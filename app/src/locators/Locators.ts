@@ -1,6 +1,6 @@
 import { LocationType } from '@gamepark/rival-cities/material/LocationType'
 import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
-import { PlayerColor } from '@gamepark/rival-cities/PlayerColor'
+import { City } from '@gamepark/rival-cities/City'
 import { Locator } from '@gamepark/react-game'
 
-export const Locators: Partial<Record<LocationType, Locator<PlayerColor, MaterialType, LocationType>>> = {}
+export const Locators: Partial<Record<LocationType, Locator<City, MaterialType, LocationType>>> = {}
