@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
-import { GameTemplateOptionsSpec } from '@gamepark/game-template/GameTemplateOptions'
-import { GameTemplateRules } from '@gamepark/game-template/GameTemplateRules'
-import { GameTemplateSetup } from '@gamepark/game-template/GameTemplateSetup'
+import { RivalCitiesOptionsSpec } from '@gamepark/rival-cities/RivalCitiesOptions'
+import { RivalCitiesRules } from '@gamepark/rival-cities/RivalCitiesRules'
+import { RivalCitiesSetup } from '@gamepark/rival-cities/RivalCitiesSetup'
 import { GameProvider, setupTranslation } from '@gamepark/react-game'
 import { StrictMode } from 'react'
 import ReactDOM from 'react-dom'
@@ -16,10 +16,10 @@ setupTranslation(translations, { debug: false })
 ReactDOM.render(
   <StrictMode>
     <GameProvider
-      game="game-template"
-      Rules={GameTemplateRules}
-      optionsSpec={GameTemplateOptionsSpec}
-      GameSetup={GameTemplateSetup}
+      game="rival-cities"
+      Rules={RivalCitiesRules}
+      optionsSpec={RivalCitiesOptionsSpec}
+      GameSetup={RivalCitiesSetup}
       material={Material}
       locators={Locators}
       animations={gameAnimations}

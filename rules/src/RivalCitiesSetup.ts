@@ -1,6 +1,6 @@
 import { MaterialGameSetup } from '@gamepark/rules-api'
-import { GameTemplateOptions } from './GameTemplateOptions'
-import { GameTemplateRules } from './GameTemplateRules'
+import { RivalCitiesOptions } from './RivalCitiesOptions'
+import { RivalCitiesRules } from './RivalCitiesRules'
 import { LocationType } from './material/LocationType'
 import { MaterialType } from './material/MaterialType'
 import { PlayerColor } from './PlayerColor'
@@ -9,10 +9,10 @@ import { RuleId } from './rules/RuleId'
 /**
  * This class creates a new Game based on the game options
  */
-export class GameTemplateSetup extends MaterialGameSetup<PlayerColor, MaterialType, LocationType, GameTemplateOptions> {
-  Rules = GameTemplateRules
+export class RivalCitiesSetup extends MaterialGameSetup<PlayerColor, MaterialType, LocationType, RivalCitiesOptions> {
+  Rules = RivalCitiesRules
 
-  setupMaterial(_options: GameTemplateOptions) {
+  setupMaterial(_options: RivalCitiesOptions) {
     // TODO
   }
 
