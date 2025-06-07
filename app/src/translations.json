@@ -1,6 +1,9 @@
 {
   "en": {
     "translation": {
+      "Name": "Rival cities",
+      "player.1": "Altona",
+      "player.2": "Hamburg",
       "Menu": "Menu",
       "OK": "OK",
       "Validate": "Validate",

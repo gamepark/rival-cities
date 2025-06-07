@@ -1,4 +1,4 @@
 export enum City {
-  Hamburg = 1,
-  Altona = 2
+  Altona = 1,
+  Hamburg = 2
 }

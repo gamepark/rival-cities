@@ -1,1 +1,23 @@
-export enum LocationType {}
+export enum LocationType {
+  GameBoard = 1,
+  BellTokenIdle,
+  CardPiste,
+  SpecialActionCardsDeck,
+  SpecialActionCardsDiscard,
+  ShipCardsDeck,
+  ShipCardsRiver,
+  AllianceCardsLayout,
+  LawsuitCardDeck,
+  LawsuitCardsRiver,
+  LawsuitPieces,
+  LawsuitMarkerPiste,
+  InkJarPiste,
+  PrestigeMarkerPiste,
+  GameOverviewPlace,
+  ProductPiles,
+  LetterDeck,
+  FactoryDeck,
+  StarTokenDeck,
+  PlayerFactories,
+  PlayerProducts
+}

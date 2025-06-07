@@ -13,17 +13,27 @@ export const PlayerPanels = () => {
 
   return createPortal(
     <>
-      {players.map((player, index) => (
-        <StyledPlayerPanel key={player.id} player={player} css={panelPosition(index)} activeRing />
+      {players.map((player) => (
+        <StyledPlayerPanel key={player.id} color={player.id === 1 ? '#904639' : '#365164'} player={player} css={panelPosition(player.id)} activeRing />
       ))}
     </>,
     root
   )
 }
 
-const panelPosition = (index: number) => css`
-  position: absolute;
-  right: 1em;
-  top: ${8.5 + index * 16}em;
-  width: 28em;
-`
+const panelPosition = (player: number) => {
+  if (player === 1) {
+    return css`
+      position: absolute;
+      left: 1em;
+      top: 8.5em;
+      width: 28em;
+    `
+  }
+  return css`
+    position: absolute;
+    right: 1em;
+    top: 8.5em;
+    width: 28em;
+  `
+}
