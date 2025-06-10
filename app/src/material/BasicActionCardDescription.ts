@@ -15,13 +15,10 @@ import BasicAction12 from '../images/cards/action/basic/en/ActionBasic12.jpg'
 import BasicAction13 from '../images/cards/action/basic/en/ActionBasic13.jpg'
 import BasicAction14 from '../images/cards/action/basic/en/ActionBasic14.jpg'
 import BasicAction15 from '../images/cards/action/basic/ActionBasic15.jpg'
-import BasicActionBack from '../images/cards/action/basic/ActionBasicBack.png'
 
 export class BasicActionCardDescription extends CardDescription {
   width = 6.76
   height = 4.36
-
-  backImage = BasicActionBack
 
   images = {
     [BasicActionCard.BasicAction1]: BasicAction1,
