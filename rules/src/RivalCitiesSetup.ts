@@ -1,6 +1,7 @@
 import { MaterialGameSetup } from '@gamepark/rules-api'
 import { shuffle } from 'lodash'
 import { City } from './City'
+import { basicActionCardPlaces, specialActionCardPlaces } from './constantes'
 import { allianceCards } from './material/AllianceCard'
 import { basicActionCards } from './material/BasicActionCard'
 import { lawsuitCards } from './material/LawsuitCard'
@@ -11,6 +12,7 @@ import { shipCards } from './material/ShipCard'
 import { specialActionCards } from './material/SpecialActionCard'
 import { RivalCitiesOptions } from './RivalCitiesOptions'
 import { RivalCitiesRules } from './RivalCitiesRules'
+import { MemoryType } from './rules/MemoryType'
 import { RuleId } from './rules/RuleId'
 
 /**
@@ -37,6 +39,7 @@ export class RivalCitiesSetup extends MaterialGameSetup<City, MaterialType, Loca
     this.setupLawsuitCards()
     this.setupProducts()
     this.setupPlayers()
+    this.initializeMemory()
   }
 
   setupSpecialActionCards() {
@@ -63,7 +66,7 @@ export class RivalCitiesSetup extends MaterialGameSetup<City, MaterialType, Loca
   setupAllianceCards() {
     const allianceCardItems = shuffle(allianceCards)
       .slice(0, 4)
-      .map((it) => ({ id: it, location: { type: LocationType.AllianceCardsLayout } }))
+      .map((it, index) => ({ id: it, location: { type: LocationType.AllianceCardsLayout, x: index } }))
     this.material(MaterialType.AllianceCard).createItems(allianceCardItems)
   }
 
@@ -93,14 +96,20 @@ export class RivalCitiesSetup extends MaterialGameSetup<City, MaterialType, Loca
   setupPlayers() {
     this.players.forEach((player, index) => {
       this.material(MaterialType.Factory).moveItem({ type: LocationType.PlayerFactories, player })
-      this.material(MaterialType.Product).id(Product.Beer).moveItem({ type: LocationType.PlayerProducts, player, id: Product.Beer }, index + 1)
+      this.material(MaterialType.Product)
+        .id(Product.Beer)
+        .moveItem({ type: LocationType.PlayerProducts, player, id: Product.Beer }, index + 1)
     })
   }
 
   start() {
-    this.startPlayerTurn(RuleId.TheFirstStep, this.players[0])
+    this.startSimultaneousRule(RuleId.ChooseFirstProduct)
+  }
+
+  private initializeMemory() {
+    this.memorize(MemoryType.NbProductToPayForAdvance, 0)
+    this.memorize(MemoryType.PlayerNbProducts, 0)
+    this.memorize(MemoryType.NbProductGiven, 0)
+    this.memorize(MemoryType.IsOffSeason, false)
   }
 }
-
-const basicActionCardPlaces = [1, 2, 3, 5, 6, 7, 9, 10, 11, 13, 14, 15, 17, 18, 19]
-const specialActionCardPlaces = [4, 8, 12, 16]

@@ -1,5 +1,7 @@
-import { CardDescription } from '@gamepark/react-game'
+import { CardDescription, ItemContext } from '@gamepark/react-game'
 import { AllianceCard } from '@gamepark/rival-cities/material/AllianceCard'
+import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
+import { isMoveItemType, MaterialMove } from '@gamepark/rules-api'
 import AllianceAmsterdam from '../images/cards/alliance/en/AllianceAmsterdam.jpg'
 import AllianceBruxelles from '../images/cards/alliance/en/AllianceBruxelles.jpg'
 import AllianceGdansk from '../images/cards/alliance/en/AllianceGdansk.jpg'
@@ -25,6 +27,10 @@ export class AllianceCardDescription extends CardDescription {
     [AllianceCard.AllianceLondon]: AllianceLondon,
     [AllianceCard.AllianceNovgorod]: AllianceNovgorod,
     [AllianceCard.AllianceOslo]: AllianceOslo
+  }
+
+  canShortClick(move: MaterialMove, context: ItemContext): boolean {
+    return isMoveItemType(MaterialType.AllianceCard)(move) && move.itemIndex === context.index && move.location.player === context.player
   }
 }
 

@@ -19,5 +19,8 @@ export enum LocationType {
   FactoryDeck,
   StarTokenDeck,
   PlayerFactories,
-  PlayerProducts
+  PlayerProducts,
+  PlayerLetterDeck,
+  PlayerSpecialActionCardsHand,
+  PlayerAllianceCards
 }

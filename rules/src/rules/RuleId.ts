@@ -1,3 +1,7 @@
 export enum RuleId {
-  TheFirstStep = 1
+  ChooseFirstProduct = 1,
+  AdvanceInkJar,
+  PayProductForAdvance,
+  ChooseAction,
+  BasicAction
 }

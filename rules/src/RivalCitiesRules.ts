@@ -1,8 +1,21 @@
-import { hideItemId, MaterialGame, MaterialMove, PositiveSequenceStrategy, SecretMaterialRules, StackingStrategy, TimeLimit } from '@gamepark/rules-api'
+import {
+  hideItemId,
+  hideItemIdToOthers,
+  MaterialGame,
+  MaterialMove,
+  PositiveSequenceStrategy,
+  SecretMaterialRules,
+  StackingStrategy,
+  TimeLimit
+} from '@gamepark/rules-api'
 import { LocationType } from './material/LocationType'
 import { MaterialType } from './material/MaterialType'
 import { City } from './City'
-import { TheFirstStepRule } from './rules/TheFirstStepRule'
+import { AdvanceInkJarRule } from './rules/AdvanceInkJarRule'
+import { BasicActionRule } from './rules/BasicActionRule'
+import { ChooseActionRule } from './rules/ChooseActionRule'
+import { ChooseFirstProductRule } from './rules/ChooseFirstProductRule'
+import { PayProductForAdvanceRule } from './rules/PayProductForAdvanceRule'
 import { RuleId } from './rules/RuleId'
 
 /**
@@ -14,15 +27,21 @@ export class RivalCitiesRules
   implements TimeLimit<MaterialGame<City, MaterialType, LocationType>, MaterialMove<City, MaterialType, LocationType>, City>
 {
   rules = {
-    [RuleId.TheFirstStep]: TheFirstStepRule
+    [RuleId.ChooseFirstProduct]: ChooseFirstProductRule,
+    [RuleId.AdvanceInkJar]: AdvanceInkJarRule,
+    [RuleId.PayProductForAdvance]: PayProductForAdvanceRule,
+    [RuleId.ChooseAction]: ChooseActionRule,
+    [RuleId.BasicAction]: BasicActionRule
   }
 
   locationsStrategies = {
     [MaterialType.SpecialActionCard]: {
-      [LocationType.SpecialActionCardsDeck]: new PositiveSequenceStrategy()
+      [LocationType.SpecialActionCardsDeck]: new PositiveSequenceStrategy(),
+      [LocationType.PlayerSpecialActionCardsHand]: new PositiveSequenceStrategy(),
     },
     [MaterialType.AllianceCard]: {
-      [LocationType.AllianceCardsLayout]: new PositiveSequenceStrategy()
+      [LocationType.AllianceCardsLayout]: new StackingStrategy(),
+      [LocationType.PlayerAllianceCards]: new PositiveSequenceStrategy(),
     },
     [MaterialType.ShipCard]: {
       [LocationType.ShipCardsDeck]: new PositiveSequenceStrategy(),
@@ -39,7 +58,8 @@ export class RivalCitiesRules
 
   hidingStrategies = {
     [MaterialType.SpecialActionCard]: {
-      [LocationType.SpecialActionCardsDeck]: hideItemId
+      [LocationType.SpecialActionCardsDeck]: hideItemId,
+      [LocationType.PlayerSpecialActionCardsHand]: hideItemIdToOthers,
     },
     [MaterialType.ShipCard]: {
       [LocationType.ShipCardsDeck]: hideItemId
