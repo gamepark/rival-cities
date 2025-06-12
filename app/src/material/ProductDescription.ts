@@ -67,10 +67,10 @@ export class ProductDescription extends TokenDescription {
 }
 
 const productSize = {
-  [Product.Beer]: { width: 2, height: 2.09 },
-  [Product.Leather]: { width: 2, height: 2.42 },
-  [Product.Cloth]: { width: 2, height: 1.64 },
-  [Product.Furniture]: { width: 2, height: 2.11 }
+  [Product.Beer]: { width: 1.48, height: 1.6 },
+  [Product.Leather]: { width: 1.33, height: 1.6 },
+  [Product.Cloth]: { width: 1.35, height: 1 },
+  [Product.Furniture]: { width: 1.53, height: 1.6 }
 }
 
 export const productDescription = new ProductDescription()

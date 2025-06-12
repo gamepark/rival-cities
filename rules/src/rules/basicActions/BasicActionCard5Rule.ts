@@ -1,31 +1,43 @@
-import { isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
-import { LocationType } from '../../material/LocationType'
-import { MaterialType } from '../../material/MaterialType'
+import { ItemMove, MaterialMove, PlayerTurnRule } from '@gamepark/rules-api'
 import { Product } from '../../material/Product'
-import { ProductionHelper } from '../helper/ProductionHelper'
-import { RuleId } from '../RuleId'
-import { AbstractBasicActionCardRule } from './AbstractBasicActionCardRule'
+import { GainLetterActionRule } from '../actions/GainLetterActionRule'
+import { ProductionActionRule } from '../actions/ProductionActionRule'
+import { ActionType } from '../ActionType'
+import { MemoryType } from '../MemoryType'
 
-export class BasicActionCard5Rule extends AbstractBasicActionCardRule {
-  productionHelper = new ProductionHelper(this.game, this.player, this.opponent, Product.Furniture)
+export class BasicActionCard5Rule extends PlayerTurnRule {
+  productionActionRule = new ProductionActionRule(this.game, Product.Furniture)
+  gainLetterActionRule = new GainLetterActionRule(this.game)
+  actionChoosen = this.remind(MemoryType.BasicActionChoosen)
 
   getPlayerMoves(): MaterialMove[] {
-    return this.productionHelper.getPlayerMoves(this.letters.moveItems({ type: LocationType.PlayerLetterDeck, player: this.player }))
+    if(!this.actionChoosen) {
+      return this.productionActionRule.getPlayerMoves(this.gainLetterActionRule.getPlayerMoves())
+    }
+    if (this.actionChoosen === ActionType.Production) {
+      return this.productionActionRule.getPlayerMoves()
+    }
+    if (this.actionChoosen === ActionType.GainLetter) {
+      return this.gainLetterActionRule.getPlayerMoves()
+    }
+    return []
+  }
+
+  beforeItemMove(move: ItemMove): MaterialMove[] {
+    return [...this.productionActionRule.beforeItemMove(move), ...this.gainLetterActionRule.beforeItemMove(move)]
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {
-    const moves: MaterialMove[] = this.productionHelper.afterItemMove(move)
-    if(isMoveItemType(MaterialType.Letter)(move)) {
-      moves.push(this.startPlayerTurn(RuleId.AdvanceInkJar, this.opponent))
+    if (this.actionChoosen === ActionType.Production) {
+      return this.productionActionRule.afterItemMove(move)
     }
-    return moves
+    if (this.actionChoosen === ActionType.GainLetter) {
+      return this.gainLetterActionRule.afterItemMove(move)
+    }
+    return []
   }
 
   onRuleEnd(): MaterialMove[] {
-    return this.productionHelper.onRuleEnd()
-  }
-
-  get letters() {
-    return this.material(MaterialType.Letter).location(LocationType.LetterDeck)
+    return this.productionActionRule.onRuleEnd()
   }
 }

@@ -1,18 +1,18 @@
-import { CustomMove, isCustomMoveType, ItemMove, MaterialMove, PlayerTurnRule, PlayMoveContext } from '@gamepark/rules-api'
+import { CustomMove, ItemMove, MaterialMove, PlayerTurnRule, PlayMoveContext, RuleMove, RuleStep } from '@gamepark/rules-api'
 import { BasicActionCard, getBasicActionCardRule } from '../material/BasicActionCard'
 import { LocationType } from '../material/LocationType'
 import { MaterialType } from '../material/MaterialType'
-import { AbstractBasicActionCardRule } from './basicActions/AbstractBasicActionCardRule'
+import { BasicActionCard0Rule } from './basicActions/BasicActionCard0Rule'
 import { CustomMoveType } from './CustomMoveType'
-import { RuleId } from './RuleId'
+import { MemoryType } from './MemoryType'
 
 export class BasicActionRule extends PlayerTurnRule {
-  onRuleStart(): MaterialMove[] {
-    return this.basicActionCardRule.onRuleStart()
+  onRuleStart(_move: RuleMove, _previousRule?: RuleStep, _context?: PlayMoveContext): MaterialMove[] {
+    return this.basicActionCardRule.onRuleStart(_move, _previousRule, _context)
   }
 
   getPlayerMoves(): MaterialMove[] {
-    return this.basicActionCardRule.getPlayerMoves()
+    return [...this.basicActionCardRule.getPlayerMoves(), this.customMove(CustomMoveType.Pass)]
   }
 
   beforeItemMove(move: ItemMove, context?: PlayMoveContext): MaterialMove[] {
@@ -24,17 +24,16 @@ export class BasicActionRule extends PlayerTurnRule {
   }
 
   onCustomMove(move: CustomMove, context?: PlayMoveContext): MaterialMove[] {
-    const moves = this.basicActionCardRule.onCustomMove(move, context)
+    const moves = super.onCustomMove(move, context)
 
-    if (isCustomMoveType(CustomMoveType.Pass)(move)) {
-      moves.push(this.startPlayerTurn(RuleId.AdvanceInkJar, this.nextPlayer))
-    }
+    moves.push(...this.basicActionCardRule.onCustomMove(move, context))
 
     return moves
   }
 
-  onRuleEnd(): MaterialMove[] {
-    return this.basicActionCardRule.onRuleEnd()
+  onRuleEnd(_move: RuleMove, _context?: PlayMoveContext): MaterialMove[] {
+    this.forget(MemoryType.BasicActionChoosen)
+    return this.basicActionCardRule.onRuleEnd(_move, _context)
   }
 
   get inkjarLocationId(): number {
@@ -48,7 +47,8 @@ export class BasicActionRule extends PlayerTurnRule {
       .getItem()?.id
   }
 
-  get basicActionCardRule(): AbstractBasicActionCardRule {
-    return getBasicActionCardRule(this.cardInInkjarPlace, this.game)
+  get basicActionCardRule(): PlayerTurnRule {
+    console.log('inkjarLocationId', this.inkjarLocationId)
+    return this.inkjarLocationId === 0 ? new BasicActionCard0Rule(this.game) : getBasicActionCardRule(this.cardInInkjarPlace, this.game)
   }
 }

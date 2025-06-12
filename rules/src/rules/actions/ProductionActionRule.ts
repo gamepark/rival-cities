@@ -1,33 +1,43 @@
-import { isMoveItemType, ItemMove, MaterialGame, MaterialMove, MaterialRulesPart } from '@gamepark/rules-api'
+import { isMoveItemType, ItemMove, MaterialGame, MaterialMove, PlayerTurnRule } from '@gamepark/rules-api'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { Product } from '../../material/Product'
+import { ActionType } from '../ActionType'
 import { CustomMoveType } from '../CustomMoveType'
+import { NextRuleHelper } from '../helper/NextRuleHelper'
 import { MemoryType } from '../MemoryType'
-import { RuleId } from '../RuleId'
 
-export class ProductionHelper extends MaterialRulesPart {
-  player: number
-  opponent: number
+export class ProductionActionRule extends PlayerTurnRule {
+  nextRuleHelper = new NextRuleHelper(this.game)
   productChoosen = this.remind(MemoryType.ProductChoosen)
-  productType: Product
+  productType?: Product
 
-  constructor(game: MaterialGame, player: number, opponent: number, productType: Product) {
+  constructor(game: MaterialGame, productType?: Product) {
     super(game)
-    this.player = player
-    this.opponent = opponent
     this.productType = productType
+  }
+
+  onRuleStart(): MaterialMove[] {
+    return [...this.products.moveItems((item) => ({ type: LocationType.PlayerProducts, player: this.player, id: item.id }))]
   }
 
   getPlayerMoves(onNotProductChoosenMoves: MaterialMove[] = []): MaterialMove[] {
     if (!this.productChoosen) {
-      return [...this.products.moveItems((item) => ({ type: LocationType.PlayerProducts, player: this.player, id: item.id })),
-        ...onNotProductChoosenMoves]
+      return [...this.products.moveItems((item) => ({ type: LocationType.PlayerProducts, player: this.player, id: item.id })), ...onNotProductChoosenMoves]
     }
     if (this.playerFactories.length && this.productChoosen === this.productType) {
       return [...this.playerFactories.rotateItems(true), this.customMove(CustomMoveType.Pass)]
     }
     return [this.customMove(CustomMoveType.Pass)]
+  }
+
+  beforeItemMove(move: ItemMove): MaterialMove[] {
+    if (isMoveItemType(MaterialType.Product)(move) && move.location.id === this.productType) {
+      if (!this.remind(MemoryType.BasicActionChoosen)) {
+        this.memorize(MemoryType.BasicActionChoosen, ActionType.Production)
+      }
+    }
+    return []
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {
@@ -39,7 +49,7 @@ export class ProductionHelper extends MaterialRulesPart {
         }
       }
       if (this.playerFactories.length === 0) {
-        return [this.startPlayerTurn(RuleId.AdvanceInkJar, this.opponent)]
+        return [...this.nextRuleHelper.moveToNextRule()]
       }
     }
     if (isMoveItemType(MaterialType.Factory)(move) && this.remind(MemoryType.ProductChoosen) === this.productType) {
@@ -62,7 +72,7 @@ export class ProductionHelper extends MaterialRulesPart {
 
     if (resourcesInReserve.length > 0) return resourcesInReserve
 
-    const opponentResource = this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(this.opponent).id(this.productType)
+    const opponentResource = this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(this.nextPlayer).id(this.productType)
     const playerResource = this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(this.player).id(this.productType)
 
     if (opponentResource.length > playerResource.length) return opponentResource

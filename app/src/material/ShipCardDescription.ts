@@ -1,5 +1,7 @@
-import { CardDescription } from '@gamepark/react-game'
+import { CardDescription, ItemContext } from '@gamepark/react-game'
+import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
 import { ShipCard } from '@gamepark/rival-cities/material/ShipCard'
+import { isMoveItemType, MaterialMove } from '@gamepark/rules-api'
 import Ship1 from '../images/cards/ship/en/Ship01.jpg'
 import Ship2 from '../images/cards/ship/en/Ship02.jpg'
 import Ship3 from '../images/cards/ship/en/Ship03.jpg'
@@ -24,8 +26,8 @@ import Ship21 from '../images/cards/ship/en/Ship21.jpg'
 import ShipBack from '../images/cards/ship/ShipBack.jpg'
 
 export class ShipCardDescription extends CardDescription {
-  width = 4.36
-  height = 6.76
+  width = 4.35
+  height = 6.75
 
   backImage = ShipBack
 
@@ -51,6 +53,10 @@ export class ShipCardDescription extends CardDescription {
     [ShipCard.Ship19]: Ship19,
     [ShipCard.Ship20]: Ship20,
     [ShipCard.Ship21]: Ship21,
+  }
+
+  canShortClick(move: MaterialMove, context: ItemContext): boolean {
+    return isMoveItemType(MaterialType.ShipCard)(move) && context.index === move.itemIndex
   }
 }
 

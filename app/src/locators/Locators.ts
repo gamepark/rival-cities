@@ -26,6 +26,8 @@ import { playerFactoriesLocator } from './player/PlayerFactoriesLocator'
 import { playerLettersDeckLocator } from './player/PlayerLettersDeckLocator'
 import { playerProductsLocator } from './player/PlayerProductsLocator'
 import { playerSpecialActionCardsHandLocator } from './player/PlayerSpecialActionCardsHandLocator'
+import { playerShipCardsLocator } from './player/PlayerShipCardsLocator'
+import { playerStarTokensDeckLocator } from './player/PlayerStarTokensDeckLocator'
 
 export const Locators: Partial<Record<LocationType, Locator<City, MaterialType, LocationType>>> = {
   [LocationType.GameBoard]: gameBoardLocator,
@@ -51,5 +53,7 @@ export const Locators: Partial<Record<LocationType, Locator<City, MaterialType, 
   [LocationType.PlayerProducts]: playerProductsLocator,
   [LocationType.PlayerSpecialActionCardsHand]: playerSpecialActionCardsHandLocator,
   [LocationType.PlayerAllianceCards]: playerAllianceCardsLocator,
+  [LocationType.PlayerShipCards]: playerShipCardsLocator,
   [LocationType.PlayerLetterDeck]: playerLettersDeckLocator,
+  [LocationType.PlayerStarTokens]: playerStarTokensDeckLocator,
 }

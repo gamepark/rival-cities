@@ -27,8 +27,8 @@ import SpecialAction24 from '../images/cards/action/special/en/ActionSpecial24.j
 import SpecialActionBack from '../images/cards/action/special/ActionSpecialBack.png'
 
 export class SpecialActionCardDescription extends CardDescription {
-  width = 6.76
-  height = 4.36
+  width = 6.75
+  height = 4.35
 
   backImage = SpecialActionBack
 

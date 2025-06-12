@@ -13,8 +13,8 @@ import AllianceOslo from '../images/cards/alliance/en/AllianceOslo.jpg'
 import AllianceBack from '../images/cards/alliance/AllianceBack.jpg'
 
 export class AllianceCardDescription extends CardDescription {
-  width = 6.76
-  height = 4.36
+  width = 6.75
+  height = 4.35
 
   backImage = AllianceBack
 

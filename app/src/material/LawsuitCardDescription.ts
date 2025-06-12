@@ -14,8 +14,8 @@ import LawsuitBack from '../images/cards/lawsuit/LawsuitBack.jpg'
 
 
 export class LawsuitCardDescription extends CardDescription {
-  width = 6.76
-  height = 4.36
+  width = 6.75
+  height = 4.35
 
   backImage = LawsuitBack
 

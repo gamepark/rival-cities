@@ -3,8 +3,8 @@ import { TokenDescription } from '@gamepark/react-game'
 import InkJar from '../images/tokens/InkJar.png'
 
 export class InkJarDescription extends TokenDescription {
-  width = 2
-  height = 1.92
+  width = 2.7
+  height = 2.55
 
   image = InkJar
 

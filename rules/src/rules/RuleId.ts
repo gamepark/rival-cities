@@ -3,5 +3,21 @@ export enum RuleId {
   AdvanceInkJar,
   PayProductForAdvance,
   ChooseAction,
-  BasicAction
+  BasicAction,
+  Choose2Product,
+  Choose1Product,
+  AdvanceAgainInLawsuit,
+  ResolveLawsuit,
+  AdvanceLawsuitAction,
+  BuildFactoryAction,
+  CourtRulingAction,
+  DonationAction,
+  DrawSpecialActionCardAction,
+  EarnPrestigeAction,
+  FormAllianceAction,
+  GainLetterAction,
+  GiftAction,
+  ProductionAction,
+  ProductSwapAction,
+  PurchaseShipAction
 }

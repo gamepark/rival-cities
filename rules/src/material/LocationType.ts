@@ -22,5 +22,7 @@ export enum LocationType {
   PlayerProducts,
   PlayerLetterDeck,
   PlayerSpecialActionCardsHand,
-  PlayerAllianceCards
+  PlayerAllianceCards,
+  PlayerShipCards,
+  PlayerStarTokens,
 }

@@ -9,7 +9,7 @@ class PlayerAllianceCardsLocator extends ListLocator {
 
   getCoordinates(location: Location) {
     if(location.player === City.Altona) {
-      return { x: -48, y: 0 }
+      return { x: -46, y: 0 }
     }
     return { x: 28, y: 0 }
   }

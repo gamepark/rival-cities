@@ -1,21 +1,20 @@
-import { ItemMove, MaterialMove } from '@gamepark/rules-api'
+import { ItemMove, MaterialMove, PlayerTurnRule } from '@gamepark/rules-api'
 import { Product } from '../../material/Product'
-import { ProductionHelper } from '../helper/ProductionHelper'
-import { AbstractBasicActionCardRule } from './AbstractBasicActionCardRule'
+import { ProductionActionRule } from '../actions/ProductionActionRule'
 
-export class BasicActionCard1Rule extends AbstractBasicActionCardRule {
-  beerProductionHelper = new ProductionHelper(this.game, this.player, this.opponent, Product.Beer)
-  clothProductionHelper = new ProductionHelper(this.game, this.player, this.opponent, Product.Cloth)
+export class BasicActionCard1Rule extends PlayerTurnRule {
+  beerProductionActionRule = new ProductionActionRule(this.game, Product.Beer)
+  clothProductionActionRule = new ProductionActionRule(this.game, Product.Cloth)
 
   getPlayerMoves(): MaterialMove[] {
-    return [...this.beerProductionHelper.getPlayerMoves(), ...this.clothProductionHelper.getPlayerMoves()]
+    return [...this.beerProductionActionRule.getPlayerMoves(), ...this.clothProductionActionRule.getPlayerMoves()]
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {
-    return [...this.beerProductionHelper.afterItemMove(move), ...this.clothProductionHelper.afterItemMove(move)]
+    return [...this.beerProductionActionRule.afterItemMove(move), ...this.clothProductionActionRule.afterItemMove(move)]
   }
 
   onRuleEnd(): MaterialMove[] {
-    return [...this.beerProductionHelper.onRuleEnd(), ...this.clothProductionHelper.onRuleEnd()]
+    return [...this.beerProductionActionRule.onRuleEnd(), ...this.clothProductionActionRule.onRuleEnd()]
   }
 }

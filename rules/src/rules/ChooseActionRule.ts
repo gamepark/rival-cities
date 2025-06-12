@@ -3,17 +3,19 @@ import { specialActionCardPlaces } from '../constantes'
 import { LocationType } from '../material/LocationType'
 import { MaterialType } from '../material/MaterialType'
 import { CustomMoveType } from './CustomMoveType'
+import { NextRuleHelper } from './helper/NextRuleHelper'
 import { RuleId } from './RuleId'
 
 export class ChooseActionRule extends PlayerTurnRule {
+  nextRuleHelper = new NextRuleHelper(this.game)
   onRuleStart(): MaterialMove[] {
     if (specialActionCardPlaces.includes(this.inkjarLocationId) && this.cardInInkjarPlace.length > 0) {
       return [
         this.cardInInkjarPlace.moveItem({ type: LocationType.PlayerSpecialActionCardsHand, player: this.player }),
-        this.startPlayerTurn(RuleId.AdvanceInkJar, this.nextPlayer)
+        ...this.nextRuleHelper.moveToNextRule()
       ]
     }
-    if (this.playerLetters.length === 0 && this.playerSpecialActionCards.length === 0) {
+    if (this.playerSpecialActionCards.length === 0) {
       return [this.startRule(RuleId.BasicAction)]
     }
     return []

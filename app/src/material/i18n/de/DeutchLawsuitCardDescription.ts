@@ -12,8 +12,6 @@ import DeutchLawsuit9 from '../../../images/cards/lawsuit/de/Lawsuit09.jpg'
 import DeutchLawsuit10 from '../../../images/cards/lawsuit/de/Lawsuit10.jpg'
 
 export class DeutchLawsuitCardDescription extends LawsuitCardDescription {
-  width = 6.76
-  height = 4.36
 
   images = {
     [LawsuitCard.Lawsuit1]: DeutchLawsuit1,
