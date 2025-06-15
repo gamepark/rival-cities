@@ -1,30 +1,28 @@
-import { isMoveItemType, ItemMove, MaterialGame, MaterialMove, PlayerTurnRule } from '@gamepark/rules-api'
+import { isMoveItemType, ItemMove, MaterialMove, PlayerTurnRule } from '@gamepark/rules-api'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { Product } from '../../material/Product'
 import { ActionType } from '../ActionType'
 import { CustomMoveType } from '../CustomMoveType'
-import { NextRuleHelper } from '../helper/NextRuleHelper'
+import { ComputedActionsHelper } from '../helper/ComputedActionsHelper'
 import { MemoryType } from '../MemoryType'
 
 export class GiftActionRule extends PlayerTurnRule {
-  nextRuleHelper = new NextRuleHelper(this.game)
-  nbProductToTake?: number
+  actionType = ActionType.Gift
+  computedActionHelper = new ComputedActionsHelper(this.game)
+  nbProductToTake = 1
   productType?: Product
   productChoosen = this.remind(MemoryType.ProductChoosen)
   nbProductGiven = this.remind<number>(MemoryType.NbProductGiven)
 
-  constructor(game: MaterialGame, nbProductToTake?: number, productType?: Product) {
-    super(game)
-    this.nbProductToTake = nbProductToTake
-    this.productType = productType
-  }
-
   onRuleStart(): MaterialMove[] {
+    const moves: MaterialMove[] = []
     if(this.productType) {
-      return [...this.products.moveItems((item) => ({ type: LocationType.PlayerProducts, player: this.player, id: item.id }), this.nbProductToTake)]
+      for (let i = 0; i < this.nbProductToTake; i++) {
+        moves.push(this.products.moveItem({ type: LocationType.PlayerProducts, player: this.player, id: this.productType }))
+      }
     }
-    return []
+    return moves
   }
 
   getPlayerMoves(onNotProductChoosenMoves: MaterialMove[] = []): MaterialMove[] {
@@ -49,17 +47,13 @@ export class GiftActionRule extends PlayerTurnRule {
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {
-    if (isMoveItemType(MaterialType.Product)(move) && move.location.id === this.productChoosen) {
-      if (this.nbProductGiven === this.nbProductToTake) {
-        return [...this.nextRuleHelper.moveToNextRule()]
+    if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.PlayerProducts) {
+      if (this.remind(MemoryType.NbProductGiven) === this.nbProductToTake) {
+        this.forget(MemoryType.ProductChoosen)
+        this.memorize(MemoryType.NbProductGiven, 0)
+        return this.computedActionHelper.removeActionAndWait(this.actionType)
       }
     }
-    return []
-  }
-
-  onRuleEnd(): MaterialMove[] {
-    this.forget(MemoryType.ProductChoosen)
-    this.memorize(MemoryType.NbProductGiven, 0)
     return []
   }
 

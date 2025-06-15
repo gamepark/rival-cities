@@ -1,18 +1,24 @@
 import { ItemMove, MaterialMove, PlayerTurnRule } from '@gamepark/rules-api'
 import { DonationActionRule } from '../actions/DonationActionRule'
 import { ProductSwapActionRule } from '../actions/ProductSwapActionRule'
+import { ActionType } from '../ActionType'
 import { MemoryType } from '../MemoryType'
 
 export class BasicActionCard8Rule extends PlayerTurnRule {
   productSwapActionRule = new ProductSwapActionRule(this.game)
   donationActionRule = new DonationActionRule(this.game)
 
+  onRuleStart(): MaterialMove[] {
+    this.memorize(MemoryType.ComputedActions, [ActionType.ProductSwap, ActionType.Donation])
+    return []
+  }
+
   getPlayerMoves(): MaterialMove[] {
     const moves: MaterialMove[] = []
-    if (!this.remind(MemoryType.IsDonationInProgress)) {
+    if (!this.remind(MemoryType.IsDonationInProgress) && this.remind<ActionType[]>(MemoryType.ComputedActions).includes(ActionType.ProductSwap)) {
       moves.push(...this.productSwapActionRule.getPlayerMoves())
     }
-    if (!this.remind(MemoryType.IsProductReturn)) {
+    if (!this.remind(MemoryType.IsProductReturn) && this.remind<ActionType[]>(MemoryType.ComputedActions).includes(ActionType.Donation)) {
       moves.push(...this.donationActionRule.getPlayerMoves())
     }
     return moves
@@ -29,9 +35,5 @@ export class BasicActionCard8Rule extends PlayerTurnRule {
     }
     moves.push(...this.donationActionRule.afterItemMove(move))
     return moves
-  }
-
-  onRuleEnd(): MaterialMove[] {
-    return [...this.productSwapActionRule.onRuleEnd(), ...this.donationActionRule.onRuleEnd()]
   }
 }

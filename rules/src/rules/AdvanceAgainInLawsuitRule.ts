@@ -3,19 +3,21 @@ import { City } from '../City'
 import { LawsuitCard, lawsuitCardData } from '../material/LawsuitCard'
 import { LocationType } from '../material/LocationType'
 import { MaterialType } from '../material/MaterialType'
+import { ActionType } from './ActionType'
 import { CustomMoveType } from './CustomMoveType'
 import { AdvanceLawsuitActionRule } from './actions/AdvanceLawsuitActionRule'
-import { NextRuleHelper } from './helper/NextRuleHelper'
+import { ComputedActionsHelper } from './helper/ComputedActionsHelper'
 import { MemoryType } from './MemoryType'
 import { RuleId } from './RuleId'
 
 export class AdvanceAgainInLawsuitRule extends PlayerTurnRule {
-  nextRuleHelper = new NextRuleHelper(this.game)
+  actionType = ActionType.AdvanceLawsuit
+  computedActionHelper = new ComputedActionsHelper(this.game)
   advanceLawsuitHelper = new AdvanceLawsuitActionRule(this.game)
 
   onRuleStart(): MaterialMove[] {
     if (!this.advanceLawsuitHelper.checkIfCanAdvanceInLawsuit(this.lawsuitCardId)) {
-      return [...this.nextRuleHelper.moveToNextRule()]
+      return [...this.computedActionHelper.removeActionAndWait(this.actionType)]
     }
     return []
   }
@@ -50,7 +52,7 @@ export class AdvanceAgainInLawsuitRule extends PlayerTurnRule {
       ) {
         this.forget(MemoryType.LawsuitAdvanced)
         this.memorize(MemoryType.NbTimeAdvancedInLawsuit, 0)
-        moves.push(...this.nextRuleHelper.moveToNextRule())
+        moves.push(...this.computedActionHelper.removeActionAndWait(this.actionType))
       } else {
         moves.push(this.startRule(RuleId.AdvanceAgainInLawsuit))
       }

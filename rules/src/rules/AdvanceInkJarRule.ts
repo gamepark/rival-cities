@@ -36,7 +36,7 @@ export class AdvanceInkJarRule extends PlayerTurnRule {
     if (this.remind(MemoryType.NbProductToPayForAdvance) > 0) {
       return [this.startRule(RuleId.PayProductForAdvance)]
     }
-    return [this.startRule(RuleId.ChooseAction)]
+    return [this.startRule(this.remind(MemoryType.IsOffSeason) ? RuleId.OffSeasonTakeBell : RuleId.ChooseAction)]
   }
 
   possiblesNbCaseToAdvance() {

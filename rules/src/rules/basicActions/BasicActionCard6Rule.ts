@@ -1,6 +1,3 @@
-import { Product } from '../../material/Product'
-import { ProductionActionRule } from '../actions/ProductionActionRule'
+import { ProductionClothActionRule } from '../actions/ProductionClothActionRule'
 
-export class BasicActionCard6Rule extends ProductionActionRule {
-  productType = Product.Cloth
-}
+export class BasicActionCard6Rule extends ProductionClothActionRule {}

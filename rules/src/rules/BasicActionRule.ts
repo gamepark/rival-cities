@@ -48,7 +48,6 @@ export class BasicActionRule extends PlayerTurnRule {
   }
 
   get basicActionCardRule(): PlayerTurnRule {
-    console.log('inkjarLocationId', this.inkjarLocationId)
     return this.inkjarLocationId === 0 ? new BasicActionCard0Rule(this.game) : getBasicActionCardRule(this.cardInInkjarPlace, this.game)
   }
 }

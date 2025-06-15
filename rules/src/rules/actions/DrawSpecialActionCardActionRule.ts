@@ -2,30 +2,34 @@ import { isMoveItemType, ItemMove, MaterialMove, PlayerTurnRule } from '@gamepar
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { ActionType } from '../ActionType'
-import { NextRuleHelper } from '../helper/NextRuleHelper'
+import { ComputedActionsHelper } from '../helper/ComputedActionsHelper'
 import { MemoryType } from '../MemoryType'
 
 export class DrawSpecialActionCardActionRule extends PlayerTurnRule {
-  nextRuleHelper = new NextRuleHelper(this.game)
+  actionType = ActionType.DrawSpecialActionCard
+  computedActionHelper = new ComputedActionsHelper(this.game)
+  nbCardsToDraw = 1
+
   onRuleStart(): MaterialMove[] {
-    if (this.specialActionCard.length) {
-      return [this.specialActionCard.moveItem({ type: LocationType.PlayerSpecialActionCardsHand, player: this.player })]
-    }
-    return []
+    return [this.specialActionCard.moveItem({ type: LocationType.PlayerSpecialActionCardsHand, player: this.player })]
   }
 
   beforeItemMove(move: ItemMove): MaterialMove[] {
     if (isMoveItemType(MaterialType.SpecialActionCard)(move)) {
       this.memorize(MemoryType.BasicActionChoosen, ActionType.DrawSpecialActionCard)
+      this.memorize<number>(MemoryType.NbCardsDraw, (old) => old + 1)
     }
     return []
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {
     if (isMoveItemType(MaterialType.SpecialActionCard)(move)) {
-      return [...this.nextRuleHelper.moveToNextRule()]
+      if(this.remind(MemoryType.NbCardsDraw) === this.nbCardsToDraw) {
+        this.memorize(MemoryType.NbCardsDraw, 0)
+        return this.computedActionHelper.removeActionAndWait(this.actionType)
+      }
     }
-    return []
+    return [this.specialActionCard.moveItem({ type: LocationType.PlayerSpecialActionCardsHand, player: this.player })]
   }
 
   get specialActionCard() {

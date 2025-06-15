@@ -22,7 +22,9 @@ import { shipCardsRiverLocator } from './board/ShipCardsRiverLocator'
 import { starTokenDeckLocator } from './board/StarTokenDeckLocator'
 import { gameBoardLocator } from './GameBoardLocator'
 import { playerAllianceCardsLocator } from './player/PlayerAllianceCardsLocator'
+import { playerBellTokenLocator } from './player/PlayerBellTokenLocator'
 import { playerFactoriesLocator } from './player/PlayerFactoriesLocator'
+import { playerLawsuitCardsLocator } from './player/PlayerLawsuitCardsLocator'
 import { playerLettersDeckLocator } from './player/PlayerLettersDeckLocator'
 import { playerProductsLocator } from './player/PlayerProductsLocator'
 import { playerSpecialActionCardsHandLocator } from './player/PlayerSpecialActionCardsHandLocator'
@@ -56,4 +58,6 @@ export const Locators: Partial<Record<LocationType, Locator<City, MaterialType, 
   [LocationType.PlayerShipCards]: playerShipCardsLocator,
   [LocationType.PlayerLetterDeck]: playerLettersDeckLocator,
   [LocationType.PlayerStarTokens]: playerStarTokensDeckLocator,
+  [LocationType.PlayerBellToken]: playerBellTokenLocator,
+  [LocationType.PlayerLawsuitCards]: playerLawsuitCardsLocator,
 }

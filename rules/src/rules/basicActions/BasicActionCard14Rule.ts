@@ -1,12 +1,11 @@
 import { ItemMove, MaterialMove, PlayerTurnRule } from '@gamepark/rules-api'
-import { Product } from '../../material/Product'
 import { EarnPrestigeActionRule } from '../actions/EarnPrestigeActionRule'
-import { ProductionActionRule } from '../actions/ProductionActionRule'
+import { ProductionBeerActionRule } from '../actions/ProductionBeerActionRule'
 import { ActionType } from '../ActionType'
 import { MemoryType } from '../MemoryType'
 
 export class BasicActionCard14Rule extends PlayerTurnRule {
-  productionActionRule = new ProductionActionRule(this.game, Product.Beer)
+  productionActionRule = new ProductionBeerActionRule(this.game)
   earnPrestigeActionRule = new EarnPrestigeActionRule(this.game)
   actionChoosen = this.remind(MemoryType.BasicActionChoosen)
 
@@ -35,9 +34,5 @@ export class BasicActionCard14Rule extends PlayerTurnRule {
       return this.earnPrestigeActionRule.afterItemMove(move)
     }
     return []
-  }
-
-  onRuleEnd(): MaterialMove[] {
-    return this.productionActionRule.onRuleEnd()
   }
 }

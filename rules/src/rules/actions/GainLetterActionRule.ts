@@ -2,16 +2,19 @@ import { isMoveItemType, ItemMove, MaterialMove, PlayerTurnRule } from '@gamepar
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { ActionType } from '../ActionType'
-import { NextRuleHelper } from '../helper/NextRuleHelper'
+import { ComputedActionsHelper } from '../helper/ComputedActionsHelper'
 import { MemoryType } from '../MemoryType'
 
 export class GainLetterActionRule extends PlayerTurnRule {
-  nextRuleHelper = new NextRuleHelper(this.game)
+  actionType = ActionType.GainLetter
+  computedActionHelper = new ComputedActionsHelper(this.game)
+  nbLettersToTake = 1
+
   onRuleStart(): MaterialMove[] {
-    return this.letters.moveItems({ type: LocationType.PlayerLetterDeck, player: this.player })
+    return this.letters.moveItems({ type: LocationType.PlayerLetterDeck, player: this.player }, this.nbLettersToTake)
   }
   getPlayerMoves(): MaterialMove[] {
-    return this.letters.moveItems({ type: LocationType.PlayerLetterDeck, player: this.player })
+    return this.letters.moveItems({ type: LocationType.PlayerLetterDeck, player: this.player }, this.nbLettersToTake)
   }
 
   beforeItemMove(move: ItemMove): MaterialMove[] {
@@ -25,7 +28,7 @@ export class GainLetterActionRule extends PlayerTurnRule {
   afterItemMove(move: ItemMove): MaterialMove[] {
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.Letter)(move)) {
-      moves.push(...this.nextRuleHelper.moveToNextRule())
+      moves.push(...this.computedActionHelper.removeActionAndWait(this.actionType))
     }
     return moves
   }

@@ -2,11 +2,12 @@ import { isMoveItemType, ItemMove, MaterialMove, PlayerTurnRule } from '@gamepar
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { ActionType } from '../ActionType'
-import { NextRuleHelper } from '../helper/NextRuleHelper'
+import { ComputedActionsHelper } from '../helper/ComputedActionsHelper'
 import { MemoryType } from '../MemoryType'
 
 export class FormAllianceActionRule extends PlayerTurnRule {
-  nextRuleHelper = new NextRuleHelper(this.game)
+  actionType = ActionType.FormAlliance
+  computedActionHelper = new ComputedActionsHelper(this.game)
 
   getPlayerMoves(): MaterialMove[] {
     const moves: MaterialMove[] = []
@@ -30,7 +31,7 @@ export class FormAllianceActionRule extends PlayerTurnRule {
 
   afterItemMove(move: ItemMove): MaterialMove[] {
     if (isMoveItemType(MaterialType.AllianceCard)(move)) {
-      return [...this.nextRuleHelper.moveToNextRule()]
+      return this.computedActionHelper.removeActionAndWait(this.actionType)
     }
     return []
   }

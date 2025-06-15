@@ -1,5 +1,6 @@
 import { getEnumValues, MaterialGame, MaterialMove } from '@gamepark/rules-api'
 import { RuleId } from '../rules/RuleId'
+import { ShipCardHelper } from './helper/ShipCardHelper'
 import { Product } from './Product'
 
 export enum ShipCard {
@@ -77,27 +78,42 @@ export const shipCardsData: Record<ShipCard, ShipCardData> = {
   },
   [ShipCard.Ship6]: {
     cost: { type: Product.Leather, quantity: 4 },
-    effect: { type: ShipEffectType.OffSeason },
+    effect: {
+      type: ShipEffectType.OffSeason,
+      action: (game, player) => new ShipCardHelper(game, player).shipCard6()
+    },
     getNbStars: () => 2
   },
   [ShipCard.Ship7]: {
     cost: { type: Product.Cloth, quantity: 5 },
-    effect: { type: ShipEffectType.OffSeason },
+    effect: {
+      type: ShipEffectType.OffSeason,
+      action: (game, player) => new ShipCardHelper(game, player).shipCard7()
+    },
     getNbStars: () => 1
   },
   [ShipCard.Ship8]: {
     cost: { type: Product.Cloth, quantity: 4 },
-    effect: { type: ShipEffectType.OffSeason },
+    effect: {
+      type: ShipEffectType.OffSeason,
+      action: (game, player) => new ShipCardHelper(game, player).shipCard8()
+    },
     getNbStars: () => 1
   },
   [ShipCard.Ship9]: {
     cost: { type: Product.Beer, quantity: 5 },
-    effect: { type: ShipEffectType.OffSeason },
+    effect: {
+      type: ShipEffectType.OffSeason,
+      action: (game, player) => new ShipCardHelper(game, player).shipCard9()
+    },
     getNbStars: () => 2
   },
   [ShipCard.Ship10]: {
     cost: { type: Product.Beer, quantity: 5 },
-    effect: { type: ShipEffectType.OffSeason },
+    effect: {
+      type: ShipEffectType.OffSeason,
+      action: (game, player) => new ShipCardHelper(game, player).shipCard10()
+    },
     getNbStars: () => 1
   },
   [ShipCard.Ship11]: {
@@ -154,5 +170,5 @@ export const shipCardsData: Record<ShipCard, ShipCardData> = {
     cost: { type: Product.Cloth, quantity: 3 },
     effect: { type: ShipEffectType.None },
     getNbStars: (nbShip) => nbShip
-  },
+  }
 }

@@ -39,8 +39,4 @@ export class BasicActionCard13Rule extends PlayerTurnRule {
   onCustomMove(move: CustomMove): MaterialMove[] {
     return this.courtRulingActionRule.onCustomMove(move)
   }
-
-  onRuleEnd(): MaterialMove[] {
-    return this.purchaseShipActionRule.onRuleEnd()
-  }
 }

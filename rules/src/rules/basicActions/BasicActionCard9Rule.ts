@@ -1,12 +1,11 @@
 import { ItemMove, MaterialMove, PlayerTurnRule } from '@gamepark/rules-api'
-import { Product } from '../../material/Product'
 import { AdvanceLawsuitActionRule } from '../actions/AdvanceLawsuitActionRule'
-import { ProductionActionRule } from '../actions/ProductionActionRule'
+import { ProductionLeatherActionRule } from '../actions/ProductionLeatherActionRule'
 import { ActionType } from '../ActionType'
 import { MemoryType } from '../MemoryType'
 
 export class BasicActionCard9Rule extends PlayerTurnRule {
-  productionActionRule = new ProductionActionRule(this.game, Product.Leather)
+  productionActionRule = new ProductionLeatherActionRule(this.game)
   advanceLawsuitActionRule = new AdvanceLawsuitActionRule(this.game)
   actionChoosen = this.remind(MemoryType.BasicActionChoosen)
   getPlayerMoves(): MaterialMove[] {
@@ -34,9 +33,5 @@ export class BasicActionCard9Rule extends PlayerTurnRule {
       return this.advanceLawsuitActionRule.afterItemMove(move)
     }
     return []
-  }
-
-  onRuleEnd(): MaterialMove[] {
-    return this.productionActionRule.onRuleEnd()
   }
 }

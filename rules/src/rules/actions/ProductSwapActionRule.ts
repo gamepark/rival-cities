@@ -3,9 +3,12 @@ import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { ActionType } from '../ActionType'
 import { CustomMoveType } from '../CustomMoveType'
+import { ComputedActionsHelper } from '../helper/ComputedActionsHelper'
 import { MemoryType } from '../MemoryType'
 
 export class ProductSwapActionRule extends PlayerTurnRule {
+  actionType = ActionType.ProductSwap
+  computedActionHelper = new ComputedActionsHelper(this.game)
   nbSwaps = this.remind(MemoryType.NbSwaps) ?? 0
   isProductReturn = this.remind(MemoryType.IsProductReturn)
 
@@ -28,21 +31,19 @@ export class ProductSwapActionRule extends PlayerTurnRule {
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {
-    const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.Product)(move)) {
       if(move.location.type === LocationType.ProductPiles) {
         this.memorize(MemoryType.IsProductReturn, true)
       } else if(move.location.type === LocationType.PlayerProducts) {
         this.memorize(MemoryType.IsProductReturn, false)
         this.memorize(MemoryType.NbSwaps, this.nbSwaps + 1)
+        if(this.remind(MemoryType.NbSwaps) === 2) {
+          this.memorize(MemoryType.NbSwaps, 0)
+          this.memorize(MemoryType.IsProductReturn, false)
+          return this.computedActionHelper.removeActionAndWait(this.actionType)
+        }
       }
     }
-    return moves
-  }
-
-  onRuleEnd(): MaterialMove[] {
-    this.memorize(MemoryType.NbSwaps, 0)
-    this.memorize(MemoryType.IsProductReturn, false)
     return []
   }
 

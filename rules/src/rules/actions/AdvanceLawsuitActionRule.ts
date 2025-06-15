@@ -4,12 +4,20 @@ import { LawsuitCard, lawsuitCardData } from '../../material/LawsuitCard'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { ActionType } from '../ActionType'
-import { NextRuleHelper } from '../helper/NextRuleHelper'
+import { ComputedActionsHelper } from '../helper/ComputedActionsHelper'
 import { MemoryType } from '../MemoryType'
 import { RuleId } from '../RuleId'
 
 export class AdvanceLawsuitActionRule extends PlayerTurnRule {
-  nextRuleHelper = new NextRuleHelper(this.game)
+  actionType = ActionType.AdvanceLawsuit
+  computedActionHelper = new ComputedActionsHelper(this.game)
+
+  onRuleStart(): MaterialMove[] {
+    if(this.possibleCardsToGet().length === 0) {
+      return this.computedActionHelper.removeActionAndWait(this.actionType)
+    }
+    return []
+  }
 
   getPlayerMoves(): MaterialMove[] {
     const moveX = this.player === City.Altona ? -1 : 1
@@ -50,7 +58,7 @@ export class AdvanceLawsuitActionRule extends PlayerTurnRule {
           this.memorize(MemoryType.LawsuitAdvanced, move.location.id)
           moves.push(this.startRule(RuleId.AdvanceAgainInLawsuit))
         } else {
-          moves.push(...this.nextRuleHelper.moveToNextRule())
+          moves.push(...this.computedActionHelper.removeActionAndWait(this.actionType))
         }
       }
     }

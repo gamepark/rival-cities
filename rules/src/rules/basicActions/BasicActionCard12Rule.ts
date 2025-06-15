@@ -5,7 +5,7 @@ import { ActionType } from '../ActionType'
 import { MemoryType } from '../MemoryType'
 
 export class BasicActionCard12Rule extends PlayerTurnRule {
-  giftActionRule = new GiftActionRule(this.game, 1)
+  giftActionRule = new GiftActionRule(this.game)
   advanceLawsuitActionRule = new AdvanceLawsuitActionRule(this.game)
   actionChoosen = this.remind(MemoryType.BasicActionChoosen)
 
@@ -34,9 +34,5 @@ export class BasicActionCard12Rule extends PlayerTurnRule {
       return this.advanceLawsuitActionRule.afterItemMove(move)
     }
     return []
-  }
-
-  onRuleEnd(): MaterialMove[] {
-    return this.giftActionRule.onRuleEnd()
   }
 }

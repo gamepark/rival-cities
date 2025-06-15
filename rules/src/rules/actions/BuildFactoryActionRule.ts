@@ -3,11 +3,12 @@ import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { ActionType } from '../ActionType'
 import { CustomMoveType } from '../CustomMoveType'
-import { NextRuleHelper } from '../helper/NextRuleHelper'
+import { ComputedActionsHelper } from '../helper/ComputedActionsHelper'
 import { MemoryType } from '../MemoryType'
 
 export class BuildFactoryActionRule extends PlayerTurnRule {
-  nextRuleHelper = new NextRuleHelper(this.game)
+  actionType = ActionType.BuildFactory
+  computedActionHelper = new ComputedActionsHelper(this.game)
   price: number
   isBuildInProgress = this.remind(MemoryType.IsBuildInProgress)
   nbProductsGiven = this.remind(MemoryType.NbProductGiven) ?? 0
@@ -45,16 +46,12 @@ export class BuildFactoryActionRule extends PlayerTurnRule {
     const moves: MaterialMove[] = []
     if(isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.ProductPiles) {
       if(this.remind(MemoryType.NbProductGiven) === this.price) {
-        return [...this.nextRuleHelper.moveToNextRule()]
+        this.memorize(MemoryType.NbProductGiven, 0)
+        this.memorize(MemoryType.IsBuildInProgress, false)
+        return [...this.computedActionHelper.removeActionAndWait(this.actionType)]
       }
     }
     return moves
-  }
-
-  onRuleEnd(): MaterialMove[] {
-    this.memorize(MemoryType.NbProductGiven, 0)
-    this.memorize(MemoryType.IsBuildInProgress, false)
-    return []
   }
 
   get playerProducts() {

@@ -1,12 +1,11 @@
 import { ItemMove, MaterialMove, PlayerTurnRule } from '@gamepark/rules-api'
-import { Product } from '../../material/Product'
 import { GainLetterActionRule } from '../actions/GainLetterActionRule'
-import { ProductionActionRule } from '../actions/ProductionActionRule'
+import { ProductionFurnitureActionRule } from '../actions/ProductionFurnitureActionRule'
 import { ActionType } from '../ActionType'
 import { MemoryType } from '../MemoryType'
 
 export class BasicActionCard5Rule extends PlayerTurnRule {
-  productionActionRule = new ProductionActionRule(this.game, Product.Furniture)
+  productionActionRule = new ProductionFurnitureActionRule(this.game)
   gainLetterActionRule = new GainLetterActionRule(this.game)
   actionChoosen = this.remind(MemoryType.BasicActionChoosen)
 
@@ -35,9 +34,5 @@ export class BasicActionCard5Rule extends PlayerTurnRule {
       return this.gainLetterActionRule.afterItemMove(move)
     }
     return []
-  }
-
-  onRuleEnd(): MaterialMove[] {
-    return this.productionActionRule.onRuleEnd()
   }
 }

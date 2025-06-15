@@ -24,8 +24,18 @@ import { ChooseActionRule } from './rules/ChooseActionRule'
 import { ChooseFirstProductRule } from './rules/ChooseFirstProductRule'
 import { CustomMoveType } from './rules/CustomMoveType'
 import { NextRuleHelper } from './rules/helper/NextRuleHelper'
+import { MemoryType } from './rules/MemoryType'
+import { OffSeasonChangeSpecialCardsRule } from './rules/OffSeason/OffSeasonChangeSpecialCardsRule'
+import { OffSeasonGetPrestigeBonusesRule } from './rules/OffSeason/OffSeasonGetPrestigeBonusesRule'
+import { OffSeasonGetShipsBonusesRule } from './rules/OffSeason/OffSeasonGetShipsBonusesRule'
+import { OffSeasonReactivateFactoriesRule } from './rules/OffSeason/OffSeasonReactivateFactoriesRule'
+import { OffSeasonReturnBellRule } from './rules/OffSeason/OffSeasonReturnBellRule'
+import { OffSeasonTakeBellRule } from './rules/OffSeason/OffSeasonTakeBellRule'
 import { PayProductForAdvanceRule } from './rules/PayProductForAdvanceRule'
+import { ResolveLawsuitRule } from './rules/ResolveLawsuitRule'
 import { RuleId } from './rules/RuleId'
+import { SpecialActionRule } from './rules/SpecialActionRule'
+import { OffSeasonPayForAllianceRule } from './rules/OffSeason/OffSeasonPayForAllianceRule'
 
 /**
  * This class implements the rules of the board game.
@@ -42,17 +52,27 @@ export class RivalCitiesRules
     [RuleId.PayProductForAdvance]: PayProductForAdvanceRule,
     [RuleId.ChooseAction]: ChooseActionRule,
     [RuleId.BasicAction]: BasicActionRule,
+    [RuleId.SpecialAction]: SpecialActionRule,
     [RuleId.AdvanceAgainInLawsuit]: AdvanceAgainInLawsuitRule,
+    [RuleId.ResolveLawsuit]: ResolveLawsuitRule,
     [RuleId.AdvanceLawsuitAction]: AdvanceLawsuitActionRule,
     [RuleId.DrawSpecialActionCardAction]: DrawSpecialActionCardActionRule,
     [RuleId.EarnPrestigeAction]: EarnPrestigeActionRule,
-    [RuleId.GainLetterAction]: GainLetterActionRule
+    [RuleId.GainLetterAction]: GainLetterActionRule,
+    [RuleId.OffSeasonTakeBell]: OffSeasonTakeBellRule,
+    [RuleId.OffSeasonPayForAlliance]: OffSeasonPayForAllianceRule,
+    [RuleId.OffSeasonGetShipsBonuses]: OffSeasonGetShipsBonusesRule,
+    [RuleId.OffSeasonGetPrestigeBonuses]: OffSeasonGetPrestigeBonusesRule,
+    [RuleId.OffSeasonChangeSpecialCards]: OffSeasonChangeSpecialCardsRule,
+    [RuleId.OffSeasonReactivateFactories]: OffSeasonReactivateFactoriesRule,
+    [RuleId.OffSeasonReturnBell]: OffSeasonReturnBellRule,
   }
 
   locationsStrategies = {
     [MaterialType.SpecialActionCard]: {
       [LocationType.SpecialActionCardsDeck]: new PositiveSequenceStrategy(),
-      [LocationType.PlayerSpecialActionCardsHand]: new PositiveSequenceStrategy()
+      [LocationType.PlayerSpecialActionCardsHand]: new PositiveSequenceStrategy(),
+      [LocationType.SpecialActionCardsDiscard]: new PositiveSequenceStrategy()
     },
     [MaterialType.AllianceCard]: {
       [LocationType.AllianceCardsLayout]: new StackingStrategy(),
@@ -88,6 +108,23 @@ export class RivalCitiesRules
     const moves: MaterialMove[] = []
 
     if (isCustomMoveType(CustomMoveType.Pass)(move)) {
+      this.memorize(MemoryType.NbProductToPayForAdvance, 0)
+      this.memorize(MemoryType.PlayerNbProducts, 0)
+      this.memorize(MemoryType.NbProductGiven, 0)
+      this.memorize(MemoryType.NbTimeAdvancedInLawsuit, 0)
+      this.memorize(MemoryType.NbSwaps, 0)
+      this.memorize(MemoryType.IsProductReturn, false)
+      this.memorize(MemoryType.IsBuildInProgress, false)
+      this.memorize(MemoryType.NbProductsDonated, 0)
+      this.memorize(MemoryType.NbProductStealed, 0)
+      this.memorize(MemoryType.NbDonations, 0)
+      this.memorize(MemoryType.NbCardsDraw, 0)
+      this.memorize(MemoryType.IsDonationInProgress, false)
+      this.memorize(MemoryType.ComputedActions, [])
+      this.forget(MemoryType.ProductChoosen)
+      this.forget(MemoryType.ShipChoosen)
+      this.forget(MemoryType.LawsuitAdvanced)
+      this.forget(MemoryType.BasicActionChoosen)
       moves.push(...this.nextRuleHelper.moveToNextRule())
     }
 

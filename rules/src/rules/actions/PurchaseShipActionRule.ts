@@ -3,12 +3,20 @@ import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { ShipCard, shipCardsData, ShipEffectType } from '../../material/ShipCard'
 import { ActionType } from '../ActionType'
-import { NextRuleHelper } from '../helper/NextRuleHelper'
+import { ComputedActionsHelper } from '../helper/ComputedActionsHelper'
 import { MemoryType } from '../MemoryType'
 
 export class PurchaseShipActionRule extends PlayerTurnRule {
-  nextRuleHelper = new NextRuleHelper(this.game)
+  actionType = ActionType.PurchaseShip
+  computedActionHelper = new ComputedActionsHelper(this.game)
   shipChoosen = this.remind(MemoryType.ShipChoosen)
+
+  onRuleStart(): MaterialMove[] {
+    if(this.possibleCardsToGet().length === 0) {
+      return this.computedActionHelper.removeActionAndWait(this.actionType)
+    }
+    return []
+  }
 
   getPlayerMoves(onNotShipChoosenMoves: MaterialMove[] = []): MaterialMove[] {
     if (!this.shipChoosen) {
@@ -35,16 +43,12 @@ export class PurchaseShipActionRule extends PlayerTurnRule {
       const shipData = shipCardsData[shipId]
       moves.push(...this.playerProducts.id(shipData.cost.type).moveItems({ type: LocationType.ProductPiles, id: shipData.cost.type }, shipData.cost.quantity))
       if (shipData.effect.type === ShipEffectType.Instant) {
+        this.forget(MemoryType.ShipChoosen)
         this.memorize(MemoryType.NextRules, shipData.effect.rules)
       }
-      moves.push(...this.nextRuleHelper.moveToNextRule())
+      moves.push(...this.computedActionHelper.removeActionAndWait(this.actionType))
     }
     return moves
-  }
-
-  onRuleEnd(): MaterialMove[] {
-    this.forget(MemoryType.ShipChoosen)
-    return []
   }
 
   possibleCardsToGet() {

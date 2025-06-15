@@ -2,8 +2,10 @@ import { CustomMove, isCustomMoveType, isMoveItemType, ItemMove, MaterialMove, P
 import { specialActionCardPlaces } from '../constantes'
 import { LocationType } from '../material/LocationType'
 import { MaterialType } from '../material/MaterialType'
+import { SpecialActionCard, spectialActionCardActions } from '../material/SpecialActionCard'
 import { CustomMoveType } from './CustomMoveType'
 import { NextRuleHelper } from './helper/NextRuleHelper'
+import { MemoryType } from './MemoryType'
 import { RuleId } from './RuleId'
 
 export class ChooseActionRule extends PlayerTurnRule {
@@ -30,7 +32,9 @@ export class ChooseActionRule extends PlayerTurnRule {
 
   afterItemMove(move: ItemMove): MaterialMove[] {
     if (isMoveItemType(MaterialType.SpecialActionCard)(move) && move.location.type === LocationType.SpecialActionCardsDiscard) {
-      // TODO start rule SpecialAction
+      const cardId = this.material(MaterialType.SpecialActionCard).index(move.itemIndex).getItem()?.id as SpecialActionCard
+      this.memorize(MemoryType.ComputedActions, spectialActionCardActions[cardId])
+      return [this.startRule(RuleId.SpecialAction)]
     }
     return []
   }

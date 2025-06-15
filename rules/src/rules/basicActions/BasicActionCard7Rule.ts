@@ -35,8 +35,4 @@ export class BasicActionCard7Rule extends PlayerTurnRule {
     }
     return []
   }
-
-  onRuleEnd(): MaterialMove[] {
-    return this.purchaseShipActionRule.onRuleEnd()
-  }
 }

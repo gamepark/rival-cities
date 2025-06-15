@@ -25,4 +25,6 @@ export enum LocationType {
   PlayerAllianceCards,
   PlayerShipCards,
   PlayerStarTokens,
+  PlayerBellToken,
+  PlayerLawsuitCards
 }

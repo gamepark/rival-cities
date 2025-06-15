@@ -19,7 +19,7 @@ export class PayProductForAdvanceRule extends PlayerTurnRule {
     const playerBaseBnProducts = this.remind(MemoryType.PlayerNbProducts)
     const nbProductToPay = this.remind(MemoryType.NbProductToPayForAdvance)
     if (this.playerProducts.getQuantity() === playerBaseBnProducts - nbProductToPay) {
-      return [this.startRule(RuleId.ChooseAction)]
+      return [this.startRule(this.remind(MemoryType.IsOffSeason) ? RuleId.OffSeasonTakeBell : RuleId.ChooseAction)]
     }
     return []
   }

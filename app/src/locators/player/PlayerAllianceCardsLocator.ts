@@ -4,7 +4,7 @@ import { City } from '@gamepark/rival-cities/City'
 import { Location } from '@gamepark/rules-api'
 
 class PlayerAllianceCardsLocator extends ListLocator {
-  gap = { x: 2.5 }
+  gap = { x: 7 }
   maxCount = 3
 
   getCoordinates(location: Location) {

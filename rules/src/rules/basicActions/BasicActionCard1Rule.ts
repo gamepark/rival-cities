@@ -1,20 +1,16 @@
 import { ItemMove, MaterialMove, PlayerTurnRule } from '@gamepark/rules-api'
-import { Product } from '../../material/Product'
-import { ProductionActionRule } from '../actions/ProductionActionRule'
+import { ProductionBeerActionRule } from '../actions/ProductionBeerActionRule'
+import { ProductionClothActionRule } from '../actions/ProductionClothActionRule'
 
 export class BasicActionCard1Rule extends PlayerTurnRule {
-  beerProductionActionRule = new ProductionActionRule(this.game, Product.Beer)
-  clothProductionActionRule = new ProductionActionRule(this.game, Product.Cloth)
+  beerProductionActionRule = new ProductionBeerActionRule(this.game)
+  clothProductionActionRule = new ProductionClothActionRule(this.game)
 
   getPlayerMoves(): MaterialMove[] {
-    return [...this.beerProductionActionRule.getPlayerMoves(), ...this.clothProductionActionRule.getPlayerMoves()]
+    return this.beerProductionActionRule.getPlayerMoves(this.clothProductionActionRule.getPlayerMoves())
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {
     return [...this.beerProductionActionRule.afterItemMove(move), ...this.clothProductionActionRule.afterItemMove(move)]
-  }
-
-  onRuleEnd(): MaterialMove[] {
-    return [...this.beerProductionActionRule.onRuleEnd(), ...this.clothProductionActionRule.onRuleEnd()]
   }
 }

@@ -2,15 +2,19 @@ import { MaterialGame, MaterialMove, MaterialRulesPart } from '@gamepark/rules-a
 import { City } from '../../City'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
+import { NextRuleHelper } from '../../rules/helper/NextRuleHelper'
+import { MemoryType } from '../../rules/MemoryType'
 import { RuleId } from '../../rules/RuleId'
 import { Product } from '../Product'
 
 export class LawsuitCardHelper extends MaterialRulesPart {
   player: number
+  nextRuleHelper: NextRuleHelper
 
   constructor(game: MaterialGame, player: number) {
     super(game)
     this.player = player
+    this.nextRuleHelper = new NextRuleHelper(game, player)
   }
 
   lawersuitCard1ActionOnAdvance(): MaterialMove[] {
@@ -18,7 +22,7 @@ export class LawsuitCardHelper extends MaterialRulesPart {
   }
 
   lawersuitCard1ActionOnWin(): MaterialMove[] {
-    return [...this.getProductMove(Product.Leather, 3), this.movePrestigeMarker()]
+    return [...this.getProductMove(Product.Leather, 3), this.movePrestigeMarker(), ...this.nextRuleHelper.moveToNextRule()]
   }
 
   lawersuitCard2ActionOnAdvance(): MaterialMove[] {
@@ -26,7 +30,7 @@ export class LawsuitCardHelper extends MaterialRulesPart {
   }
 
   lawersuitCard2ActionOnWin(): MaterialMove[] {
-    return [this.buildFactoryMove()]
+    return [this.buildFactoryMove(), ...this.nextRuleHelper.moveToNextRule()]
   }
 
   lawersuitCard3ActionOnAdvance(): MaterialMove[] {
@@ -34,7 +38,8 @@ export class LawsuitCardHelper extends MaterialRulesPart {
   }
 
   lawersuitCard3ActionOnWin(): MaterialMove[] {
-    return [this.startRule(RuleId.Choose2Product)]
+    this.memorize(MemoryType.NextRules, [RuleId.Choose2Product])
+    return new NextRuleHelper(this.game, this.player).moveToNextRule()
   }
 
   lawersuitCard4ActionOnAdvance(): MaterialMove[] {
@@ -42,7 +47,7 @@ export class LawsuitCardHelper extends MaterialRulesPart {
   }
 
   lawersuitCard4ActionOnWin(): MaterialMove[] {
-    return [this.buildFactoryMove()]
+    return [this.buildFactoryMove(), ...this.nextRuleHelper.moveToNextRule()]
   }
 
   lawersuitCard5ActionOnAdvance(): MaterialMove[] {
@@ -50,7 +55,7 @@ export class LawsuitCardHelper extends MaterialRulesPart {
   }
 
   lawersuitCard5ActionOnWin(): MaterialMove[] {
-    return [...this.getProductMove(Product.Beer, 3), ...this.getStarTokensMove(2)]
+    return [...this.getProductMove(Product.Beer, 3), ...this.getStarTokensMove(2), ...this.nextRuleHelper.moveToNextRule()]
   }
 
   lawersuitCard6ActionOnAdvance(): MaterialMove[] {
@@ -58,7 +63,7 @@ export class LawsuitCardHelper extends MaterialRulesPart {
   }
 
   lawersuitCard6ActionOnWin(): MaterialMove[] {
-    return [...this.getLetterMove(2)]
+    return [...this.getLetterMove(2), ...this.nextRuleHelper.moveToNextRule()]
   }
 
   lawersuitCard7ActionOnAdvance(): MaterialMove[] {
@@ -66,7 +71,8 @@ export class LawsuitCardHelper extends MaterialRulesPart {
   }
 
   lawersuitCard7ActionOnWin(): MaterialMove[] {
-    return [this.movePrestigeMarker(), this.startRule(RuleId.Choose1Product)]
+    this.memorize(MemoryType.NextRules, [RuleId.Choose1Product])
+    return [this.movePrestigeMarker(), ...new NextRuleHelper(this.game, this.player).moveToNextRule()]
   }
 
   lawersuitCard8ActionOnAdvance(): MaterialMove[] {
@@ -74,7 +80,7 @@ export class LawsuitCardHelper extends MaterialRulesPart {
   }
 
   lawersuitCard8ActionOnWin(): MaterialMove[] {
-    return [this.buildFactoryMove()]
+    return [this.buildFactoryMove(), ...this.nextRuleHelper.moveToNextRule()]
   }
 
   lawersuitCard9ActionOnAdvance(): MaterialMove[] {
@@ -82,7 +88,7 @@ export class LawsuitCardHelper extends MaterialRulesPart {
   }
 
   lawersuitCard9ActionOnWin(): MaterialMove[] {
-    return [...this.getLetterMove(1)]
+    return [...this.getLetterMove(1), ...this.nextRuleHelper.moveToNextRule()]
   }
 
   lawersuitCard10ActionOnAdvance(): MaterialMove[] {
@@ -90,7 +96,7 @@ export class LawsuitCardHelper extends MaterialRulesPart {
   }
 
   lawersuitCard10ActionOnWin(): MaterialMove[] {
-    return [this.buildFactoryMove()]
+    return [this.buildFactoryMove(), ...this.nextRuleHelper.moveToNextRule()]
   }
 
   private movePrestigeMarker(): MaterialMove {

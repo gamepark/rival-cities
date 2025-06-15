@@ -1,4 +1,6 @@
-import { CardDescription } from '@gamepark/react-game'
+import { CardDescription, ItemContext } from '@gamepark/react-game'
+import { LocationType } from '@gamepark/rival-cities/material/LocationType'
+import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
 import { SpecialActionCard } from '@gamepark/rival-cities/material/SpecialActionCard'
 import SpecialAction1 from '../images/cards/action/special/ActionSpecial01.jpg'
 import SpecialAction2 from '../images/cards/action/special/en/ActionSpecial02.jpg'
@@ -25,6 +27,7 @@ import SpecialAction22 from '../images/cards/action/special/en/ActionSpecial22.j
 import SpecialAction23 from '../images/cards/action/special/en/ActionSpecial23.jpg'
 import SpecialAction24 from '../images/cards/action/special/en/ActionSpecial24.jpg'
 import SpecialActionBack from '../images/cards/action/special/ActionSpecialBack.png'
+import { isMoveItemType, MaterialMove } from '@gamepark/rules-api'
 
 export class SpecialActionCardDescription extends CardDescription {
   width = 6.75
@@ -57,6 +60,10 @@ export class SpecialActionCardDescription extends CardDescription {
     [SpecialActionCard.SpecialAction22]: SpecialAction22,
     [SpecialActionCard.SpecialAction23]: SpecialAction23,
     [SpecialActionCard.SpecialAction24]: SpecialAction24
+  }
+
+  canShortClick(move: MaterialMove, context: ItemContext): boolean {
+    return isMoveItemType(MaterialType.SpecialActionCard)(move) && move.location.type === LocationType.SpecialActionCardsDiscard && move.itemIndex === context.index
   }
 }
 

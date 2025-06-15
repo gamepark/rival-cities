@@ -4,12 +4,13 @@ import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { ActionType } from '../ActionType'
 import { CustomMoveType } from '../CustomMoveType'
-import { NextRuleHelper } from '../helper/NextRuleHelper'
+import { ComputedActionsHelper } from '../helper/ComputedActionsHelper'
 import { MemoryType } from '../MemoryType'
 import { RuleId } from '../RuleId'
 
 export class CourtRulingActionRule extends PlayerTurnRule {
-  nextRuleHelper = new NextRuleHelper(this.game)
+  actionType = ActionType.CourtRuling
+  computedActionHelper = new ComputedActionsHelper(this.game)
 
   getPlayerMoves(): MaterialMove[] {
     const moves: MaterialMove[] = []
@@ -50,7 +51,7 @@ export class CourtRulingActionRule extends PlayerTurnRule {
   afterItemMove(move: ItemMove): MaterialMove[] {
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.LawsuitCard)(move) && move.location.z === 1) {
-      moves.push(...this.nextRuleHelper.moveToNextRule())
+      moves.push(...this.computedActionHelper.removeActionAndWait(this.actionType))
     }
     return moves
   }
