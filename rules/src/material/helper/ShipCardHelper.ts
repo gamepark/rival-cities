@@ -45,7 +45,7 @@ export class ShipCardHelper extends MaterialRulesPart {
       .moveItem(({ location }) => ({ ...location, x: location.x! + prestigeMarkerMove }))
   }
 
-  private getProductMove(product: Product, quantity: number): MaterialMove[] {
+  getProductMove(product: Product, quantity: number): MaterialMove[] {
     return this.material(MaterialType.Product)
       .location(LocationType.ProductPiles)
       .id(product)

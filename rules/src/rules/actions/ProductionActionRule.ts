@@ -2,6 +2,7 @@ import { isMoveItemType, ItemMove, MaterialMove, PlayerTurnRule } from '@gamepar
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { Product } from '../../material/Product'
+import { ShipCard, shipCardsData, ShipEffectType } from '../../material/ShipCard'
 import { ActionType } from '../ActionType'
 import { CustomMoveType } from '../CustomMoveType'
 import { ComputedActionsHelper } from '../helper/ComputedActionsHelper'
@@ -40,10 +41,20 @@ export class ProductionActionRule extends PlayerTurnRule {
   afterItemMove(move: ItemMove): MaterialMove[] {
     if (isMoveItemType(MaterialType.Product)(move)) {
       if (!this.productChoosen) {
+        const moves: MaterialMove[] = []
         this.memorize(MemoryType.ProductChoosen, move.location.id)
         if (this.productType === Product.Beer && move.location.id === Product.Beer) {
-          return [...this.products.moveItems({ ...move.location, type: LocationType.PlayerProducts }, 1)]
+          moves.push(...this.products.moveItems({ ...move.location, type: LocationType.PlayerProducts }, 1))
         }
+        if(this.playerShipCards.length > 0) {
+          for (const shipCard of this.playerShipCards) {
+            const shipCardData = shipCardsData[shipCard.id as ShipCard]
+            if (shipCardData.effect.action) {
+              moves.push(...shipCardData.effect.action(this.game, this.player))
+            }
+          }
+        }
+        return moves
       }
       if (this.playerFactories.length === 0) {
         this.forget(MemoryType.ProductChoosen)
@@ -51,11 +62,11 @@ export class ProductionActionRule extends PlayerTurnRule {
       }
     }
     if (isMoveItemType(MaterialType.Factory)(move)) {
-      if(!this.productType) {
+      if (!this.productType) {
         this.forget(MemoryType.ProductChoosen)
         return []
       }
-      if(this.productChoosen === this.productType) {
+      if (this.productChoosen === this.productType) {
         return [...this.products.moveItems({ type: LocationType.PlayerProducts, id: this.productChoosen, player: this.player }, 1)]
       }
     }
@@ -90,5 +101,12 @@ export class ProductionActionRule extends PlayerTurnRule {
     if (opponentResource.length > playerResource.length) return opponentResource
 
     return resourcesInReserve
+  }
+
+  get playerShipCards() {
+    return this.material(MaterialType.ShipCard)
+      .location(LocationType.PlayerShipCards)
+      .player(this.player)
+      .filter((it) => shipCardsData[it.id as ShipCard].effect.type === ShipEffectType.OnProduction).getItems()
   }
 }

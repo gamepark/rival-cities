@@ -1,6 +1,7 @@
 import { isMoveItemType, ItemMove, MaterialMove, PlayerTurnRule } from '@gamepark/rules-api'
 import { LocationType } from '../material/LocationType'
 import { MaterialType } from '../material/MaterialType'
+import { ShipCard } from '../material/ShipCard'
 import { MemoryType } from './MemoryType'
 import { RuleId } from './RuleId'
 
@@ -40,16 +41,17 @@ export class AdvanceInkJarRule extends PlayerTurnRule {
   }
 
   possiblesNbCaseToAdvance() {
+    const nbFreeCases = this.playerShip17.length ? 3 : 2
     let nbMovesForProducts = 0
     for (let i = 1; i <= this.playerProducts.getQuantity(); i++) {
-      if (i < 3) {
+      if (i < nbFreeCases + 1) {
         nbMovesForProducts += 1
       } else {
         nbMovesForProducts += 0.5
       }
     }
 
-    return 2 + Math.floor(nbMovesForProducts)
+    return nbFreeCases + Math.floor(nbMovesForProducts)
   }
 
   get inkjar() {
@@ -61,8 +63,9 @@ export class AdvanceInkJarRule extends PlayerTurnRule {
   }
 
   private determineNbProductToPay(nbCaseAdvanced: number) {
+    const nbFreeCases = this.playerShip17.length ? 3 : 2
     let nbProducts = 0
-    for (let i = 3; i <= nbCaseAdvanced; i++) {
+    for (let i = nbFreeCases + 1; i <= nbCaseAdvanced; i++) {
       if (i <= 4) {
         nbProducts += 1
       } else {
@@ -71,4 +74,9 @@ export class AdvanceInkJarRule extends PlayerTurnRule {
     }
     return nbProducts
   }
+
+  get playerShip17() {
+    return this.material(MaterialType.ShipCard).location(LocationType.PlayerShipCards).player(this.player).id(ShipCard.Ship17)
+  }
+
 }

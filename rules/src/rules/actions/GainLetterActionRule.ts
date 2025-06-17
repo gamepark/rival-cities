@@ -13,6 +13,7 @@ export class GainLetterActionRule extends PlayerTurnRule {
   onRuleStart(): MaterialMove[] {
     return this.letters.moveItems({ type: LocationType.PlayerLetterDeck, player: this.player }, this.nbLettersToTake)
   }
+
   getPlayerMoves(): MaterialMove[] {
     return this.letters.moveItems({ type: LocationType.PlayerLetterDeck, player: this.player }, this.nbLettersToTake)
   }
@@ -28,6 +29,7 @@ export class GainLetterActionRule extends PlayerTurnRule {
   afterItemMove(move: ItemMove): MaterialMove[] {
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.Letter)(move)) {
+      this.forget(MemoryType.BasicActionChoosen)
       moves.push(...this.computedActionHelper.removeActionAndWait(this.actionType))
     }
     return moves

@@ -34,7 +34,7 @@ export class BuildFactoryActionRule extends PlayerTurnRule {
   beforeItemMove(move: ItemMove): MaterialMove[] {
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.Factory)(move) && move.location.type === LocationType.PlayerFactories) {
-      this.memorize(MemoryType.BasicActionChoosen, ActionType.BuildFactory)
+      this.memorize(MemoryType.BasicActionChoosen, this.actionType)
       this.memorize(MemoryType.IsBuildInProgress, true)
     } else if(isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.ProductPiles && this.isBuildInProgress) {
       this.memorize(MemoryType.NbProductGiven, this.nbProductsGiven + 1)
@@ -44,8 +44,16 @@ export class BuildFactoryActionRule extends PlayerTurnRule {
 
   afterItemMove(move: ItemMove): MaterialMove[] {
     const moves: MaterialMove[] = []
+    if(this.remind(MemoryType.BasicActionChoosen) !== this.actionType) return moves
     if(isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.ProductPiles) {
       if(this.remind(MemoryType.NbProductGiven) === this.price) {
+        this.memorize(MemoryType.NbProductGiven, 0)
+        this.memorize(MemoryType.IsBuildInProgress, false)
+        return [...this.computedActionHelper.removeActionAndWait(this.actionType)]
+      }
+    }
+    if(isMoveItemType(MaterialType.Factory)(move) && move.location.type === LocationType.PlayerFactories) {
+      if(this.price === 0) {
         this.memorize(MemoryType.NbProductGiven, 0)
         this.memorize(MemoryType.IsBuildInProgress, false)
         return [...this.computedActionHelper.removeActionAndWait(this.actionType)]

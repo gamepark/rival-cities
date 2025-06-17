@@ -11,12 +11,23 @@ export class OffSeasonGetPrestigeBonusesRule extends PlayerTurnRule {
     if (Math.abs(this.prestigeMarkerLocation) < 2) {
       return [this.startRule(RuleId.ResolveLawsuit)]
     }
-    this.memorize(MemoryType.ProcessedBonuses, 0)
+    this.memorize(MemoryType.ProcessedBonuses, 2)
+    return this.getBonusesMoves()
+  }
+
+  afterItemMove(): MaterialMove[] {
+    if (this.remind<number>(MemoryType.ProcessedBonuses) === Math.abs(this.prestigeMarkerLocation)) {
+      return [this.startRule(RuleId.ResolveLawsuit)]
+    }
+    this.memorize<number>(MemoryType.ProcessedBonuses, old => old + 1)
+    return this.getBonusesMoves()
+  }
+
+  getBonusesMoves() {
     const moves: MaterialMove[] = []
     const player = this.prestigeMarkerLocation < 0 ? City.Altona : City.Hamburg
 
-    for (let i = 2; i <= Math.abs(this.prestigeMarkerLocation); i++) {
-      switch (i) {
+      switch (this.remind<number>(MemoryType.ProcessedBonuses)) {
         case 2:
           moves.push(...this.getProducts(Product.Beer).moveItems({ type: LocationType.PlayerProducts, player, id: Product.Beer }))
           break
@@ -35,16 +46,8 @@ export class OffSeasonGetPrestigeBonusesRule extends PlayerTurnRule {
         default:
           moves.push(...this.getStarsTokens().moveItems({ type: LocationType.PlayerStarTokens, player }))
       }
-    }
 
     return moves
-  }
-
-  afterItemMove(): MaterialMove[] {
-    if (this.remind<number>(MemoryType.ProcessedBonuses) === Math.abs(this.prestigeMarkerLocation)) {
-      return [this.startRule(RuleId.ResolveLawsuit)]
-    }
-    return []
   }
 
   get prestigeMarkerLocation() {

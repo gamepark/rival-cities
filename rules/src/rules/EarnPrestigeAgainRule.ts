@@ -1,0 +1,42 @@
+import { isMoveItemType, ItemMove, MaterialMove, PlayerTurnRule } from '@gamepark/rules-api'
+import { RuleMove } from '@gamepark/rules-api/dist/material/moves'
+import { RuleStep } from '@gamepark/rules-api/dist/material/rules/RuleStep'
+import { City } from '../City'
+import { LocationType } from '../material/LocationType'
+import { MaterialType } from '../material/MaterialType'
+import { Product } from '../material/Product'
+import { ActionType } from './ActionType'
+import { ComputedActionsHelper } from './helper/ComputedActionsHelper'
+
+export class EarnPrestigeAgainRule extends PlayerTurnRule {
+  actionType = ActionType.AdvanceLawsuit
+  computedActionHelper?: ComputedActionsHelper
+
+  onRuleStart(_: RuleMove, previousRule: RuleStep): MaterialMove[] {
+    this.computedActionHelper = new ComputedActionsHelper(this.game, previousRule.player)
+    return []
+  }
+
+  getPlayerMoves(): MaterialMove[] {
+    return this.playerBeers.moveItems((item) => ({ type: LocationType.ProductPiles, id: item.id }), 2)
+  }
+
+  afterItemMove(move: ItemMove): MaterialMove[] {
+    if(isMoveItemType(MaterialType.Product)(move)) {
+      const move = this.player === City.Altona ? -1 : 1
+      return this.prestigeMarker.moveItems(({ location }) => ({ ...location, x: location.x! + move }))
+    }
+    if(isMoveItemType(MaterialType.PrestigeMarker)(move)) {
+      return this.computedActionHelper?.removeActionAndWait(this.actionType) ?? []
+    }
+    return []
+  }
+
+  get playerBeers() {
+    return this.material(MaterialType.Product).location(LocationType.PlayerProducts).id(Product.Beer).player(this.player)
+  }
+
+  get prestigeMarker() {
+    return this.material(MaterialType.PrestigeMarker).location(LocationType.PrestigeMarkerPiste)
+  }
+}

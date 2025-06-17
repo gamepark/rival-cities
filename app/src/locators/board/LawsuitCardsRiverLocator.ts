@@ -9,6 +9,10 @@ class LawsuitCardsRiverLocator extends ListLocator {
     const base = gameBoardLocator.coordinates
     return { x: base.x - 13.2, y: base.y - (location.z === 1 ? 13.8 : 14.3) }
   }
+
+  getHoverTransform = () => {
+    return ['translateZ(10em)', 'scale(2.5)']
+  }
 }
 
 export const lawsuitCardsRiverLocator = new LawsuitCardsRiverLocator()

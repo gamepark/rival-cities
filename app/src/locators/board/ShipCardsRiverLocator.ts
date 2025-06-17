@@ -13,6 +13,10 @@ class ShipCardsRiverLocator extends ListLocator {
     const base = gameBoardLocator.coordinates
     return { x: base.x - 14.5, y: base.y + 4.5 }
   }
+
+  getHoverTransform = () => {
+    return ['translateZ(10em)', 'scale(2.5)', 'rotateZ(180deg)']
+  }
 }
 
 export const shipCardsRiverLocator = new ShipCardsRiverLocator()

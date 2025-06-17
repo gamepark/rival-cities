@@ -1,4 +1,4 @@
-import { isMoveItemType, ItemMove, MaterialMove, PlayerTurnRule } from '@gamepark/rules-api'
+import { CustomMove, isCustomMoveType, isMoveItemType, ItemMove, MaterialMove, PlayerTurnRule } from '@gamepark/rules-api'
 import { City } from '../../City'
 import { LawsuitCard, lawsuitCardData } from '../../material/LawsuitCard'
 import { LocationType } from '../../material/LocationType'
@@ -7,6 +7,7 @@ import { ActionType } from '../ActionType'
 import { ComputedActionsHelper } from '../helper/ComputedActionsHelper'
 import { MemoryType } from '../MemoryType'
 import { RuleId } from '../RuleId'
+import { CustomMoveType } from '../CustomMoveType'
 
 export class AdvanceLawsuitActionRule extends PlayerTurnRule {
   actionType = ActionType.AdvanceLawsuit
@@ -33,15 +34,6 @@ export class AdvanceLawsuitActionRule extends PlayerTurnRule {
   }
 
   beforeItemMove(move: ItemMove): MaterialMove[] {
-    if (isMoveItemType(MaterialType.LawsuitMarker)(move)) {
-      if (!this.remind(MemoryType.BasicActionChoosen)) {
-        this.memorize(MemoryType.BasicActionChoosen, ActionType.AdvanceLawsuit)
-      }
-    }
-    return []
-  }
-
-  afterItemMove(move: ItemMove): MaterialMove[] {
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.LawsuitMarker)(move)) {
       const card = this.lawsuitCards.filter(({ location }) => location.z === move.location.id).getItem()
@@ -53,6 +45,19 @@ export class AdvanceLawsuitActionRule extends PlayerTurnRule {
             moves.push(...this.playerProducts.id(cost.type).moveItems({ type: LocationType.ProductPiles, id: cost.type }, cost.quantity))
           }
         })
+      }
+      if (!this.remind(MemoryType.BasicActionChoosen)) {
+        this.memorize(MemoryType.BasicActionChoosen, ActionType.AdvanceLawsuit)
+      }
+    }
+    return moves
+  }
+
+  afterItemMove(move: ItemMove): MaterialMove[] {
+    const moves: MaterialMove[] = []
+    if (isMoveItemType(MaterialType.LawsuitMarker)(move)) {
+      const card = this.lawsuitCards.filter(({ location }) => location.z === move.location.id).getItem()
+      if (card) {
         moves.push(...lawsuitCardData[card.id as LawsuitCard].actionInAdvance(this.game, this.player))
         if (move.location.id === 1 || move.location.id === 2) {
           this.memorize(MemoryType.LawsuitAdvanced, move.location.id)
@@ -63,6 +68,13 @@ export class AdvanceLawsuitActionRule extends PlayerTurnRule {
       }
     }
     return moves
+  }
+
+  onCustomMove(move: CustomMove): MaterialMove[] {
+      if(isCustomMoveType(CustomMoveType.Wait)(move)) {
+        this.forget(MemoryType.BasicActionChoosen)
+      }
+      return []
   }
 
   possibleCardsToGet() {

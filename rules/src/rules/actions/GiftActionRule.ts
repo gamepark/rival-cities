@@ -17,6 +17,9 @@ export class GiftActionRule extends PlayerTurnRule {
 
   onRuleStart(): MaterialMove[] {
     const moves: MaterialMove[] = []
+    if(this.anotherActionInProgress) {
+      return moves
+    }
     if(this.productType) {
       for (let i = 0; i < this.nbProductToTake; i++) {
         moves.push(this.products.moveItem({ type: LocationType.PlayerProducts, player: this.player, id: this.productType }))
@@ -25,10 +28,10 @@ export class GiftActionRule extends PlayerTurnRule {
     return moves
   }
 
-  getPlayerMoves(onNotProductChoosenMoves: MaterialMove[] = []): MaterialMove[] {
+  getPlayerMoves(): MaterialMove[] {
     const moves: MaterialMove[] = []
-    if(!this.productChoosen) {
-      moves.push(...onNotProductChoosenMoves)
+    if(this.anotherActionInProgress) {
+      return moves
     }
     moves.push(...this.allProducts.moveItems((item) => ({ type: LocationType.PlayerProducts, player: this.player, id: item.id })))
     moves.push(this.customMove(CustomMoveType.Pass))
@@ -36,6 +39,9 @@ export class GiftActionRule extends PlayerTurnRule {
   }
 
   beforeItemMove(move: ItemMove): MaterialMove[] {
+    if(this.anotherActionInProgress) {
+      return []
+    }
     if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.PlayerProducts) {
       if (!this.productChoosen) {
         this.memorize(MemoryType.ProductChoosen, move.location.id)
@@ -47,6 +53,9 @@ export class GiftActionRule extends PlayerTurnRule {
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {
+    if(this.anotherActionInProgress) {
+      return []
+    }
     if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.PlayerProducts) {
       if (this.remind(MemoryType.NbProductGiven) === this.nbProductToTake) {
         this.forget(MemoryType.ProductChoosen)
@@ -81,5 +90,9 @@ export class GiftActionRule extends PlayerTurnRule {
     if (opponentResource.length > playerResource.length) return opponentResource
 
     return resourcesInReserve
+  }
+
+  get anotherActionInProgress() {
+    return this.remind(MemoryType.BasicActionChoosen) && this.remind(MemoryType.BasicActionChoosen) !== this.actionType
   }
 }

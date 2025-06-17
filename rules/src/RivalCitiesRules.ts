@@ -20,14 +20,19 @@ import { GainLetterActionRule } from './rules/actions/GainLetterActionRule'
 import { AdvanceAgainInLawsuitRule } from './rules/AdvanceAgainInLawsuitRule'
 import { AdvanceInkJarRule } from './rules/AdvanceInkJarRule'
 import { BasicActionRule } from './rules/BasicActionRule'
+import { Choose1ProductRule } from './rules/Choose1ProductRule'
+import { Choose2ProductRule } from './rules/Choose2ProductRule'
 import { ChooseActionRule } from './rules/ChooseActionRule'
 import { ChooseFirstProductRule } from './rules/ChooseFirstProductRule'
+import { ChooseSpecialActionRule } from './rules/ChooseSpecialActionRule'
 import { CustomMoveType } from './rules/CustomMoveType'
+import { EarnPrestigeAgainRule } from './rules/EarnPrestigeAgainRule'
 import { NextRuleHelper } from './rules/helper/NextRuleHelper'
 import { MemoryType } from './rules/MemoryType'
 import { OffSeasonChangeSpecialCardsRule } from './rules/OffSeason/OffSeasonChangeSpecialCardsRule'
 import { OffSeasonGetPrestigeBonusesRule } from './rules/OffSeason/OffSeasonGetPrestigeBonusesRule'
 import { OffSeasonGetShipsBonusesRule } from './rules/OffSeason/OffSeasonGetShipsBonusesRule'
+import { OffSeasonPlayerWithMostShipCardsEarnPrestigeRule } from './rules/OffSeason/OffSeasonPlayerWithMostShipCardsEarnPrestigeRule'
 import { OffSeasonReactivateFactoriesRule } from './rules/OffSeason/OffSeasonReactivateFactoriesRule'
 import { OffSeasonReturnBellRule } from './rules/OffSeason/OffSeasonReturnBellRule'
 import { OffSeasonTakeBellRule } from './rules/OffSeason/OffSeasonTakeBellRule'
@@ -66,6 +71,11 @@ export class RivalCitiesRules
     [RuleId.OffSeasonChangeSpecialCards]: OffSeasonChangeSpecialCardsRule,
     [RuleId.OffSeasonReactivateFactories]: OffSeasonReactivateFactoriesRule,
     [RuleId.OffSeasonReturnBell]: OffSeasonReturnBellRule,
+    [RuleId.EarnPrestigeAgain]: EarnPrestigeAgainRule,
+    [RuleId.ChooseSpecialAction]: ChooseSpecialActionRule,
+    [RuleId.Choose2Product]: Choose2ProductRule,
+    [RuleId.Choose1Product]: Choose1ProductRule,
+    [RuleId.OffSeasonPlayerWithMostShipCardsEarnPrestige]: OffSeasonPlayerWithMostShipCardsEarnPrestigeRule,
   }
 
   locationsStrategies = {
@@ -80,6 +90,7 @@ export class RivalCitiesRules
     },
     [MaterialType.ShipCard]: {
       [LocationType.ShipCardsDeck]: new PositiveSequenceStrategy(),
+      [LocationType.PlayerShipCards]: new PositiveSequenceStrategy(),
       [LocationType.ShipCardsRiver]: new StackingStrategy()
     },
     [MaterialType.LawsuitCard]: {

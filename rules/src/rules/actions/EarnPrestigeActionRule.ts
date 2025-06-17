@@ -2,9 +2,12 @@ import { isMoveItemType, ItemMove, MaterialMove, PlayerTurnRule } from '@gamepar
 import { City } from '../../City'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
+import { Product } from '../../material/Product'
+import { ShipCard } from '../../material/ShipCard'
 import { ActionType } from '../ActionType'
 import { ComputedActionsHelper } from '../helper/ComputedActionsHelper'
 import { MemoryType } from '../MemoryType'
+import { RuleId } from '../RuleId'
 
 export class EarnPrestigeActionRule extends PlayerTurnRule {
   actionType = ActionType.EarnPrestige
@@ -32,6 +35,10 @@ export class EarnPrestigeActionRule extends PlayerTurnRule {
   afterItemMove(move: ItemMove): MaterialMove[] {
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.PrestigeMarker)(move)) {
+      const playerShip16 = this.material(MaterialType.ShipCard).location(LocationType.PlayerShipCards).player(this.playerWhoEarnedPrestige).id(ShipCard.Ship16)
+      if(playerShip16.length > 0 && this.playerBeers.length >= 2) {
+        moves.push(this.startPlayerTurn(RuleId.EarnPrestigeAgain, this.playerWhoEarnedPrestige))
+      }
       moves.push(...this.computedActionHelper.removeActionAndWait(this.actionType))
     }
     return moves
@@ -39,5 +46,9 @@ export class EarnPrestigeActionRule extends PlayerTurnRule {
 
   get prestigeMarker() {
     return this.material(MaterialType.PrestigeMarker).location(LocationType.PrestigeMarkerPiste)
+  }
+
+  get playerBeers() {
+    return this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(this.playerWhoEarnedPrestige).id(Product.Beer)
   }
 }

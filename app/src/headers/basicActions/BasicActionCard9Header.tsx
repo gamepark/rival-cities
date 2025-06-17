@@ -1,4 +1,7 @@
 /** @jsxImportSource @emotion/react */
+import { PlayMoveButton, useLegalMove } from '@gamepark/react-game'
+import { CustomMoveType } from '@gamepark/rival-cities/rules/CustomMoveType'
+import { isCustomMoveType } from '@gamepark/rules-api'
 import React from 'react'
 import { Trans } from 'react-i18next'
 
@@ -8,9 +11,14 @@ interface Props {
 }
 
 export const BasicActionCard9Header: React.FC<Props> = ({ player, itsMe }) => {
+  const pass = useLegalMove((move) => isCustomMoveType(CustomMoveType.Pass)(move))
   if (itsMe) {
     return (
-      <Trans defaults="header.basic.action.card.9.you"/>
+      <Trans defaults="header.basic.action.card.9.you"
+             components={{
+               pass: <PlayMoveButton move={pass} />
+             }}
+      />
     )
   }
 

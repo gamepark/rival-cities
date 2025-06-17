@@ -1,15 +1,18 @@
 import { MaterialGame, MaterialMove, MaterialRulesPart } from '@gamepark/rules-api'
 import { ActionType } from '../ActionType'
-import { CustomMoveType } from '../CustomMoveType'
 import { MemoryType } from '../MemoryType'
+import { RuleId } from '../RuleId'
 import { NextRuleHelper } from './NextRuleHelper'
+import { CustomMoveType } from '../CustomMoveType'
 
 export class ComputedActionsHelper extends MaterialRulesPart {
   player?: number
+  previousRulePlayer?: number
   nextRuleHelper = new NextRuleHelper(this.game)
-  constructor(game: MaterialGame) {
+  constructor(game: MaterialGame, previousRulePlayer?: number) {
     super(game)
     this.player = game.rule?.player
+    this.previousRulePlayer = previousRulePlayer
   }
 
   removeActionAndWait(actionType: ActionType): MaterialMove[] {
@@ -21,7 +24,7 @@ export class ComputedActionsHelper extends MaterialRulesPart {
       return old
     })
     if(this.remind(MemoryType.ComputedActions).length) {
-      return [this.customMove(CustomMoveType.Wait)]
+      return [this.previousRulePlayer !== undefined ? this.startPlayerTurn(RuleId.SpecialAction, this.previousRulePlayer!) : this.customMove(CustomMoveType.Wait)]
     }
     return this.nextRuleHelper.moveToNextRule()
   }

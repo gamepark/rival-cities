@@ -118,22 +118,34 @@ export const shipCardsData: Record<ShipCard, ShipCardData> = {
   },
   [ShipCard.Ship11]: {
     cost: { type: Product.Cloth, quantity: 4 },
-    effect: { type: ShipEffectType.OnProduction },
+    effect: {
+      type: ShipEffectType.OnProduction,
+      action: (game, player) => new ShipCardHelper(game, player).getProductMove(Product.Beer, 1)
+    },
     getNbStars: () => 1
   },
   [ShipCard.Ship12]: {
     cost: { type: Product.Beer, quantity: 6 },
-    effect: { type: ShipEffectType.OnProduction },
+    effect: {
+      type: ShipEffectType.OnProduction,
+      action: (game, player) => new ShipCardHelper(game, player).getProductMove(Product.Leather, 1)
+    },
     getNbStars: () => 1
   },
   [ShipCard.Ship13]: {
     cost: { type: Product.Leather, quantity: 4 },
-    effect: { type: ShipEffectType.OnProduction },
+    effect: {
+      type: ShipEffectType.OnProduction,
+      action: (game, player) => new ShipCardHelper(game, player).getProductMove(Product.Cloth, 1)
+    },
     getNbStars: () => 1
   },
   [ShipCard.Ship14]: {
     cost: { type: Product.Cloth, quantity: 5 },
-    effect: { type: ShipEffectType.OnProduction },
+    effect: {
+      type: ShipEffectType.OnProduction,
+      action: (game, player) => new ShipCardHelper(game, player).getProductMove(Product.Furniture, 1)
+    },
     getNbStars: () => 1
   },
   [ShipCard.Ship15]: {

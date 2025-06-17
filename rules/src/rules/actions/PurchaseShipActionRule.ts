@@ -5,6 +5,7 @@ import { ShipCard, shipCardsData, ShipEffectType } from '../../material/ShipCard
 import { ActionType } from '../ActionType'
 import { ComputedActionsHelper } from '../helper/ComputedActionsHelper'
 import { MemoryType } from '../MemoryType'
+import { RuleId } from '../RuleId'
 
 export class PurchaseShipActionRule extends PlayerTurnRule {
   actionType = ActionType.PurchaseShip
@@ -27,24 +28,26 @@ export class PurchaseShipActionRule extends PlayerTurnRule {
 
   beforeItemMove(move: ItemMove): MaterialMove[] {
     const moves: MaterialMove[] = []
-    if (isMoveItemType(MaterialType.ShipCard)(move)) {
+    if (isMoveItemType(MaterialType.ShipCard)(move) && move.location.type === LocationType.PlayerShipCards) {
       this.memorize(MemoryType.BasicActionChoosen, ActionType.PurchaseShip)
+      moves.push(this.material(MaterialType.ShipCard).location(LocationType.ShipCardsDeck).maxBy(it => it.location.x!).moveItem({ type: LocationType.ShipCardsRiver }))
     }
     return moves
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {
     const moves: MaterialMove[] = []
-    if (isMoveItemType(MaterialType.ShipCard)(move)) {
+    if (isMoveItemType(MaterialType.ShipCard)(move) && move.location.type === LocationType.PlayerShipCards) {
       const shipId: ShipCard = this.material(MaterialType.ShipCard).index(move.itemIndex).getItem()?.id
       if (!this.shipChoosen) {
         this.memorize(MemoryType.ShipChoosen, shipId)
       }
       const shipData = shipCardsData[shipId]
-      moves.push(...this.playerProducts.id(shipData.cost.type).moveItems({ type: LocationType.ProductPiles, id: shipData.cost.type }, shipData.cost.quantity))
+      const costQuantity = this.playerShip19.length ? shipData.cost.quantity - 1 : shipData.cost.quantity
+      moves.push(...this.playerProducts.id(shipData.cost.type).moveItems({ type: LocationType.ProductPiles, id: shipData.cost.type }, costQuantity))
       if (shipData.effect.type === ShipEffectType.Instant) {
         this.forget(MemoryType.ShipChoosen)
-        this.memorize(MemoryType.NextRules, shipData.effect.rules)
+        this.memorize<RuleId[]>(MemoryType.NextRules, (old) => [...shipData.effect.rules!, ...old])
       }
       moves.push(...this.computedActionHelper.removeActionAndWait(this.actionType))
     }
@@ -54,7 +57,8 @@ export class PurchaseShipActionRule extends PlayerTurnRule {
   possibleCardsToGet() {
     return this.shipCards.filter((item) => {
       const shipData = shipCardsData[item.id as ShipCard]
-      return this.playerProducts.id(shipData.cost.type).getQuantity() >= shipData.cost.quantity
+      const costQuantity = this.playerShip19.length ? shipData.cost.quantity - 1 : shipData.cost.quantity
+      return this.playerProducts.id(shipData.cost.type).getQuantity() >= costQuantity
     })
   }
 
@@ -64,5 +68,9 @@ export class PurchaseShipActionRule extends PlayerTurnRule {
 
   get shipCards() {
     return this.material(MaterialType.ShipCard).location(LocationType.ShipCardsRiver)
+  }
+
+  get playerShip19() {
+    return this.material(MaterialType.ShipCard).location(LocationType.PlayerShipCards).player(this.player).id(ShipCard.Ship19)
   }
 }

@@ -21,4 +21,5 @@ export enum MemoryType {
   AlliancePay,
   ProcessedBonuses,
   MovesOnLawsuitWin,
+  IsUseLetter,
 }

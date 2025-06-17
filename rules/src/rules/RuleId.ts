@@ -19,5 +19,8 @@ export enum RuleId {
   OffSeasonGetPrestigeBonuses,
   OffSeasonChangeSpecialCards,
   OffSeasonReactivateFactories,
-  OffSeasonReturnBell
+  OffSeasonReturnBell,
+  EarnPrestigeAgain,
+  ChooseSpecialAction,
+  OffSeasonPlayerWithMostShipCardsEarnPrestige,
 }

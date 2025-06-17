@@ -38,8 +38,7 @@ export class LawsuitCardHelper extends MaterialRulesPart {
   }
 
   lawersuitCard3ActionOnWin(): MaterialMove[] {
-    this.memorize(MemoryType.NextRules, [RuleId.Choose2Product])
-    return new NextRuleHelper(this.game, this.player).moveToNextRule()
+    return [this.startPlayerTurn(RuleId.Choose2Product, this.player)]
   }
 
   lawersuitCard4ActionOnAdvance(): MaterialMove[] {

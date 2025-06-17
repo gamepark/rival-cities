@@ -65,7 +65,7 @@ export class OffSeasonPayForAllianceRule extends SimultaneousRule {
   }
 
   beforeItemMove(move: ItemMove): MaterialMove[] {
-    if(isMoveItemType(MaterialType.Product)(move)) {
+    if(isMoveItemType(MaterialType.Product)(move) || isMoveItemType(MaterialType.Letter)(move)) {
       const alliancePays = this.remind<AlliancePay[]>(MemoryType.AlliancePay, move.location.player)
       const alliancePay = alliancePays.find((it: AlliancePay) => it.alreadyPay < it.cost.amount)
       if (alliancePay) {
@@ -82,7 +82,7 @@ export class OffSeasonPayForAllianceRule extends SimultaneousRule {
         return [this.endPlayerTurn(move.location.player!)]
       }
     }
-    if (isMoveItemType(MaterialType.Product)(move)) {
+    if (isMoveItemType(MaterialType.Product)(move) || isMoveItemType(MaterialType.Letter)(move)) {
       if (this.getPlayerAlrdeadyPayedAlliance(move.location.player!).length === this.getPlayerAlliances(move.location.player!).length) {
         return [this.endPlayerTurn(move.location.player!)]
       }
@@ -95,6 +95,11 @@ export class OffSeasonPayForAllianceRule extends SimultaneousRule {
       this.memorize<AlliancePay[]>(MemoryType.AlliancePay, (alliancePays) => [...alliancePays, move.data.pay], move.data.player)
     }
     return []
+  }
+
+  getMovesAfterPlayersDone(): MaterialMove[] {
+    const playerWhoHaveBell = this.material(MaterialType.BellToken).getItem()?.location.player!
+    return [this.startPlayerTurn(RuleId.OffSeasonPlayerWithMostShipCardsEarnPrestige, playerWhoHaveBell)]
   }
 
   possiblePlaces(): Location[] {
@@ -115,10 +120,6 @@ export class OffSeasonPayForAllianceRule extends SimultaneousRule {
       return this.getPlayerProduct(player).id(allianceData.cost.product).getQuantity() >= allianceData.cost.amount
     }
     return this.getPlayerProduct(player).getQuantity() >= allianceData.cost.amount
-  }
-
-  getMovesAfterPlayersDone(): MaterialMove[] {
-    return [this.startRule(RuleId.OffSeasonGetShipsBonuses)]
   }
 
   getPlayerLetters(player: number) {

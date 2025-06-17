@@ -12,9 +12,6 @@ export class PiracyActionRule extends PlayerTurnRule {
   nbProductsToSteal = 1
 
   onRuleStart(): MaterialMove[] {
-    if(this.opponentProducts.length === 0) {
-      return this.computedActionHelper.removeActionAndWait(this.actionType)
-    }
     return []
   }
 

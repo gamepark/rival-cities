@@ -12,6 +12,10 @@ class AllianceCardsLayoutLocator extends Locator {
     const itemCoordinates = coordinates[location.x!] as XYCoordinates
     return { x: base.x + itemCoordinates.x, y: base.y + itemCoordinates.y }
   }
+
+  getHoverTransform = () => {
+    return ['translateZ(10em)', 'scale(2.5)']
+  }
 }
 
 const coordinates = [

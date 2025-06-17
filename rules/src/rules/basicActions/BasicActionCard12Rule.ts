@@ -11,7 +11,7 @@ export class BasicActionCard12Rule extends PlayerTurnRule {
 
   getPlayerMoves(): MaterialMove[] {
     if(!this.actionChoosen) {
-      return this.giftActionRule.getPlayerMoves(this.advanceLawsuitActionRule.getPlayerMoves())
+      return [...this.giftActionRule.getPlayerMoves(), ...this.advanceLawsuitActionRule.getPlayerMoves()]
     }
     if (this.actionChoosen === ActionType.Gift) {
       return this.giftActionRule.getPlayerMoves()
