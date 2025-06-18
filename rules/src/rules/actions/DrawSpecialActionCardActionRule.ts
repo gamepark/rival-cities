@@ -8,6 +8,7 @@ import { AllianceCard } from '../../material/AllianceCard'
 import { Product } from '../../material/Product'
 import { RuleId } from '../RuleId'
 import { BasicActionHelper } from '../helper/BasicActionHelper'
+import { AllianceCardHelper } from '../../material/helper/AllianceCardHelper'
 
 export class DrawSpecialActionCardActionRule extends PlayerTurnRule {
   actionType = ActionType.DrawSpecialActionCard
@@ -33,7 +34,8 @@ export class DrawSpecialActionCardActionRule extends PlayerTurnRule {
     if (isMoveItemType(MaterialType.SpecialActionCard)(move)) {
       if(this.remind(MemoryType.NbCardsDraw) === this.nbCardsToDraw) {
         this.memorize(MemoryType.NbCardsDraw, 0)
-        if(this.playerAllianceKjobenhavn.length && this.playerBeers.getQuantity() > 0) {
+         const playerHaveAllianceKjjobenhavn = new AllianceCardHelper(this.game).checkPlayerAllianceCardById(AllianceCard.AllianceKjjobenhavn)
+        if(playerHaveAllianceKjjobenhavn && this.playerBeers.getQuantity() > 0) {
           return [this.startRule(RuleId.AllianceCardDrawSpecialActionCardAgain)]
         }
         this.forget(MemoryType.BasicActionChoosen)
@@ -52,8 +54,4 @@ export class DrawSpecialActionCardActionRule extends PlayerTurnRule {
     get playerBeers() {
       return this.material(MaterialType.Product).id(Product.Beer).location(LocationType.PlayerProducts).player(this.player)
     }
-  
-  get playerAllianceKjobenhavn() {
-    return this.material(MaterialType.AllianceCard).location(LocationType.PlayerAllianceCards).player(this.player).id(AllianceCard.AllianceKjjobenhavn)
-  }
 }

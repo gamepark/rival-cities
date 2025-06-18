@@ -7,13 +7,14 @@ import { ActionType } from '../ActionType'
 import { CustomMoveType } from '../CustomMoveType'
 import { ComputedActionsHelper } from '../helper/ComputedActionsHelper'
 import { MemoryType } from '../MemoryType'
-import { AllianceCard } from '../../material/AllianceCard'
 import { BasicActionHelper } from '../helper/BasicActionHelper'
+import { AllianceCardHelper } from '../../material/helper/AllianceCardHelper'
 
 export class ProductionActionRule extends PlayerTurnRule {
   actionType = ActionType.Production
   computedActionHelper = new ComputedActionsHelper(this.game)
   basicActionHelper = new BasicActionHelper(this.game)
+  allianceCardHelper = new AllianceCardHelper(this.game)
   productChoosen = this.remind(MemoryType.ProductChoosen)
   productType?: Product
 
@@ -60,9 +61,9 @@ export class ProductionActionRule extends PlayerTurnRule {
             }
           }
         }
-        moves.push(...this.checkAllianceCards(move.location.id as Product, Product.Furniture, AllianceCard.AllianceOslo))
-        moves.push(...this.checkAllianceCards(move.location.id as Product, Product.Leather, AllianceCard.AllianceNovgorod))
-        moves.push(...this.checkAllianceCards(move.location.id as Product, Product.Cloth, AllianceCard.AllianceLondon))
+        moves.push(...this.allianceCardHelper.getOsloProducts(move.location.id as Product))
+        moves.push(...this.allianceCardHelper.getNovgorodProducts(move.location.id as Product))
+        moves.push(...this.allianceCardHelper.getLondonProducts(move.location.id as Product))
       } else if (this.playerFactories.length === 0) {
         this.forget(MemoryType.ProductChoosen)
         this.forget(MemoryType.BasicActionChoosen)
@@ -78,14 +79,6 @@ export class ProductionActionRule extends PlayerTurnRule {
       }
     }
     return moves
-  }
-
-  checkAllianceCards(product: Product, allianceProduct: Product, allianceCard: AllianceCard): MaterialMove[] {
-    const alliance = this.material(MaterialType.AllianceCard).location(LocationType.PlayerAllianceCards).player(this.player).id(allianceCard)
-    if(alliance.length && product === allianceProduct) {
-      return this.allProducts.id(product).moveItems({ type: LocationType.PlayerProducts, id: allianceProduct }, 1)
-    }
-    return []
   }
 
   get playerFactories() {

@@ -2,9 +2,8 @@ import { ItemMove, MaterialMove, PlayerTurnRule } from '@gamepark/rules-api'
 import { ProductionBeerActionRule } from '../actions/ProductionBeerActionRule'
 import { ProductionClothActionRule } from '../actions/ProductionClothActionRule'
 import { AllianceCard } from '../../material/AllianceCard'
-import { MaterialType } from '../../material/MaterialType'
-import { LocationType } from '../../material/LocationType'
 import { MemoryType } from '../MemoryType'
+import { AllianceCardHelper } from '../../material/helper/AllianceCardHelper'
 
 export class BasicActionCard1Rule extends PlayerTurnRule {
   beerProductionActionRule = new ProductionBeerActionRule(this.game)
@@ -41,6 +40,6 @@ export class BasicActionCard1Rule extends PlayerTurnRule {
   }
 
   get playerHasGdanskAlliance() {
-    return this.material(MaterialType.AllianceCard).location(LocationType.PlayerAllianceCards).player(this.player).id(AllianceCard.AllianceGdansk).length > 0
+    return new AllianceCardHelper(this.game).checkPlayerAllianceCardById(AllianceCard.AllianceGdansk)
   }
 }

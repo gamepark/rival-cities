@@ -10,6 +10,7 @@ import { MemoryType } from '../MemoryType'
 import { RuleId } from '../RuleId'
 import { AllianceCard } from '../../material/AllianceCard'
 import { BasicActionHelper } from '../helper/BasicActionHelper'
+import { AllianceCardHelper } from '../../material/helper/AllianceCardHelper'
 
 export class EarnPrestigeActionRule extends PlayerTurnRule {
   actionType = ActionType.EarnPrestige
@@ -45,7 +46,8 @@ export class EarnPrestigeActionRule extends PlayerTurnRule {
       if(playerShip16.length > 0 && this.playerBeers.length >= 2) {
         return [this.startPlayerTurn(RuleId.EarnPrestigeAgain, this.playerWhoEarnedPrestige)]
       }
-      if(this.playerAllianceBruxelles.length > 0 && this.playerFurnitures.getQuantity() > 0) {
+      const playerHaveAllianceBruxelles = new AllianceCardHelper(this.game).checkPlayerAllianceCardById(AllianceCard.AllianceBruxelles)
+      if(playerHaveAllianceBruxelles && this.playerFurnitures.getQuantity() > 0) {
         return [this.startPlayerTurn(RuleId.AllianceCardEarnPrestigeAgain, this.playerWhoEarnedPrestige)]
       }
       return this.computedActionHelper.removeActionAndWait(this.actionType)
@@ -63,9 +65,5 @@ export class EarnPrestigeActionRule extends PlayerTurnRule {
 
   get playerFurnitures() {
     return this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(this.playerWhoEarnedPrestige).id(Product.Furniture)
-  }
-  
-  get playerAllianceBruxelles() {
-    return this.material(MaterialType.AllianceCard).location(LocationType.PlayerAllianceCards).player(this.player).id(AllianceCard.AllianceBruxelles)
   }
 }

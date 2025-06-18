@@ -8,6 +8,7 @@ import { ComputedActionsHelper } from '../helper/ComputedActionsHelper'
 import { MemoryType } from '../MemoryType'
 import { AllianceCard } from '../../material/AllianceCard'
 import { BasicActionHelper } from '../helper/BasicActionHelper'
+import { AllianceCardHelper } from '../../material/helper/AllianceCardHelper'
 
 export class DonationActionRule extends PlayerTurnRule {
   actionType = ActionType.Donation
@@ -28,7 +29,8 @@ export class DonationActionRule extends PlayerTurnRule {
       moves.push(...this.playerProducts.moveItems(item => ({ type: LocationType.ProductPiles, id: item.id })))
     } else {
       if(this.nbProductsDonated < this.nbProduct && this.starTokens.length > 0) {
-        moves.push(...this.starTokens.moveItems({ type: LocationType.PlayerStarTokens, player: this.player }, this.playerAllianceAmsterdam.length ? this.nbStars + 1 : this.nbStars))
+        const playerHaveAllianceAmsterdam = new AllianceCardHelper(this.game).checkPlayerAllianceCardById(AllianceCard.AllianceAmsterdam)
+        moves.push(...this.starTokens.moveItems({ type: LocationType.PlayerStarTokens, player: this.player }, playerHaveAllianceAmsterdam ? this.nbStars + 1 : this.nbStars))
       }
       moves.push(this.customMove(CustomMoveType.Pass))
     }
@@ -76,8 +78,4 @@ export class DonationActionRule extends PlayerTurnRule {
   get starTokens() {
     return this.material(MaterialType.StarToken).location(LocationType.StarTokenDeck)
   }
-    
-    get playerAllianceAmsterdam() {
-      return this.material(MaterialType.AllianceCard).location(LocationType.PlayerAllianceCards).player(this.player).id(AllianceCard.AllianceAmsterdam)
-    }
 }

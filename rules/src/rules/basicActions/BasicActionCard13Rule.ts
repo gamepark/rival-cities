@@ -3,8 +3,7 @@ import { CourtRulingActionRule } from '../actions/CourtRulingActionRule'
 import { PurchaseShipActionRule } from '../actions/PurchaseShipActionRule'
 import { MemoryType } from '../MemoryType'
 import { AllianceCard } from '../../material/AllianceCard'
-import { LocationType } from '../../material/LocationType'
-import { MaterialType } from '../../material/MaterialType'
+import { AllianceCardHelper } from '../../material/helper/AllianceCardHelper'
 
 export class BasicActionCard13Rule extends PlayerTurnRule {
   courtRulingActionRule = new CourtRulingActionRule(this.game)
@@ -46,6 +45,6 @@ export class BasicActionCard13Rule extends PlayerTurnRule {
   }
 
   get playerHasGdanskAlliance() {
-    return this.material(MaterialType.AllianceCard).location(LocationType.PlayerAllianceCards).player(this.player).id(AllianceCard.AllianceGdansk).length > 0
+    return new AllianceCardHelper(this.game).checkPlayerAllianceCardById(AllianceCard.AllianceGdansk)
   }
 }

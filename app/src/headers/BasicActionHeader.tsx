@@ -1,26 +1,14 @@
 /** @jsxImportSource @emotion/react */
 
-import { usePlayerId, usePlayerName, useRules } from '@gamepark/react-game'
+import { PlayMoveButton, useLegalMove, usePlayerId, usePlayerName, useRules } from '@gamepark/react-game'
 import { BasicActionCard } from '@gamepark/rival-cities/material/BasicActionCard'
 import { LocationType } from '@gamepark/rival-cities/material/LocationType'
 import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
 import { RivalCitiesRules } from '@gamepark/rival-cities/RivalCitiesRules'
-import { BasicActionCard0Header } from './basicActions/BasicActionCard0Header'
-import { BasicActionCard10Header } from './basicActions/BasicActionCard10Header'
-import { BasicActionCard11Header } from './basicActions/BasicActionCard11Header'
-import { BasicActionCard12Header } from './basicActions/BasicActionCard12Header'
-import { BasicActionCard13Header } from './basicActions/BasicActionCard13Header'
-import { BasicActionCard14Header } from './basicActions/BasicActionCard14Header'
-import { BasicActionCard15Header } from './basicActions/BasicActionCard15Header'
-import { BasicActionCard1Header } from './basicActions/BasicActionCard1Header'
-import { BasicActionCard2Header } from './basicActions/BasicActionCard2Header'
-import { BasicActionCard3Header } from './basicActions/BasicActionCard3Header'
-import { BasicActionCard4Header } from './basicActions/BasicActionCard4Header'
-import { BasicActionCard5Header } from './basicActions/BasicActionCard5Header'
-import { BasicActionCard6Header } from './basicActions/BasicActionCard6Header'
-import { BasicActionCard7Header } from './basicActions/BasicActionCard7Header'
-import { BasicActionCard8Header } from './basicActions/BasicActionCard8Header'
-import { BasicActionCard9Header } from './basicActions/BasicActionCard9Header'
+import { CustomMoveType } from '@gamepark/rival-cities/rules/CustomMoveType'
+import { MemoryType } from '@gamepark/rival-cities/rules/MemoryType'
+import { isCustomMoveType } from '@gamepark/rules-api'
+import { Trans } from 'react-i18next'
 
 export const BasicActionHeader = () => {
   const player = usePlayerId()
@@ -29,6 +17,16 @@ export const BasicActionHeader = () => {
   const itsMe = player && activePlayer === player
   const name = usePlayerName(activePlayer)
   const inkjarLocationId: number = rules.material(MaterialType.InkJar).location(LocationType.InkJarPiste).getItem()?.location.id
+  const pass = useLegalMove((move) => isCustomMoveType(CustomMoveType.Pass)(move))
+
+  if(inkjarLocationId === 0) {
+    return <Trans
+    defaults={`header.basic.action.card.0.you`}
+    components={{
+      pass: <PlayMoveButton move={pass} />
+    }}
+  />
+  }
 
   const cardInInkjarPlace = (): BasicActionCard => {
     return rules
@@ -37,43 +35,43 @@ export const BasicActionHeader = () => {
       .filter((it) => it.location.id === inkjarLocationId)
       .getItem()?.id
   }
+  
+  const productChoosen = rules.remind(MemoryType.ProductChoosen)
+    const isDonationInProgress = rules.remind(MemoryType.IsDonationInProgress)
 
-  if(inkjarLocationId === 0) {
-    return <BasicActionCard0Header player={name} itsMe={itsMe} />
+  if (itsMe) {
+      if (isDonationInProgress) {
+        return (
+          <Trans
+            defaults="header.donation.in.progress.you"
+            components={{
+              pass: <PlayMoveButton move={pass} />
+            }}
+          />
+        )
+      }
+
+    if(productChoosen) {
+      return (
+        <Trans
+          defaults="header.production.factory.you"
+          values={{ product: productChoosen }}
+          components={{
+            pass: <PlayMoveButton move={pass} />
+          }}
+        />
+      )
+    }
+
+    return (
+      <Trans
+        defaults={`header.basic.action.card.${cardInInkjarPlace()}.you`}
+        components={{
+          pass: <PlayMoveButton move={pass} />
+        }}
+      />
+    )
   }
 
-  switch (cardInInkjarPlace()) {
-    case BasicActionCard.BasicAction1:
-      return <BasicActionCard1Header player={name} itsMe={itsMe} />
-    case BasicActionCard.BasicAction2:
-      return <BasicActionCard2Header player={name} itsMe={itsMe} />
-    case BasicActionCard.BasicAction3:
-      return <BasicActionCard3Header player={name} itsMe={itsMe} />
-    case BasicActionCard.BasicAction4:
-      return <BasicActionCard4Header player={name} itsMe={itsMe} />
-    case BasicActionCard.BasicAction5:
-      return <BasicActionCard5Header player={name} itsMe={itsMe} />
-    case BasicActionCard.BasicAction6:
-      return <BasicActionCard6Header player={name} itsMe={itsMe} />
-    case BasicActionCard.BasicAction7:
-      return <BasicActionCard7Header player={name} itsMe={itsMe} />
-    case BasicActionCard.BasicAction8:
-      return <BasicActionCard8Header player={name} itsMe={itsMe} />
-    case BasicActionCard.BasicAction9:
-      return <BasicActionCard9Header player={name} itsMe={itsMe} />
-    case BasicActionCard.BasicAction10:
-      return <BasicActionCard10Header player={name} itsMe={itsMe} />
-    case BasicActionCard.BasicAction11:
-      return <BasicActionCard11Header player={name} itsMe={itsMe} />
-    case BasicActionCard.BasicAction12:
-      return <BasicActionCard12Header player={name} itsMe={itsMe} />
-    case BasicActionCard.BasicAction13:
-      return <BasicActionCard13Header player={name} itsMe={itsMe} />
-    case BasicActionCard.BasicAction14:
-      return <BasicActionCard14Header player={name} itsMe={itsMe} />
-    case BasicActionCard.BasicAction15:
-      return <BasicActionCard15Header player={name} itsMe={itsMe} />
-    default:
-      throw new Error(`BasicActionCard ${cardInInkjarPlace()} is not implemented`)
-  }
+  return <Trans defaults={`header.basic.action.card.${cardInInkjarPlace()}.player`} values={{ player: name }} />
 }
