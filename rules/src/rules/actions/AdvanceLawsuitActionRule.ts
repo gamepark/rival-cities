@@ -8,12 +8,16 @@ import { ComputedActionsHelper } from '../helper/ComputedActionsHelper'
 import { MemoryType } from '../MemoryType'
 import { RuleId } from '../RuleId'
 import { CustomMoveType } from '../CustomMoveType'
+import { AllianceCard } from '../../material/AllianceCard'
+import { BasicActionHelper } from '../helper/BasicActionHelper'
 
 export class AdvanceLawsuitActionRule extends PlayerTurnRule {
   actionType = ActionType.AdvanceLawsuit
   computedActionHelper = new ComputedActionsHelper(this.game)
+  basicActionHelper = new BasicActionHelper(this.game)
 
   onRuleStart(): MaterialMove[] {
+    this.memorize(MemoryType.NbTimeUsedAllianceLeHavre, 0)
     if(this.possibleCardsToGet().length === 0) {
       return this.computedActionHelper.removeActionAndWait(this.actionType)
     }
@@ -21,6 +25,7 @@ export class AdvanceLawsuitActionRule extends PlayerTurnRule {
   }
 
   getPlayerMoves(): MaterialMove[] {
+    if(this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
     const moveX = this.player === City.Altona ? -1 : 1
     const moves: MaterialMove[] = []
     this.possibleCardsToGet().forEach((card) => {
@@ -34,6 +39,7 @@ export class AdvanceLawsuitActionRule extends PlayerTurnRule {
   }
 
   beforeItemMove(move: ItemMove): MaterialMove[] {
+    if(this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.LawsuitMarker)(move)) {
       const card = this.lawsuitCards.filter(({ location }) => location.z === move.location.id).getItem()
@@ -54,15 +60,20 @@ export class AdvanceLawsuitActionRule extends PlayerTurnRule {
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {
+    if(this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.LawsuitMarker)(move)) {
       const card = this.lawsuitCards.filter(({ location }) => location.z === move.location.id).getItem()
       if (card) {
+        this.memorize(MemoryType.NbProductGiven, 0)
         moves.push(...lawsuitCardData[card.id as LawsuitCard].actionInAdvance(this.game, this.player))
         if (move.location.id === 1 || move.location.id === 2) {
           this.memorize(MemoryType.LawsuitAdvanced, move.location.id)
           moves.push(this.startRule(RuleId.AdvanceAgainInLawsuit))
+        } else if (this.playerAllianceLeHavre.length && this.playerProducts.length) {
+          moves.push(this.startRule(RuleId.AllianceCardAdvanceAgainInLawsuit))
         } else {
+          this.forget(MemoryType.BasicActionChoosen)
           moves.push(...this.computedActionHelper.removeActionAndWait(this.actionType))
         }
       }
@@ -71,6 +82,7 @@ export class AdvanceLawsuitActionRule extends PlayerTurnRule {
   }
 
   onCustomMove(move: CustomMove): MaterialMove[] {
+    if(this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
       if(isCustomMoveType(CustomMoveType.Wait)(move)) {
         this.forget(MemoryType.BasicActionChoosen)
       }
@@ -108,5 +120,9 @@ export class AdvanceLawsuitActionRule extends PlayerTurnRule {
 
   get lawsuitCards() {
     return this.material(MaterialType.LawsuitCard).location(LocationType.LawsuitCardsRiver)
+  }
+
+  get playerAllianceLeHavre() {
+    return this.material(MaterialType.AllianceCard).location(LocationType.PlayerAllianceCards).player(this.player).id(AllianceCard.AllianceLeHavre)
   }
 }

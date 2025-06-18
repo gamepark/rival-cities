@@ -5,10 +5,12 @@ import { ActionType } from '../ActionType'
 import { CustomMoveType } from '../CustomMoveType'
 import { ComputedActionsHelper } from '../helper/ComputedActionsHelper'
 import { MemoryType } from '../MemoryType'
+import { BasicActionHelper } from '../helper/BasicActionHelper'
 
 export class BuildFactoryActionRule extends PlayerTurnRule {
   actionType = ActionType.BuildFactory
   computedActionHelper = new ComputedActionsHelper(this.game)
+  basicActionHelper = new BasicActionHelper(this.game)
   price: number
   isBuildInProgress = this.remind(MemoryType.IsBuildInProgress)
   nbProductsGiven = this.remind(MemoryType.NbProductGiven) ?? 0
@@ -19,6 +21,7 @@ export class BuildFactoryActionRule extends PlayerTurnRule {
   }
 
   getPlayerMoves(): MaterialMove[] {
+    if(this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
     const moves: MaterialMove[] = []
     if(this.isBuildInProgress) {
       moves.push(...this.playerProducts.moveItems(item => ({ type: LocationType.ProductPiles, id: item.id })))
@@ -32,6 +35,7 @@ export class BuildFactoryActionRule extends PlayerTurnRule {
   }
 
   beforeItemMove(move: ItemMove): MaterialMove[] {
+    if(this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.Factory)(move) && move.location.type === LocationType.PlayerFactories) {
       this.memorize(MemoryType.BasicActionChoosen, this.actionType)
@@ -43,6 +47,7 @@ export class BuildFactoryActionRule extends PlayerTurnRule {
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {
+    if(this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
     const moves: MaterialMove[] = []
     if(this.remind(MemoryType.BasicActionChoosen) !== this.actionType) return moves
     if(isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.ProductPiles) {
@@ -54,6 +59,7 @@ export class BuildFactoryActionRule extends PlayerTurnRule {
     }
     if(isMoveItemType(MaterialType.Factory)(move) && move.location.type === LocationType.PlayerFactories) {
       if(this.price === 0) {
+        this.forget(MemoryType.BasicActionChoosen)
         this.memorize(MemoryType.NbProductGiven, 0)
         this.memorize(MemoryType.IsBuildInProgress, false)
         return [...this.computedActionHelper.removeActionAndWait(this.actionType)]

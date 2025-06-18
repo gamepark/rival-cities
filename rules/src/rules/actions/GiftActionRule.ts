@@ -6,10 +6,13 @@ import { ActionType } from '../ActionType'
 import { CustomMoveType } from '../CustomMoveType'
 import { ComputedActionsHelper } from '../helper/ComputedActionsHelper'
 import { MemoryType } from '../MemoryType'
+import { AllianceCard } from '../../material/AllianceCard'
+import { BasicActionHelper } from '../helper/BasicActionHelper'
 
 export class GiftActionRule extends PlayerTurnRule {
   actionType = ActionType.Gift
   computedActionHelper = new ComputedActionsHelper(this.game)
+  basicActionHelper = new BasicActionHelper(this.game)
   nbProductToTake = 1
   productType?: Product
   productChoosen = this.remind(MemoryType.ProductChoosen)
@@ -17,7 +20,7 @@ export class GiftActionRule extends PlayerTurnRule {
 
   onRuleStart(): MaterialMove[] {
     const moves: MaterialMove[] = []
-    if(this.anotherActionInProgress) {
+    if(this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) {
       return moves
     }
     if(this.productType) {
@@ -30,7 +33,7 @@ export class GiftActionRule extends PlayerTurnRule {
 
   getPlayerMoves(): MaterialMove[] {
     const moves: MaterialMove[] = []
-    if(this.anotherActionInProgress) {
+    if(this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) {
       return moves
     }
     moves.push(...this.allProducts.moveItems((item) => ({ type: LocationType.PlayerProducts, player: this.player, id: item.id })))
@@ -39,7 +42,7 @@ export class GiftActionRule extends PlayerTurnRule {
   }
 
   beforeItemMove(move: ItemMove): MaterialMove[] {
-    if(this.anotherActionInProgress) {
+    if(this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) {
       return []
     }
     if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.PlayerProducts) {
@@ -53,18 +56,32 @@ export class GiftActionRule extends PlayerTurnRule {
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {
-    if(this.anotherActionInProgress) {
+    if(this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) {
       return []
     }
+    const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.PlayerProducts) {
       if (this.remind(MemoryType.NbProductGiven) === this.nbProductToTake) {
         this.forget(MemoryType.ProductChoosen)
+        this.forget(MemoryType.BasicActionChoosen)
         this.memorize(MemoryType.NbProductGiven, 0)
-        return this.computedActionHelper.removeActionAndWait(this.actionType)
+        moves.push(...this.checkAllianceCards(move.location.id as Product, Product.Furniture, AllianceCard.AllianceOslo))
+        moves.push(...this.checkAllianceCards(move.location.id as Product, Product.Leather, AllianceCard.AllianceNovgorod))
+        moves.push(...this.checkAllianceCards(move.location.id as Product, Product.Cloth, AllianceCard.AllianceLondon))
+        moves.push(...this.computedActionHelper.removeActionAndWait(this.actionType))
       }
+    }
+    return moves
+  }
+  
+  checkAllianceCards(product: Product, allianceProduct: Product, allianceCard: AllianceCard): MaterialMove[] {
+    const alliance = this.material(MaterialType.AllianceCard).location(LocationType.PlayerAllianceCards).player(this.player).id(allianceCard)
+    if(alliance.length && product === allianceProduct) {
+      return this.allProducts.id(product).moveItems({ type: LocationType.PlayerProducts, id: allianceProduct }, 1)
     }
     return []
   }
+  
 
   get products() {
     const resourcesInReserve = this.material(MaterialType.Product).location(LocationType.ProductPiles).id(this.productType)
@@ -90,9 +107,5 @@ export class GiftActionRule extends PlayerTurnRule {
     if (opponentResource.length > playerResource.length) return opponentResource
 
     return resourcesInReserve
-  }
-
-  get anotherActionInProgress() {
-    return this.remind(MemoryType.BasicActionChoosen) && this.remind(MemoryType.BasicActionChoosen) !== this.actionType
   }
 }

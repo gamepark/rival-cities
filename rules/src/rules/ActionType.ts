@@ -28,6 +28,9 @@ import { ProductionFurnitureActionRule } from './actions/ProductionFurnitureActi
 import { ProductSwapActionRule } from './actions/ProductSwapActionRule'
 import { PurchaseShipActionRule } from './actions/PurchaseShipActionRule'
 import { Return3FactoryActionRule } from './actions/Return3FactoryActionRule'
+import { ProductionBeerActionRule } from './actions/ProductionBeerActionRule'
+import { ProductionClothActionRule } from './actions/ProductionClothActionRule'
+import { ProductionLeatherActionRule } from './actions/ProductionLeatherActionRule'
 
 export enum ActionType {
   Production = 1,
@@ -55,6 +58,9 @@ export enum ActionType {
   Donation2furnituresFor3Stars,
   Donation1ClothFor1star,
   ProductionFurniture,
+  ProductionBeer,
+  ProductionCloth,
+  ProductionLeather,
   GiftFurniture,
   Donation1LeatherFor1star2Times,
   Donation3BeerFor1Star,
@@ -87,6 +93,9 @@ export const actionRules: Record<ActionType, (game: MaterialGame) => PlayerTurnR
   [ActionType.Donation2furnituresFor3Stars]: (game) => new Donation2furnituresFor3StarsActionRule(game),
   [ActionType.Donation1ClothFor1star]: (game) => new Donation1ClothFor1starActionRule(game),
   [ActionType.ProductionFurniture]: (game) => new ProductionFurnitureActionRule(game),
+  [ActionType.ProductionBeer]: (game) => new ProductionBeerActionRule(game),
+  [ActionType.ProductionCloth]: (game) => new ProductionClothActionRule(game),
+  [ActionType.ProductionLeather]: (game) => new ProductionLeatherActionRule(game),
   [ActionType.GiftFurniture]: (game) => new GiftFurnitureActionRule(game),
   [ActionType.Donation1LeatherFor1star2Times]: (game) => new Donation1LeatherFor1star2TimesActionRule(game),
   [ActionType.Donation3BeerFor1Star]: (game) => new Donation3BeerFor1StarActionRule(game),

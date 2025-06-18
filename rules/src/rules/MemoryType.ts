@@ -15,6 +15,7 @@ export enum MemoryType {
   NbCardsDraw,
   BasicActionChoosen,
   IsBuildInProgress,
+  PreviousRule,
   NextRules,
   ComputedActions,
   NbProductStealed,
@@ -22,4 +23,5 @@ export enum MemoryType {
   ProcessedBonuses,
   MovesOnLawsuitWin,
   IsUseLetter,
+  NbTimeUsedAllianceLeHavre,
 }

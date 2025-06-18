@@ -25,6 +25,9 @@ import { OffSeasonGetPrestigeBonusesHeader } from './OffSeasonGetPrestigeBonuses
 import { EarnPrestigeAgainHeader } from './EarnPrestigeAgainHeader'
 import { Choose2ProductHeader } from './Choose2ProductHeader'
 import { OffSeasonPlayerWithMostShipCardsEarnPrestigeHeader } from './OffSeasonPlayerWithMostShipCardsEarnPrestigeHeader'
+import { AllianceCardAdvanceAgainInLawsuitHeader } from './AllianceCardAdvanceAgainInLawsuitHeader'
+import { AllianceCardDrawSpecialActionCardAgainHeader } from './AllianceCardDrawSpecialActionCardAgainHeader'
+import { AllianceCardEarnPrestigeAgainHeader } from './AllianceCardEarnPrestigeAgainHeader'
 
 export const Headers: Partial<Record<RuleId, ComponentType>> = {
   [RuleId.ChooseFirstProduct]: ChooseFirstProductHeader,
@@ -36,6 +39,9 @@ export const Headers: Partial<Record<RuleId, ComponentType>> = {
   [RuleId.Choose2Product]: Choose2ProductHeader,
   [RuleId.Choose1Product]: Choose1ProductHeader,
   [RuleId.AdvanceAgainInLawsuit]: AdvanceAgainInLawsuitHeader,
+  [RuleId.AllianceCardAdvanceAgainInLawsuit]: AllianceCardAdvanceAgainInLawsuitHeader,
+  [RuleId.AllianceCardDrawSpecialActionCardAgain]: AllianceCardDrawSpecialActionCardAgainHeader,
+  [RuleId.AllianceCardEarnPrestigeAgain]: AllianceCardEarnPrestigeAgainHeader,
   [RuleId.ResolveLawsuit]: ResolveLawsuitHeader,
   [RuleId.AdvanceLawsuitAction]: AdvanceLawsuitActionHeader,
   [RuleId.DrawSpecialActionCardAction]: DrawSpecialActionCardActionHeader,

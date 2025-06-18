@@ -2,10 +2,12 @@ import { CustomMove, ItemMove, MaterialMove, PlayerTurnRule, PlayMoveContext, Ru
 import { actionRules, ActionType } from './ActionType'
 import { CustomMoveType } from './CustomMoveType'
 import { MemoryType } from './MemoryType'
+import { RuleId } from './RuleId'
 
 export class SpecialActionRule extends PlayerTurnRule {
   actionRules = this.remind<ActionType[]>(MemoryType.ComputedActions).map((it) => actionRules[it](this.game))
   onRuleStart(_move: RuleMove, _previousRule?: RuleStep, _context?: PlayMoveContext): MaterialMove[] {
+    this.memorize(MemoryType.PreviousRule, RuleId.SpecialAction)
     return [...this.actionRules.flatMap((rule) => rule.onRuleStart(_move, _previousRule, _context))]
   }
 

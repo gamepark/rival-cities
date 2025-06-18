@@ -41,6 +41,9 @@ import { ResolveLawsuitRule } from './rules/ResolveLawsuitRule'
 import { RuleId } from './rules/RuleId'
 import { SpecialActionRule } from './rules/SpecialActionRule'
 import { OffSeasonPayForAllianceRule } from './rules/OffSeason/OffSeasonPayForAllianceRule'
+import { AllianceCardAdvanceAgainInLawsuitRule } from './rules/AllianceCardAdvanceAgainInLawsuitRule'
+import { AllianceCardDrawSpecialActionCardAgainRule } from './rules/AllianceCardDrawSpecialActionCardAgainRule'
+import { AllianceCardEarnPrestigeAgainRule } from './rules/AllianceCardEarnPrestigeAgainRule'
 
 /**
  * This class implements the rules of the board game.
@@ -59,6 +62,9 @@ export class RivalCitiesRules
     [RuleId.BasicAction]: BasicActionRule,
     [RuleId.SpecialAction]: SpecialActionRule,
     [RuleId.AdvanceAgainInLawsuit]: AdvanceAgainInLawsuitRule,
+    [RuleId.AllianceCardAdvanceAgainInLawsuit]: AllianceCardAdvanceAgainInLawsuitRule,
+    [RuleId.AllianceCardDrawSpecialActionCardAgain]: AllianceCardDrawSpecialActionCardAgainRule,
+    [RuleId.AllianceCardEarnPrestigeAgain]: AllianceCardEarnPrestigeAgainRule,
     [RuleId.ResolveLawsuit]: ResolveLawsuitRule,
     [RuleId.AdvanceLawsuitAction]: AdvanceLawsuitActionRule,
     [RuleId.DrawSpecialActionCardAction]: DrawSpecialActionCardActionRule,

@@ -9,8 +9,10 @@ import { ActionType } from './ActionType'
 import { ComputedActionsHelper } from './helper/ComputedActionsHelper'
 
 export class EarnPrestigeAgainRule extends PlayerTurnRule {
-  actionType = ActionType.AdvanceLawsuit
+  actionType = ActionType.EarnPrestige
   computedActionHelper?: ComputedActionsHelper
+  productType = Product.Beer
+  price = 2
 
   onRuleStart(_: RuleMove, previousRule: RuleStep): MaterialMove[] {
     this.computedActionHelper = new ComputedActionsHelper(this.game, previousRule.player)
@@ -18,7 +20,7 @@ export class EarnPrestigeAgainRule extends PlayerTurnRule {
   }
 
   getPlayerMoves(): MaterialMove[] {
-    return this.playerBeers.moveItems((item) => ({ type: LocationType.ProductPiles, id: item.id }), 2)
+    return this.playerProducts.moveItems((item) => ({ type: LocationType.ProductPiles, id: item.id }), this.price)
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {
@@ -32,8 +34,8 @@ export class EarnPrestigeAgainRule extends PlayerTurnRule {
     return []
   }
 
-  get playerBeers() {
-    return this.material(MaterialType.Product).location(LocationType.PlayerProducts).id(Product.Beer).player(this.player)
+  get playerProducts() {
+    return this.material(MaterialType.Product).location(LocationType.PlayerProducts).id(this.productType).player(this.player)
   }
 
   get prestigeMarker() {

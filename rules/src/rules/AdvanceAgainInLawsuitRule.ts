@@ -9,6 +9,7 @@ import { AdvanceLawsuitActionRule } from './actions/AdvanceLawsuitActionRule'
 import { ComputedActionsHelper } from './helper/ComputedActionsHelper'
 import { MemoryType } from './MemoryType'
 import { RuleId } from './RuleId'
+import { AllianceCard } from '../material/AllianceCard'
 
 export class AdvanceAgainInLawsuitRule extends PlayerTurnRule {
   actionType = ActionType.AdvanceLawsuit
@@ -47,12 +48,17 @@ export class AdvanceAgainInLawsuitRule extends PlayerTurnRule {
         }
       })
       if (
-        move.location.id === 1 ||
+        move.location.id === 2 ||
         this.remind(MemoryType.NbTimeAdvancedInLawsuit) === 2
       ) {
         this.forget(MemoryType.LawsuitAdvanced)
         this.memorize(MemoryType.NbTimeAdvancedInLawsuit, 0)
-        moves.push(...this.computedActionHelper.removeActionAndWait(this.actionType))
+        if (this.playerAllianceLeHavre.length && this.playerProducts.length && this.remind(MemoryType.NbTimeUsedAllianceLeHavre) === 0) {
+          moves.push(this.startRule(RuleId.AllianceCardAdvanceAgainInLawsuit))
+        } else {
+          this.memorize(MemoryType.NbTimeUsedAllianceLeHavre, 0)
+          moves.push(...this.computedActionHelper.removeActionAndWait(this.actionType))
+        }
       } else {
         moves.push(this.startRule(RuleId.AdvanceAgainInLawsuit))
       }
@@ -79,5 +85,9 @@ export class AdvanceAgainInLawsuitRule extends PlayerTurnRule {
 
   get playerLetters() {
     return this.material(MaterialType.Letter).location(LocationType.PlayerLetterDeck).player(this.player)
+  }
+  
+  get playerAllianceLeHavre() {
+    return this.material(MaterialType.AllianceCard).location(LocationType.PlayerAllianceCards).player(this.player).id(AllianceCard.AllianceLeHavre)
   }
 }

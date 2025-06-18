@@ -6,10 +6,12 @@ import { ActionType } from '../ActionType'
 import { ComputedActionsHelper } from '../helper/ComputedActionsHelper'
 import { MemoryType } from '../MemoryType'
 import { RuleId } from '../RuleId'
+import { BasicActionHelper } from '../helper/BasicActionHelper'
 
 export class PurchaseShipActionRule extends PlayerTurnRule {
   actionType = ActionType.PurchaseShip
   computedActionHelper = new ComputedActionsHelper(this.game)
+  basicActionHelper = new BasicActionHelper(this.game)
   shipChoosen = this.remind(MemoryType.ShipChoosen)
 
   onRuleStart(): MaterialMove[] {
@@ -20,6 +22,7 @@ export class PurchaseShipActionRule extends PlayerTurnRule {
   }
 
   getPlayerMoves(onNotShipChoosenMoves: MaterialMove[] = []): MaterialMove[] {
+    if(this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
     if (!this.shipChoosen) {
       return [...this.possibleCardsToGet().moveItems({ type: LocationType.PlayerShipCards, player: this.player }), ...onNotShipChoosenMoves]
     }
@@ -27,6 +30,7 @@ export class PurchaseShipActionRule extends PlayerTurnRule {
   }
 
   beforeItemMove(move: ItemMove): MaterialMove[] {
+    if(this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.ShipCard)(move) && move.location.type === LocationType.PlayerShipCards) {
       this.memorize(MemoryType.BasicActionChoosen, ActionType.PurchaseShip)
@@ -36,6 +40,7 @@ export class PurchaseShipActionRule extends PlayerTurnRule {
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {
+    if(this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.ShipCard)(move) && move.location.type === LocationType.PlayerShipCards) {
       const shipId: ShipCard = this.material(MaterialType.ShipCard).index(move.itemIndex).getItem()?.id
@@ -49,6 +54,7 @@ export class PurchaseShipActionRule extends PlayerTurnRule {
         this.forget(MemoryType.ShipChoosen)
         this.memorize<RuleId[]>(MemoryType.NextRules, (old) => [...shipData.effect.rules!, ...old])
       }
+      this.forget(MemoryType.BasicActionChoosen)
       moves.push(...this.computedActionHelper.removeActionAndWait(this.actionType))
     }
     return moves

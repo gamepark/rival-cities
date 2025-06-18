@@ -7,10 +7,13 @@ import { ActionType } from '../ActionType'
 import { CustomMoveType } from '../CustomMoveType'
 import { ComputedActionsHelper } from '../helper/ComputedActionsHelper'
 import { MemoryType } from '../MemoryType'
+import { AllianceCard } from '../../material/AllianceCard'
+import { BasicActionHelper } from '../helper/BasicActionHelper'
 
 export class ProductionActionRule extends PlayerTurnRule {
   actionType = ActionType.Production
   computedActionHelper = new ComputedActionsHelper(this.game)
+  basicActionHelper = new BasicActionHelper(this.game)
   productChoosen = this.remind(MemoryType.ProductChoosen)
   productType?: Product
 
@@ -19,6 +22,7 @@ export class ProductionActionRule extends PlayerTurnRule {
   }
 
   getPlayerMoves(onNotProductChoosenMoves: MaterialMove[] = []): MaterialMove[] {
+    if(this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
     if (!this.productChoosen) {
       const productsToMove = this.productType ? this.products : this.allProducts
       return [...productsToMove.moveItems((item) => ({ type: LocationType.PlayerProducts, player: this.player, id: item.id })), ...onNotProductChoosenMoves]
@@ -30,18 +34,20 @@ export class ProductionActionRule extends PlayerTurnRule {
   }
 
   beforeItemMove(move: ItemMove): MaterialMove[] {
-    if (isMoveItemType(MaterialType.Product)(move)) {
+    if(this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
+    if (isMoveItemType(MaterialType.Product)(move) && (!this.productType || this.productType === move.location.id)) {
       if (!this.remind(MemoryType.BasicActionChoosen)) {
-        this.memorize(MemoryType.BasicActionChoosen, ActionType.Production)
+        this.memorize(MemoryType.BasicActionChoosen, this.actionType)
       }
     }
     return []
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {
-    if (isMoveItemType(MaterialType.Product)(move)) {
+    if(this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
+    const moves: MaterialMove[] = []
+    if (isMoveItemType(MaterialType.Product)(move) && (!this.productType || this.productType === move.location.id)) {
       if (!this.productChoosen) {
-        const moves: MaterialMove[] = []
         this.memorize(MemoryType.ProductChoosen, move.location.id)
         if (this.productType === Product.Beer && move.location.id === Product.Beer) {
           moves.push(...this.products.moveItems({ ...move.location, type: LocationType.PlayerProducts }, 1))
@@ -54,21 +60,30 @@ export class ProductionActionRule extends PlayerTurnRule {
             }
           }
         }
-        return moves
-      }
-      if (this.playerFactories.length === 0) {
+        moves.push(...this.checkAllianceCards(move.location.id as Product, Product.Furniture, AllianceCard.AllianceOslo))
+        moves.push(...this.checkAllianceCards(move.location.id as Product, Product.Leather, AllianceCard.AllianceNovgorod))
+        moves.push(...this.checkAllianceCards(move.location.id as Product, Product.Cloth, AllianceCard.AllianceLondon))
+      } else if (this.playerFactories.length === 0) {
         this.forget(MemoryType.ProductChoosen)
-        return [...this.computedActionHelper.removeActionAndWait(this.actionType)]
+        this.forget(MemoryType.BasicActionChoosen)
+        moves.push(...this.computedActionHelper.removeActionAndWait(this.actionType))
       }
     }
     if (isMoveItemType(MaterialType.Factory)(move)) {
       if (!this.productType) {
         this.forget(MemoryType.ProductChoosen)
-        return []
       }
       if (this.productChoosen === this.productType) {
-        return [...this.products.moveItems({ type: LocationType.PlayerProducts, id: this.productChoosen, player: this.player }, 1)]
+        moves.push(...this.products.moveItems({ type: LocationType.PlayerProducts, id: this.productChoosen, player: this.player }, 1))
       }
+    }
+    return moves
+  }
+
+  checkAllianceCards(product: Product, allianceProduct: Product, allianceCard: AllianceCard): MaterialMove[] {
+    const alliance = this.material(MaterialType.AllianceCard).location(LocationType.PlayerAllianceCards).player(this.player).id(allianceCard)
+    if(alliance.length && product === allianceProduct) {
+      return this.allProducts.id(product).moveItems({ type: LocationType.PlayerProducts, id: allianceProduct }, 1)
     }
     return []
   }

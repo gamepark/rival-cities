@@ -1,25 +1,30 @@
 import { ItemMove, MaterialMove, PlayerTurnRule } from '@gamepark/rules-api'
 import { GainLetterActionRule } from '../actions/GainLetterActionRule'
 import { ProductionFurnitureActionRule } from '../actions/ProductionFurnitureActionRule'
-import { ActionType } from '../ActionType'
 import { MemoryType } from '../MemoryType'
+import { MaterialType } from '../../material/MaterialType'
+import { LocationType } from '../../material/LocationType'
+import { AllianceCard } from '../../material/AllianceCard'
 
 export class BasicActionCard5Rule extends PlayerTurnRule {
   productionActionRule = new ProductionFurnitureActionRule(this.game)
   gainLetterActionRule = new GainLetterActionRule(this.game)
   actionChoosen = this.remind(MemoryType.BasicActionChoosen)
 
+  onRuleStart(): MaterialMove[] {
+      this.computeActionIfPlayerHasGdanskAlliance()
+      return []
+  }
+
   getPlayerMoves(): MaterialMove[] {
-    if(!this.actionChoosen) {
-      return this.productionActionRule.getPlayerMoves(this.gainLetterActionRule.getPlayerMoves())
+    const moves: MaterialMove[] = []
+    if (!this.playerHasGdanskAlliance || this.remind(MemoryType.ComputedActions).includes(this.productionActionRule.actionType)) {
+      moves.push(...this.productionActionRule.getPlayerMoves())
     }
-    if (this.actionChoosen === ActionType.Production) {
-      return this.productionActionRule.getPlayerMoves()
+    if (!this.playerHasGdanskAlliance || this.remind(MemoryType.ComputedActions).includes(this.gainLetterActionRule.actionType)) {
+      moves.push(...this.gainLetterActionRule.getPlayerMoves())
     }
-    if (this.actionChoosen === ActionType.GainLetter) {
-      return this.gainLetterActionRule.getPlayerMoves()
-    }
-    return []
+    return moves
   }
 
   beforeItemMove(move: ItemMove): MaterialMove[] {
@@ -27,12 +32,16 @@ export class BasicActionCard5Rule extends PlayerTurnRule {
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {
-    if (this.actionChoosen === ActionType.Production) {
-      return this.productionActionRule.afterItemMove(move)
+    return [...this.productionActionRule.afterItemMove(move), ...this.gainLetterActionRule.afterItemMove(move)]
+  }
+      
+  computeActionIfPlayerHasGdanskAlliance() {
+    if(this.playerHasGdanskAlliance) {
+      this.memorize(MemoryType.ComputedActions, [this.productionActionRule.actionType, this.gainLetterActionRule.actionType])
     }
-    if (this.actionChoosen === ActionType.GainLetter) {
-      return this.gainLetterActionRule.afterItemMove(move)
-    }
-    return []
+  }
+
+  get playerHasGdanskAlliance() {
+    return this.material(MaterialType.AllianceCard).location(LocationType.PlayerAllianceCards).player(this.player).id(AllianceCard.AllianceGdansk).length > 0
   }
 }

@@ -1,25 +1,30 @@
 import { ItemMove, MaterialMove, PlayerTurnRule } from '@gamepark/rules-api'
 import { EarnPrestigeActionRule } from '../actions/EarnPrestigeActionRule'
 import { ProductionBeerActionRule } from '../actions/ProductionBeerActionRule'
-import { ActionType } from '../ActionType'
 import { MemoryType } from '../MemoryType'
+import { AllianceCard } from '../../material/AllianceCard'
+import { LocationType } from '../../material/LocationType'
+import { MaterialType } from '../../material/MaterialType'
 
 export class BasicActionCard14Rule extends PlayerTurnRule {
   productionActionRule = new ProductionBeerActionRule(this.game)
   earnPrestigeActionRule = new EarnPrestigeActionRule(this.game)
   actionChoosen = this.remind(MemoryType.BasicActionChoosen)
 
-  getPlayerMoves(): MaterialMove[] {
-    if(!this.actionChoosen) {
-      return this.productionActionRule.getPlayerMoves(this.earnPrestigeActionRule.getPlayerMoves())
-    }
-    if (this.actionChoosen === ActionType.Production) {
-      return this.productionActionRule.getPlayerMoves()
-    }
-    if (this.actionChoosen === ActionType.EarnPrestige) {
-      return this.earnPrestigeActionRule.getPlayerMoves()
-    }
+  onRuleStart(): MaterialMove[] {
+    this.computeActionIfPlayerHasGdanskAlliance()
     return []
+  }
+
+  getPlayerMoves(): MaterialMove[] {
+    const moves: MaterialMove[] = []
+    if (!this.playerHasGdanskAlliance || this.remind(MemoryType.ComputedActions).includes(this.productionActionRule.actionType)) {
+      moves.push(...this.productionActionRule.getPlayerMoves())
+    }
+    if (!this.playerHasGdanskAlliance || this.remind(MemoryType.ComputedActions).includes(this.earnPrestigeActionRule.actionType)) {
+      moves.push(...this.earnPrestigeActionRule.getPlayerMoves())
+    }
+    return moves
   }
 
   beforeItemMove(move: ItemMove): MaterialMove[] {
@@ -27,12 +32,16 @@ export class BasicActionCard14Rule extends PlayerTurnRule {
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {
-    if (this.actionChoosen === ActionType.Production) {
-      return this.productionActionRule.afterItemMove(move)
+    return [...this.productionActionRule.afterItemMove(move), ...this.earnPrestigeActionRule.afterItemMove(move)]
+  }
+    
+  computeActionIfPlayerHasGdanskAlliance() {
+    if(this.playerHasGdanskAlliance) {
+      this.memorize(MemoryType.ComputedActions, [this.productionActionRule.actionType, this.earnPrestigeActionRule.actionType])
     }
-    if (this.actionChoosen === ActionType.EarnPrestige) {
-      return this.earnPrestigeActionRule.afterItemMove(move)
-    }
-    return []
+  }
+
+  get playerHasGdanskAlliance() {
+    return this.material(MaterialType.AllianceCard).location(LocationType.PlayerAllianceCards).player(this.player).id(AllianceCard.AllianceGdansk).length > 0
   }
 }
