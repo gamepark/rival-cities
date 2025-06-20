@@ -87,8 +87,6 @@ export class EndOfGameHelper extends PlayerTurnRule {
     const altonaLawsuits = this.getPlayerLawsuitCards(City.Altona)
     const hamburgLawsuits = this.getPlayerShipCards(City.Hamburg)
 
-    console.log('altonaLawsuits', altonaLawsuits.length, 'hamburgLawsuits', hamburgLawsuits.length)
-
     return altonaLawsuits.length >= 3 || hamburgLawsuits.length >= 3
   }
 
