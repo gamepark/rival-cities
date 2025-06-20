@@ -18,7 +18,7 @@ export class AllianceCardAdvanceAgainInLawsuitRule extends AdvanceLawsuitActionR
 
     const moves: MaterialMove[] = []
     moves.push(...this.playerProducts.moveItems(it => ({ type: LocationType.ProductPiles, id: it.location.id })))
-    moves.push(this.customMove(CustomMoveType.Pass))
+    moves.push(this.customMove(CustomMoveType.Pass, true))
     return moves
   }
   

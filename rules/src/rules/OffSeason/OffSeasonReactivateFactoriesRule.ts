@@ -2,18 +2,20 @@ import { isMoveItemType, ItemMove, MaterialMove, PlayerTurnRule } from '@gamepar
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { RuleId } from '../RuleId'
+import { EndOfGameHelper } from '../helper/EndOfGameHelper'
 
 export class OffSeasonReactivateFactoriesRule extends PlayerTurnRule {
+  endOfGameHelper = new EndOfGameHelper(this.game)
   onRuleStart(): MaterialMove[] {
     if (this.factories.length === 0) {
-      return [this.startPlayerTurn(RuleId.OffSeasonReturnBell, this.playerWithBell)]
+      return this.endOfGameHelper.checkOffSeasonEndOfGame(this.startPlayerTurn(RuleId.OffSeasonReturnBell, this.playerWithBell))
     }
     return [...this.factories.rotateItems(undefined)]
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {
     if (isMoveItemType(MaterialType.Factory)(move)) {
-      return [this.startPlayerTurn(RuleId.OffSeasonReturnBell, this.playerWithBell)]
+      return this.endOfGameHelper.checkOffSeasonEndOfGame(this.startPlayerTurn(RuleId.OffSeasonReturnBell, this.playerWithBell))
     }
     return []
   }

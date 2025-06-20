@@ -9,6 +9,7 @@ export class BasicActionCard8Rule extends PlayerTurnRule {
   donationActionRule = new DonationActionRule(this.game)
 
   onRuleStart(): MaterialMove[] {
+    if(this.remind(MemoryType.ComputedActions).length > 0) return []
     this.memorize(MemoryType.ComputedActions, [ActionType.ProductSwap, ActionType.Donation])
     return []
   }

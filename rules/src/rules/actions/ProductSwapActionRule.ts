@@ -44,8 +44,6 @@ export class ProductSwapActionRule extends PlayerTurnRule {
         this.memorize(MemoryType.NbSwaps, this.nbSwaps + 1)
         if(this.remind(MemoryType.NbSwaps) === 2) {
           this.forget(MemoryType.BasicActionChoosen)
-          this.memorize(MemoryType.NbSwaps, 0)
-          this.memorize(MemoryType.IsProductReturn, false)
           return this.computedActionHelper.removeActionAndWait(this.actionType)
         }
       }

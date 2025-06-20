@@ -8,9 +8,10 @@ import { AllianceCardHelper } from '../../material/helper/AllianceCardHelper'
 export class BasicActionCard1Rule extends PlayerTurnRule {
   beerProductionActionRule = new ProductionBeerActionRule(this.game)
   clothProductionActionRule = new ProductionClothActionRule(this.game)
+  allianceCardHelper = new AllianceCardHelper(this.game)
 
   onRuleStart(): MaterialMove[] {
-    this.computeActionIfPlayerHasGdanskAlliance()
+    this.allianceCardHelper.computeActionIfPlayerHasGdanskAlliance([this.beerProductionActionRule.actionType, this.clothProductionActionRule.actionType])
     return []
   }
 
@@ -31,12 +32,6 @@ export class BasicActionCard1Rule extends PlayerTurnRule {
 
   afterItemMove(move: ItemMove): MaterialMove[] {
     return [...this.beerProductionActionRule.afterItemMove(move), ...this.clothProductionActionRule.afterItemMove(move)]
-  }
-    
-  computeActionIfPlayerHasGdanskAlliance() {
-    if(this.playerHasGdanskAlliance) {
-      this.memorize(MemoryType.ComputedActions, [this.beerProductionActionRule.actionType, this.clothProductionActionRule.actionType])
-    }
   }
 
   get playerHasGdanskAlliance() {

@@ -3,6 +3,8 @@ import { AllianceCard } from '../AllianceCard'
 import { LocationType } from '../LocationType'
 import { MaterialType } from '../MaterialType'
 import { Product } from '../Product'
+import { ActionType } from '../../rules/ActionType'
+import { MemoryType } from '../../rules/MemoryType'
 
 export class AllianceCardHelper extends MaterialRulesPart {
   player?: number
@@ -14,7 +16,16 @@ export class AllianceCardHelper extends MaterialRulesPart {
     this.nextPlayer = game.players.find((player) => player !== this.player)
   }
 
-    
+  
+      
+  computeActionIfPlayerHasGdanskAlliance(actions: ActionType[]) {
+    if(this.remind(MemoryType.ComputedActions).length > 0) return
+
+    if(this.checkPlayerAllianceCardById(AllianceCard.AllianceGdansk)) {
+      this.memorize(MemoryType.ComputedActions, actions)
+    }
+  }
+
   checkPlayerAllianceCardById(allianceCard: AllianceCard) {
     return this.material(MaterialType.AllianceCard).location(LocationType.PlayerAllianceCards).player(this.player).id(allianceCard).length > 0
   }
@@ -34,7 +45,7 @@ export class AllianceCardHelper extends MaterialRulesPart {
   private getProductsFromAllianceCard(product: Product, allianceProduct: Product, allianceCard: AllianceCard): MaterialMove[] {
     const alliance = this.material(MaterialType.AllianceCard).location(LocationType.PlayerAllianceCards).player(this.player).id(allianceCard)
     if(alliance.length && product === allianceProduct) {
-      return this.allProducts.id(product).moveItems({ type: LocationType.PlayerProducts, id: allianceProduct }, 1)
+      return [this.allProducts.id(product).moveItem({ type: LocationType.PlayerProducts, id: allianceProduct, player: this.player })]
     }
     return []
   }

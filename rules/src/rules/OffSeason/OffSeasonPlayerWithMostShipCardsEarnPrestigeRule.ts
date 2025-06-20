@@ -3,6 +3,7 @@ import { City } from '../../City'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { RuleId } from '../RuleId'
+import { EndOfGameHelper } from '../helper/EndOfGameHelper'
 
 
 export class OffSeasonPlayerWithMostShipCardsEarnPrestigeRule extends PlayerTurnRule {
@@ -20,7 +21,7 @@ export class OffSeasonPlayerWithMostShipCardsEarnPrestigeRule extends PlayerTurn
 
   afterItemMove(move: ItemMove): MaterialMove[] {
     if (isMoveItemType(MaterialType.PrestigeMarker)(move)) {
-      return [this.startRule(RuleId.OffSeasonGetShipsBonuses)]
+      return new EndOfGameHelper(this.game).checkInstantEndOfGame([this.startRule(RuleId.OffSeasonGetShipsBonuses)])
     }
     return []
   }

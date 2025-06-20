@@ -1,4 +1,5 @@
 import {
+  CompetitiveRank,
   CustomMove,
   hideItemId,
   hideItemIdToOthers,
@@ -27,7 +28,6 @@ import { ChooseFirstProductRule } from './rules/ChooseFirstProductRule'
 import { ChooseSpecialActionRule } from './rules/ChooseSpecialActionRule'
 import { CustomMoveType } from './rules/CustomMoveType'
 import { EarnPrestigeAgainRule } from './rules/EarnPrestigeAgainRule'
-import { NextRuleHelper } from './rules/helper/NextRuleHelper'
 import { MemoryType } from './rules/MemoryType'
 import { OffSeasonChangeSpecialCardsRule } from './rules/OffSeason/OffSeasonChangeSpecialCardsRule'
 import { OffSeasonGetPrestigeBonusesRule } from './rules/OffSeason/OffSeasonGetPrestigeBonusesRule'
@@ -44,6 +44,9 @@ import { OffSeasonPayForAllianceRule } from './rules/OffSeason/OffSeasonPayForAl
 import { AllianceCardAdvanceAgainInLawsuitRule } from './rules/AllianceCardAdvanceAgainInLawsuitRule'
 import { AllianceCardDrawSpecialActionCardAgainRule } from './rules/AllianceCardDrawSpecialActionCardAgainRule'
 import { AllianceCardEarnPrestigeAgainRule } from './rules/AllianceCardEarnPrestigeAgainRule'
+import { EndOfGameHelper } from './rules/helper/EndOfGameHelper'
+import { ComputedActionsHelper } from './rules/helper/ComputedActionsHelper'
+import { MemoryHelper } from './rules/helper/MemoryHelper'
 
 /**
  * This class implements the rules of the board game.
@@ -51,9 +54,10 @@ import { AllianceCardEarnPrestigeAgainRule } from './rules/AllianceCardEarnPrest
  */
 export class RivalCitiesRules
   extends SecretMaterialRules<City, MaterialType, LocationType>
-  implements TimeLimit<MaterialGame<City, MaterialType, LocationType>, MaterialMove<City, MaterialType, LocationType>, City>
+  implements TimeLimit<MaterialGame, MaterialMove, City>, CompetitiveRank<MaterialGame, MaterialMove, City>
 {
-  nextRuleHelper = new NextRuleHelper(this.game)
+  computedActionsHelper = new ComputedActionsHelper(this.game)
+  endOfGameHelper = new EndOfGameHelper(this.game)
   rules = {
     [RuleId.ChooseFirstProduct]: ChooseFirstProductRule,
     [RuleId.AdvanceInkJar]: AdvanceInkJarRule,
@@ -101,6 +105,7 @@ export class RivalCitiesRules
     },
     [MaterialType.LawsuitCard]: {
       [LocationType.LawsuitCardDeck]: new PositiveSequenceStrategy(),
+      [LocationType.PlayerLawsuitCards]: new PositiveSequenceStrategy(),
       [LocationType.LawsuitCardsRiver]: new StackingStrategy()
     },
     [MaterialType.Factory]: {
@@ -125,24 +130,12 @@ export class RivalCitiesRules
     const moves: MaterialMove[] = []
 
     if (isCustomMoveType(CustomMoveType.Pass)(move)) {
-      this.memorize(MemoryType.NbProductToPayForAdvance, 0)
-      this.memorize(MemoryType.PlayerNbProducts, 0)
-      this.memorize(MemoryType.NbProductGiven, 0)
-      this.memorize(MemoryType.NbTimeAdvancedInLawsuit, 0)
-      this.memorize(MemoryType.NbSwaps, 0)
-      this.memorize(MemoryType.IsProductReturn, false)
-      this.memorize(MemoryType.IsBuildInProgress, false)
-      this.memorize(MemoryType.NbProductsDonated, 0)
-      this.memorize(MemoryType.NbProductStealed, 0)
-      this.memorize(MemoryType.NbDonations, 0)
-      this.memorize(MemoryType.NbCardsDraw, 0)
-      this.memorize(MemoryType.IsDonationInProgress, false)
-      this.memorize(MemoryType.ComputedActions, [])
-      this.forget(MemoryType.ProductChoosen)
-      this.forget(MemoryType.ShipChoosen)
-      this.forget(MemoryType.LawsuitAdvanced)
-      this.forget(MemoryType.BasicActionChoosen)
-      moves.push(...this.nextRuleHelper.moveToNextRule())
+      new MemoryHelper(this.game).clearMemory()
+      const actionType = this.remind(MemoryType.BasicActionChoosen)
+      if(!move.data) {
+        this.memorize(MemoryType.ComputedActions, [])
+      }
+      moves.push(...this.computedActionsHelper.removeActionAndWait(actionType))
     }
 
     return moves
@@ -150,5 +143,24 @@ export class RivalCitiesRules
 
   giveTime(): number {
     return 60
+  }
+
+  rankPlayers(playerA: City, playerB: City): number {
+    return this.endOfGameHelper.rankPlayers(playerA, playerB)
+  }
+
+  getScore(playerId: number): number | undefined {
+    if (this.endOfGameHelper.checkIfWinnerIsDeterminateByScore()) {
+      return this.endOfGameHelper.getScore(playerId)
+    }
+    return undefined
+  }
+
+  getTieBreaker(tieBreaker: number, playerId: number): number | undefined {
+    if (tieBreaker === 1) {
+      const bellToken = this.material(MaterialType.BellToken).location(LocationType.PlayerBellToken).player(playerId)
+      return bellToken.length
+    }
+    return undefined
   }
 }

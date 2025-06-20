@@ -7,6 +7,7 @@ import { ComputedActionsHelper } from '../helper/ComputedActionsHelper'
 import { MemoryType } from '../MemoryType'
 import { RuleId } from '../RuleId'
 import { BasicActionHelper } from '../helper/BasicActionHelper'
+import { EndOfGameHelper } from '../helper/EndOfGameHelper'
 
 export class PurchaseShipActionRule extends PlayerTurnRule {
   actionType = ActionType.PurchaseShip
@@ -43,7 +44,15 @@ export class PurchaseShipActionRule extends PlayerTurnRule {
     if(this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.ShipCard)(move) && move.location.type === LocationType.PlayerShipCards) {
-      const shipId: ShipCard = this.material(MaterialType.ShipCard).index(move.itemIndex).getItem()?.id
+      new EndOfGameHelper(this.game).checkInstantEndOfGame(this.movesOnPushasedShip(move))
+    }
+    return moves
+  }
+
+  movesOnPushasedShip(move: MaterialMove): MaterialMove[] {
+    if(!isMoveItemType(MaterialType.ShipCard)(move)) return []
+    const moves: MaterialMove[] = []
+    const shipId: ShipCard = this.material(MaterialType.ShipCard).index(move.itemIndex).getItem()?.id
       if (!this.shipChoosen) {
         this.memorize(MemoryType.ShipChoosen, shipId)
       }
@@ -51,14 +60,12 @@ export class PurchaseShipActionRule extends PlayerTurnRule {
       const costQuantity = this.playerShip19.length ? shipData.cost.quantity - 1 : shipData.cost.quantity
       moves.push(...this.playerProducts.id(shipData.cost.type).moveItems({ type: LocationType.ProductPiles, id: shipData.cost.type }, costQuantity))
       if (shipData.effect.type === ShipEffectType.Instant) {
-        this.forget(MemoryType.ShipChoosen)
         this.memorize<RuleId[]>(MemoryType.NextRules, (old) => [...shipData.effect.rules!, ...old])
       }
       this.forget(MemoryType.BasicActionChoosen)
       moves.push(...this.computedActionHelper.removeActionAndWait(this.actionType))
+      return moves
     }
-    return moves
-  }
 
   possibleCardsToGet() {
     return this.shipCards.filter((item) => {

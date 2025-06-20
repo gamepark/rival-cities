@@ -3,7 +3,6 @@ import { City } from '../../City'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { Product } from '../../material/Product'
-import { MemoryType } from '../MemoryType'
 import { RuleId } from '../RuleId'
 
 export class OffSeasonGetPrestigeBonusesRule extends PlayerTurnRule {
@@ -11,15 +10,6 @@ export class OffSeasonGetPrestigeBonusesRule extends PlayerTurnRule {
     if (Math.abs(this.prestigeMarkerLocation) < 2) {
       return [this.startRule(RuleId.ResolveLawsuit)]
     }
-    this.memorize(MemoryType.ProcessedBonuses, 2)
-    return this.getBonusesMoves()
-  }
-
-  afterItemMove(): MaterialMove[] {
-    if (this.remind<number>(MemoryType.ProcessedBonuses) === Math.abs(this.prestigeMarkerLocation)) {
-      return [this.startRule(RuleId.ResolveLawsuit)]
-    }
-    this.memorize<number>(MemoryType.ProcessedBonuses, old => old + 1)
     return this.getBonusesMoves()
   }
 
@@ -27,26 +17,43 @@ export class OffSeasonGetPrestigeBonusesRule extends PlayerTurnRule {
     const moves: MaterialMove[] = []
     const player = this.prestigeMarkerLocation < 0 ? City.Altona : City.Hamburg
 
-      switch (this.remind<number>(MemoryType.ProcessedBonuses)) {
-        case 2:
-          moves.push(...this.getProducts(Product.Beer).moveItems({ type: LocationType.PlayerProducts, player, id: Product.Beer }))
-          break
-        case 3:
-          moves.push(...this.getProducts(Product.Cloth).moveItems({ type: LocationType.PlayerProducts, player, id: Product.Cloth }))
-          break
-        case 4:
-          moves.push(...this.getProducts(Product.Leather).moveItems({ type: LocationType.PlayerProducts, player, id: Product.Leather }))
-          break
-        case 5:
-          moves.push(...this.getProducts(Product.Furniture).moveItems({ type: LocationType.PlayerProducts, player, id: Product.Furniture }))
-          break
-        case 6:
-          moves.push(...this.getLetters().moveItems({ type: LocationType.PlayerLetterDeck, player }))
-          break
-        default:
-          moves.push(...this.getStarsTokens().moveItems({ type: LocationType.PlayerStarTokens, player }))
-      }
-
+    switch (Math.abs(this.prestigeMarkerLocation)) {
+      case 0: break
+      case 1: break
+      case 2:
+        moves.push(this.getProducts(Product.Beer).moveItem({ type: LocationType.PlayerProducts, player, id: Product.Beer }))
+        break
+      case 3:
+        moves.push(this.getProducts(Product.Beer).moveItem({ type: LocationType.PlayerProducts, player, id: Product.Beer }))
+        moves.push(this.getProducts(Product.Cloth).moveItem({ type: LocationType.PlayerProducts, player, id: Product.Cloth }))
+        break
+      case 4:
+        moves.push(this.getProducts(Product.Beer).moveItem({ type: LocationType.PlayerProducts, player, id: Product.Beer }))
+        moves.push(this.getProducts(Product.Cloth).moveItem({ type: LocationType.PlayerProducts, player, id: Product.Cloth }))
+        moves.push(this.getProducts(Product.Leather).moveItem({ type: LocationType.PlayerProducts, player, id: Product.Leather }))
+        break
+      case 5:
+        moves.push(this.getProducts(Product.Beer).moveItem({ type: LocationType.PlayerProducts, player, id: Product.Beer }))
+        moves.push(this.getProducts(Product.Cloth).moveItem({ type: LocationType.PlayerProducts, player, id: Product.Cloth }))
+        moves.push(this.getProducts(Product.Leather).moveItem({ type: LocationType.PlayerProducts, player, id: Product.Leather }))
+        moves.push(this.getProducts(Product.Furniture).moveItem({ type: LocationType.PlayerProducts, player, id: Product.Furniture }))
+        break
+      case 6:
+        moves.push(this.getProducts(Product.Beer).moveItem({ type: LocationType.PlayerProducts, player, id: Product.Beer }))
+        moves.push(this.getProducts(Product.Cloth).moveItem({ type: LocationType.PlayerProducts, player, id: Product.Cloth }))
+        moves.push(this.getProducts(Product.Leather).moveItem({ type: LocationType.PlayerProducts, player, id: Product.Leather }))
+        moves.push(this.getProducts(Product.Furniture).moveItem({ type: LocationType.PlayerProducts, player, id: Product.Furniture }))
+        moves.push(this.getLetters().moveItem({ type: LocationType.PlayerLetterDeck, player }))
+        break
+      default:
+        moves.push(this.getProducts(Product.Beer).moveItem({ type: LocationType.PlayerProducts, player, id: Product.Beer }))
+        moves.push(this.getProducts(Product.Cloth).moveItem({ type: LocationType.PlayerProducts, player, id: Product.Cloth }))
+        moves.push(this.getProducts(Product.Leather).moveItem({ type: LocationType.PlayerProducts, player, id: Product.Leather }))
+        moves.push(this.getProducts(Product.Furniture).moveItem({ type: LocationType.PlayerProducts, player, id: Product.Furniture }))
+        moves.push(this.getLetters().moveItem({ type: LocationType.PlayerLetterDeck, player }))
+        moves.push(this.getStarsTokens().moveItem({ type: LocationType.PlayerStarTokens, player }))
+    }
+    moves.push(this.startRule(RuleId.ResolveLawsuit))
     return moves
   }
 

@@ -58,9 +58,6 @@ export class DonationActionRule extends PlayerTurnRule {
         this.memorize<number>(MemoryType.NbDonations, (old) => old + 1)
         if(this.remind(MemoryType.NbDonations) === this.nbTimes) {
           this.forget(MemoryType.BasicActionChoosen)
-          this.memorize(MemoryType.NbDonations, 0)
-          this.memorize(MemoryType.NbProductsDonated, 0)
-          this.memorize(MemoryType.IsDonationInProgress, false)
           return this.computedActionHelper.removeActionAndWait(this.actionType)
         }
       }

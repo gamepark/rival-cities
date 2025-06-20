@@ -52,16 +52,12 @@ export class BuildFactoryActionRule extends PlayerTurnRule {
     if(this.remind(MemoryType.BasicActionChoosen) !== this.actionType) return moves
     if(isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.ProductPiles) {
       if(this.remind(MemoryType.NbProductGiven) === this.price) {
-        this.memorize(MemoryType.NbProductGiven, 0)
-        this.memorize(MemoryType.IsBuildInProgress, false)
         return [...this.computedActionHelper.removeActionAndWait(this.actionType)]
       }
     }
     if(isMoveItemType(MaterialType.Factory)(move) && move.location.type === LocationType.PlayerFactories) {
       if(this.price === 0) {
         this.forget(MemoryType.BasicActionChoosen)
-        this.memorize(MemoryType.NbProductGiven, 0)
-        this.memorize(MemoryType.IsBuildInProgress, false)
         return [...this.computedActionHelper.removeActionAndWait(this.actionType)]
       }
     }

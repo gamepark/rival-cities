@@ -3,6 +3,7 @@ import { actionRules, ActionType } from './ActionType'
 import { CustomMoveType } from './CustomMoveType'
 import { MemoryType } from './MemoryType'
 import { RuleId } from './RuleId'
+import { MemoryHelper } from './helper/MemoryHelper'
 
 export class SpecialActionRule extends PlayerTurnRule {
   actionRules = this.remind<ActionType[]>(MemoryType.ComputedActions).map((it) => actionRules[it](this.game))
@@ -31,7 +32,7 @@ export class SpecialActionRule extends PlayerTurnRule {
   }
 
   onRuleEnd(): MaterialMove[] {
-    this.forget(MemoryType.BasicActionChoosen)
+    new MemoryHelper(this.game).clearMemory()
     return []
   }
 }

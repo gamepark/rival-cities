@@ -5,6 +5,7 @@ import { ActionType } from '../ActionType'
 import { ComputedActionsHelper } from '../helper/ComputedActionsHelper'
 import { MemoryType } from '../MemoryType'
 import { BasicActionHelper } from '../helper/BasicActionHelper'
+import { EndOfGameHelper } from '../helper/EndOfGameHelper'
 
 export class FormAllianceActionRule extends PlayerTurnRule {
   actionType = ActionType.FormAlliance
@@ -37,7 +38,7 @@ export class FormAllianceActionRule extends PlayerTurnRule {
     if(this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
     if (isMoveItemType(MaterialType.AllianceCard)(move)) {
       this.forget(MemoryType.BasicActionChoosen)
-      return this.computedActionHelper.removeActionAndWait(this.actionType)
+      return new EndOfGameHelper(this.game).checkInstantEndOfGame(this.computedActionHelper.removeActionAndWait(this.actionType))
     }
     return []
   }

@@ -6,6 +6,9 @@ import { MaterialType } from '../material/MaterialType'
 import { ShipCard } from '../material/ShipCard'
 import { MemoryType } from './MemoryType'
 import { RuleId } from './RuleId'
+import { ComputedActionsHelper } from './helper/ComputedActionsHelper'
+import { ActionType } from './ActionType'
+import { EndOfGameHelper } from './helper/EndOfGameHelper'
 
 export class ResolveLawsuitRule extends PlayerTurnRule {
   onRuleStart(): MaterialMove[] {
@@ -26,7 +29,7 @@ export class ResolveLawsuitRule extends PlayerTurnRule {
     } else {
       moves.push(this.lawsuitCardToResolve.deleteItem())
     }
-    if(this.material(MaterialType.LawsuitCard)
+    if (this.material(MaterialType.LawsuitCard)
       .location((loc) => loc.type === LocationType.LawsuitCardsRiver && loc.z === 1).length) {
       moves.push(
         this.material(MaterialType.LawsuitCard)
@@ -34,7 +37,7 @@ export class ResolveLawsuitRule extends PlayerTurnRule {
           .moveItem(({ location }) => ({ ...location, z: 0 }))
       )
     }
-    if(this.material(MaterialType.LawsuitCard)
+    if (this.material(MaterialType.LawsuitCard)
       .location((loc) => loc.type === LocationType.LawsuitCardsRiver && loc.z === 2).length) {
       moves.push(
         this.material(MaterialType.LawsuitCard)
@@ -42,7 +45,7 @@ export class ResolveLawsuitRule extends PlayerTurnRule {
           .moveItem(({ location }) => ({ ...location, z: 1 }))
       )
     }
-    if(this.material(MaterialType.LawsuitCard)
+    if (this.material(MaterialType.LawsuitCard)
       .location(LocationType.LawsuitCardDeck).length) {
       moves.push(
         this.material(MaterialType.LawsuitCard)
@@ -69,13 +72,7 @@ export class ResolveLawsuitRule extends PlayerTurnRule {
     return moves
   }
 
-  afterItemMove(move: ItemMove): MaterialMove[] {
-    if (isMoveItemType(MaterialType.LawsuitMarker)(move) && move.location.id === 2) {
-      if (this.remind<MaterialMove[]>(MemoryType.MovesOnLawsuitWin)) {
-        return this.remind(MemoryType.MovesOnLawsuitWin)
-      }
-      return [this.startRule(RuleId.OffSeasonChangeSpecialCards)]
-    }
+  beforeItemMove(move: ItemMove): MaterialMove[] {
     if (isMoveItemType(MaterialType.LawsuitCard)(move) && move.location.type === LocationType.PlayerLawsuitCards) {
       const playerShip15 = this.material(MaterialType.ShipCard).location(LocationType.PlayerShipCards).player(move.location.player).id(ShipCard.Ship15)
       if (playerShip15.length > 0) {
@@ -85,6 +82,19 @@ export class ResolveLawsuitRule extends PlayerTurnRule {
             .moveItems({ type: LocationType.PlayerStarTokens, player: move.location.player }, 2)
         ]
       }
+    }
+    return []
+  }
+
+  afterItemMove(move: ItemMove): MaterialMove[] {
+    if (isMoveItemType(MaterialType.LawsuitMarker)(move) && move.location.id === 2) {
+      if (this.remind<MaterialMove[]>(MemoryType.MovesOnLawsuitWin)) {
+        return this.remind(MemoryType.MovesOnLawsuitWin)
+      }
+      return this.remind(MemoryType.IsOffSeason) ? [this.startRule(RuleId.OffSeasonChangeSpecialCards)] : new ComputedActionsHelper(this.game).removeActionAndWait(ActionType.CourtRuling)
+    }
+    if (isMoveItemType(MaterialType.LawsuitCard)(move) && move.location.type === LocationType.PlayerLawsuitCards) {
+      return new EndOfGameHelper(this.game).checkInstantEndOfGame([])
     }
     return []
   }

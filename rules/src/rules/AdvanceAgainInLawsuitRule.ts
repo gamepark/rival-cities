@@ -33,7 +33,7 @@ export class AdvanceAgainInLawsuitRule extends PlayerTurnRule {
       moves.push(this.marker.moveItem(({ location }) => ({ ...location, x: location.x! + moveX })))
     }
 
-    moves.push(this.customMove(CustomMoveType.Pass))
+    moves.push(this.customMove(CustomMoveType.Pass, true))
     return moves
   }
 
@@ -45,7 +45,7 @@ export class AdvanceAgainInLawsuitRule extends PlayerTurnRule {
         if (cost.type === 'Letter') {
           moves.push(...this.playerLetters.limit(cost.quantity).moveItems({ type: LocationType.LetterDeck }))
         } else {
-          moves.push(...this.playerProducts.id(cost.type).moveItems({ type: LocationType.ProductPiles, id: cost.type }, cost.quantity))
+          moves.push(...this.playerProducts.id(cost.type).limit(cost.quantity).moveItems({ type: LocationType.ProductPiles, id: cost.type }, cost.quantity))
         }
       })
       if (
@@ -59,6 +59,7 @@ export class AdvanceAgainInLawsuitRule extends PlayerTurnRule {
           moves.push(this.startRule(RuleId.AllianceCardAdvanceAgainInLawsuit))
         } else {
           this.memorize(MemoryType.NbTimeUsedAllianceLeHavre, 0)
+          this.forget(MemoryType.BasicActionChoosen)
           moves.push(...this.computedActionHelper.removeActionAndWait(this.actionType))
         }
       } else {

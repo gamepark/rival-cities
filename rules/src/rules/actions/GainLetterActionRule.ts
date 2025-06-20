@@ -12,9 +12,9 @@ export class GainLetterActionRule extends PlayerTurnRule {
   basicActionHelper = new BasicActionHelper(this.game)
   nbLettersToTake = 1
 
-  onRuleStart(): MaterialMove[] {
-    return this.letters.moveItems({ type: LocationType.PlayerLetterDeck, player: this.player }, this.nbLettersToTake)
-  }
+  //onRuleStart(): MaterialMove[] {
+  //  return this.letters.moveItem({ type: LocationType.PlayerLetterDeck, player: this.player }, this.nbLettersToTake)
+  //}
 
   getPlayerMoves(): MaterialMove[] {
     if(this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []

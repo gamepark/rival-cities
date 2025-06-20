@@ -9,9 +9,10 @@ export class BasicActionCard12Rule extends PlayerTurnRule {
   giftActionRule = new GiftActionRule(this.game)
   advanceLawsuitActionRule = new AdvanceLawsuitActionRule(this.game)
   actionChoosen = this.remind(MemoryType.BasicActionChoosen)
+  allianceCardHelper = new AllianceCardHelper(this.game)
 
   onRuleStart(): MaterialMove[] {
-    this.computeActionIfPlayerHasGdanskAlliance()
+    this.allianceCardHelper.computeActionIfPlayerHasGdanskAlliance([this.giftActionRule.actionType, this.advanceLawsuitActionRule.actionType])
     return []
   }
 
@@ -32,12 +33,6 @@ export class BasicActionCard12Rule extends PlayerTurnRule {
 
   afterItemMove(move: ItemMove): MaterialMove[] {
     return [...this.giftActionRule.afterItemMove(move), ...this.advanceLawsuitActionRule.afterItemMove(move)]
-  }
-      
-  computeActionIfPlayerHasGdanskAlliance() {
-    if(this.playerHasGdanskAlliance) {
-      this.memorize(MemoryType.ComputedActions, [this.giftActionRule.actionType, this.advanceLawsuitActionRule.actionType])
-    }
   }
 
   get playerHasGdanskAlliance() {

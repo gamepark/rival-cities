@@ -4,6 +4,7 @@ import { LocationType } from '../LocationType'
 import { MaterialType } from '../MaterialType'
 import { MemoryType } from '../../rules/MemoryType'
 import { Product } from '../Product'
+import { EndOfGameHelper } from '../../rules/helper/EndOfGameHelper'
 
 export class ShipCardHelper extends MaterialRulesPart {
   player: number
@@ -25,7 +26,7 @@ export class ShipCardHelper extends MaterialRulesPart {
 
   shipCard8(): MaterialMove[] {
     this.addProcessedShip()
-    return [this.movePrestigeMarker()]
+    return [...this.movePrestigeMarker()]
   }
 
   shipCard9(): MaterialMove[] {
@@ -38,12 +39,15 @@ export class ShipCardHelper extends MaterialRulesPart {
     return this.getLetterMove(1)
   }
 
-  private movePrestigeMarker(): MaterialMove {
-    const prestigeMarkerMove = this.player === City.Altona ? -1 : 1
-    return this.material(MaterialType.PrestigeMarker)
-      .location(LocationType.PrestigeMarkerPiste)
-      .moveItem(({ location }) => ({ ...location, x: location.x! + prestigeMarkerMove }))
-  }
+  private movePrestigeMarker(): MaterialMove[] {
+      const prestigeMarkerMove = this.player === City.Altona ? -1 : 1
+      const moves: MaterialMove[] = []
+       moves.push(this.material(MaterialType.PrestigeMarker)
+        .location(LocationType.PrestigeMarkerPiste)
+        .moveItem(({ location }) => ({ ...location, x: location.x! + prestigeMarkerMove })))
+        moves.push(...new EndOfGameHelper(this.game).checkInstantEndOfGame([]))
+        return moves
+    }
 
   getProductMove(product: Product, quantity: number): MaterialMove[] {
     return this.material(MaterialType.Product)

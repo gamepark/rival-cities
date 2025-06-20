@@ -9,9 +9,10 @@ export class BasicActionCard13Rule extends PlayerTurnRule {
   courtRulingActionRule = new CourtRulingActionRule(this.game)
   purchaseShipActionRule = new PurchaseShipActionRule(this.game)
   actionChoosen = this.remind(MemoryType.BasicActionChoosen)
+  allianceCardHelper = new AllianceCardHelper(this.game)
 
   onRuleStart(): MaterialMove[] {
-    this.computeActionIfPlayerHasGdanskAlliance()
+    this.allianceCardHelper.computeActionIfPlayerHasGdanskAlliance([this.courtRulingActionRule.actionType, this.purchaseShipActionRule.actionType])
     return []
   }
 
@@ -36,12 +37,6 @@ export class BasicActionCard13Rule extends PlayerTurnRule {
 
   onCustomMove(move: CustomMove): MaterialMove[] {
     return this.courtRulingActionRule.onCustomMove(move)
-  }
-    
-  computeActionIfPlayerHasGdanskAlliance() {
-    if(this.playerHasGdanskAlliance) {
-      this.memorize(MemoryType.ComputedActions, [this.courtRulingActionRule.actionType, this.purchaseShipActionRule.actionType])
-    }
   }
 
   get playerHasGdanskAlliance() {

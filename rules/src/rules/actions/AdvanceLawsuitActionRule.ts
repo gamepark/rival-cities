@@ -66,7 +66,6 @@ export class AdvanceLawsuitActionRule extends PlayerTurnRule {
     if (isMoveItemType(MaterialType.LawsuitMarker)(move)) {
       const card = this.lawsuitCards.filter(({ location }) => location.z === move.location.id).getItem()
       if (card) {
-        this.memorize(MemoryType.NbProductGiven, 0)
         moves.push(...lawsuitCardData[card.id as LawsuitCard].actionInAdvance(this.game, this.player))
         const playerHaveAllianceLeHavre = new AllianceCardHelper(this.game).checkPlayerAllianceCardById(AllianceCard.AllianceLeHavre)
         if (move.location.id === 1 || move.location.id === 2) {
@@ -96,6 +95,7 @@ export class AdvanceLawsuitActionRule extends PlayerTurnRule {
   }
 
   checkIfCanAdvanceInLawsuit(itemId: LawsuitCard) {
+    if(!itemId) return false
     const lawsuitData = lawsuitCardData[itemId]
     let haveSuffisantProducts = true
     lawsuitData.cost.forEach((cost) => {

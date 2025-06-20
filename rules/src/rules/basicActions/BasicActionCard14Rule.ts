@@ -9,9 +9,10 @@ export class BasicActionCard14Rule extends PlayerTurnRule {
   productionActionRule = new ProductionBeerActionRule(this.game)
   earnPrestigeActionRule = new EarnPrestigeActionRule(this.game)
   actionChoosen = this.remind(MemoryType.BasicActionChoosen)
+  allianceCardHelper = new AllianceCardHelper(this.game)
 
   onRuleStart(): MaterialMove[] {
-    this.computeActionIfPlayerHasGdanskAlliance()
+    this.allianceCardHelper.computeActionIfPlayerHasGdanskAlliance([this.productionActionRule.actionType, this.earnPrestigeActionRule.actionType])
     return []
   }
 
@@ -32,12 +33,6 @@ export class BasicActionCard14Rule extends PlayerTurnRule {
 
   afterItemMove(move: ItemMove): MaterialMove[] {
     return [...this.productionActionRule.afterItemMove(move), ...this.earnPrestigeActionRule.afterItemMove(move)]
-  }
-    
-  computeActionIfPlayerHasGdanskAlliance() {
-    if(this.playerHasGdanskAlliance) {
-      this.memorize(MemoryType.ComputedActions, [this.productionActionRule.actionType, this.earnPrestigeActionRule.actionType])
-    }
   }
 
   get playerHasGdanskAlliance() {

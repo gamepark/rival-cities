@@ -5,4 +5,5 @@ import { ProductionActionRule } from './ProductionActionRule'
 export class ProductionBeerActionRule extends ProductionActionRule {
   actionType = ActionType.ProductionBeer
   productType = Product.Beer
+  quantity = 2
 }

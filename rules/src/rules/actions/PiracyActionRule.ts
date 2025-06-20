@@ -39,7 +39,6 @@ export class PiracyActionRule extends PlayerTurnRule {
   afterItemMove(move: ItemMove): MaterialMove[] {
     if(this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
     if (isMoveItemType(MaterialType.Product)(move) && this.remind(MemoryType.NbProductStealed) === this.nbProductsToSteal) {
-      this.memorize(MemoryType.NbProductStealed, 0)
       this.forget(MemoryType.BasicActionChoosen)
       return this.computedActionHelper.removeActionAndWait(this.actionType)
     }

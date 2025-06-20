@@ -6,10 +6,11 @@ import { BasicActionCard0Rule } from './basicActions/BasicActionCard0Rule'
 import { CustomMoveType } from './CustomMoveType'
 import { MemoryType } from './MemoryType'
 import { RuleId } from './RuleId'
+import { MemoryHelper } from './helper/MemoryHelper'
 
 export class BasicActionRule extends PlayerTurnRule {
   onRuleStart(_move: RuleMove, _previousRule?: RuleStep, _context?: PlayMoveContext): MaterialMove[] {
-      this.memorize(MemoryType.PreviousRule, RuleId.BasicAction)
+    this.memorize(MemoryType.PreviousRule, RuleId.BasicAction)
     return this.basicActionCardRule.onRuleStart(_move, _previousRule, _context)
   }
 
@@ -34,7 +35,7 @@ export class BasicActionRule extends PlayerTurnRule {
   }
 
   onRuleEnd(_move: RuleMove, _context?: PlayMoveContext): MaterialMove[] {
-    this.forget(MemoryType.BasicActionChoosen)
+    new MemoryHelper(this.game).clearMemory()
     return this.basicActionCardRule.onRuleEnd(_move, _context)
   }
 

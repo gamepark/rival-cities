@@ -9,9 +9,10 @@ export class BasicActionCard10Rule extends PlayerTurnRule {
   formAllianceActionRule = new FormAllianceActionRule(this.game)
   earnPrestigeActionRule = new EarnPrestigeActionRule(this.game)
   actionChoosen = this.remind(MemoryType.BasicActionChoosen)
+  allianceCardHelper = new AllianceCardHelper(this.game)
 
   onRuleStart(): MaterialMove[] {
-    this.computeActionIfPlayerHasGdanskAlliance()
+    this.allianceCardHelper.computeActionIfPlayerHasGdanskAlliance([this.formAllianceActionRule.actionType, this.earnPrestigeActionRule.actionType])
     return []
   }
 
@@ -32,12 +33,6 @@ export class BasicActionCard10Rule extends PlayerTurnRule {
 
   afterItemMove(move: ItemMove): MaterialMove[] {
     return [...this.formAllianceActionRule.afterItemMove(move), ...this.earnPrestigeActionRule.afterItemMove(move)]
-  }
-    
-  computeActionIfPlayerHasGdanskAlliance() {
-    if(this.playerHasGdanskAlliance) {
-      this.memorize(MemoryType.ComputedActions, [this.formAllianceActionRule.actionType, this.earnPrestigeActionRule.actionType])
-    }
   }
 
   get playerHasGdanskAlliance() {

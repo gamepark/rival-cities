@@ -17,19 +17,20 @@ export class ProductionActionRule extends PlayerTurnRule {
   allianceCardHelper = new AllianceCardHelper(this.game)
   productChoosen = this.remind(MemoryType.ProductChoosen)
   productType?: Product
+  quantity = 1
 
-  onRuleStart(): MaterialMove[] {
-    return [...this.products.moveItems((item) => ({ type: LocationType.PlayerProducts, player: this.player, id: item.id }))]
-  }
+  //onRuleStart(): MaterialMove[] {
+  //  return this.products.limit(this.quantity).moveItems((item) => ({ type: LocationType.PlayerProducts, player: this.player, id: item.id }), this.quantity)
+  //}
 
   getPlayerMoves(onNotProductChoosenMoves: MaterialMove[] = []): MaterialMove[] {
     if(this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
     if (!this.productChoosen) {
       const productsToMove = this.productType ? this.products : this.allProducts
-      return [...productsToMove.moveItems((item) => ({ type: LocationType.PlayerProducts, player: this.player, id: item.id })), ...onNotProductChoosenMoves]
+      return [...productsToMove.moveItems((item) => ({ type: LocationType.PlayerProducts, player: this.player, id: item.id }), this.quantity), ...onNotProductChoosenMoves]
     }
     if (this.playerFactories.length) {
-      return [...this.playerFactories.rotateItems(true), this.customMove(CustomMoveType.Pass)]
+      return [...this.playerFactories.rotateItems(true), this.customMove(CustomMoveType.Pass, true)]
     }
     return [this.customMove(CustomMoveType.Pass)]
   }
@@ -41,6 +42,14 @@ export class ProductionActionRule extends PlayerTurnRule {
         this.memorize(MemoryType.BasicActionChoosen, this.actionType)
       }
     }
+    if (isMoveItemType(MaterialType.Factory)(move)) {
+      if (!this.productType) {
+        this.forget(MemoryType.ProductChoosen)
+      }
+      if (this.productChoosen === this.productType) {
+        return [this.products.moveItem({ type: LocationType.PlayerProducts, id: this.productChoosen, player: this.player })]
+      }
+    }
     return []
   }
 
@@ -50,9 +59,6 @@ export class ProductionActionRule extends PlayerTurnRule {
     if (isMoveItemType(MaterialType.Product)(move) && (!this.productType || this.productType === move.location.id)) {
       if (!this.productChoosen) {
         this.memorize(MemoryType.ProductChoosen, move.location.id)
-        if (this.productType === Product.Beer && move.location.id === Product.Beer) {
-          moves.push(...this.products.moveItems({ ...move.location, type: LocationType.PlayerProducts }, 1))
-        }
         if(this.playerShipCards.length > 0) {
           for (const shipCard of this.playerShipCards) {
             const shipCardData = shipCardsData[shipCard.id as ShipCard]
@@ -65,17 +71,8 @@ export class ProductionActionRule extends PlayerTurnRule {
         moves.push(...this.allianceCardHelper.getNovgorodProducts(move.location.id as Product))
         moves.push(...this.allianceCardHelper.getLondonProducts(move.location.id as Product))
       } else if (this.playerFactories.length === 0) {
-        this.forget(MemoryType.ProductChoosen)
         this.forget(MemoryType.BasicActionChoosen)
         moves.push(...this.computedActionHelper.removeActionAndWait(this.actionType))
-      }
-    }
-    if (isMoveItemType(MaterialType.Factory)(move)) {
-      if (!this.productType) {
-        this.forget(MemoryType.ProductChoosen)
-      }
-      if (this.productChoosen === this.productType) {
-        moves.push(...this.products.moveItems({ type: LocationType.PlayerProducts, id: this.productChoosen, player: this.player }, 1))
       }
     }
     return moves

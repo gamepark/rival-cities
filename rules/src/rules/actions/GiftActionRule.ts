@@ -19,7 +19,7 @@ export class GiftActionRule extends PlayerTurnRule {
   productChoosen = this.remind(MemoryType.ProductChoosen)
   nbProductGiven = this.remind<number>(MemoryType.NbProductGiven)
 
-  onRuleStart(): MaterialMove[] {
+  /*onRuleStart(): MaterialMove[] {
     const moves: MaterialMove[] = []
     if(this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) {
       return moves
@@ -30,14 +30,18 @@ export class GiftActionRule extends PlayerTurnRule {
       }
     }
     return moves
-  }
+  }*/
 
   getPlayerMoves(): MaterialMove[] {
     const moves: MaterialMove[] = []
     if(this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) {
       return moves
     }
-    moves.push(...this.allProducts.moveItems((item) => ({ type: LocationType.PlayerProducts, player: this.player, id: item.id })))
+    if(this.productType) {
+      moves.push(...this.products.moveItems({ type: LocationType.PlayerProducts, player: this.player, id: this.productType }, this.nbProductToTake))
+    } else {
+      moves.push(...this.allProducts.moveItems((item) => ({ type: LocationType.PlayerProducts, player: this.player, id: item.id }), 1))
+    }
     moves.push(this.customMove(CustomMoveType.Pass))
     return moves
   }
@@ -47,11 +51,8 @@ export class GiftActionRule extends PlayerTurnRule {
       return []
     }
     if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.PlayerProducts) {
-      if (!this.productChoosen) {
-        this.memorize(MemoryType.ProductChoosen, move.location.id)
-      }
-      this.memorize(MemoryType.BasicActionChoosen, ActionType.Gift)
-      this.memorize(MemoryType.NbProductGiven, this.nbProductGiven + 1)
+      this.memorize(MemoryType.BasicActionChoosen, this.actionType)
+      this.memorize<number>(MemoryType.NbProductGiven, (old) => old + 1)
     }
     return []
   }
@@ -62,13 +63,14 @@ export class GiftActionRule extends PlayerTurnRule {
     }
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.PlayerProducts) {
-      if (this.remind(MemoryType.NbProductGiven) === this.nbProductToTake) {
-        this.forget(MemoryType.ProductChoosen)
-        this.forget(MemoryType.BasicActionChoosen)
-        this.memorize(MemoryType.NbProductGiven, 0)
+      if(!this.productChoosen) {
+        this.memorize(MemoryType.ProductChoosen, move.location.id)
         moves.push(...this.allianceCardHelper.getOsloProducts(move.location.id as Product))
         moves.push(...this.allianceCardHelper.getNovgorodProducts(move.location.id as Product))
         moves.push(...this.allianceCardHelper.getLondonProducts(move.location.id as Product))
+      }
+      if (this.remind(MemoryType.NbProductGiven) === this.nbProductToTake) {
+        this.forget(MemoryType.BasicActionChoosen)
         moves.push(...this.computedActionHelper.removeActionAndWait(this.actionType))
       }
     }

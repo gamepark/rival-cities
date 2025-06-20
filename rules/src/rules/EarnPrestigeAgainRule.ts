@@ -7,6 +7,8 @@ import { MaterialType } from '../material/MaterialType'
 import { Product } from '../material/Product'
 import { ActionType } from './ActionType'
 import { ComputedActionsHelper } from './helper/ComputedActionsHelper'
+import { MemoryType } from './MemoryType'
+import { EndOfGameHelper } from './helper/EndOfGameHelper'
 
 export class EarnPrestigeAgainRule extends PlayerTurnRule {
   actionType = ActionType.EarnPrestige
@@ -26,10 +28,11 @@ export class EarnPrestigeAgainRule extends PlayerTurnRule {
   afterItemMove(move: ItemMove): MaterialMove[] {
     if(isMoveItemType(MaterialType.Product)(move)) {
       const move = this.player === City.Altona ? -1 : 1
-      return this.prestigeMarker.moveItems(({ location }) => ({ ...location, x: location.x! + move }))
+      return [this.prestigeMarker.moveItem(({ location }) => ({ ...location, x: location.x! + move }))]
     }
     if(isMoveItemType(MaterialType.PrestigeMarker)(move)) {
-      return this.computedActionHelper?.removeActionAndWait(this.actionType) ?? []
+      this.forget(MemoryType.BasicActionChoosen)
+      return new EndOfGameHelper(this.game).checkInstantEndOfGame(this.computedActionHelper?.removeActionAndWait(this.actionType) ?? [])
     }
     return []
   }

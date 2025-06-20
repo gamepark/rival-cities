@@ -9,10 +9,11 @@ export class BasicActionCard5Rule extends PlayerTurnRule {
   productionActionRule = new ProductionFurnitureActionRule(this.game)
   gainLetterActionRule = new GainLetterActionRule(this.game)
   actionChoosen = this.remind(MemoryType.BasicActionChoosen)
+  allianceCardHelper = new AllianceCardHelper(this.game)
 
   onRuleStart(): MaterialMove[] {
-      this.computeActionIfPlayerHasGdanskAlliance()
-      return []
+    this.allianceCardHelper.computeActionIfPlayerHasGdanskAlliance([this.productionActionRule.actionType, this.gainLetterActionRule.actionType])
+    return []
   }
 
   getPlayerMoves(): MaterialMove[] {
@@ -32,12 +33,6 @@ export class BasicActionCard5Rule extends PlayerTurnRule {
 
   afterItemMove(move: ItemMove): MaterialMove[] {
     return [...this.productionActionRule.afterItemMove(move), ...this.gainLetterActionRule.afterItemMove(move)]
-  }
-      
-  computeActionIfPlayerHasGdanskAlliance() {
-    if(this.playerHasGdanskAlliance) {
-      this.memorize(MemoryType.ComputedActions, [this.productionActionRule.actionType, this.gainLetterActionRule.actionType])
-    }
   }
 
   get playerHasGdanskAlliance() {

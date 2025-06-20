@@ -4,6 +4,7 @@ import { MaterialGame } from '@gamepark/rules-api'
 import { useEffect, useState } from 'react'
 import { GameDisplay } from './GameDisplay'
 import { Headers } from './headers/Headers'
+import { GameOverHeader } from './headers/GameOverHeader'
 
 export default function App() {
   const game = useGame<MaterialGame>()
@@ -17,7 +18,7 @@ export default function App() {
     <>
       {!!game && <GameDisplay players={game.players.length} />}
       <LoadingScreen display={loading} author="Someone" artist="Somebody" publisher="Nobody" developer="You" />
-      <MaterialHeader rulesStepsHeaders={Headers} loading={loading} />
+      <MaterialHeader rulesStepsHeaders={Headers} GameOver={GameOverHeader} loading={loading} />
       <MaterialImageLoader onImagesLoad={() => setImagesLoading(false)} />
       <MaterialGameSounds />
       <Menu />
