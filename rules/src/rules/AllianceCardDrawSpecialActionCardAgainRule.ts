@@ -14,7 +14,7 @@ export class AllianceCardDrawSpecialActionCardAgainRule extends PlayerTurnRule {
   getPlayerMoves(): MaterialMove[] {
     const moves: MaterialMove[] = []
 
-    moves.push(...this.playerBeers.moveItems(it => ({ type: LocationType.ProductPiles, id: it.location.id })))
+    moves.push(...this.playerBeers.moveItems((it) => ({ type: LocationType.ProductPiles, id: it.location.id })))
 
     moves.push(this.customMove(CustomMoveType.Pass, true))
     return moves

@@ -23,5 +23,5 @@ export enum MemoryType {
   ProcessedBonuses,
   MovesOnLawsuitWin,
   IsUseLetter,
-  NbTimeUsedAllianceLeHavre,
+  NbTimeUsedAllianceLeHavre
 }

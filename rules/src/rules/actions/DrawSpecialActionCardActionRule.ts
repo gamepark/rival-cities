@@ -21,7 +21,7 @@ export class DrawSpecialActionCardActionRule extends PlayerTurnRule {
   }
 
   beforeItemMove(move: ItemMove): MaterialMove[] {
-    if(this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
+    if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
     if (isMoveItemType(MaterialType.SpecialActionCard)(move)) {
       this.memorize(MemoryType.BasicActionChoosen, ActionType.DrawSpecialActionCard)
       this.memorize<number>(MemoryType.NbCardsDraw, (old) => old + 1)
@@ -30,12 +30,12 @@ export class DrawSpecialActionCardActionRule extends PlayerTurnRule {
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {
-    if(this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
+    if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
     if (isMoveItemType(MaterialType.SpecialActionCard)(move)) {
-      if(this.remind(MemoryType.NbCardsDraw) === this.nbCardsToDraw) {
+      if (this.remind(MemoryType.NbCardsDraw) === this.nbCardsToDraw) {
         this.memorize(MemoryType.NbCardsDraw, 0)
-         const playerHaveAllianceKjjobenhavn = new AllianceCardHelper(this.game).checkPlayerAllianceCardById(AllianceCard.AllianceKjjobenhavn)
-        if(playerHaveAllianceKjjobenhavn && this.playerBeers.getQuantity() > 0) {
+        const playerHaveAllianceKjjobenhavn = new AllianceCardHelper(this.game).checkPlayerAllianceCardById(AllianceCard.AllianceKjjobenhavn)
+        if (playerHaveAllianceKjjobenhavn && this.playerBeers.getQuantity() > 0) {
           return [this.startRule(RuleId.AllianceCardDrawSpecialActionCardAgain)]
         }
         this.forget(MemoryType.BasicActionChoosen)
@@ -50,8 +50,8 @@ export class DrawSpecialActionCardActionRule extends PlayerTurnRule {
       .location(LocationType.SpecialActionCardsDeck)
       .maxBy((it) => it.location.x!)
   }
-  
-    get playerBeers() {
-      return this.material(MaterialType.Product).id(Product.Beer).location(LocationType.PlayerProducts).player(this.player)
-    }
+
+  get playerBeers() {
+    return this.material(MaterialType.Product).id(Product.Beer).location(LocationType.PlayerProducts).player(this.player)
+  }
 }

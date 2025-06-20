@@ -12,7 +12,7 @@ export class NextRuleHelper extends MaterialRulesPart {
   }
 
   moveToNextRule() {
-    console.log("NextRuleHelper moveToNextRule called")
+    console.log('NextRuleHelper moveToNextRule called')
     const nextRules: RuleId[] = this.remind(MemoryType.NextRules)
     if (nextRules.length > 0) {
       this.memorize(MemoryType.NextRules, nextRules.slice(1))

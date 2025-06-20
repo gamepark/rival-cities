@@ -18,19 +18,24 @@ export class DonationActionRule extends PlayerTurnRule {
   nbProduct = 2
   nbStars = 1
   nbTimes = 1
-  nbProductsDonated = this.remind(MemoryType.NbProductsDonated) ?? 0
+  nbProductsDonated: number = this.remind(MemoryType.NbProductsDonated) ?? 0
   isDonationInProgress = this.remind(MemoryType.IsDonationInProgress)
 
   getPlayerMoves(): MaterialMove[] {
-    if(this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
+    if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
     const moves: MaterialMove[] = []
-    if(this.playerProducts.getQuantity() < this.nbProduct) return moves
-    if(this.isDonationInProgress) {
-      moves.push(...this.playerProducts.moveItems(item => ({ type: LocationType.ProductPiles, id: item.id })))
+    if (this.playerProducts.getQuantity() < this.nbProduct) return moves
+    if (this.isDonationInProgress) {
+      moves.push(...this.playerProducts.moveItems((item) => ({ type: LocationType.ProductPiles, id: item.id })))
     } else {
-      if(this.nbProductsDonated < this.nbProduct && this.starTokens.length > 0) {
+      if (this.nbProductsDonated < this.nbProduct && this.starTokens.length > 0) {
         const playerHaveAllianceAmsterdam = new AllianceCardHelper(this.game).checkPlayerAllianceCardById(AllianceCard.AllianceAmsterdam)
-        moves.push(...this.starTokens.moveItems({ type: LocationType.PlayerStarTokens, player: this.player }, playerHaveAllianceAmsterdam ? this.nbStars + 1 : this.nbStars))
+        moves.push(
+          ...this.starTokens.moveItems(
+            { type: LocationType.PlayerStarTokens, player: this.player },
+            playerHaveAllianceAmsterdam ? this.nbStars + 1 : this.nbStars
+          )
+        )
       }
       moves.push(this.customMove(CustomMoveType.Pass))
     }
@@ -38,25 +43,25 @@ export class DonationActionRule extends PlayerTurnRule {
   }
 
   beforeItemMove(move: ItemMove): MaterialMove[] {
-    if(this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
+    if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.StarToken)(move) && move.location.type === LocationType.PlayerStarTokens) {
       this.memorize(MemoryType.BasicActionChoosen, ActionType.Donation)
       this.memorize(MemoryType.IsDonationInProgress, true)
-    } else if(isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.ProductPiles && this.isDonationInProgress) {
+    } else if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.ProductPiles && this.isDonationInProgress) {
       this.memorize(MemoryType.NbProductsDonated, this.nbProductsDonated + 1)
     }
     return moves
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {
-    if(this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
+    if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
     const moves: MaterialMove[] = []
-    if(isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.ProductPiles) {
-      if(this.remind(MemoryType.NbProductsDonated) === this.nbProduct) {
+    if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.ProductPiles) {
+      if (this.remind(MemoryType.NbProductsDonated) === this.nbProduct) {
         this.memorize(MemoryType.IsDonationInProgress, false)
         this.memorize<number>(MemoryType.NbDonations, (old) => old + 1)
-        if(this.remind(MemoryType.NbDonations) === this.nbTimes) {
+        if (this.remind(MemoryType.NbDonations) === this.nbTimes) {
           this.forget(MemoryType.BasicActionChoosen)
           return this.computedActionHelper.removeActionAndWait(this.actionType)
         }
@@ -66,7 +71,7 @@ export class DonationActionRule extends PlayerTurnRule {
   }
 
   get playerProducts() {
-    if(!this.productType) {
+    if (!this.productType) {
       return this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(this.player)
     }
     return this.material(MaterialType.Product).id(this.productType).location(LocationType.PlayerProducts).player(this.player)

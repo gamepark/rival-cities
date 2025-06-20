@@ -48,10 +48,7 @@ export class AdvanceAgainInLawsuitRule extends PlayerTurnRule {
           moves.push(...this.playerProducts.id(cost.type).limit(cost.quantity).moveItems({ type: LocationType.ProductPiles, id: cost.type }, cost.quantity))
         }
       })
-      if (
-        move.location.id === 2 ||
-        this.remind(MemoryType.NbTimeAdvancedInLawsuit) === 2
-      ) {
+      if (move.location.id === 2 || this.remind(MemoryType.NbTimeAdvancedInLawsuit) === 2) {
         this.forget(MemoryType.LawsuitAdvanced)
         this.memorize(MemoryType.NbTimeAdvancedInLawsuit, 0)
         const playerHaveAllianceLeHavre = new AllianceCardHelper(this.game).checkPlayerAllianceCardById(AllianceCard.AllianceLeHavre)

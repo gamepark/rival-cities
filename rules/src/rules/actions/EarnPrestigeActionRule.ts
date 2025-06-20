@@ -25,13 +25,13 @@ export class EarnPrestigeActionRule extends PlayerTurnRule {
   //}
 
   getPlayerMoves(): MaterialMove[] {
-    if(this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
+    if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
     const move = this.playerWhoEarnedPrestige === City.Altona ? -1 : 1
     return [this.prestigeMarker.moveItem(({ location }) => ({ ...location, x: location.x! + move }))]
   }
 
   beforeItemMove(move: ItemMove): MaterialMove[] {
-    if(this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
+    if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.PrestigeMarker)(move)) {
       this.memorize(MemoryType.BasicActionChoosen, ActionType.EarnPrestige)
@@ -40,24 +40,24 @@ export class EarnPrestigeActionRule extends PlayerTurnRule {
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {
-    if(this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
+    if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
     if (isMoveItemType(MaterialType.PrestigeMarker)(move)) {
-      new EndOfGameHelper(this.game).checkInstantEndOfGame(this.movesOnPrestigeMarkerMoved())
+      return new EndOfGameHelper(this.game).checkInstantEndOfGame(this.movesOnPrestigeMarkerMoved())
     }
     return []
   }
 
   movesOnPrestigeMarkerMoved(): MaterialMove[] {
     const playerShip16 = this.material(MaterialType.ShipCard).location(LocationType.PlayerShipCards).player(this.playerWhoEarnedPrestige).id(ShipCard.Ship16)
-      if(playerShip16.length > 0 && this.playerBeers.length >= 2) {
-        return [this.startPlayerTurn(RuleId.EarnPrestigeAgain, this.playerWhoEarnedPrestige)]
-      }
-      const playerHaveAllianceBruxelles = new AllianceCardHelper(this.game).checkPlayerAllianceCardById(AllianceCard.AllianceBruxelles)
-      if(playerHaveAllianceBruxelles && this.playerFurnitures.getQuantity() > 0) {
-        return [this.startPlayerTurn(RuleId.AllianceCardEarnPrestigeAgain, this.playerWhoEarnedPrestige)]
-      }
-      this.forget(MemoryType.BasicActionChoosen)
-      return this.computedActionHelper.removeActionAndWait(this.actionType)
+    if (playerShip16.length > 0 && this.playerBeers.length >= 2) {
+      return [this.startPlayerTurn(RuleId.EarnPrestigeAgain, this.playerWhoEarnedPrestige)]
+    }
+    const playerHaveAllianceBruxelles = new AllianceCardHelper(this.game).checkPlayerAllianceCardById(AllianceCard.AllianceBruxelles)
+    if (playerHaveAllianceBruxelles && this.playerFurnitures.getQuantity() > 0) {
+      return [this.startPlayerTurn(RuleId.AllianceCardEarnPrestigeAgain, this.playerWhoEarnedPrestige)]
+    }
+    this.forget(MemoryType.BasicActionChoosen)
+    return this.computedActionHelper.removeActionAndWait(this.actionType)
   }
 
   get prestigeMarker() {

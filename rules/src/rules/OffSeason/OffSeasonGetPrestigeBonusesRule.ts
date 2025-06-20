@@ -18,8 +18,10 @@ export class OffSeasonGetPrestigeBonusesRule extends PlayerTurnRule {
     const player = this.prestigeMarkerLocation < 0 ? City.Altona : City.Hamburg
 
     switch (Math.abs(this.prestigeMarkerLocation)) {
-      case 0: break
-      case 1: break
+      case 0:
+        break
+      case 1:
+        break
       case 2:
         moves.push(this.getProducts(Product.Beer).moveItem({ type: LocationType.PlayerProducts, player, id: Product.Beer }))
         break

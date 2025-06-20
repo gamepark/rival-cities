@@ -16,12 +16,10 @@ export class AllianceCardHelper extends MaterialRulesPart {
     this.nextPlayer = game.players.find((player) => player !== this.player)
   }
 
-  
-      
   computeActionIfPlayerHasGdanskAlliance(actions: ActionType[]) {
-    if(this.remind(MemoryType.ComputedActions).length > 0) return
+    if (this.remind(MemoryType.ComputedActions).length > 0) return
 
-    if(this.checkPlayerAllianceCardById(AllianceCard.AllianceGdansk)) {
+    if (this.checkPlayerAllianceCardById(AllianceCard.AllianceGdansk)) {
       this.memorize(MemoryType.ComputedActions, actions)
     }
   }
@@ -29,22 +27,22 @@ export class AllianceCardHelper extends MaterialRulesPart {
   checkPlayerAllianceCardById(allianceCard: AllianceCard) {
     return this.material(MaterialType.AllianceCard).location(LocationType.PlayerAllianceCards).player(this.player).id(allianceCard).length > 0
   }
-  
+
   getOsloProducts(moveProduct: Product): MaterialMove[] {
     return [...this.getProductsFromAllianceCard(moveProduct, Product.Furniture, AllianceCard.AllianceOslo)]
   }
-  
+
   getNovgorodProducts(moveProduct: Product): MaterialMove[] {
     return [...this.getProductsFromAllianceCard(moveProduct, Product.Leather, AllianceCard.AllianceNovgorod)]
   }
-  
+
   getLondonProducts(moveProduct: Product): MaterialMove[] {
     return [...this.getProductsFromAllianceCard(moveProduct, Product.Cloth, AllianceCard.AllianceLondon)]
   }
-  
+
   private getProductsFromAllianceCard(product: Product, allianceProduct: Product, allianceCard: AllianceCard): MaterialMove[] {
     const alliance = this.material(MaterialType.AllianceCard).location(LocationType.PlayerAllianceCards).player(this.player).id(allianceCard)
-    if(alliance.length && product === allianceProduct) {
+    if (alliance.length && product === allianceProduct) {
       return [this.allProducts.id(product).moveItem({ type: LocationType.PlayerProducts, id: allianceProduct, player: this.player })]
     }
     return []
@@ -62,5 +60,4 @@ export class AllianceCardHelper extends MaterialRulesPart {
 
     return resourcesInReserve
   }
-
 }

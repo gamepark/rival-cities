@@ -40,14 +40,16 @@ export class ShipCardHelper extends MaterialRulesPart {
   }
 
   private movePrestigeMarker(): MaterialMove[] {
-      const prestigeMarkerMove = this.player === City.Altona ? -1 : 1
-      const moves: MaterialMove[] = []
-       moves.push(this.material(MaterialType.PrestigeMarker)
+    const prestigeMarkerMove = this.player === City.Altona ? -1 : 1
+    const moves: MaterialMove[] = []
+    moves.push(
+      this.material(MaterialType.PrestigeMarker)
         .location(LocationType.PrestigeMarkerPiste)
-        .moveItem(({ location }) => ({ ...location, x: location.x! + prestigeMarkerMove })))
-        moves.push(...new EndOfGameHelper(this.game).checkInstantEndOfGame([]))
-        return moves
-    }
+        .moveItem(({ location }) => ({ ...location, x: location.x! + prestigeMarkerMove }))
+    )
+    moves.push(...new EndOfGameHelper(this.game).checkInstantEndOfGame([]))
+    return moves
+  }
 
   getProductMove(product: Product, quantity: number): MaterialMove[] {
     return this.material(MaterialType.Product)

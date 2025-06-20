@@ -9,12 +9,14 @@ export class OffSeasonChangeSpecialCardsRule extends PlayerTurnRule {
     const moves: MaterialMove[] = []
     if (this.material(MaterialType.SpecialActionCard).location(LocationType.SpecialActionCardsDeck).length < 4) {
       moves.push(this.material(MaterialType.SpecialActionCard).location(LocationType.SpecialActionCardsDiscard).shuffle())
-      moves.push(this.material(MaterialType.SpecialActionCard)
-        .location(LocationType.SpecialActionCardsDiscard)
-        .moveItemsAtOnce({ type: LocationType.SpecialActionCardsDeck }))
-    } else { 
-    moves.push(...this.replaceCardsInCardPist())
-  }
+      moves.push(
+        this.material(MaterialType.SpecialActionCard)
+          .location(LocationType.SpecialActionCardsDiscard)
+          .moveItemsAtOnce({ type: LocationType.SpecialActionCardsDeck })
+      )
+    } else {
+      moves.push(...this.replaceCardsInCardPist())
+    }
     return moves
   }
 

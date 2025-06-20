@@ -26,11 +26,11 @@ export class EarnPrestigeAgainRule extends PlayerTurnRule {
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {
-    if(isMoveItemType(MaterialType.Product)(move)) {
+    if (isMoveItemType(MaterialType.Product)(move)) {
       const move = this.player === City.Altona ? -1 : 1
       return [this.prestigeMarker.moveItem(({ location }) => ({ ...location, x: location.x! + move }))]
     }
-    if(isMoveItemType(MaterialType.PrestigeMarker)(move)) {
+    if (isMoveItemType(MaterialType.PrestigeMarker)(move)) {
       this.forget(MemoryType.BasicActionChoosen)
       return new EndOfGameHelper(this.game).checkInstantEndOfGame(this.computedActionHelper?.removeActionAndWait(this.actionType) ?? [])
     }

@@ -71,7 +71,10 @@ export const lawsuitCardData: Record<LawsuitCard, LawsuitCardData> = {
     nbStars: 2
   },
   [LawsuitCard.Lawsuit8]: {
-    cost: [{ type: Product.Cloth, quantity: 1 }, { type: Product.Leather, quantity: 1 }],
+    cost: [
+      { type: Product.Cloth, quantity: 1 },
+      { type: Product.Leather, quantity: 1 }
+    ],
     actionInAdvance: (game, player) => new LawsuitCardHelper(game, player).lawersuitCard8ActionOnAdvance(),
     actionInWin: (game, player) => new LawsuitCardHelper(game, player).lawersuitCard8ActionOnWin(),
     nbStars: 3

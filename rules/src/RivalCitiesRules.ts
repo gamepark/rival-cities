@@ -85,7 +85,7 @@ export class RivalCitiesRules
     [RuleId.ChooseSpecialAction]: ChooseSpecialActionRule,
     [RuleId.Choose2Product]: Choose2ProductRule,
     [RuleId.Choose1Product]: Choose1ProductRule,
-    [RuleId.OffSeasonPlayerWithMostShipCardsEarnPrestige]: OffSeasonPlayerWithMostShipCardsEarnPrestigeRule,
+    [RuleId.OffSeasonPlayerWithMostShipCardsEarnPrestige]: OffSeasonPlayerWithMostShipCardsEarnPrestigeRule
   }
 
   locationsStrategies = {
@@ -132,7 +132,7 @@ export class RivalCitiesRules
     if (isCustomMoveType(CustomMoveType.Pass)(move)) {
       new MemoryHelper(this.game).clearMemory()
       const actionType = this.remind(MemoryType.BasicActionChoosen)
-      if(!move.data) {
+      if (!move.data) {
         this.memorize(MemoryType.ComputedActions, [])
       }
       moves.push(...this.computedActionsHelper.removeActionAndWait(actionType))

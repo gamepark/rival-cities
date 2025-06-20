@@ -21,7 +21,7 @@ export class OffSeasonPayForAllianceRule extends SimultaneousRule {
     const moves: MaterialMove[] = []
     this.game.players.forEach((player) => {
       this.memorize(MemoryType.AlliancePay, [], player)
-      if(this.getPlayerAlliances(player).length === 0) {
+      if (this.getPlayerAlliances(player).length === 0) {
         moves.push(this.endPlayerTurn(player))
       }
     })
@@ -44,7 +44,7 @@ export class OffSeasonPayForAllianceRule extends SimultaneousRule {
     }
     this.getPlayerAlliances(player).forEach((it) => {
       const allianceData = allianceDatas[it.id as AllianceCard]
-    if (this.checkIfPlayerHasEnougthProducts(player, allianceData) && !this.getPlayerAlrdeadyPayedAlliance(player).find((pay) => pay.id === it.id)) {
+      if (this.checkIfPlayerHasEnougthProducts(player, allianceData) && !this.getPlayerAlrdeadyPayedAlliance(player).find((pay) => pay.id === it.id)) {
         const alliancePay: AlliancePay = {
           id: it.id,
           cost: allianceData.cost,
@@ -65,7 +65,7 @@ export class OffSeasonPayForAllianceRule extends SimultaneousRule {
   }
 
   beforeItemMove(move: ItemMove): MaterialMove[] {
-    if(isMoveItemType(MaterialType.Product)(move) || isMoveItemType(MaterialType.Letter)(move)) {
+    if (isMoveItemType(MaterialType.Product)(move) || isMoveItemType(MaterialType.Letter)(move)) {
       const alliancePays = this.remind<AlliancePay[]>(MemoryType.AlliancePay, move.location.player)
       const alliancePay = alliancePays.find((it: AlliancePay) => it.alreadyPay < it.cost.amount)
       if (alliancePay) {

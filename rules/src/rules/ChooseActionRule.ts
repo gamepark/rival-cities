@@ -27,7 +27,7 @@ export class ChooseActionRule extends PlayerTurnRule {
 
   getPlayerMoves(): MaterialMove[] {
     const moves: MaterialMove[] = []
-    if(this.playerLetters.length > 0 && !this.remind(MemoryType.IsUseLetter)) {
+    if (this.playerLetters.length > 0 && !this.remind(MemoryType.IsUseLetter)) {
       moves.push(...this.playerLetters.moveItems({ type: LocationType.LetterDeck }))
     }
     moves.push(...this.playerSpecialActionCards.moveItems({ type: LocationType.SpecialActionCardsDiscard }))
@@ -36,7 +36,7 @@ export class ChooseActionRule extends PlayerTurnRule {
   }
 
   beforeItemMove(move: ItemMove): MaterialMove[] {
-    if(isMoveItemType(MaterialType.Letter)(move)) {
+    if (isMoveItemType(MaterialType.Letter)(move)) {
       this.memorize(MemoryType.IsUseLetter, true)
     }
     return []
@@ -46,7 +46,7 @@ export class ChooseActionRule extends PlayerTurnRule {
     if (isMoveItemType(MaterialType.SpecialActionCard)(move) && move.location.type === LocationType.SpecialActionCardsDiscard) {
       const cardId = this.material(MaterialType.SpecialActionCard).index(move.itemIndex).getItem()?.id as SpecialActionCard
       this.memorize(MemoryType.ComputedActions, spectialActionCardActions[cardId])
-      if(this.remind(MemoryType.IsUseLetter) || this.playerHaveShip18) {
+      if (this.remind(MemoryType.IsUseLetter) || this.playerHaveShip18) {
         this.memorize(MemoryType.NextRules, [RuleId.SpecialAction, RuleId.BasicAction])
         return this.nextRuleHelper.moveToNextRule()
       }
@@ -57,7 +57,7 @@ export class ChooseActionRule extends PlayerTurnRule {
 
   onCustomMove(move: CustomMove): MaterialMove[] {
     if (isCustomMoveType(CustomMoveType.PlaysBasicAction)(move)) {
-      if(this.remind(MemoryType.IsUseLetter) || this.playerHaveShip18) {
+      if (this.remind(MemoryType.IsUseLetter) || this.playerHaveShip18) {
         this.memorize(MemoryType.NextRules, [RuleId.BasicAction, RuleId.ChooseSpecialAction])
         return this.nextRuleHelper.moveToNextRule()
       }

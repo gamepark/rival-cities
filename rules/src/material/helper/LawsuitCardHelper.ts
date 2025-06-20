@@ -39,7 +39,7 @@ export class LawsuitCardHelper extends MaterialRulesPart {
   }
 
   lawersuitCard3ActionOnWin(): MaterialMove[] {
-    this.memorize<RuleId[]>(MemoryType.NextRules, old => [RuleId.Choose2Product, ...old])
+    this.memorize<RuleId[]>(MemoryType.NextRules, (old) => [RuleId.Choose2Product, ...old])
     return this.nextRuleHelper.moveToNextRule()
   }
 
@@ -72,7 +72,7 @@ export class LawsuitCardHelper extends MaterialRulesPart {
   }
 
   lawersuitCard7ActionOnWin(): MaterialMove[] {
-    this.memorize<RuleId[]>(MemoryType.NextRules, old => [RuleId.Choose1Product, ...old])
+    this.memorize<RuleId[]>(MemoryType.NextRules, (old) => [RuleId.Choose1Product, ...old])
     return [...this.movePrestigeMarker(), ...this.nextRuleHelper.moveToNextRule()]
   }
 
@@ -103,11 +103,13 @@ export class LawsuitCardHelper extends MaterialRulesPart {
   private movePrestigeMarker(): MaterialMove[] {
     const prestigeMarkerMove = this.player === City.Altona ? -1 : 1
     const moves: MaterialMove[] = []
-     moves.push(this.material(MaterialType.PrestigeMarker)
-      .location(LocationType.PrestigeMarkerPiste)
-      .moveItem(({ location }) => ({ ...location, x: location.x! + prestigeMarkerMove })))
-      moves.push(...new EndOfGameHelper(this.game).checkInstantEndOfGame([]))
-      return moves
+    moves.push(
+      this.material(MaterialType.PrestigeMarker)
+        .location(LocationType.PrestigeMarkerPiste)
+        .moveItem(({ location }) => ({ ...location, x: location.x! + prestigeMarkerMove }))
+    )
+    moves.push(...new EndOfGameHelper(this.game).checkInstantEndOfGame([]))
+    return moves
   }
 
   private getProductMove(product: Product, quantity: number): MaterialMove[] {

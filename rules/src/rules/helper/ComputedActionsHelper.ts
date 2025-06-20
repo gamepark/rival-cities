@@ -21,8 +21,12 @@ export class ComputedActionsHelper extends MaterialRulesPart {
       }
       return old
     })
-    if(this.remind(MemoryType.ComputedActions).length) {
-      return [this.previousRulePlayer !== undefined ? this.startPlayerTurn(this.remind(MemoryType.PreviousRule), this.previousRulePlayer!) : this.startRule(this.remind(MemoryType.PreviousRule))]
+    if (this.remind(MemoryType.ComputedActions).length) {
+      return [
+        this.previousRulePlayer !== undefined
+          ? this.startPlayerTurn(this.remind(MemoryType.PreviousRule), this.previousRulePlayer)
+          : this.startRule(this.remind(MemoryType.PreviousRule))
+      ]
     }
     return this.nextRuleHelper.moveToNextRule()
   }

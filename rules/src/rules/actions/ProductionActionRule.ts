@@ -24,10 +24,13 @@ export class ProductionActionRule extends PlayerTurnRule {
   //}
 
   getPlayerMoves(onNotProductChoosenMoves: MaterialMove[] = []): MaterialMove[] {
-    if(this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
+    if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
     if (!this.productChoosen) {
       const productsToMove = this.productType ? this.products : this.allProducts
-      return [...productsToMove.moveItems((item) => ({ type: LocationType.PlayerProducts, player: this.player, id: item.id }), this.quantity), ...onNotProductChoosenMoves]
+      return [
+        ...productsToMove.moveItems((item) => ({ type: LocationType.PlayerProducts, player: this.player, id: item.id }), this.quantity),
+        ...onNotProductChoosenMoves
+      ]
     }
     if (this.playerFactories.length) {
       return [...this.playerFactories.rotateItems(true), this.customMove(CustomMoveType.Pass, true)]
@@ -36,7 +39,7 @@ export class ProductionActionRule extends PlayerTurnRule {
   }
 
   beforeItemMove(move: ItemMove): MaterialMove[] {
-    if(this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
+    if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
     if (isMoveItemType(MaterialType.Product)(move) && (!this.productType || this.productType === move.location.id)) {
       if (!this.remind(MemoryType.BasicActionChoosen)) {
         this.memorize(MemoryType.BasicActionChoosen, this.actionType)
@@ -54,12 +57,12 @@ export class ProductionActionRule extends PlayerTurnRule {
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {
-    if(this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
+    if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.Product)(move) && (!this.productType || this.productType === move.location.id)) {
       if (!this.productChoosen) {
         this.memorize(MemoryType.ProductChoosen, move.location.id)
-        if(this.playerShipCards.length > 0) {
+        if (this.playerShipCards.length > 0) {
           for (const shipCard of this.playerShipCards) {
             const shipCardData = shipCardsData[shipCard.id as ShipCard]
             if (shipCardData.effect.action) {
@@ -112,6 +115,7 @@ export class ProductionActionRule extends PlayerTurnRule {
     return this.material(MaterialType.ShipCard)
       .location(LocationType.PlayerShipCards)
       .player(this.player)
-      .filter((it) => shipCardsData[it.id as ShipCard].effect.type === ShipEffectType.OnProduction).getItems()
+      .filter((it) => shipCardsData[it.id as ShipCard].effect.type === ShipEffectType.OnProduction)
+      .getItems()
   }
 }

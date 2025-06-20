@@ -29,24 +29,21 @@ export class ResolveLawsuitRule extends PlayerTurnRule {
     } else {
       moves.push(this.lawsuitCardToResolve.deleteItem())
     }
-    if (this.material(MaterialType.LawsuitCard)
-      .location((loc) => loc.type === LocationType.LawsuitCardsRiver && loc.z === 1).length) {
+    if (this.material(MaterialType.LawsuitCard).location((loc) => loc.type === LocationType.LawsuitCardsRiver && loc.z === 1).length) {
       moves.push(
         this.material(MaterialType.LawsuitCard)
           .location((loc) => loc.type === LocationType.LawsuitCardsRiver && loc.z === 1)
           .moveItem(({ location }) => ({ ...location, z: 0 }))
       )
     }
-    if (this.material(MaterialType.LawsuitCard)
-      .location((loc) => loc.type === LocationType.LawsuitCardsRiver && loc.z === 2).length) {
+    if (this.material(MaterialType.LawsuitCard).location((loc) => loc.type === LocationType.LawsuitCardsRiver && loc.z === 2).length) {
       moves.push(
         this.material(MaterialType.LawsuitCard)
           .location((loc) => loc.type === LocationType.LawsuitCardsRiver && loc.z === 2)
           .moveItem(({ location }) => ({ ...location, z: 1 }))
       )
     }
-    if (this.material(MaterialType.LawsuitCard)
-      .location(LocationType.LawsuitCardDeck).length) {
+    if (this.material(MaterialType.LawsuitCard).location(LocationType.LawsuitCardDeck).length) {
       moves.push(
         this.material(MaterialType.LawsuitCard)
           .location(LocationType.LawsuitCardDeck)
@@ -91,7 +88,9 @@ export class ResolveLawsuitRule extends PlayerTurnRule {
       if (this.remind<MaterialMove[]>(MemoryType.MovesOnLawsuitWin)) {
         return this.remind(MemoryType.MovesOnLawsuitWin)
       }
-      return this.remind(MemoryType.IsOffSeason) ? [this.startRule(RuleId.OffSeasonChangeSpecialCards)] : new ComputedActionsHelper(this.game).removeActionAndWait(ActionType.CourtRuling)
+      return this.remind(MemoryType.IsOffSeason)
+        ? [this.startRule(RuleId.OffSeasonChangeSpecialCards)]
+        : new ComputedActionsHelper(this.game).removeActionAndWait(ActionType.CourtRuling)
     }
     if (isMoveItemType(MaterialType.LawsuitCard)(move) && move.location.type === LocationType.PlayerLawsuitCards) {
       return new EndOfGameHelper(this.game).checkInstantEndOfGame([])

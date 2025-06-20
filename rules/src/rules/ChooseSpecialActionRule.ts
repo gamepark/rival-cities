@@ -6,7 +6,6 @@ import { MemoryType } from './MemoryType'
 import { RuleId } from './RuleId'
 
 export class ChooseSpecialActionRule extends PlayerTurnRule {
-
   getPlayerMoves(): MaterialMove[] {
     const moves: MaterialMove[] = []
     moves.push(...this.playerSpecialActionCards.moveItems({ type: LocationType.SpecialActionCardsDiscard }))

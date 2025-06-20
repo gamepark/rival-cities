@@ -55,7 +55,6 @@ export const spectialActionCardActions: Record<SpecialActionCard, ActionType[]> 
   [SpecialActionCard.SpecialAction22]: [ActionType.CourtRuling, ActionType.AdvanceLawsuit],
   [SpecialActionCard.SpecialAction23]: [ActionType.AdvanceLawsuit, ActionType.Gift, ActionType.Donation1LeatherFor1star2Times],
   [SpecialActionCard.SpecialAction24]: [ActionType.Gift2Time, ActionType.Donation3BeerFor1Star2Times]
-
 }
 
 /*

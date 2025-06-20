@@ -15,7 +15,7 @@ export class Return3FactoryActionRule extends PlayerTurnRule {
 
   afterItemMove(move: ItemMove): MaterialMove[] {
     const moves: MaterialMove[] = []
-    if(isMoveItemType(MaterialType.Factory)(move)) {
+    if (isMoveItemType(MaterialType.Factory)(move)) {
       return this.computedActionHelper.removeActionAndWait(this.actionType)
     }
     return moves

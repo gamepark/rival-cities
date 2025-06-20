@@ -13,7 +13,7 @@ export enum AllianceCard {
 }
 
 export type AllianceData = {
-  cost : {
+  cost: {
     product?: Product | 'Letter'
     amount: number
   }

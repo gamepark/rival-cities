@@ -15,7 +15,7 @@ export class CourtRulingActionRule extends PlayerTurnRule {
   basicActionHelper = new BasicActionHelper(this.game)
 
   getPlayerMoves(): MaterialMove[] {
-    if(this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
+    if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
     const moves: MaterialMove[] = []
     const xPositionToCanResolve = this.player === City.Altona ? [-2, -3, -4] : [2, 3, 4]
 
@@ -29,7 +29,7 @@ export class CourtRulingActionRule extends PlayerTurnRule {
   }
 
   beforeItemMove(move: ItemMove): MaterialMove[] {
-    if(this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
+    if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.LawsuitCard)(move) && move.location.z !== 1) {
       this.memorize(MemoryType.BasicActionChoosen, ActionType.CourtRuling)
@@ -53,7 +53,7 @@ export class CourtRulingActionRule extends PlayerTurnRule {
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {
-    if(this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
+    if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.LawsuitCard)(move) && move.location.z === 1) {
       this.forget(MemoryType.BasicActionChoosen)
@@ -63,7 +63,7 @@ export class CourtRulingActionRule extends PlayerTurnRule {
   }
 
   onCustomMove(move: CustomMove): MaterialMove[] {
-    if(this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
+    if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
     if (isCustomMoveType(CustomMoveType.ResolveLawsuit)(move)) {
       return [this.startRule(RuleId.ResolveLawsuit)]
     }

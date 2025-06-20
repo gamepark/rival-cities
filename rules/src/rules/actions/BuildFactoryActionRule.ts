@@ -21,12 +21,12 @@ export class BuildFactoryActionRule extends PlayerTurnRule {
   }
 
   getPlayerMoves(): MaterialMove[] {
-    if(this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
+    if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
     const moves: MaterialMove[] = []
-    if(this.isBuildInProgress) {
-      moves.push(...this.playerProducts.moveItems(item => ({ type: LocationType.ProductPiles, id: item.id })))
+    if (this.isBuildInProgress) {
+      moves.push(...this.playerProducts.moveItems((item) => ({ type: LocationType.ProductPiles, id: item.id })))
     } else {
-      if(this.factories.length > 0) {
+      if (this.factories.length > 0) {
         moves.push(...this.factories.moveItems({ type: LocationType.PlayerFactories, player: this.player }, 1))
       }
       moves.push(this.customMove(CustomMoveType.Pass))
@@ -35,28 +35,28 @@ export class BuildFactoryActionRule extends PlayerTurnRule {
   }
 
   beforeItemMove(move: ItemMove): MaterialMove[] {
-    if(this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
+    if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.Factory)(move) && move.location.type === LocationType.PlayerFactories) {
       this.memorize(MemoryType.BasicActionChoosen, this.actionType)
       this.memorize(MemoryType.IsBuildInProgress, true)
-    } else if(isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.ProductPiles && this.isBuildInProgress) {
+    } else if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.ProductPiles && this.isBuildInProgress) {
       this.memorize(MemoryType.NbProductGiven, this.nbProductsGiven + 1)
     }
     return moves
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {
-    if(this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
+    if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
     const moves: MaterialMove[] = []
-    if(this.remind(MemoryType.BasicActionChoosen) !== this.actionType) return moves
-    if(isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.ProductPiles) {
-      if(this.remind(MemoryType.NbProductGiven) === this.price) {
+    if (this.remind(MemoryType.BasicActionChoosen) !== this.actionType) return moves
+    if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.ProductPiles) {
+      if (this.remind(MemoryType.NbProductGiven) === this.price) {
         return [...this.computedActionHelper.removeActionAndWait(this.actionType)]
       }
     }
-    if(isMoveItemType(MaterialType.Factory)(move) && move.location.type === LocationType.PlayerFactories) {
-      if(this.price === 0) {
+    if (isMoveItemType(MaterialType.Factory)(move) && move.location.type === LocationType.PlayerFactories) {
+      if (this.price === 0) {
         this.forget(MemoryType.BasicActionChoosen)
         return [...this.computedActionHelper.removeActionAndWait(this.actionType)]
       }

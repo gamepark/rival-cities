@@ -7,14 +7,14 @@ import { RuleId } from '../RuleId'
 
 export class OffSeasonGetShipsBonusesRule extends PlayerTurnRule {
   onRuleStart(): MaterialMove[] {
-    if(this.shipsOffSeason.length === 0) {
+    if (this.shipsOffSeason.length === 0) {
       return [this.startRule(RuleId.OffSeasonGetPrestigeBonuses)]
     }
     const moves: MaterialMove[] = []
     this.memorize<number>(MemoryType.ProcessedBonuses, 0)
     this.shipsOffSeason.forEach((it) => {
       const shipCardData = shipCardsData[it.id as ShipCard]
-      if(shipCardData.effect.action) {
+      if (shipCardData.effect.action) {
         moves.push(...shipCardData.effect.action(this.game, it.location.player!))
       }
     })
@@ -22,13 +22,16 @@ export class OffSeasonGetShipsBonusesRule extends PlayerTurnRule {
   }
 
   afterItemMove(): MaterialMove[] {
-    if(this.remind<number>(MemoryType.ProcessedBonuses) === this.shipsOffSeason.length) {
+    if (this.remind<number>(MemoryType.ProcessedBonuses) === this.shipsOffSeason.length) {
       return [this.startRule(RuleId.OffSeasonGetPrestigeBonuses)]
     }
     return []
   }
 
   get shipsOffSeason() {
-    return this.material(MaterialType.ShipCard).location(LocationType.PlayerShipCards).filter(it => shipCardsData[it.id as ShipCard].effect.type === ShipEffectType.OffSeason).getItems()
+    return this.material(MaterialType.ShipCard)
+      .location(LocationType.PlayerShipCards)
+      .filter((it) => shipCardsData[it.id as ShipCard].effect.type === ShipEffectType.OffSeason)
+      .getItems()
   }
 }

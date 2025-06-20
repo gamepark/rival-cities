@@ -8,47 +8,44 @@ import { ShipCard, shipCardsData } from '../../material/ShipCard'
 
 export class EndOfGameHelper extends PlayerTurnRule {
   checkOffSeasonEndOfGame(moveIfGameNotEnded: MaterialMove): MaterialMove[] {
-    if(
-        this.factoryDeckIsEmpty ||
-        this.starTokensDeckIsEmpty ||
-        this.noLawsuitCardsInBoard ||
-        this.noShipCardsInBoard
-    ) {
-        return [this.endGame()]
+    if (this.factoryDeckIsEmpty || this.starTokensDeckIsEmpty || this.noLawsuitCardsInBoard || this.noShipCardsInBoard) {
+      return [this.endGame()]
     }
     return [moveIfGameNotEnded]
   }
 
   checkInstantEndOfGame(moveIfGameNotEnded: MaterialMove[]): MaterialMove[] {
-    if(
-        this.checkIfAPlayerAs3MoreShips() ||
-        this.checkIfAPlayerhasWin3Lawsuits() ||
-        this.checkIfAPlayerhasThe4Alliances() ||
-        this.checkIfPrestigeMarkerIsOnACity()
+    if (
+      this.checkIfAPlayerAs3MoreShips() ||
+      this.checkIfAPlayerhasWin3Lawsuits() ||
+      this.checkIfAPlayerhasThe4Alliances() ||
+      this.checkIfPrestigeMarkerIsOnACity()
     ) {
-        return [this.endGame()]
+      return [this.endGame()]
     }
     return moveIfGameNotEnded
   }
 
   checkIfWinnerIsDeterminateByScore(): boolean {
-    return !this.checkIfAPlayerAs3MoreShips() &&
-    !this.checkIfAPlayerhasWin3Lawsuits() &&
-    !this.checkIfAPlayerhasThe4Alliances() &&
-    !this.checkIfPrestigeMarkerIsOnACity()
+    return (
+      !this.checkIfAPlayerAs3MoreShips() &&
+      !this.checkIfAPlayerhasWin3Lawsuits() &&
+      !this.checkIfAPlayerhasThe4Alliances() &&
+      !this.checkIfPrestigeMarkerIsOnACity()
+    )
   }
 
   rankPlayers(playerA: City, playerB: City): number {
-    if(this.checkIfAPlayerAs3MoreShips()) {
+    if (this.checkIfAPlayerAs3MoreShips()) {
       return this.getPlayerShipCards(playerB).length > this.getPlayerShipCards(playerA).length ? 1 : -1
     }
-    if(this.checkIfAPlayerhasWin3Lawsuits()) {
+    if (this.checkIfAPlayerhasWin3Lawsuits()) {
       return this.getPlayerLawsuitCards(playerB).length > this.getPlayerLawsuitCards(playerA).length ? 1 : -1
     }
-    if(this.checkIfAPlayerhasThe4Alliances()) {
+    if (this.checkIfAPlayerhasThe4Alliances()) {
       return this.getPlayerAllianceCards(playerB).length > this.getPlayerAllianceCards(playerA).length ? 1 : -1
     }
-    if(this.checkIfPrestigeMarkerIsOnACity()) {
+    if (this.checkIfPrestigeMarkerIsOnACity()) {
       return this.prestigeMarkerLocation > 0 ? 1 : -1
     }
 
@@ -57,14 +54,23 @@ export class EndOfGameHelper extends PlayerTurnRule {
 
   getScore(playerId: City): number {
     let score = 0
-    score += this.getPlayerAllianceCards(playerId).getItems().map(it => allianceDatas[it.id as AllianceCard].stars).reduce((acc, cur) => acc + cur, 0)
-    score += this.getPlayerLawsuitCards(playerId).getItems().map(it => lawsuitCardData[it.id as LawsuitCard].nbStars).reduce((acc, cur) => acc + cur, 0)
-    score += this.getPlayerShipCards(playerId).getItems().map(it => shipCardsData[it.id as ShipCard].getNbStars(this.getPlayerShipCards(playerId).length)).reduce((acc, cur) => acc + cur, 0)
+    score += this.getPlayerAllianceCards(playerId)
+      .getItems()
+      .map((it) => allianceDatas[it.id as AllianceCard].stars)
+      .reduce((acc, cur) => acc + cur, 0)
+    score += this.getPlayerLawsuitCards(playerId)
+      .getItems()
+      .map((it) => lawsuitCardData[it.id as LawsuitCard].nbStars)
+      .reduce((acc, cur) => acc + cur, 0)
+    score += this.getPlayerShipCards(playerId)
+      .getItems()
+      .map((it) => shipCardsData[it.id as ShipCard].getNbStars(this.getPlayerShipCards(playerId).length))
+      .reduce((acc, cur) => acc + cur, 0)
     score += this.material(MaterialType.StarToken).location(LocationType.PlayerStarTokens).player(playerId).length
-    if(playerId === City.Hamburg && this.prestigeMarkerLocation > 0) {
+    if (playerId === City.Hamburg && this.prestigeMarkerLocation > 0) {
       score += this.prestigeMarkerStars
     }
-    if(playerId === City.Altona && this.prestigeMarkerLocation < 0) { 
+    if (playerId === City.Altona && this.prestigeMarkerLocation < 0) {
       score += this.prestigeMarkerStars
     }
     return score
@@ -124,13 +130,17 @@ export class EndOfGameHelper extends PlayerTurnRule {
   }
 
   get noLawsuitCardsInBoard() {
-    return this.material(MaterialType.LawsuitCard).location(LocationType.LawsuitCardDeck).length === 0
-    && this.material(MaterialType.LawsuitCard).location(LocationType.LawsuitCardsRiver).length === 0
+    return (
+      this.material(MaterialType.LawsuitCard).location(LocationType.LawsuitCardDeck).length === 0 &&
+      this.material(MaterialType.LawsuitCard).location(LocationType.LawsuitCardsRiver).length === 0
+    )
   }
 
   get noShipCardsInBoard() {
-    return this.material(MaterialType.ShipCard).location(LocationType.ShipCardsDeck).length === 0
-    && this.material(MaterialType.ShipCard).location(LocationType.ShipCardsRiver).length === 0
+    return (
+      this.material(MaterialType.ShipCard).location(LocationType.ShipCardsDeck).length === 0 &&
+      this.material(MaterialType.ShipCard).location(LocationType.ShipCardsRiver).length === 0
+    )
   }
 
   get playerWithBell() {

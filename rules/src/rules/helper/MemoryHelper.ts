@@ -2,7 +2,6 @@ import { MaterialRulesPart } from '@gamepark/rules-api'
 import { MemoryType } from '../MemoryType'
 
 export class MemoryHelper extends MaterialRulesPart {
-
   clearMemory(): void {
     this.memorize(MemoryType.NbProductToPayForAdvance, 0)
     this.memorize(MemoryType.PlayerNbProducts, 0)
@@ -21,5 +20,4 @@ export class MemoryHelper extends MaterialRulesPart {
     this.forget(MemoryType.LawsuitAdvanced)
     this.forget(MemoryType.BasicActionChoosen)
   }
-
 }

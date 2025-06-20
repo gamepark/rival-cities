@@ -34,10 +34,10 @@ export class GiftActionRule extends PlayerTurnRule {
 
   getPlayerMoves(): MaterialMove[] {
     const moves: MaterialMove[] = []
-    if(this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) {
+    if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) {
       return moves
     }
-    if(this.productType) {
+    if (this.productType) {
       moves.push(...this.products.moveItems({ type: LocationType.PlayerProducts, player: this.player, id: this.productType }, this.nbProductToTake))
     } else {
       moves.push(...this.allProducts.moveItems((item) => ({ type: LocationType.PlayerProducts, player: this.player, id: item.id }), 1))
@@ -47,7 +47,7 @@ export class GiftActionRule extends PlayerTurnRule {
   }
 
   beforeItemMove(move: ItemMove): MaterialMove[] {
-    if(this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) {
+    if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) {
       return []
     }
     if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.PlayerProducts) {
@@ -58,12 +58,12 @@ export class GiftActionRule extends PlayerTurnRule {
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {
-    if(this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) {
+    if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) {
       return []
     }
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.PlayerProducts) {
-      if(!this.productChoosen) {
+      if (!this.productChoosen) {
         this.memorize(MemoryType.ProductChoosen, move.location.id)
         moves.push(...this.allianceCardHelper.getOsloProducts(move.location.id as Product))
         moves.push(...this.allianceCardHelper.getNovgorodProducts(move.location.id as Product))
@@ -76,7 +76,6 @@ export class GiftActionRule extends PlayerTurnRule {
     }
     return moves
   }
-  
 
   get products() {
     const resourcesInReserve = this.material(MaterialType.Product).location(LocationType.ProductPiles).id(this.productType)

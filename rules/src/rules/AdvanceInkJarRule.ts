@@ -78,5 +78,4 @@ export class AdvanceInkJarRule extends PlayerTurnRule {
   get playerShip17() {
     return this.material(MaterialType.ShipCard).location(LocationType.PlayerShipCards).player(this.player).id(ShipCard.Ship17)
   }
-
 }

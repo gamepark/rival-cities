@@ -19,14 +19,14 @@ export class AdvanceLawsuitActionRule extends PlayerTurnRule {
 
   onRuleStart(): MaterialMove[] {
     this.memorize(MemoryType.NbTimeUsedAllianceLeHavre, 0)
-    if(this.possibleCardsToGet().length === 0) {
+    if (this.possibleCardsToGet().length === 0) {
       return this.computedActionHelper.removeActionAndWait(this.actionType)
     }
     return []
   }
 
   getPlayerMoves(): MaterialMove[] {
-    if(this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
+    if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
     const moveX = this.player === City.Altona ? -1 : 1
     const moves: MaterialMove[] = []
     this.possibleCardsToGet().forEach((card) => {
@@ -40,7 +40,7 @@ export class AdvanceLawsuitActionRule extends PlayerTurnRule {
   }
 
   beforeItemMove(move: ItemMove): MaterialMove[] {
-    if(this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
+    if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.LawsuitMarker)(move)) {
       const card = this.lawsuitCards.filter(({ location }) => location.z === move.location.id).getItem()
@@ -61,7 +61,7 @@ export class AdvanceLawsuitActionRule extends PlayerTurnRule {
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {
-    if(this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
+    if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.LawsuitMarker)(move)) {
       const card = this.lawsuitCards.filter(({ location }) => location.z === move.location.id).getItem()
@@ -83,11 +83,11 @@ export class AdvanceLawsuitActionRule extends PlayerTurnRule {
   }
 
   onCustomMove(move: CustomMove): MaterialMove[] {
-    if(this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
-      if(isCustomMoveType(CustomMoveType.Wait)(move)) {
-        this.forget(MemoryType.BasicActionChoosen)
-      }
-      return []
+    if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
+    if (isCustomMoveType(CustomMoveType.Wait)(move)) {
+      this.forget(MemoryType.BasicActionChoosen)
+    }
+    return []
   }
 
   possibleCardsToGet() {
@@ -95,7 +95,7 @@ export class AdvanceLawsuitActionRule extends PlayerTurnRule {
   }
 
   checkIfCanAdvanceInLawsuit(itemId: LawsuitCard) {
-    if(!itemId) return false
+    if (!itemId) return false
     const lawsuitData = lawsuitCardData[itemId]
     let haveSuffisantProducts = true
     lawsuitData.cost.forEach((cost) => {

@@ -5,10 +5,9 @@ import { MaterialType } from '../../material/MaterialType'
 import { RuleId } from '../RuleId'
 import { EndOfGameHelper } from '../helper/EndOfGameHelper'
 
-
 export class OffSeasonPlayerWithMostShipCardsEarnPrestigeRule extends PlayerTurnRule {
   onRuleStart(): MaterialMove[] {
-    if(this.getPlayerShipCardsLength(City.Altona) === this.getPlayerShipCardsLength(City.Hamburg)) {
+    if (this.getPlayerShipCardsLength(City.Altona) === this.getPlayerShipCardsLength(City.Hamburg)) {
       return [this.startRule(RuleId.OffSeasonGetShipsBonuses)]
     }
     const markerMove = this.getPlayerShipCardsLength(City.Altona) > this.getPlayerShipCardsLength(City.Hamburg) ? -1 : 1

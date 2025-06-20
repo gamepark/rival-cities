@@ -13,10 +13,7 @@ export class SpecialActionRule extends PlayerTurnRule {
   }
 
   getPlayerMoves(): MaterialMove[] {
-    return [
-      ...this.actionRules.flatMap((rule) => rule.getPlayerMoves()),
-      this.customMove(CustomMoveType.Pass)
-    ]
+    return [...this.actionRules.flatMap((rule) => rule.getPlayerMoves()), this.customMove(CustomMoveType.Pass)]
   }
 
   beforeItemMove(move: ItemMove, context?: PlayMoveContext): MaterialMove[] {
