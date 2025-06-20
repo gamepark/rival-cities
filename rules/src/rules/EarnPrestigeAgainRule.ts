@@ -7,7 +7,6 @@ import { MaterialType } from '../material/MaterialType'
 import { Product } from '../material/Product'
 import { ActionType } from './ActionType'
 import { ComputedActionsHelper } from './helper/ComputedActionsHelper'
-import { MemoryType } from './MemoryType'
 import { EndOfGameHelper } from './helper/EndOfGameHelper'
 
 export class EarnPrestigeAgainRule extends PlayerTurnRule {
@@ -31,8 +30,7 @@ export class EarnPrestigeAgainRule extends PlayerTurnRule {
       return [this.prestigeMarker.moveItem(({ location }) => ({ ...location, x: location.x! + move }))]
     }
     if (isMoveItemType(MaterialType.PrestigeMarker)(move)) {
-      this.forget(MemoryType.BasicActionChoosen)
-      return new EndOfGameHelper(this.game).checkInstantEndOfGame(this.computedActionHelper?.removeActionAndWait(this.actionType) ?? [])
+      return new EndOfGameHelper(this.game).checkInstantEndOfGame(this.computedActionHelper?.removeActionAndnext(this.actionType) ?? [])
     }
     return []
   }

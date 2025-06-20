@@ -3,7 +3,6 @@ import { BasicActionCard, getBasicActionCardRule } from '../material/BasicAction
 import { LocationType } from '../material/LocationType'
 import { MaterialType } from '../material/MaterialType'
 import { BasicActionCard0Rule } from './basicActions/BasicActionCard0Rule'
-import { CustomMoveType } from './CustomMoveType'
 import { MemoryType } from './MemoryType'
 import { RuleId } from './RuleId'
 import { MemoryHelper } from './helper/MemoryHelper'
@@ -15,7 +14,7 @@ export class BasicActionRule extends PlayerTurnRule {
   }
 
   getPlayerMoves(): MaterialMove[] {
-    return [...this.basicActionCardRule.getPlayerMoves(), this.customMove(CustomMoveType.Pass)]
+    return [...this.basicActionCardRule.getPlayerMoves()]
   }
 
   beforeItemMove(move: ItemMove, context?: PlayMoveContext): MaterialMove[] {

@@ -23,7 +23,7 @@ export class PiracyActionRule extends PlayerTurnRule {
     if (this.opponentProducts.length > 0) {
       moves.push(...this.opponentProducts.moveItems((item) => ({ type: LocationType.PlayerProducts, player: this.player, id: item.id })))
     }
-    moves.push(this.customMove(CustomMoveType.Pass))
+    moves.push(this.customMove(CustomMoveType.Pass, this.actionType))
     return moves
   }
 
@@ -39,8 +39,7 @@ export class PiracyActionRule extends PlayerTurnRule {
   afterItemMove(move: ItemMove): MaterialMove[] {
     if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
     if (isMoveItemType(MaterialType.Product)(move) && this.remind(MemoryType.NbProductStealed) === this.nbProductsToSteal) {
-      this.forget(MemoryType.BasicActionChoosen)
-      return this.computedActionHelper.removeActionAndWait(this.actionType)
+      return this.computedActionHelper.removeActionAndnext(this.actionType)
     }
     return []
   }

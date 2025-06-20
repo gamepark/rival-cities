@@ -68,12 +68,12 @@ export const shipCardsData: Record<ShipCard, ShipCardData> = {
   },
   [ShipCard.Ship4]: {
     cost: { type: Product.Furniture, quantity: 2 },
-    effect: { type: ShipEffectType.Instant, rules: [RuleId.GainLetterAction] },
+    effect: { type: ShipEffectType.Instant, rules: [RuleId.GainLetter] },
     getNbStars: () => 3
   },
   [ShipCard.Ship5]: {
     cost: { type: Product.Furniture, quantity: 2 },
-    effect: { type: ShipEffectType.Instant, rules: [RuleId.GainLetterAction, RuleId.GainLetterAction] },
+    effect: { type: ShipEffectType.Instant, rules: [RuleId.GainLetter, RuleId.GainLetter] },
     getNbStars: () => 1
   },
   [ShipCard.Ship6]: {

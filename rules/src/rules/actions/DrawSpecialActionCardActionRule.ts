@@ -23,7 +23,7 @@ export class DrawSpecialActionCardActionRule extends PlayerTurnRule {
   beforeItemMove(move: ItemMove): MaterialMove[] {
     if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
     if (isMoveItemType(MaterialType.SpecialActionCard)(move)) {
-      this.memorize(MemoryType.BasicActionChoosen, ActionType.DrawSpecialActionCard)
+      this.memorize(MemoryType.BasicActionChoosen, this.actionType)
       this.memorize<number>(MemoryType.NbCardsDraw, (old) => old + 1)
     }
     return []
@@ -38,8 +38,7 @@ export class DrawSpecialActionCardActionRule extends PlayerTurnRule {
         if (playerHaveAllianceKjjobenhavn && this.playerBeers.getQuantity() > 0) {
           return [this.startRule(RuleId.AllianceCardDrawSpecialActionCardAgain)]
         }
-        this.forget(MemoryType.BasicActionChoosen)
-        return this.computedActionHelper.removeActionAndWait(this.actionType)
+        return this.computedActionHelper.removeActionAndnext(this.actionType)
       }
     }
     return [this.specialActionCard.moveItem({ type: LocationType.PlayerSpecialActionCardsHand, player: this.player })]

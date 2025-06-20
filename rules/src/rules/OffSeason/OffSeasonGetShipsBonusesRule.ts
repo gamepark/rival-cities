@@ -1,9 +1,10 @@
-import { MaterialMove, PlayerTurnRule } from '@gamepark/rules-api'
+import { isMoveItemType, MaterialMove, PlayerTurnRule } from '@gamepark/rules-api'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { ShipCard, shipCardsData, ShipEffectType } from '../../material/ShipCard'
 import { MemoryType } from '../MemoryType'
 import { RuleId } from '../RuleId'
+import { EndOfGameHelper } from '../helper/EndOfGameHelper'
 
 export class OffSeasonGetShipsBonusesRule extends PlayerTurnRule {
   onRuleStart(): MaterialMove[] {
@@ -21,17 +22,26 @@ export class OffSeasonGetShipsBonusesRule extends PlayerTurnRule {
     return moves
   }
 
-  afterItemMove(): MaterialMove[] {
+  afterItemMove(move: MaterialMove): MaterialMove[] {
     if (this.remind<number>(MemoryType.ProcessedBonuses) === this.shipsOffSeason.length) {
+      if(isMoveItemType(MaterialType.PrestigeMarker)(move)) {
+        return new EndOfGameHelper(this.game).checkInstantEndOfGame([this.startRule(RuleId.OffSeasonGetPrestigeBonuses)])
+      }
       return [this.startRule(RuleId.OffSeasonGetPrestigeBonuses)]
     }
     return []
   }
 
   get shipsOffSeason() {
-    return this.material(MaterialType.ShipCard)
+    const shipCards = this.material(MaterialType.ShipCard)
       .location(LocationType.PlayerShipCards)
       .filter((it) => shipCardsData[it.id as ShipCard].effect.type === ShipEffectType.OffSeason)
       .getItems()
+
+    return shipCards.sort((a, b) => {
+      if(a.id === ShipCard.Ship8) return 1
+      if(b.id === ShipCard.Ship8) return -1
+      return a.id - b.id
+    })
   }
 }

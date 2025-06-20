@@ -1,6 +1,5 @@
 import { CustomMove, ItemMove, MaterialMove, PlayerTurnRule, PlayMoveContext, RuleMove, RuleStep } from '@gamepark/rules-api'
 import { actionRules, ActionType } from './ActionType'
-import { CustomMoveType } from './CustomMoveType'
 import { MemoryType } from './MemoryType'
 import { RuleId } from './RuleId'
 import { MemoryHelper } from './helper/MemoryHelper'
@@ -13,7 +12,7 @@ export class SpecialActionRule extends PlayerTurnRule {
   }
 
   getPlayerMoves(): MaterialMove[] {
-    return [...this.actionRules.flatMap((rule) => rule.getPlayerMoves()), this.customMove(CustomMoveType.Pass)]
+    return [...this.actionRules.flatMap((rule) => rule.getPlayerMoves())]
   }
 
   beforeItemMove(move: ItemMove, context?: PlayMoveContext): MaterialMove[] {

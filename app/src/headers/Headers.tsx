@@ -11,7 +11,7 @@ import { ChooseFirstProductHeader } from './ChooseFirstProductHeader'
 import { ChooseSpecialActionHeader } from './ChooseSpecialActionHeader'
 import { DrawSpecialActionCardActionHeader } from './DrawSpecialActionCardActionHeader'
 import { EarnPrestigeActionHeader } from './EarnPrestigeActionHeader'
-import { GainLetterActionHeader } from './GainLetterActionHeader'
+import { GainLetterHeader } from './GainLetterHeader'
 import { OffSeasonChangeSpecialCardsHeader } from './OffSeasonChangeSpecialCardsHeader'
 import { OffSeasonReactivateFactoriesHeader } from './OffSeasonReactivateFactoriesHeader'
 import { OffSeasonReturnBellHeader } from './OffSeasonReturnBellHeader'
@@ -46,7 +46,7 @@ export const Headers: Partial<Record<RuleId, ComponentType>> = {
   [RuleId.AdvanceLawsuitAction]: AdvanceLawsuitActionHeader,
   [RuleId.DrawSpecialActionCardAction]: DrawSpecialActionCardActionHeader,
   [RuleId.EarnPrestigeAction]: EarnPrestigeActionHeader,
-  [RuleId.GainLetterAction]: GainLetterActionHeader,
+  [RuleId.GainLetter]: GainLetterHeader,
   [RuleId.OffSeasonTakeBell]: OffSeasonTakeBellHeader,
   [RuleId.OffSeasonPayForAlliance]: OffSeasonPayForAllianceHeader,
   [RuleId.OffSeasonGetShipsBonuses]: OffSeasonGetShipsBonusesHeader,

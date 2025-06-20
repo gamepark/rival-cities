@@ -24,7 +24,6 @@ export class ResolveLawsuitRule extends PlayerTurnRule {
       const player = this.lawsuitMarkerToResolve < 0 ? City.Altona : City.Hamburg
       moves.push(this.lawsuitCardToResolve.moveItem({ type: LocationType.PlayerLawsuitCards, player }))
       const lawsuitData = lawsuitCardData[this.lawsuitCardToResolve.getItem()?.id! as LawsuitCard]
-      this.memorize(MemoryType.NextRules, [RuleId.OffSeasonChangeSpecialCards])
       this.memorize(MemoryType.MovesOnLawsuitWin, lawsuitData.actionInWin(this.game, player))
     } else {
       moves.push(this.lawsuitCardToResolve.deleteItem())
@@ -90,7 +89,7 @@ export class ResolveLawsuitRule extends PlayerTurnRule {
       }
       return this.remind(MemoryType.IsOffSeason)
         ? [this.startRule(RuleId.OffSeasonChangeSpecialCards)]
-        : new ComputedActionsHelper(this.game).removeActionAndWait(ActionType.CourtRuling)
+        : new ComputedActionsHelper(this.game).removeActionAndnext(ActionType.CourtRuling)
     }
     if (isMoveItemType(MaterialType.LawsuitCard)(move) && move.location.type === LocationType.PlayerLawsuitCards) {
       return new EndOfGameHelper(this.game).checkInstantEndOfGame([])

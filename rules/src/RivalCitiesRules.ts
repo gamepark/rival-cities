@@ -17,7 +17,6 @@ import { City } from './City'
 import { AdvanceLawsuitActionRule } from './rules/actions/AdvanceLawsuitActionRule'
 import { DrawSpecialActionCardActionRule } from './rules/actions/DrawSpecialActionCardActionRule'
 import { EarnPrestigeActionRule } from './rules/actions/EarnPrestigeActionRule'
-import { GainLetterActionRule } from './rules/actions/GainLetterActionRule'
 import { AdvanceAgainInLawsuitRule } from './rules/AdvanceAgainInLawsuitRule'
 import { AdvanceInkJarRule } from './rules/AdvanceInkJarRule'
 import { BasicActionRule } from './rules/BasicActionRule'
@@ -28,7 +27,6 @@ import { ChooseFirstProductRule } from './rules/ChooseFirstProductRule'
 import { ChooseSpecialActionRule } from './rules/ChooseSpecialActionRule'
 import { CustomMoveType } from './rules/CustomMoveType'
 import { EarnPrestigeAgainRule } from './rules/EarnPrestigeAgainRule'
-import { MemoryType } from './rules/MemoryType'
 import { OffSeasonChangeSpecialCardsRule } from './rules/OffSeason/OffSeasonChangeSpecialCardsRule'
 import { OffSeasonGetPrestigeBonusesRule } from './rules/OffSeason/OffSeasonGetPrestigeBonusesRule'
 import { OffSeasonGetShipsBonusesRule } from './rules/OffSeason/OffSeasonGetShipsBonusesRule'
@@ -47,6 +45,7 @@ import { AllianceCardEarnPrestigeAgainRule } from './rules/AllianceCardEarnPrest
 import { EndOfGameHelper } from './rules/helper/EndOfGameHelper'
 import { ComputedActionsHelper } from './rules/helper/ComputedActionsHelper'
 import { MemoryHelper } from './rules/helper/MemoryHelper'
+import { GainLetterRule } from './rules/shipCardActions/GainLetterRule'
 
 /**
  * This class implements the rules of the board game.
@@ -73,7 +72,7 @@ export class RivalCitiesRules
     [RuleId.AdvanceLawsuitAction]: AdvanceLawsuitActionRule,
     [RuleId.DrawSpecialActionCardAction]: DrawSpecialActionCardActionRule,
     [RuleId.EarnPrestigeAction]: EarnPrestigeActionRule,
-    [RuleId.GainLetterAction]: GainLetterActionRule,
+    [RuleId.GainLetter]: GainLetterRule,
     [RuleId.OffSeasonTakeBell]: OffSeasonTakeBellRule,
     [RuleId.OffSeasonPayForAlliance]: OffSeasonPayForAllianceRule,
     [RuleId.OffSeasonGetShipsBonuses]: OffSeasonGetShipsBonusesRule,
@@ -131,11 +130,7 @@ export class RivalCitiesRules
 
     if (isCustomMoveType(CustomMoveType.Pass)(move)) {
       new MemoryHelper(this.game).clearMemory()
-      const actionType = this.remind(MemoryType.BasicActionChoosen)
-      if (!move.data) {
-        this.memorize(MemoryType.ComputedActions, [])
-      }
-      moves.push(...this.computedActionsHelper.removeActionAndWait(actionType))
+      moves.push(...this.computedActionsHelper.removeActionAndnext(move.data))
     }
 
     return moves

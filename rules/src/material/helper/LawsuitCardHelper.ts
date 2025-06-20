@@ -3,10 +3,8 @@ import { City } from '../../City'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { NextRuleHelper } from '../../rules/helper/NextRuleHelper'
-import { MemoryType } from '../../rules/MemoryType'
 import { RuleId } from '../../rules/RuleId'
 import { Product } from '../Product'
-import { EndOfGameHelper } from '../../rules/helper/EndOfGameHelper'
 
 export class LawsuitCardHelper extends MaterialRulesPart {
   player: number
@@ -19,36 +17,35 @@ export class LawsuitCardHelper extends MaterialRulesPart {
   }
 
   lawersuitCard1ActionOnAdvance(): MaterialMove[] {
-    return [...this.getProductMove(Product.Leather, 1)]
+    return [this.getProductMove(Product.Leather)]
   }
 
   lawersuitCard1ActionOnWin(): MaterialMove[] {
-    return [...this.getProductMove(Product.Leather, 3), ...this.movePrestigeMarker(), ...this.nextRuleHelper.moveToNextRule()]
+    return [this.getProductMove(Product.Leather), this.getProductMove(Product.Leather), this.getProductMove(Product.Leather), this.movePrestigeMarker(), this.startRule(RuleId.OffSeasonChangeSpecialCards)]
   }
 
   lawersuitCard2ActionOnAdvance(): MaterialMove[] {
-    return [...this.getProductMove(Product.Furniture, 1)]
+    return [this.getProductMove(Product.Furniture)]
   }
 
   lawersuitCard2ActionOnWin(): MaterialMove[] {
-    return [this.buildFactoryMove(), ...this.nextRuleHelper.moveToNextRule()]
+    return [this.buildFactoryMove(), this.startRule(RuleId.OffSeasonChangeSpecialCards)]
   }
 
   lawersuitCard3ActionOnAdvance(): MaterialMove[] {
-    return [...this.getProductMove(Product.Cloth, 1)]
+    return [this.getProductMove(Product.Cloth)]
   }
 
   lawersuitCard3ActionOnWin(): MaterialMove[] {
-    this.memorize<RuleId[]>(MemoryType.NextRules, (old) => [RuleId.Choose2Product, ...old])
-    return this.nextRuleHelper.moveToNextRule()
+    return [this.startPlayerTurn(RuleId.Choose2Product, this.player)]
   }
 
   lawersuitCard4ActionOnAdvance(): MaterialMove[] {
-    return [...this.movePrestigeMarker()]
+    return [this.movePrestigeMarker()]
   }
 
   lawersuitCard4ActionOnWin(): MaterialMove[] {
-    return [this.buildFactoryMove(), ...this.nextRuleHelper.moveToNextRule()]
+    return [this.buildFactoryMove(), this.startRule(RuleId.OffSeasonChangeSpecialCards)]
   }
 
   lawersuitCard5ActionOnAdvance(): MaterialMove[] {
@@ -56,79 +53,74 @@ export class LawsuitCardHelper extends MaterialRulesPart {
   }
 
   lawersuitCard5ActionOnWin(): MaterialMove[] {
-    return [...this.getProductMove(Product.Beer, 3), ...this.getStarTokensMove(2), ...this.nextRuleHelper.moveToNextRule()]
+    return [this.getProductMove(Product.Beer), this.getProductMove(Product.Beer), this.getProductMove(Product.Beer), this.getStarTokensMove(), this.getStarTokensMove(), this.startRule(RuleId.OffSeasonChangeSpecialCards)]
   }
 
   lawersuitCard6ActionOnAdvance(): MaterialMove[] {
-    return [...this.movePrestigeMarker()]
+    return [this.movePrestigeMarker()]
   }
 
   lawersuitCard6ActionOnWin(): MaterialMove[] {
-    return [...this.getLetterMove(2), ...this.nextRuleHelper.moveToNextRule()]
+    return [this.getLetterMove(), this.getLetterMove(), this.startRule(RuleId.OffSeasonChangeSpecialCards)]
   }
 
   lawersuitCard7ActionOnAdvance(): MaterialMove[] {
-    return [...this.getProductMove(Product.Beer, 1)]
+    return [this.getProductMove(Product.Beer)]
   }
 
   lawersuitCard7ActionOnWin(): MaterialMove[] {
-    this.memorize<RuleId[]>(MemoryType.NextRules, (old) => [RuleId.Choose1Product, ...old])
-    return [...this.movePrestigeMarker(), ...this.nextRuleHelper.moveToNextRule()]
+    return [this.movePrestigeMarker(), this.startPlayerTurn(RuleId.Choose1Product, this.player)]
   }
 
   lawersuitCard8ActionOnAdvance(): MaterialMove[] {
-    return [...this.getProductMove(Product.Beer, 1), ...this.getLetterMove(1)]
+    return [this.getProductMove(Product.Beer), this.getLetterMove()]
   }
 
   lawersuitCard8ActionOnWin(): MaterialMove[] {
-    return [this.buildFactoryMove(), ...this.nextRuleHelper.moveToNextRule()]
+    return [this.buildFactoryMove(), this.startRule(RuleId.OffSeasonChangeSpecialCards)]
   }
 
   lawersuitCard9ActionOnAdvance(): MaterialMove[] {
-    return [...this.movePrestigeMarker()]
+    return [this.movePrestigeMarker()]
   }
 
   lawersuitCard9ActionOnWin(): MaterialMove[] {
-    return [...this.getLetterMove(1), ...this.nextRuleHelper.moveToNextRule()]
+    return [this.getLetterMove(), this.startRule(RuleId.OffSeasonChangeSpecialCards)]
   }
 
   lawersuitCard10ActionOnAdvance(): MaterialMove[] {
-    return [...this.getProductMove(Product.Cloth, 1)]
+    return [this.getProductMove(Product.Cloth)]
   }
 
   lawersuitCard10ActionOnWin(): MaterialMove[] {
-    return [this.buildFactoryMove(), ...this.nextRuleHelper.moveToNextRule()]
+    return [this.buildFactoryMove(), this.startRule(RuleId.OffSeasonChangeSpecialCards)]
   }
 
-  private movePrestigeMarker(): MaterialMove[] {
+  private movePrestigeMarker(): MaterialMove {
     const prestigeMarkerMove = this.player === City.Altona ? -1 : 1
-    const moves: MaterialMove[] = []
-    moves.push(
-      this.material(MaterialType.PrestigeMarker)
+    return this.material(MaterialType.PrestigeMarker)
         .location(LocationType.PrestigeMarkerPiste)
         .moveItem(({ location }) => ({ ...location, x: location.x! + prestigeMarkerMove }))
-    )
-    moves.push(...new EndOfGameHelper(this.game).checkInstantEndOfGame([]))
-    return moves
+    
   }
 
-  private getProductMove(product: Product, quantity: number): MaterialMove[] {
+  private getProductMove(product: Product): MaterialMove {
     return this.material(MaterialType.Product)
       .location(LocationType.ProductPiles)
       .id(product)
-      .moveItems({ type: LocationType.PlayerProducts, player: this.player, id: product }, quantity)
+      .moveItem({ type: LocationType.PlayerProducts, player: this.player, id: product })
   }
 
-  private getStarTokensMove(quantity: number): MaterialMove[] {
+  private getStarTokensMove(): MaterialMove {
     return this.material(MaterialType.StarToken)
       .location(LocationType.StarTokenDeck)
-      .moveItems({ type: LocationType.PlayerStarTokens, player: this.player }, quantity)
+      .moveItem({ type: LocationType.PlayerStarTokens, player: this.player })
   }
 
-  private getLetterMove(quantity: number): MaterialMove[] {
+  private getLetterMove(): MaterialMove {
     return this.material(MaterialType.Letter)
       .location(LocationType.LetterDeck)
-      .moveItems({ type: LocationType.PlayerLetterDeck, player: this.player }, quantity)
+      .moveItem({ type: LocationType.PlayerLetterDeck, player: this.player })
   }
 
   private buildFactoryMove(): MaterialMove {

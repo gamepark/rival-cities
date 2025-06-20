@@ -42,7 +42,7 @@ export class GiftActionRule extends PlayerTurnRule {
     } else {
       moves.push(...this.allProducts.moveItems((item) => ({ type: LocationType.PlayerProducts, player: this.player, id: item.id }), 1))
     }
-    moves.push(this.customMove(CustomMoveType.Pass))
+    moves.push(this.customMove(CustomMoveType.Pass, this.actionType))
     return moves
   }
 
@@ -70,11 +70,14 @@ export class GiftActionRule extends PlayerTurnRule {
         moves.push(...this.allianceCardHelper.getLondonProducts(move.location.id as Product))
       }
       if (this.remind(MemoryType.NbProductGiven) === this.nbProductToTake) {
-        this.forget(MemoryType.BasicActionChoosen)
-        moves.push(...this.computedActionHelper.removeActionAndWait(this.actionType))
+        moves.push(...this.movesAfterProductsGiven())
       }
     }
     return moves
+  }
+
+  movesAfterProductsGiven(): MaterialMove[] {
+    return this.computedActionHelper.removeActionAndnext(this.actionType)
   }
 
   get products() {

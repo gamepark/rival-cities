@@ -29,7 +29,7 @@ export class BuildFactoryActionRule extends PlayerTurnRule {
       if (this.factories.length > 0) {
         moves.push(...this.factories.moveItems({ type: LocationType.PlayerFactories, player: this.player }, 1))
       }
-      moves.push(this.customMove(CustomMoveType.Pass))
+      moves.push(this.customMove(CustomMoveType.Pass, this.actionType))
     }
     return moves
   }
@@ -52,13 +52,12 @@ export class BuildFactoryActionRule extends PlayerTurnRule {
     if (this.remind(MemoryType.BasicActionChoosen) !== this.actionType) return moves
     if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.ProductPiles) {
       if (this.remind(MemoryType.NbProductGiven) === this.price) {
-        return [...this.computedActionHelper.removeActionAndWait(this.actionType)]
+        return [...this.computedActionHelper.removeActionAndnext(this.actionType)]
       }
     }
     if (isMoveItemType(MaterialType.Factory)(move) && move.location.type === LocationType.PlayerFactories) {
       if (this.price === 0) {
-        this.forget(MemoryType.BasicActionChoosen)
-        return [...this.computedActionHelper.removeActionAndWait(this.actionType)]
+        return [...this.computedActionHelper.removeActionAndnext(this.actionType)]
       }
     }
     return moves

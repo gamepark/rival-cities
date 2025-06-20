@@ -22,7 +22,7 @@ export class ProductSwapActionRule extends PlayerTurnRule {
     if (this.nbSwaps < 2) {
       return [...this.playerProducts.moveItems((item) => ({ type: LocationType.ProductPiles, id: item.id }), 1)]
     }
-    return [this.customMove(CustomMoveType.Pass)]
+    return [this.customMove(CustomMoveType.Pass, this.actionType)]
   }
 
   beforeItemMove(move: ItemMove): MaterialMove[] {
@@ -43,8 +43,7 @@ export class ProductSwapActionRule extends PlayerTurnRule {
         this.memorize(MemoryType.IsProductReturn, false)
         this.memorize(MemoryType.NbSwaps, this.nbSwaps + 1)
         if (this.remind(MemoryType.NbSwaps) === 2) {
-          this.forget(MemoryType.BasicActionChoosen)
-          return this.computedActionHelper.removeActionAndWait(this.actionType)
+          return this.computedActionHelper.removeActionAndnext(this.actionType)
         }
       }
     }

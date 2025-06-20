@@ -20,12 +20,16 @@ export const BasicActionHeader = () => {
   const pass = useLegalMove((move) => isCustomMoveType(CustomMoveType.Pass)(move))
 
   if(inkjarLocationId === 0) {
-    return <Trans
+    if(itsMe) {
+      return <Trans
     defaults={`header.basic.action.card.0.you`}
     components={{
       pass: <PlayMoveButton move={pass} />
     }}
   />
+    }
+    return <Trans
+    defaults={`header.basic.action.card.0.player`} values={{ player: name }} />
   }
 
   const cardInInkjarPlace = (): BasicActionCard => {

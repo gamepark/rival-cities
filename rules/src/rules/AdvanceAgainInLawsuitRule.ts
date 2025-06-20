@@ -5,21 +5,21 @@ import { LocationType } from '../material/LocationType'
 import { MaterialType } from '../material/MaterialType'
 import { ActionType } from './ActionType'
 import { CustomMoveType } from './CustomMoveType'
-import { AdvanceLawsuitActionRule } from './actions/AdvanceLawsuitActionRule'
 import { ComputedActionsHelper } from './helper/ComputedActionsHelper'
 import { MemoryType } from './MemoryType'
 import { RuleId } from './RuleId'
 import { AllianceCardHelper } from '../material/helper/AllianceCardHelper'
 import { AllianceCard } from '../material/AllianceCard'
+import { AdvanceLawsuitHelper } from './helper/AdvanceLawsuitHelper'
 
 export class AdvanceAgainInLawsuitRule extends PlayerTurnRule {
   actionType = ActionType.AdvanceLawsuit
   computedActionHelper = new ComputedActionsHelper(this.game)
-  advanceLawsuitHelper = new AdvanceLawsuitActionRule(this.game)
+  advanceLawsuitHelper = new AdvanceLawsuitHelper(this.game)
 
   onRuleStart(): MaterialMove[] {
     if (!this.advanceLawsuitHelper.checkIfCanAdvanceInLawsuit(this.lawsuitCardId)) {
-      return [...this.computedActionHelper.removeActionAndWait(this.actionType)]
+      return [...this.computedActionHelper.removeActionAndnext(this.actionType)]
     }
     return []
   }
@@ -33,7 +33,7 @@ export class AdvanceAgainInLawsuitRule extends PlayerTurnRule {
       moves.push(this.marker.moveItem(({ location }) => ({ ...location, x: location.x! + moveX })))
     }
 
-    moves.push(this.customMove(CustomMoveType.Pass, true))
+    moves.push(this.customMove(CustomMoveType.Pass, this.actionType))
     return moves
   }
 
@@ -48,7 +48,9 @@ export class AdvanceAgainInLawsuitRule extends PlayerTurnRule {
           moves.push(...this.playerProducts.id(cost.type).limit(cost.quantity).moveItems({ type: LocationType.ProductPiles, id: cost.type }, cost.quantity))
         }
       })
-      if (move.location.id === 2 || this.remind(MemoryType.NbTimeAdvancedInLawsuit) === 2) {
+      if (move.location.id === 2 && this.remind(MemoryType.NbTimeAdvancedInLawsuit) < 2) {
+        moves.push(this.startRule(RuleId.AdvanceAgainInLawsuit))
+      } else {
         this.forget(MemoryType.LawsuitAdvanced)
         this.memorize(MemoryType.NbTimeAdvancedInLawsuit, 0)
         const playerHaveAllianceLeHavre = new AllianceCardHelper(this.game).checkPlayerAllianceCardById(AllianceCard.AllianceLeHavre)
@@ -56,11 +58,8 @@ export class AdvanceAgainInLawsuitRule extends PlayerTurnRule {
           moves.push(this.startRule(RuleId.AllianceCardAdvanceAgainInLawsuit))
         } else {
           this.memorize(MemoryType.NbTimeUsedAllianceLeHavre, 0)
-          this.forget(MemoryType.BasicActionChoosen)
-          moves.push(...this.computedActionHelper.removeActionAndWait(this.actionType))
+          moves.push(...this.computedActionHelper.removeActionAndnext(this.actionType))
         }
-      } else {
-        moves.push(this.startRule(RuleId.AdvanceAgainInLawsuit))
       }
     }
     return moves

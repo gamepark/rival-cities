@@ -56,8 +56,7 @@ export class EarnPrestigeActionRule extends PlayerTurnRule {
     if (playerHaveAllianceBruxelles && this.playerFurnitures.getQuantity() > 0) {
       return [this.startPlayerTurn(RuleId.AllianceCardEarnPrestigeAgain, this.playerWhoEarnedPrestige)]
     }
-    this.forget(MemoryType.BasicActionChoosen)
-    return this.computedActionHelper.removeActionAndWait(this.actionType)
+    return this.computedActionHelper.removeActionAndnext(this.actionType)
   }
 
   get prestigeMarker() {

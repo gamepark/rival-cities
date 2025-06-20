@@ -46,7 +46,7 @@ export class EndOfGameHelper extends PlayerTurnRule {
       return this.getPlayerAllianceCards(playerB).length > this.getPlayerAllianceCards(playerA).length ? 1 : -1
     }
     if (this.checkIfPrestigeMarkerIsOnACity()) {
-      return this.prestigeMarkerLocation > 0 ? 1 : -1
+      return this.prestigeMarkerLocation === this.getPlayerPrestigeLocation(playerB) ? 1 : -1
     }
 
     return this.getScore(playerB) > this.getScore(playerA) ? 1 : this.getScore(playerB) < this.getScore(playerA) ? -1 : 0
@@ -99,8 +99,11 @@ export class EndOfGameHelper extends PlayerTurnRule {
 
   checkIfPrestigeMarkerIsOnACity(): boolean {
     const prestigeMarkerLocation = this.material(MaterialType.PrestigeMarker).location(LocationType.PrestigeMarkerPiste).getItem()?.location.x ?? 0
-
     return Math.abs(prestigeMarkerLocation) >= 8
+  }
+
+  private getPlayerPrestigeLocation(player: City) {
+    return player === City.Altona ? -8 : 8
   }
 
   private getPlayerLawsuitCards(player: City) {

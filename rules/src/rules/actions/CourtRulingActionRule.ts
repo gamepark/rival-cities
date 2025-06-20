@@ -25,6 +25,7 @@ export class CourtRulingActionRule extends PlayerTurnRule {
 
     moves.push(this.lawsuitCardToMove.moveItem(({ location }) => ({ ...location, z: 0 })))
     moves.push(this.lawsuitCardToMove.moveItem(({ location }) => ({ ...location, z: 2 })))
+    moves.push(this.customMove(CustomMoveType.Pass, this.actionType))
     return moves
   }
 
@@ -56,8 +57,7 @@ export class CourtRulingActionRule extends PlayerTurnRule {
     if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.LawsuitCard)(move) && move.location.z === 1) {
-      this.forget(MemoryType.BasicActionChoosen)
-      moves.push(...this.computedActionHelper.removeActionAndWait(this.actionType))
+      moves.push(...this.computedActionHelper.removeActionAndnext(this.actionType))
     }
     return moves
   }

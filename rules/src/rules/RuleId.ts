@@ -15,7 +15,7 @@ export enum RuleId {
   AdvanceLawsuitAction,
   DrawSpecialActionCardAction,
   EarnPrestigeAction,
-  GainLetterAction,
+  GainLetter,
   OffSeasonTakeBell,
   OffSeasonPayForAlliance,
   OffSeasonGetShipsBonuses,

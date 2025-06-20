@@ -13,7 +13,9 @@ export class ComputedActionsHelper extends MaterialRulesPart {
     this.previousRulePlayer = previousRulePlayer
   }
 
-  removeActionAndWait(actionType: ActionType): MaterialMove[] {
+  removeActionAndnext(actionType: ActionType): MaterialMove[] {
+    console.log(`Removing action ${actionType}`)
+    this.forget(MemoryType.BasicActionChoosen)
     this.memorize<ActionType[]>(MemoryType.ComputedActions, (old) => {
       const index = old.indexOf(actionType)
       if (index !== -1) {

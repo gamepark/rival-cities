@@ -23,19 +23,19 @@ export class ProductionActionRule extends PlayerTurnRule {
   //  return this.products.limit(this.quantity).moveItems((item) => ({ type: LocationType.PlayerProducts, player: this.player, id: item.id }), this.quantity)
   //}
 
-  getPlayerMoves(onNotProductChoosenMoves: MaterialMove[] = []): MaterialMove[] {
+  getPlayerMoves(): MaterialMove[] {
     if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
     if (!this.productChoosen) {
       const productsToMove = this.productType ? this.products : this.allProducts
       return [
         ...productsToMove.moveItems((item) => ({ type: LocationType.PlayerProducts, player: this.player, id: item.id }), this.quantity),
-        ...onNotProductChoosenMoves
+        this.customMove(CustomMoveType.Pass, this.actionType)
       ]
     }
     if (this.playerFactories.length) {
-      return [...this.playerFactories.rotateItems(true), this.customMove(CustomMoveType.Pass, true)]
+      return [...this.playerFactories.rotateItems(true), this.customMove(CustomMoveType.Pass, this.actionType)]
     }
-    return [this.customMove(CustomMoveType.Pass)]
+    return [this.customMove(CustomMoveType.Pass, this.actionType)]
   }
 
   beforeItemMove(move: ItemMove): MaterialMove[] {
@@ -74,8 +74,7 @@ export class ProductionActionRule extends PlayerTurnRule {
         moves.push(...this.allianceCardHelper.getNovgorodProducts(move.location.id as Product))
         moves.push(...this.allianceCardHelper.getLondonProducts(move.location.id as Product))
       } else if (this.playerFactories.length === 0) {
-        this.forget(MemoryType.BasicActionChoosen)
-        moves.push(...this.computedActionHelper.removeActionAndWait(this.actionType))
+        moves.push(...this.computedActionHelper.removeActionAndnext(this.actionType))
       }
     }
     return moves

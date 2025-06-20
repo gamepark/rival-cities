@@ -11,16 +11,18 @@ import { CustomMoveType } from '../CustomMoveType'
 import { AllianceCard } from '../../material/AllianceCard'
 import { BasicActionHelper } from '../helper/BasicActionHelper'
 import { AllianceCardHelper } from '../../material/helper/AllianceCardHelper'
+import { AdvanceLawsuitHelper } from '../helper/AdvanceLawsuitHelper'
 
 export class AdvanceLawsuitActionRule extends PlayerTurnRule {
   actionType = ActionType.AdvanceLawsuit
   computedActionHelper = new ComputedActionsHelper(this.game)
   basicActionHelper = new BasicActionHelper(this.game)
+  advanceLawsuitHelper = new AdvanceLawsuitHelper(this.game)
 
   onRuleStart(): MaterialMove[] {
     this.memorize(MemoryType.NbTimeUsedAllianceLeHavre, 0)
     if (this.possibleCardsToGet().length === 0) {
-      return this.computedActionHelper.removeActionAndWait(this.actionType)
+      return this.computedActionHelper.removeActionAndnext(this.actionType)
     }
     return []
   }
@@ -36,6 +38,7 @@ export class AdvanceLawsuitActionRule extends PlayerTurnRule {
         moves.push(marker.moveItem(({ location }) => ({ ...location, x: location.x! + moveX })))
       }
     })
+    moves.push(this.customMove(CustomMoveType.Pass, this.actionType))
     return moves
   }
 
@@ -74,8 +77,7 @@ export class AdvanceLawsuitActionRule extends PlayerTurnRule {
         } else if (playerHaveAllianceLeHavre && this.playerProducts.length) {
           moves.push(this.startRule(RuleId.AllianceCardAdvanceAgainInLawsuit))
         } else {
-          this.forget(MemoryType.BasicActionChoosen)
-          moves.push(...this.computedActionHelper.removeActionAndWait(this.actionType))
+          moves.push(...this.computedActionHelper.removeActionAndnext(this.actionType))
         }
       }
     }
@@ -91,25 +93,7 @@ export class AdvanceLawsuitActionRule extends PlayerTurnRule {
   }
 
   possibleCardsToGet() {
-    return this.lawsuitCards.getItems((item) => this.checkIfCanAdvanceInLawsuit(item.id as LawsuitCard))
-  }
-
-  checkIfCanAdvanceInLawsuit(itemId: LawsuitCard) {
-    if (!itemId) return false
-    const lawsuitData = lawsuitCardData[itemId]
-    let haveSuffisantProducts = true
-    lawsuitData.cost.forEach((cost) => {
-      if (cost.type === 'Letter') {
-        if (this.playerLetters.length < cost.quantity) {
-          haveSuffisantProducts = false
-        }
-      } else {
-        if (this.playerProducts.id(cost.type).getQuantity() < cost.quantity) {
-          haveSuffisantProducts = false
-        }
-      }
-    })
-    return haveSuffisantProducts
+    return this.lawsuitCards.getItems((item) => this.advanceLawsuitHelper.checkIfCanAdvanceInLawsuit(item.id as LawsuitCard))
   }
 
   get playerProducts() {

@@ -9,14 +9,14 @@ export class Return3FactoryActionRule extends PlayerTurnRule {
   computedActionHelper = new ComputedActionsHelper(this.game)
 
   onRuleStart(): MaterialMove[] {
-    if (this.playerFactories.length === 0) return this.computedActionHelper.removeActionAndWait(this.actionType)
+    if (this.playerFactories.length === 0) return this.computedActionHelper.removeActionAndnext(this.actionType)
     return [...this.playerFactories.limit(3).rotateItems(undefined)]
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.Factory)(move)) {
-      return this.computedActionHelper.removeActionAndWait(this.actionType)
+      return this.computedActionHelper.removeActionAndnext(this.actionType)
     }
     return moves
   }

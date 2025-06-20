@@ -37,7 +37,7 @@ export class DonationActionRule extends PlayerTurnRule {
           )
         )
       }
-      moves.push(this.customMove(CustomMoveType.Pass))
+      moves.push(this.customMove(CustomMoveType.Pass, this.actionType))
     }
     return moves
   }
@@ -46,8 +46,12 @@ export class DonationActionRule extends PlayerTurnRule {
     if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.StarToken)(move) && move.location.type === LocationType.PlayerStarTokens) {
-      this.memorize(MemoryType.BasicActionChoosen, ActionType.Donation)
-      this.memorize(MemoryType.IsDonationInProgress, true)
+      this.memorize(MemoryType.BasicActionChoosen, this.actionType)
+      if(this.productType) {
+        moves.push(...this.playerProducts.moveItems((item) => ({ type: LocationType.ProductPiles, id: item.id }), this.nbProduct))
+      } else {
+        this.memorize(MemoryType.IsDonationInProgress, true)
+      }
     } else if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.ProductPiles && this.isDonationInProgress) {
       this.memorize(MemoryType.NbProductsDonated, this.nbProductsDonated + 1)
     }
@@ -58,12 +62,16 @@ export class DonationActionRule extends PlayerTurnRule {
     if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.ProductPiles) {
-      if (this.remind(MemoryType.NbProductsDonated) === this.nbProduct) {
+      if(this.productType) {
+        this.memorize<number>(MemoryType.NbDonations, (old) => old + 1)
+        if (this.remind(MemoryType.NbDonations) === this.nbTimes) {
+          return this.computedActionHelper.removeActionAndnext(this.actionType)
+        }
+      } else if (this.remind(MemoryType.NbProductsDonated) === this.nbProduct) {
         this.memorize(MemoryType.IsDonationInProgress, false)
         this.memorize<number>(MemoryType.NbDonations, (old) => old + 1)
         if (this.remind(MemoryType.NbDonations) === this.nbTimes) {
-          this.forget(MemoryType.BasicActionChoosen)
-          return this.computedActionHelper.removeActionAndWait(this.actionType)
+          return this.computedActionHelper.removeActionAndnext(this.actionType)
         }
       }
     }

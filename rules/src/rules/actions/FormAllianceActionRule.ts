@@ -6,6 +6,7 @@ import { ComputedActionsHelper } from '../helper/ComputedActionsHelper'
 import { MemoryType } from '../MemoryType'
 import { BasicActionHelper } from '../helper/BasicActionHelper'
 import { EndOfGameHelper } from '../helper/EndOfGameHelper'
+import { CustomMoveType } from '../CustomMoveType'
 
 export class FormAllianceActionRule extends PlayerTurnRule {
   actionType = ActionType.FormAlliance
@@ -19,6 +20,7 @@ export class FormAllianceActionRule extends PlayerTurnRule {
     if (this.playerLetters.length) {
       moves.push(...this.opponentAllianceCards.moveItems({ type: LocationType.PlayerAllianceCards, player: this.player }))
     }
+    moves.push(this.customMove(CustomMoveType.Pass, this.actionType))
     return moves
   }
 
@@ -37,8 +39,7 @@ export class FormAllianceActionRule extends PlayerTurnRule {
   afterItemMove(move: ItemMove): MaterialMove[] {
     if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
     if (isMoveItemType(MaterialType.AllianceCard)(move)) {
-      this.forget(MemoryType.BasicActionChoosen)
-      return new EndOfGameHelper(this.game).checkInstantEndOfGame(this.computedActionHelper.removeActionAndWait(this.actionType))
+      return new EndOfGameHelper(this.game).checkInstantEndOfGame(this.computedActionHelper.removeActionAndnext(this.actionType))
     }
     return []
   }

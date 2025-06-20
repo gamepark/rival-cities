@@ -5,6 +5,7 @@ import { ActionType } from '../ActionType'
 import { ComputedActionsHelper } from '../helper/ComputedActionsHelper'
 import { MemoryType } from '../MemoryType'
 import { BasicActionHelper } from '../helper/BasicActionHelper'
+import { CustomMoveType } from '../CustomMoveType'
 
 export class GainLetterActionRule extends PlayerTurnRule {
   actionType = ActionType.GainLetter
@@ -18,14 +19,17 @@ export class GainLetterActionRule extends PlayerTurnRule {
 
   getPlayerMoves(): MaterialMove[] {
     if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
-    return this.letters.moveItems({ type: LocationType.PlayerLetterDeck, player: this.player }, this.nbLettersToTake)
+    return [
+      ...this.letters.moveItems({ type: LocationType.PlayerLetterDeck, player: this.player }, this.nbLettersToTake),
+      this.customMove(CustomMoveType.Pass, this.actionType)
+    ]
   }
 
   beforeItemMove(move: ItemMove): MaterialMove[] {
     if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.Letter)(move)) {
-      this.memorize(MemoryType.BasicActionChoosen, ActionType.GainLetter)
+      this.memorize(MemoryType.BasicActionChoosen, this.actionType)
     }
     return moves
   }
@@ -34,8 +38,7 @@ export class GainLetterActionRule extends PlayerTurnRule {
     if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.Letter)(move)) {
-      this.forget(MemoryType.BasicActionChoosen)
-      moves.push(...this.computedActionHelper.removeActionAndWait(this.actionType))
+      moves.push(...this.computedActionHelper.removeActionAndnext(this.actionType))
     }
     return moves
   }
