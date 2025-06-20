@@ -1,22 +1,22 @@
 /** @jsxImportSource @emotion/react */
-import { PileLocator } from '@gamepark/react-game'
+import { ListLocator } from '@gamepark/react-game'
 import { City } from '@gamepark/rival-cities/City'
 import { Coordinates, Location, MaterialItem } from '@gamepark/rules-api'
 
-class PlayerProductsLocator extends PileLocator {
-  radius = 1
-  limit = 12
+class PlayerProductsLocator extends ListLocator {
+  gap = { x: 1.7 }
+  maxCount = 12
 
   getCoordinates(location: Location): Partial<Coordinates> {
     const base = this.getBaseCoordinates(location)
-    return { x: base.x! + 4 * (location.id - 1), y: base.y }
+    return { x: base.x, y: base.y! + 2.5 * (location.id - 1) }
   }
 
   getBaseCoordinates(location: Location): Partial<Coordinates> {
     if(location.player === City.Altona) {
-      return { x: -47, y: 6 }
+      return { x: -47, y: -1 }
     }
-    return { x: 27, y: 6 }
+    return { x: 27, y: -1 }
   }
 
   getPileId(item: MaterialItem): string {

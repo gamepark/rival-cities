@@ -21,7 +21,7 @@ import { RuleId } from './rules/RuleId'
 export class RivalCitiesSetup extends MaterialGameSetup<City, MaterialType, LocationType, RivalCitiesOptions> {
   Rules = RivalCitiesRules
 
-  setupMaterial(_options: RivalCitiesOptions) {
+  setupMaterial(options: RivalCitiesOptions) {
     this.material(MaterialType.BellToken).createItem({ location: { type: LocationType.BellTokenIdle } })
     this.material(MaterialType.InkJar).createItem({ location: { type: LocationType.InkJarPiste, id: 0 } })
     this.material(MaterialType.PrestigeMarker).createItem({ location: { type: LocationType.PrestigeMarkerPiste, x: 0 } })
@@ -29,8 +29,9 @@ export class RivalCitiesSetup extends MaterialGameSetup<City, MaterialType, Loca
     this.material(MaterialType.Factory).createItem({ quantity: 12, location: { type: LocationType.FactoryDeck } })
     this.material(MaterialType.StarToken).createItem({ quantity: 12, location: { type: LocationType.StarTokenDeck } })
 
+    const basicCards = options.firstPlay ? basicActionCards : shuffle(basicActionCards)
     basicActionCardPlaces.forEach((id, index) => {
-      this.material(MaterialType.BasicActionCard).createItem({ id: basicActionCards[index], location: { type: LocationType.CardPiste, id } })
+      this.material(MaterialType.BasicActionCard).createItem({ id: basicCards[index], location: { type: LocationType.CardPiste, id } })
     })
 
     this.setupSpecialActionCards()

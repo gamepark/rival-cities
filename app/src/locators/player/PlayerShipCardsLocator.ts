@@ -5,13 +5,13 @@ import { Location } from '@gamepark/rules-api'
 
 class PlayerShipCardsLocator extends ListLocator {
   gap = { x: 5 }
-  maxCount = 3
+  maxCount = 5
 
   getCoordinates(location: Location) {
     if(location.player === City.Altona) {
-      return { x: -46, y: -10 }
+      return { x: -47, y: -13 }
     }
-    return { x: 28, y: -10 }
+    return { x: 27, y: -13 }
   }
 }
 

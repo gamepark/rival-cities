@@ -5,7 +5,7 @@ import { Location } from '@gamepark/rules-api'
 
 class PlayerFactoriesLocator extends ListLocator {
   gap = { x: 2.5 }
-  maxCount = 6
+  maxCount = 10
 
   getCoordinates(location: Location) {
     if(location.player === City.Altona) {

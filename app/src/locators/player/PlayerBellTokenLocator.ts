@@ -6,9 +6,9 @@ class PlayerBellTokenLocator extends Locator {
 
   getCoordinates(location: Location) {
     if(location.player === City.Altona) {
-      return { x: -25, y: 20 }
+      return { x: -21, y: 21 }
     }
-    return { x: 26, y: 20 }
+    return { x: 21, y: 21 }
   }
 }
 
