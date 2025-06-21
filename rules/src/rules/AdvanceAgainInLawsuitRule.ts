@@ -18,7 +18,6 @@ export class AdvanceAgainInLawsuitRule extends PlayerTurnRule {
   advanceLawsuitHelper = new AdvanceLawsuitHelper(this.game)
 
   onRuleStart(): MaterialMove[] {
-    console.log("coucou")
     if (!this.advanceLawsuitHelper.checkIfCanAdvanceInLawsuit(this.lawsuitCardId)) {
       return [...this.computedActionHelper.removeActionAndnext(this.actionType)]
     }
