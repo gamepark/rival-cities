@@ -16,7 +16,7 @@ import { MaterialType } from './material/MaterialType'
 import { City } from './City'
 import { AdvanceLawsuitActionRule } from './rules/actions/AdvanceLawsuitActionRule'
 import { DrawSpecialActionCardActionRule } from './rules/actions/DrawSpecialActionCardActionRule'
-import { EarnPrestigeActionRule } from './rules/actions/EarnPrestigeActionRule'
+import { EarnPrestigeRule } from './rules/shipCardActions/EarnPrestigeRule'
 import { AdvanceAgainInLawsuitRule } from './rules/AdvanceAgainInLawsuitRule'
 import { AdvanceInkJarRule } from './rules/AdvanceInkJarRule'
 import { BasicActionRule } from './rules/BasicActionRule'
@@ -71,7 +71,7 @@ export class RivalCitiesRules
     [RuleId.ResolveLawsuit]: ResolveLawsuitRule,
     [RuleId.AdvanceLawsuitAction]: AdvanceLawsuitActionRule,
     [RuleId.DrawSpecialActionCardAction]: DrawSpecialActionCardActionRule,
-    [RuleId.EarnPrestigeAction]: EarnPrestigeActionRule,
+    [RuleId.EarnPrestige]: EarnPrestigeRule,
     [RuleId.GainLetter]: GainLetterRule,
     [RuleId.OffSeasonTakeBell]: OffSeasonTakeBellRule,
     [RuleId.OffSeasonPayForAlliance]: OffSeasonPayForAllianceRule,

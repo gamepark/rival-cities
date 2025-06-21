@@ -16,13 +16,14 @@ export class ProductSwapActionRule extends PlayerTurnRule {
 
   getPlayerMoves(): MaterialMove[] {
     if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
+    const moves: MaterialMove[] = []
     if (this.isProductReturn) {
-      return [...this.products.moveItems((item) => ({ type: LocationType.PlayerProducts, player: this.player, id: item.id }), 1)]
+      moves.push(...this.products.moveItems((item) => ({ type: LocationType.PlayerProducts, player: this.player, id: item.id }), 1))
+    } else if (this.nbSwaps < 2) {
+      moves.push(...this.playerProducts.moveItems((item) => ({ type: LocationType.ProductPiles, id: item.id }), 1))
     }
-    if (this.nbSwaps < 2) {
-      return [...this.playerProducts.moveItems((item) => ({ type: LocationType.ProductPiles, id: item.id }), 1)]
-    }
-    return [this.customMove(CustomMoveType.Pass, this.actionType)]
+    moves.push(this.customMove(CustomMoveType.Pass, this.actionType))
+    return moves
   }
 
   beforeItemMove(move: ItemMove): MaterialMove[] {

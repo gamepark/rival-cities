@@ -18,6 +18,7 @@ export class AdvanceAgainInLawsuitRule extends PlayerTurnRule {
   advanceLawsuitHelper = new AdvanceLawsuitHelper(this.game)
 
   onRuleStart(): MaterialMove[] {
+    console.log("coucou")
     if (!this.advanceLawsuitHelper.checkIfCanAdvanceInLawsuit(this.lawsuitCardId)) {
       return [...this.computedActionHelper.removeActionAndnext(this.actionType)]
     }
@@ -49,18 +50,18 @@ export class AdvanceAgainInLawsuitRule extends PlayerTurnRule {
         }
       })
       if (move.location.id === 2 && this.remind(MemoryType.NbTimeAdvancedInLawsuit) < 2) {
-        moves.push(this.startRule(RuleId.AdvanceAgainInLawsuit))
+        this.memorize<RuleId[]>(MemoryType.BonusesRules, (old) => [RuleId.AdvanceAgainInLawsuit, ...old])
       } else {
         this.forget(MemoryType.LawsuitAdvanced)
         this.memorize(MemoryType.NbTimeAdvancedInLawsuit, 0)
         const playerHaveAllianceLeHavre = new AllianceCardHelper(this.game).checkPlayerAllianceCardById(AllianceCard.AllianceLeHavre)
         if (playerHaveAllianceLeHavre && this.playerProducts.length && this.remind(MemoryType.NbTimeUsedAllianceLeHavre) === 0) {
-          moves.push(this.startRule(RuleId.AllianceCardAdvanceAgainInLawsuit))
+          this.memorize<RuleId[]>(MemoryType.BonusesRules, (old) => [RuleId.AllianceCardAdvanceAgainInLawsuit, ...old])
         } else {
           this.memorize(MemoryType.NbTimeUsedAllianceLeHavre, 0)
-          moves.push(...this.computedActionHelper.removeActionAndnext(this.actionType))
         }
       }
+      moves.push(...this.computedActionHelper.removeActionAndnext(this.actionType))
     }
     return moves
   }

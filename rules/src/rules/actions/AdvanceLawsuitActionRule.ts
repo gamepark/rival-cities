@@ -19,14 +19,6 @@ export class AdvanceLawsuitActionRule extends PlayerTurnRule {
   basicActionHelper = new BasicActionHelper(this.game)
   advanceLawsuitHelper = new AdvanceLawsuitHelper(this.game)
 
-  onRuleStart(): MaterialMove[] {
-    this.memorize(MemoryType.NbTimeUsedAllianceLeHavre, 0)
-    if (this.possibleCardsToGet().length === 0) {
-      return this.computedActionHelper.removeActionAndnext(this.actionType)
-    }
-    return []
-  }
-
   getPlayerMoves(): MaterialMove[] {
     if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
     const moveX = this.player === City.Altona ? -1 : 1
@@ -73,12 +65,11 @@ export class AdvanceLawsuitActionRule extends PlayerTurnRule {
         const playerHaveAllianceLeHavre = new AllianceCardHelper(this.game).checkPlayerAllianceCardById(AllianceCard.AllianceLeHavre)
         if (move.location.id === 1 || move.location.id === 2) {
           this.memorize(MemoryType.LawsuitAdvanced, move.location.id)
-          moves.push(this.startRule(RuleId.AdvanceAgainInLawsuit))
+          this.memorize<RuleId[]>(MemoryType.BonusesRules, (old) => [RuleId.AdvanceAgainInLawsuit, ...old])
         } else if (playerHaveAllianceLeHavre && this.playerProducts.length) {
-          moves.push(this.startRule(RuleId.AllianceCardAdvanceAgainInLawsuit))
-        } else {
-          moves.push(...this.computedActionHelper.removeActionAndnext(this.actionType))
+          this.memorize<RuleId[]>(MemoryType.BonusesRules, (old) => [RuleId.AllianceCardAdvanceAgainInLawsuit, ...old])
         }
+        moves.push(...this.computedActionHelper.removeActionAndnext(this.actionType))
       }
     }
     return moves

@@ -65,7 +65,8 @@ export class CourtRulingActionRule extends PlayerTurnRule {
   onCustomMove(move: CustomMove): MaterialMove[] {
     if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
     if (isCustomMoveType(CustomMoveType.ResolveLawsuit)(move)) {
-      return [this.startRule(RuleId.ResolveLawsuit)]
+      this.memorize<RuleId[]>(MemoryType.BonusesRules, (old) => [RuleId.ResolveLawsuit, ...old])
+      return this.computedActionHelper.removeActionAndnext(this.actionType)
     }
     return []
   }

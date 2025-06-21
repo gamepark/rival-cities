@@ -2,6 +2,7 @@ import { MaterialGame, MaterialMove, MaterialRulesPart } from '@gamepark/rules-a
 import { ActionType } from '../ActionType'
 import { MemoryType } from '../MemoryType'
 import { NextRuleHelper } from './NextRuleHelper'
+import { RuleId } from '../RuleId'
 
 export class ComputedActionsHelper extends MaterialRulesPart {
   player?: number
@@ -13,15 +14,22 @@ export class ComputedActionsHelper extends MaterialRulesPart {
     this.previousRulePlayer = previousRulePlayer
   }
 
-  removeActionAndnext(actionType: ActionType): MaterialMove[] {
+  removeActionAndnext(actionType?: ActionType): MaterialMove[] {    
     this.forget(MemoryType.BasicActionChoosen)
-    this.memorize<ActionType[]>(MemoryType.ComputedActions, (old) => {
-      const index = old.indexOf(actionType)
-      if (index !== -1) {
-        old.splice(index, 1)
-      }
-      return old
-    })
+    const BonusesRules: RuleId[] = this.remind(MemoryType.BonusesRules)
+    if (BonusesRules.length > 0) {
+      this.memorize(MemoryType.BonusesRules, BonusesRules.slice(1))
+      return [this.startRule(BonusesRules[0])]
+    }
+    if(actionType) {
+      this.memorize<ActionType[]>(MemoryType.ComputedActions, (old) => {
+        const index = old.indexOf(actionType)
+        if (index !== -1) {
+          old.splice(index, 1)
+        }
+        return old
+      })
+    }
     if (this.remind(MemoryType.ComputedActions).length) {
       return [
         this.previousRulePlayer !== undefined

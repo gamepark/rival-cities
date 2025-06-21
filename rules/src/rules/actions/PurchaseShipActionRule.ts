@@ -9,7 +9,6 @@ import { RuleId } from '../RuleId'
 import { BasicActionHelper } from '../helper/BasicActionHelper'
 import { EndOfGameHelper } from '../helper/EndOfGameHelper'
 import { CustomMoveType } from '../CustomMoveType'
-import { NextRuleHelper } from '../helper/NextRuleHelper'
 
 export class PurchaseShipActionRule extends PlayerTurnRule {
   actionType = ActionType.PurchaseShip
@@ -67,8 +66,7 @@ export class PurchaseShipActionRule extends PlayerTurnRule {
     const costQuantity = this.playerShip19.length ? shipData.cost.quantity - 1 : shipData.cost.quantity
     moves.push(...this.playerProducts.id(shipData.cost.type).moveItems({ type: LocationType.ProductPiles, id: shipData.cost.type }, costQuantity))
     if (shipData.effect.type === ShipEffectType.Instant) {
-      this.memorize<RuleId[]>(MemoryType.NextRules, [...shipData.effect.rules!])
-      return new NextRuleHelper(this.game).moveToNextRule()
+      this.memorize<RuleId[]>(MemoryType.BonusesRules, shipData.effect.rules!)
     }
     moves.push(...this.computedActionHelper.removeActionAndnext(this.actionType))
     return moves

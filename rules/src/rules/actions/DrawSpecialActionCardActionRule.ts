@@ -36,7 +36,7 @@ export class DrawSpecialActionCardActionRule extends PlayerTurnRule {
         this.memorize(MemoryType.NbCardsDraw, 0)
         const playerHaveAllianceKjjobenhavn = new AllianceCardHelper(this.game).checkPlayerAllianceCardById(AllianceCard.AllianceKjjobenhavn)
         if (playerHaveAllianceKjjobenhavn && this.playerBeers.getQuantity() > 0) {
-          return [this.startRule(RuleId.AllianceCardDrawSpecialActionCardAgain)]
+          this.memorize<RuleId[]>(MemoryType.BonusesRules, (old) => [RuleId.AllianceCardDrawSpecialActionCardAgain, ...old])
         }
         return this.computedActionHelper.removeActionAndnext(this.actionType)
       }

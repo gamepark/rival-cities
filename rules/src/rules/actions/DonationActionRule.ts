@@ -24,7 +24,7 @@ export class DonationActionRule extends PlayerTurnRule {
   getPlayerMoves(): MaterialMove[] {
     if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
     const moves: MaterialMove[] = []
-    if (this.playerProducts.getQuantity() < this.nbProduct) return moves
+    if (this.playerProducts.getQuantity() < this.nbProduct) return [this.customMove(CustomMoveType.Pass, this.actionType)]
     if (this.isDonationInProgress) {
       moves.push(...this.playerProducts.moveItems((item) => ({ type: LocationType.ProductPiles, id: item.id })))
     } else {

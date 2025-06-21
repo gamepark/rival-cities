@@ -123,5 +123,6 @@ export class RivalCitiesSetup extends MaterialGameSetup<City, MaterialType, Loca
     this.memorize(MemoryType.IsDonationInProgress, false)
     this.memorize(MemoryType.ComputedActions, [])
     this.memorize(MemoryType.NextRules, [])
+    this.memorize(MemoryType.BonusesRules, [])
   }
 }

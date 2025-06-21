@@ -2,18 +2,18 @@ import { MaterialGame, MaterialMove, MaterialRulesPart } from '@gamepark/rules-a
 import { City } from '../../City'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
-import { NextRuleHelper } from '../../rules/helper/NextRuleHelper'
 import { RuleId } from '../../rules/RuleId'
 import { Product } from '../Product'
+import { ActionType } from '../../rules/ActionType'
+import { ComputedActionsHelper } from '../../rules/helper/ComputedActionsHelper'
+import { MemoryType } from '../../rules/MemoryType'
 
 export class LawsuitCardHelper extends MaterialRulesPart {
   player: number
-  nextRuleHelper: NextRuleHelper
 
   constructor(game: MaterialGame, player: number) {
     super(game)
     this.player = player
-    this.nextRuleHelper = new NextRuleHelper(game, player)
   }
 
   lawersuitCard1ActionOnAdvance(): MaterialMove[] {
@@ -21,7 +21,7 @@ export class LawsuitCardHelper extends MaterialRulesPart {
   }
 
   lawersuitCard1ActionOnWin(): MaterialMove[] {
-    return [this.getProductMove(Product.Leather), this.getProductMove(Product.Leather), this.getProductMove(Product.Leather), this.movePrestigeMarker(), this.startRule(RuleId.OffSeasonChangeSpecialCards)]
+    return [this.getProductMove(Product.Leather), this.getProductMove(Product.Leather), this.getProductMove(Product.Leather), this.movePrestigeMarker(), ...this.onBonusesEnd()]
   }
 
   lawersuitCard2ActionOnAdvance(): MaterialMove[] {
@@ -29,7 +29,7 @@ export class LawsuitCardHelper extends MaterialRulesPart {
   }
 
   lawersuitCard2ActionOnWin(): MaterialMove[] {
-    return [this.buildFactoryMove(), this.startRule(RuleId.OffSeasonChangeSpecialCards)]
+    return [this.buildFactoryMove(), ...this.onBonusesEnd()]
   }
 
   lawersuitCard3ActionOnAdvance(): MaterialMove[] {
@@ -45,7 +45,7 @@ export class LawsuitCardHelper extends MaterialRulesPart {
   }
 
   lawersuitCard4ActionOnWin(): MaterialMove[] {
-    return [this.buildFactoryMove(), this.startRule(RuleId.OffSeasonChangeSpecialCards)]
+    return [this.buildFactoryMove(), ...this.onBonusesEnd()]
   }
 
   lawersuitCard5ActionOnAdvance(): MaterialMove[] {
@@ -53,7 +53,7 @@ export class LawsuitCardHelper extends MaterialRulesPart {
   }
 
   lawersuitCard5ActionOnWin(): MaterialMove[] {
-    return [this.getProductMove(Product.Beer), this.getProductMove(Product.Beer), this.getProductMove(Product.Beer), this.getStarTokensMove(), this.getStarTokensMove(), this.startRule(RuleId.OffSeasonChangeSpecialCards)]
+    return [this.getProductMove(Product.Beer), this.getProductMove(Product.Beer), this.getProductMove(Product.Beer), this.getStarTokensMove(), this.getStarTokensMove(), ...this.onBonusesEnd()]
   }
 
   lawersuitCard6ActionOnAdvance(): MaterialMove[] {
@@ -61,7 +61,7 @@ export class LawsuitCardHelper extends MaterialRulesPart {
   }
 
   lawersuitCard6ActionOnWin(): MaterialMove[] {
-    return [this.getLetterMove(), this.getLetterMove(), this.startRule(RuleId.OffSeasonChangeSpecialCards)]
+    return [this.getLetterMove(), this.getLetterMove(), ...this.onBonusesEnd()]
   }
 
   lawersuitCard7ActionOnAdvance(): MaterialMove[] {
@@ -77,7 +77,7 @@ export class LawsuitCardHelper extends MaterialRulesPart {
   }
 
   lawersuitCard8ActionOnWin(): MaterialMove[] {
-    return [this.buildFactoryMove(), this.startRule(RuleId.OffSeasonChangeSpecialCards)]
+    return [this.buildFactoryMove(), ...this.onBonusesEnd()]
   }
 
   lawersuitCard9ActionOnAdvance(): MaterialMove[] {
@@ -85,7 +85,7 @@ export class LawsuitCardHelper extends MaterialRulesPart {
   }
 
   lawersuitCard9ActionOnWin(): MaterialMove[] {
-    return [this.getLetterMove(), this.startRule(RuleId.OffSeasonChangeSpecialCards)]
+    return [this.getLetterMove(), ...this.onBonusesEnd()]
   }
 
   lawersuitCard10ActionOnAdvance(): MaterialMove[] {
@@ -93,7 +93,7 @@ export class LawsuitCardHelper extends MaterialRulesPart {
   }
 
   lawersuitCard10ActionOnWin(): MaterialMove[] {
-    return [this.buildFactoryMove(), this.startRule(RuleId.OffSeasonChangeSpecialCards)]
+    return [this.buildFactoryMove(), ...this.onBonusesEnd()]
   }
 
   private movePrestigeMarker(): MaterialMove {
@@ -131,5 +131,11 @@ export class LawsuitCardHelper extends MaterialRulesPart {
     const playerReturnedFactories = this.material(MaterialType.Factory).location(LocationType.PlayerFactories).player(this.player).rotation(true)
     if (playerReturnedFactories.length === 0) return []
     return [playerReturnedFactories.rotateItem(undefined)]
+  }
+
+  private onBonusesEnd(): MaterialMove[] {
+    return this.remind(MemoryType.IsOffSeason)
+            ? [this.startRule(RuleId.OffSeasonChangeSpecialCards)]
+            : new ComputedActionsHelper(this.game).removeActionAndnext(ActionType.CourtRuling)
   }
 }

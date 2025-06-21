@@ -30,7 +30,7 @@ export class EarnPrestigeAgainRule extends PlayerTurnRule {
       return [this.prestigeMarker.moveItem(({ location }) => ({ ...location, x: location.x! + move }))]
     }
     if (isMoveItemType(MaterialType.PrestigeMarker)(move)) {
-      return new EndOfGameHelper(this.game).checkInstantEndOfGame(this.computedActionHelper?.removeActionAndnext(this.actionType) ?? [])
+      return new EndOfGameHelper(this.game).checkInstantEndOfGame(this.computedActionHelper?.removeActionAndnext() ?? [])
     }
     return []
   }

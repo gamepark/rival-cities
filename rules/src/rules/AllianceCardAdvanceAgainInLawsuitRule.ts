@@ -6,8 +6,13 @@ import { AdvanceLawsuitActionRule } from './actions/AdvanceLawsuitActionRule'
 import { MemoryType } from './MemoryType'
 
 export class AllianceCardAdvanceAgainInLawsuitRule extends AdvanceLawsuitActionRule {
+
   onRuleStart(): MaterialMove[] {
-    return super.onRuleStart()
+    this.memorize(MemoryType.NbTimeUsedAllianceLeHavre, 0)
+    if (this.possibleCardsToGet().length === 0) {
+      return this.computedActionHelper.removeActionAndnext(this.actionType)
+    }
+    return []
   }
 
   getPlayerMoves(): MaterialMove[] {

@@ -53,7 +53,7 @@ export const shipCards = getEnumValues(ShipCard)
 export const shipCardsData: Record<ShipCard, ShipCardData> = {
   [ShipCard.Ship1]: {
     cost: { type: Product.Furniture, quantity: 3 },
-    effect: { type: ShipEffectType.Instant, rules: [RuleId.EarnPrestigeAction, RuleId.EarnPrestigeAction] },
+    effect: { type: ShipEffectType.Instant, rules: [RuleId.EarnPrestige, RuleId.EarnPrestige] },
     getNbStars: () => 1
   },
   [ShipCard.Ship2]: {

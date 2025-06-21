@@ -17,6 +17,7 @@ export enum MemoryType {
   IsBuildInProgress,
   PreviousRule,
   NextRules,
+  BonusesRules,
   ComputedActions,
   NbProductStealed,
   AlliancePay,
