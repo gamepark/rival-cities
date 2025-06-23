@@ -24,7 +24,7 @@ export class OffSeasonGetShipsBonusesRule extends PlayerTurnRule {
 
   afterItemMove(move: MaterialMove): MaterialMove[] {
     if (this.remind<number>(MemoryType.ProcessedBonuses) === this.shipsOffSeason.length) {
-      if(isMoveItemType(MaterialType.PrestigeMarker)(move)) {
+      if (isMoveItemType(MaterialType.PrestigeMarker)(move)) {
         return new EndOfGameHelper(this.game).checkInstantEndOfGame([this.startRule(RuleId.OffSeasonGetPrestigeBonuses)])
       }
       return [this.startRule(RuleId.OffSeasonGetPrestigeBonuses)]
@@ -39,8 +39,8 @@ export class OffSeasonGetShipsBonusesRule extends PlayerTurnRule {
       .getItems()
 
     return shipCards.sort((a, b) => {
-      if(a.id === ShipCard.Ship8) return 1
-      if(b.id === ShipCard.Ship8) return -1
+      if (a.id === ShipCard.Ship8) return 1
+      if (b.id === ShipCard.Ship8) return -1
       return a.id - b.id
     })
   }

@@ -5,18 +5,18 @@ import { RuleId } from './RuleId'
 import { MemoryHelper } from './helper/MemoryHelper'
 
 export class Choose1ProductRule extends GiftActionRule {
-    movesAfterProductsGiven(): MaterialMove[] {
-        if (this.remind(MemoryType.IsOffSeason)) {
-            this.forget(MemoryType.BasicActionChoosen)
-            return [this.startRule(RuleId.OffSeasonChangeSpecialCards)]
-        }
-        return super.movesAfterProductsGiven()
+  movesAfterProductsGiven(): MaterialMove[] {
+    if (this.remind(MemoryType.IsOffSeason)) {
+      this.forget(MemoryType.BasicActionChoosen)
+      return [this.startRule(RuleId.OffSeasonChangeSpecialCards)]
     }
+    return super.movesAfterProductsGiven()
+  }
 
-    onRuleEnd(): MaterialMove[] {
-        if (this.remind(MemoryType.IsOffSeason)) {
-            new MemoryHelper(this.game).clearMemory()
-        }
-        return []
+  onRuleEnd(): MaterialMove[] {
+    if (this.remind(MemoryType.IsOffSeason)) {
+      new MemoryHelper(this.game).clearMemory()
     }
+    return []
+  }
 }

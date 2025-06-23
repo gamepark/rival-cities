@@ -21,7 +21,13 @@ export class LawsuitCardHelper extends MaterialRulesPart {
   }
 
   lawersuitCard1ActionOnWin(): MaterialMove[] {
-    return [this.getProductMove(Product.Leather), this.getProductMove(Product.Leather), this.getProductMove(Product.Leather), this.movePrestigeMarker(), ...this.onBonusesEnd()]
+    return [
+      this.getProductMove(Product.Leather),
+      this.getProductMove(Product.Leather),
+      this.getProductMove(Product.Leather),
+      this.movePrestigeMarker(),
+      ...this.onBonusesEnd()
+    ]
   }
 
   lawersuitCard2ActionOnAdvance(): MaterialMove[] {
@@ -53,7 +59,14 @@ export class LawsuitCardHelper extends MaterialRulesPart {
   }
 
   lawersuitCard5ActionOnWin(): MaterialMove[] {
-    return [this.getProductMove(Product.Beer), this.getProductMove(Product.Beer), this.getProductMove(Product.Beer), this.getStarTokensMove(), this.getStarTokensMove(), ...this.onBonusesEnd()]
+    return [
+      this.getProductMove(Product.Beer),
+      this.getProductMove(Product.Beer),
+      this.getProductMove(Product.Beer),
+      this.getStarTokensMove(),
+      this.getStarTokensMove(),
+      ...this.onBonusesEnd()
+    ]
   }
 
   lawersuitCard6ActionOnAdvance(): MaterialMove[] {
@@ -99,9 +112,8 @@ export class LawsuitCardHelper extends MaterialRulesPart {
   private movePrestigeMarker(): MaterialMove {
     const prestigeMarkerMove = this.player === City.Altona ? -1 : 1
     return this.material(MaterialType.PrestigeMarker)
-        .location(LocationType.PrestigeMarkerPiste)
-        .moveItem(({ location }) => ({ ...location, x: location.x! + prestigeMarkerMove }))
-    
+      .location(LocationType.PrestigeMarkerPiste)
+      .moveItem(({ location }) => ({ ...location, x: location.x! + prestigeMarkerMove }))
   }
 
   private getProductMove(product: Product): MaterialMove {
@@ -112,15 +124,11 @@ export class LawsuitCardHelper extends MaterialRulesPart {
   }
 
   private getStarTokensMove(): MaterialMove {
-    return this.material(MaterialType.StarToken)
-      .location(LocationType.StarTokenDeck)
-      .moveItem({ type: LocationType.PlayerStarTokens, player: this.player })
+    return this.material(MaterialType.StarToken).location(LocationType.StarTokenDeck).moveItem({ type: LocationType.PlayerStarTokens, player: this.player })
   }
 
   private getLetterMove(): MaterialMove {
-    return this.material(MaterialType.Letter)
-      .location(LocationType.LetterDeck)
-      .moveItem({ type: LocationType.PlayerLetterDeck, player: this.player })
+    return this.material(MaterialType.Letter).location(LocationType.LetterDeck).moveItem({ type: LocationType.PlayerLetterDeck, player: this.player })
   }
 
   private buildFactoryMove(): MaterialMove {
@@ -135,7 +143,7 @@ export class LawsuitCardHelper extends MaterialRulesPart {
 
   private onBonusesEnd(): MaterialMove[] {
     return this.remind(MemoryType.IsOffSeason)
-            ? [this.startRule(RuleId.OffSeasonChangeSpecialCards)]
-            : new ComputedActionsHelper(this.game).removeActionAndnext(ActionType.CourtRuling)
+      ? [this.startRule(RuleId.OffSeasonChangeSpecialCards)]
+      : new ComputedActionsHelper(this.game).removeActionAndnext(ActionType.CourtRuling)
   }
 }

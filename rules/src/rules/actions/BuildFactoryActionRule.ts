@@ -16,7 +16,7 @@ export class BuildFactoryActionRule extends PlayerTurnRule {
   nbProductsGiven = this.remind(MemoryType.NbProductGiven) ?? 0
 
   onRuleStart(): MaterialMove[] {
-    if(this.playerProducts.getQuantity() < this.price) {
+    if (this.playerProducts.getQuantity() < this.price) {
       return [...this.computedActionHelper.removeActionAndnext(this.actionType)]
     }
     return []

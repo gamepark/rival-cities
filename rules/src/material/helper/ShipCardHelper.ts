@@ -41,8 +41,8 @@ export class ShipCardHelper extends MaterialRulesPart {
   private movePrestigeMarker(): MaterialMove {
     const prestigeMarkerMove = this.player === City.Altona ? -1 : 1
     return this.material(MaterialType.PrestigeMarker)
-        .location(LocationType.PrestigeMarkerPiste)
-        .moveItem(({ location }) => ({ ...location, x: location.x! + prestigeMarkerMove }))
+      .location(LocationType.PrestigeMarkerPiste)
+      .moveItem(({ location }) => ({ ...location, x: location.x! + prestigeMarkerMove }))
   }
 
   getProductMove(product: Product, quantity: number): MaterialMove[] {

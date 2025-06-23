@@ -6,7 +6,6 @@ import { AdvanceLawsuitActionRule } from './actions/AdvanceLawsuitActionRule'
 import { MemoryType } from './MemoryType'
 
 export class AllianceCardAdvanceAgainInLawsuitRule extends AdvanceLawsuitActionRule {
-
   onRuleStart(): MaterialMove[] {
     this.memorize(MemoryType.NbTimeUsedAllianceLeHavre, 0)
     if (this.possibleCardsToGet().length === 0) {

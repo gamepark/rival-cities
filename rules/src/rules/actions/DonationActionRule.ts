@@ -49,7 +49,7 @@ export class DonationActionRule extends PlayerTurnRule {
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.StarToken)(move) && move.location.type === LocationType.PlayerStarTokens) {
       this.memorize(MemoryType.BasicActionChoosen, this.actionType)
-      if(this.productType) {
+      if (this.productType) {
         moves.push(...this.playerProducts.moveItems((item) => ({ type: LocationType.ProductPiles, id: item.id }), this.nbProduct))
       } else {
         this.memorize(MemoryType.IsDonationInProgress, true)
@@ -62,13 +62,13 @@ export class DonationActionRule extends PlayerTurnRule {
 
   afterItemMove(move: ItemMove): MaterialMove[] {
     if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
-    if(isMoveItemType(MaterialType.Letter)(move)) {
+    if (isMoveItemType(MaterialType.Letter)(move)) {
       this.memorize<RuleId[]>(MemoryType.BonusesRules, (old) => [RuleId.SwapProduct, ...old])
       return this.computedActionHelper.removeActionAndnext()
     }
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.ProductPiles) {
-      if(this.productType) {
+      if (this.productType) {
         this.memorize<number>(MemoryType.NbDonations, (old) => old + 1)
         if (this.remind(MemoryType.NbDonations) === this.nbTimes) {
           return this.computedActionHelper.removeActionAndnext(this.actionType)

@@ -22,7 +22,7 @@ export class ChooseActionRule extends PlayerTurnRule {
       ]
     }
     if (this.playerSpecialActionCards.length === 0) {
-      if(this.basicActionCardIdInInkjarPlace) {
+      if (this.basicActionCardIdInInkjarPlace) {
         this.memorize(MemoryType.ComputedActions, basicActionCardActions[this.basicActionCardIdInInkjarPlace])
       } else if (this.inkjarLocationId === 0) {
         this.memorize(MemoryType.ComputedActions, [ActionType.Gift])
@@ -64,7 +64,7 @@ export class ChooseActionRule extends PlayerTurnRule {
 
   onCustomMove(move: CustomMove): MaterialMove[] {
     if (isCustomMoveType(CustomMoveType.PlaysBasicAction)(move)) {
-      if(this.basicActionCardIdInInkjarPlace) {
+      if (this.basicActionCardIdInInkjarPlace) {
         this.memorize(MemoryType.ComputedActions, basicActionCardActions[this.basicActionCardIdInInkjarPlace])
       } else if (this.inkjarLocationId === 0) {
         this.memorize(MemoryType.ComputedActions, [ActionType.Gift])

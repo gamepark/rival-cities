@@ -40,12 +40,11 @@ export class AdvanceAgainInLawsuitRule extends PlayerTurnRule {
   }
 
   beforeItemMove(move: ItemMove): MaterialMove[] {
-    if(isMoveItemType(MaterialType.Letter)(move)) {
+    if (isMoveItemType(MaterialType.Letter)(move)) {
       this.memorize<RuleId[]>(MemoryType.BonusesRules, (old) => [RuleId.SwapProduct, ...old])
       return this.computedActionHelper.removeActionAndnext()
     }
     return []
-      
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {

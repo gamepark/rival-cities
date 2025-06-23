@@ -39,11 +39,11 @@ export class AdvanceLawsuitActionRule extends PlayerTurnRule {
   beforeItemMove(move: ItemMove): MaterialMove[] {
     if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
 
-    if(isMoveItemType(MaterialType.Letter)(move)) {
+    if (isMoveItemType(MaterialType.Letter)(move)) {
       this.memorize<RuleId[]>(MemoryType.BonusesRules, (old) => [RuleId.SwapProduct, ...old])
       return this.computedActionHelper.removeActionAndnext()
     }
-    
+
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.LawsuitMarker)(move)) {
       const card = this.lawsuitCards.filter(({ location }) => location.z === move.location.id).getItem()

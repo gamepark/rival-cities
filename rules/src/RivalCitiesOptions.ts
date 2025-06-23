@@ -11,7 +11,7 @@ type PlayerOptions = { id: City }
  * The first generic parameter, "{}", can be changed to include game options like variants or expansions.
  */
 export type RivalCitiesOptions = {
-  players: PlayerOptions[],
+  players: PlayerOptions[]
   firstPlay: boolean
 }
 
@@ -29,6 +29,6 @@ export const RivalCitiesOptionsSpec: OptionsSpec<RivalCitiesOptions> = {
   },
   firstPlay: {
     label: (t) => t('firstPlay'),
-    help: (t) => t('firstPlay.help'),
+    help: (t) => t('firstPlay.help')
   }
 }

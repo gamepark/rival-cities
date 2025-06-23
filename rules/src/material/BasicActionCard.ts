@@ -36,5 +36,5 @@ export const basicActionCardActions: Record<BasicActionCard, ActionType[]> = {
   [BasicActionCard.BasicAction12]: [ActionType.Gift, ActionType.AdvanceLawsuit],
   [BasicActionCard.BasicAction13]: [ActionType.CourtRuling, ActionType.PurchaseShip],
   [BasicActionCard.BasicAction14]: [ActionType.EarnPrestige, ActionType.ProductionBeer],
-  [BasicActionCard.BasicAction15]: [ActionType.AdvanceLawsuit],
+  [BasicActionCard.BasicAction15]: [ActionType.AdvanceLawsuit]
 }

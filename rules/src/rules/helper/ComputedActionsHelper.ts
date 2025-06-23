@@ -18,15 +18,15 @@ export class ComputedActionsHelper extends MaterialRulesPart {
     this.previousRulePlayer = previousRulePlayer
   }
 
-  removeActionAndnext(actionType?: ActionType): MaterialMove[] {    
+  removeActionAndnext(actionType?: ActionType): MaterialMove[] {
     this.forget(MemoryType.BasicActionChoosen)
     const BonusesRules: RuleId[] = this.remind(MemoryType.BonusesRules)
     if (BonusesRules.length > 0) {
       this.memorize(MemoryType.BonusesRules, BonusesRules.slice(1))
       return [this.startRule(BonusesRules[0])]
     }
-    if(actionType) {
-    if(this.checkIfPlayerCanTakeAllActions()) {
+    if (actionType) {
+      if (this.checkIfPlayerCanTakeAllActions()) {
         this.memorize<ActionType[]>(MemoryType.ComputedActions, (old) => {
           const index = old.indexOf(actionType)
           if (index !== -1) {
@@ -34,10 +34,10 @@ export class ComputedActionsHelper extends MaterialRulesPart {
           }
           return old
         })
-    } else {
-      this.memorize(MemoryType.ComputedActions, [])
+      } else {
+        this.memorize(MemoryType.ComputedActions, [])
+      }
     }
-  }
     if (this.remind(MemoryType.ComputedActions).length) {
       return [
         this.previousRulePlayer !== undefined
@@ -54,15 +54,15 @@ export class ComputedActionsHelper extends MaterialRulesPart {
     const isBasicActionCard8 = this.getBasicActionCardIdInInkjarPlace() === 8
     return isSpeciaActionCard || playerHaveGdanskAlliance || isBasicActionCard8
   }
-  
+
   getInkjarLocationId(): number {
-      return this.material(MaterialType.InkJar).location(LocationType.InkJarPiste).getItem()?.location.id
-    }
-  
+    return this.material(MaterialType.InkJar).location(LocationType.InkJarPiste).getItem()?.location.id
+  }
+
   getBasicActionCardIdInInkjarPlace(): number {
-      return this.material(MaterialType.BasicActionCard)
-        .location(LocationType.CardPiste)
-        .filter((it) => it.location.id === this.getInkjarLocationId())
-        .getItem()?.id
-    }
+    return this.material(MaterialType.BasicActionCard)
+      .location(LocationType.CardPiste)
+      .filter((it) => it.location.id === this.getInkjarLocationId())
+      .getItem()?.id
+  }
 }

@@ -67,7 +67,7 @@ export enum ActionType {
   CourtRuling,
   Return3Factory,
   Piracy,
-  Piracy3times,
+  Piracy3times
 }
 
 export const actionRules: Record<ActionType, (game: MaterialGame) => PlayerTurnRule> = {

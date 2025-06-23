@@ -22,7 +22,8 @@ export class PurchaseShipActionRule extends PlayerTurnRule {
       return [
         ...this.possibleCardsToGet().moveItems({ type: LocationType.PlayerShipCards, player: this.player }),
         ...this.playerLetters.moveItems({ type: LocationType.LetterDeck }),
-        this.customMove(CustomMoveType.Pass, this.actionType)]
+        this.customMove(CustomMoveType.Pass, this.actionType)
+      ]
     }
     return []
   }
@@ -44,7 +45,7 @@ export class PurchaseShipActionRule extends PlayerTurnRule {
 
   afterItemMove(move: ItemMove): MaterialMove[] {
     if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
-    if(isMoveItemType(MaterialType.Letter)(move)) {
+    if (isMoveItemType(MaterialType.Letter)(move)) {
       this.memorize<RuleId[]>(MemoryType.BonusesRules, (old) => [RuleId.SwapProduct, ...old])
       return this.computedActionHelper.removeActionAndnext()
     }

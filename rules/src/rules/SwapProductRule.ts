@@ -1,9 +1,9 @@
 import { ProductSwapActionRule } from './actions/ProductSwapActionRule'
 
 export class SwapProductRule extends ProductSwapActionRule {
-    nbSwaps = 1
+  nbSwaps = 1
 
-    next() {
-      return this.computedActionHelper.removeActionAndnext()
-    }
+  next() {
+    return this.computedActionHelper.removeActionAndnext()
+  }
 }
