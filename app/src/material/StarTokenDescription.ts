@@ -2,6 +2,7 @@ import { CardDescription, ItemContext } from '@gamepark/react-game'
 import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
 import { isMoveItemType, MaterialMove } from '@gamepark/rules-api'
 import StarToken from '../images/tokens/Star.jpg'
+import { StarTokenHelp } from './help/StarTokenHelp'
 
 export class StarTokenDescription extends CardDescription {
   width = 1.7
@@ -13,6 +14,8 @@ export class StarTokenDescription extends CardDescription {
   canShortClick(move: MaterialMove, context: ItemContext): boolean {
     return isMoveItemType(MaterialType.StarToken)(move) && move.itemIndex === context.index
   }
+
+  help = StarTokenHelp
 }
 
 export const starTokenDescription = new StarTokenDescription()

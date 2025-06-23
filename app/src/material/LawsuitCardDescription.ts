@@ -11,6 +11,7 @@ import Lawsuit8 from '../images/cards/lawsuit/en/Lawsuit08.jpg'
 import Lawsuit9 from '../images/cards/lawsuit/en/Lawsuit09.jpg'
 import Lawsuit10 from '../images/cards/lawsuit/en/Lawsuit10.jpg'
 import LawsuitBack from '../images/cards/lawsuit/LawsuitBack.jpg'
+import { LawsuitCardHelp } from './help/LawsuitCardHelp'
 
 
 export class LawsuitCardDescription extends CardDescription {
@@ -31,6 +32,8 @@ export class LawsuitCardDescription extends CardDescription {
     [LawsuitCard.Lawsuit9]: Lawsuit9,
     [LawsuitCard.Lawsuit10]: Lawsuit10
   }
+
+  help = LawsuitCardHelp
 }
 
 export const lawsuitCardDescription = new LawsuitCardDescription()

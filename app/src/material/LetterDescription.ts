@@ -3,6 +3,7 @@ import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
 import { isMoveItemType, MaterialItem, MaterialMove } from '@gamepark/rules-api'
 import LetterFront from '../images/tokens/LetterFront.jpg'
 import LetterBack from '../images/tokens/LetterBack.jpg'
+import { LetterHelp } from './help/LetterHelp'
 
 export class LetterDescription extends CardDescription {
   width = 3
@@ -19,6 +20,8 @@ export class LetterDescription extends CardDescription {
   canShortClick(move: MaterialMove, context: ItemContext): boolean {
     return isMoveItemType(MaterialType.Letter)(move) && context.index === move.itemIndex
   }
+
+  help = LetterHelp
 }
 
 export const letterDescription = new LetterDescription()

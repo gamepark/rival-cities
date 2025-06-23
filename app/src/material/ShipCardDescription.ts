@@ -24,6 +24,7 @@ import Ship19 from '../images/cards/ship/en/Ship19.jpg'
 import Ship20 from '../images/cards/ship/en/Ship20.jpg'
 import Ship21 from '../images/cards/ship/en/Ship21.jpg'
 import ShipBack from '../images/cards/ship/ShipBack.jpg'
+import { ShipCardHelp } from './help/ShipCardHelp'
 
 export class ShipCardDescription extends CardDescription {
   width = 4.35
@@ -58,6 +59,8 @@ export class ShipCardDescription extends CardDescription {
   canShortClick(move: MaterialMove, context: ItemContext): boolean {
     return isMoveItemType(MaterialType.ShipCard)(move) && context.index === move.itemIndex
   }
+
+  help = ShipCardHelp
 }
 
 export const shipCardDescription = new ShipCardDescription()
