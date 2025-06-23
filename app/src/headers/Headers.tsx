@@ -28,6 +28,7 @@ import { OffSeasonPlayerWithMostShipCardsEarnPrestigeHeader } from './OffSeasonP
 import { AllianceCardAdvanceAgainInLawsuitHeader } from './AllianceCardAdvanceAgainInLawsuitHeader'
 import { AllianceCardDrawSpecialActionCardAgainHeader } from './AllianceCardDrawSpecialActionCardAgainHeader'
 import { AllianceCardEarnPrestigeAgainHeader } from './AllianceCardEarnPrestigeAgainHeader'
+import { SwapProductHeader } from './SwapProductHeader'
 
 export const Headers: Partial<Record<RuleId, ComponentType>> = {
   [RuleId.ChooseFirstProduct]: ChooseFirstProductHeader,
@@ -57,4 +58,5 @@ export const Headers: Partial<Record<RuleId, ComponentType>> = {
   [RuleId.EarnPrestigeAgain]: EarnPrestigeAgainHeader,
   [RuleId.ChooseSpecialAction]: ChooseSpecialActionHeader,
   [RuleId.OffSeasonPlayerWithMostShipCardsEarnPrestige]: OffSeasonPlayerWithMostShipCardsEarnPrestigeHeader,
+  [RuleId.SwapProduct]: SwapProductHeader
 }

@@ -9,6 +9,7 @@ import { MemoryType } from '../MemoryType'
 import { AllianceCard } from '../../material/AllianceCard'
 import { BasicActionHelper } from '../helper/BasicActionHelper'
 import { AllianceCardHelper } from '../../material/helper/AllianceCardHelper'
+import { RuleId } from '../RuleId'
 
 export class DonationActionRule extends PlayerTurnRule {
   actionType = ActionType.Donation
@@ -38,6 +39,7 @@ export class DonationActionRule extends PlayerTurnRule {
         )
       }
       moves.push(this.customMove(CustomMoveType.Pass, this.actionType))
+      moves.push(...this.playerLetters.moveItems({ type: LocationType.LetterDeck }))
     }
     return moves
   }
@@ -60,6 +62,10 @@ export class DonationActionRule extends PlayerTurnRule {
 
   afterItemMove(move: ItemMove): MaterialMove[] {
     if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
+    if(isMoveItemType(MaterialType.Letter)(move)) {
+      this.memorize<RuleId[]>(MemoryType.BonusesRules, (old) => [RuleId.SwapProduct, ...old])
+      return this.computedActionHelper.removeActionAndnext()
+    }
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.ProductPiles) {
       if(this.productType) {
@@ -87,5 +93,9 @@ export class DonationActionRule extends PlayerTurnRule {
 
   get starTokens() {
     return this.material(MaterialType.StarToken).location(LocationType.StarTokenDeck)
+  }
+
+  get playerLetters() {
+    return this.material(MaterialType.Letter).location(LocationType.PlayerLetterDeck).player(this.player)
   }
 }

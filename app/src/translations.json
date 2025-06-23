@@ -118,6 +118,8 @@
   },
   "fr": {
     "translation": {
+      "header.swap.you": "Vous pouvez échanger une de vos ressource contre une autre ressource au choix",
+      "header.swap.player": "{player} peut échanger une de ses ressources contre une autre ressource au choix",
       "header.choose.first.product.you": "Vous devez choisir un produit",
       "header.choose.first.product.player": "{player} doit choisir un produit",
       "header.choose.first.product.others": "Les joueurs doivent choisir un produit",

@@ -46,11 +46,15 @@ export class ProductSwapActionRule extends PlayerTurnRule {
         this.memorize(MemoryType.NbSwaps, this.nbSwaps + 1)
         if (this.remind(MemoryType.NbSwaps) === 2) {
           this.memorize(MemoryType.NbSwaps, 0)
-          return this.computedActionHelper.removeActionAndnext(this.actionType)
+          return this.next()
         }
       }
     }
     return []
+  }
+
+  next() {
+    return this.computedActionHelper.removeActionAndnext(this.actionType)
   }
 
   get playerProducts() {

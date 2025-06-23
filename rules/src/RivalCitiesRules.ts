@@ -46,6 +46,7 @@ import { EndOfGameHelper } from './rules/helper/EndOfGameHelper'
 import { ComputedActionsHelper } from './rules/helper/ComputedActionsHelper'
 import { MemoryHelper } from './rules/helper/MemoryHelper'
 import { GainLetterRule } from './rules/shipCardActions/GainLetterRule'
+import { SwapProductRule } from './rules/SwapProductRule'
 
 /**
  * This class implements the rules of the board game.
@@ -84,7 +85,8 @@ export class RivalCitiesRules
     [RuleId.ChooseSpecialAction]: ChooseSpecialActionRule,
     [RuleId.Choose2Product]: Choose2ProductRule,
     [RuleId.Choose1Product]: Choose1ProductRule,
-    [RuleId.OffSeasonPlayerWithMostShipCardsEarnPrestige]: OffSeasonPlayerWithMostShipCardsEarnPrestigeRule
+    [RuleId.OffSeasonPlayerWithMostShipCardsEarnPrestige]: OffSeasonPlayerWithMostShipCardsEarnPrestigeRule,
+    [RuleId.SwapProduct]: SwapProductRule
   }
 
   locationsStrategies = {

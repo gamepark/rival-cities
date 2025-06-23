@@ -25,8 +25,8 @@ export class ComputedActionsHelper extends MaterialRulesPart {
       this.memorize(MemoryType.BonusesRules, BonusesRules.slice(1))
       return [this.startRule(BonusesRules[0])]
     }
+    if(actionType) {
     if(this.checkIfPlayerCanTakeAllActions()) {
-      if(actionType) {
         this.memorize<ActionType[]>(MemoryType.ComputedActions, (old) => {
           const index = old.indexOf(actionType)
           if (index !== -1) {
@@ -34,10 +34,10 @@ export class ComputedActionsHelper extends MaterialRulesPart {
           }
           return old
         })
-      }
     } else {
       this.memorize(MemoryType.ComputedActions, [])
     }
+  }
     if (this.remind(MemoryType.ComputedActions).length) {
       return [
         this.previousRulePlayer !== undefined

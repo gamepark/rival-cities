@@ -16,17 +16,13 @@ export class PurchaseShipActionRule extends PlayerTurnRule {
   basicActionHelper = new BasicActionHelper(this.game)
   shipChoosen = this.remind(MemoryType.ShipChoosen)
 
-  onRuleStart(): MaterialMove[] {
-    if (this.possibleCardsToGet().length === 0) {
-      return this.computedActionHelper.removeActionAndnext(this.actionType)
-    }
-    return []
-  }
-
   getPlayerMoves(): MaterialMove[] {
     if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
     if (!this.shipChoosen) {
-      return [...this.possibleCardsToGet().moveItems({ type: LocationType.PlayerShipCards, player: this.player }), this.customMove(CustomMoveType.Pass, this.actionType)]
+      return [
+        ...this.possibleCardsToGet().moveItems({ type: LocationType.PlayerShipCards, player: this.player }),
+        ...this.playerLetters.moveItems({ type: LocationType.LetterDeck }),
+        this.customMove(CustomMoveType.Pass, this.actionType)]
     }
     return []
   }
@@ -48,6 +44,10 @@ export class PurchaseShipActionRule extends PlayerTurnRule {
 
   afterItemMove(move: ItemMove): MaterialMove[] {
     if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
+    if(isMoveItemType(MaterialType.Letter)(move)) {
+      this.memorize<RuleId[]>(MemoryType.BonusesRules, (old) => [RuleId.SwapProduct, ...old])
+      return this.computedActionHelper.removeActionAndnext()
+    }
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.ShipCard)(move) && move.location.type === LocationType.PlayerShipCards) {
       return new EndOfGameHelper(this.game).checkInstantEndOfGame(this.movesOnPushasedShip(move))
@@ -90,5 +90,9 @@ export class PurchaseShipActionRule extends PlayerTurnRule {
 
   get playerShip19() {
     return this.material(MaterialType.ShipCard).location(LocationType.PlayerShipCards).player(this.player).id(ShipCard.Ship19)
+  }
+
+  get playerLetters() {
+    return this.material(MaterialType.Letter).location(LocationType.PlayerLetterDeck).player(this.player)
   }
 }

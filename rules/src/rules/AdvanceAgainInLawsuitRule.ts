@@ -18,7 +18,7 @@ export class AdvanceAgainInLawsuitRule extends PlayerTurnRule {
   advanceLawsuitHelper = new AdvanceLawsuitHelper(this.game)
 
   onRuleStart(): MaterialMove[] {
-    if (!this.advanceLawsuitHelper.checkIfCanAdvanceInLawsuit(this.lawsuitCardId)) {
+    if (!this.advanceLawsuitHelper.checkIfCanAdvanceInLawsuit(this.lawsuitCardId) && this.playerLetters.length === 0) {
       return [...this.computedActionHelper.removeActionAndnext(this.actionType)]
     }
     return []
@@ -33,8 +33,19 @@ export class AdvanceAgainInLawsuitRule extends PlayerTurnRule {
       moves.push(this.marker.moveItem(({ location }) => ({ ...location, x: location.x! + moveX })))
     }
 
+    moves.push(...this.playerLetters.moveItems({ type: LocationType.LetterDeck }))
+
     moves.push(this.customMove(CustomMoveType.Pass, this.actionType))
     return moves
+  }
+
+  beforeItemMove(move: ItemMove): MaterialMove[] {
+    if(isMoveItemType(MaterialType.Letter)(move)) {
+      this.memorize<RuleId[]>(MemoryType.BonusesRules, (old) => [RuleId.SwapProduct, ...old])
+      return this.computedActionHelper.removeActionAndnext()
+    }
+    return []
+      
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {
