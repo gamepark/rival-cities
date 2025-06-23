@@ -3,6 +3,10 @@ import { ActionType } from '../ActionType'
 import { MemoryType } from '../MemoryType'
 import { NextRuleHelper } from './NextRuleHelper'
 import { RuleId } from '../RuleId'
+import { AllianceCardHelper } from '../../material/helper/AllianceCardHelper'
+import { AllianceCard } from '../../material/AllianceCard'
+import { LocationType } from '../../material/LocationType'
+import { MaterialType } from '../../material/MaterialType'
 
 export class ComputedActionsHelper extends MaterialRulesPart {
   player?: number
@@ -21,14 +25,18 @@ export class ComputedActionsHelper extends MaterialRulesPart {
       this.memorize(MemoryType.BonusesRules, BonusesRules.slice(1))
       return [this.startRule(BonusesRules[0])]
     }
-    if(actionType) {
-      this.memorize<ActionType[]>(MemoryType.ComputedActions, (old) => {
-        const index = old.indexOf(actionType)
-        if (index !== -1) {
-          old.splice(index, 1)
-        }
-        return old
-      })
+    if(this.checkIfPlayerCanTakeAllActions()) {
+      if(actionType) {
+        this.memorize<ActionType[]>(MemoryType.ComputedActions, (old) => {
+          const index = old.indexOf(actionType)
+          if (index !== -1) {
+            old.splice(index, 1)
+          }
+          return old
+        })
+      }
+    } else {
+      this.memorize(MemoryType.ComputedActions, [])
     }
     if (this.remind(MemoryType.ComputedActions).length) {
       return [
@@ -39,4 +47,22 @@ export class ComputedActionsHelper extends MaterialRulesPart {
     }
     return this.nextRuleHelper.moveToNextRule()
   }
+
+  checkIfPlayerCanTakeAllActions(): boolean {
+    const playerHaveGdanskAlliance = new AllianceCardHelper(this.game).checkPlayerAllianceCardById(AllianceCard.AllianceGdansk)
+    const isSpeciaActionCard = this.remind(MemoryType.PreviousRule) === RuleId.SpecialAction
+    const isBasicActionCard8 = this.getBasicActionCardIdInInkjarPlace() === 8
+    return isSpeciaActionCard || playerHaveGdanskAlliance || isBasicActionCard8
+  }
+  
+  getInkjarLocationId(): number {
+      return this.material(MaterialType.InkJar).location(LocationType.InkJarPiste).getItem()?.location.id
+    }
+  
+  getBasicActionCardIdInInkjarPlace(): number {
+      return this.material(MaterialType.BasicActionCard)
+        .location(LocationType.CardPiste)
+        .filter((it) => it.location.id === this.getInkjarLocationId())
+        .getItem()?.id
+    }
 }

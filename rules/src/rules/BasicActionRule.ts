@@ -1,55 +1,36 @@
 import { CustomMove, ItemMove, MaterialMove, PlayerTurnRule, PlayMoveContext, RuleMove, RuleStep } from '@gamepark/rules-api'
-import { BasicActionCard, getBasicActionCardRule } from '../material/BasicActionCard'
-import { LocationType } from '../material/LocationType'
-import { MaterialType } from '../material/MaterialType'
-import { BasicActionCard0Rule } from './basicActions/BasicActionCard0Rule'
 import { MemoryType } from './MemoryType'
 import { RuleId } from './RuleId'
 import { MemoryHelper } from './helper/MemoryHelper'
+import { actionRules, ActionType } from './ActionType'
+import { AllianceCardHelper } from '../material/helper/AllianceCardHelper'
 
 export class BasicActionRule extends PlayerTurnRule {
-  onRuleStart(_move: RuleMove, _previousRule?: RuleStep, _context?: PlayMoveContext): MaterialMove[] {
-    this.memorize(MemoryType.PreviousRule, RuleId.BasicAction)
-    return this.basicActionCardRule.onRuleStart(_move, _previousRule, _context)
-  }
-
-  getPlayerMoves(): MaterialMove[] {
-    return [...this.basicActionCardRule.getPlayerMoves()]
-  }
-
-  beforeItemMove(move: ItemMove, context?: PlayMoveContext): MaterialMove[] {
-    return this.basicActionCardRule.beforeItemMove(move, context)
-  }
-
-  afterItemMove(move: ItemMove, context?: PlayMoveContext): MaterialMove[] {
-    return this.basicActionCardRule.afterItemMove(move, context)
-  }
-
-  onCustomMove(move: CustomMove, context?: PlayMoveContext): MaterialMove[] {
-    const moves = super.onCustomMove(move, context)
-
-    moves.push(...this.basicActionCardRule.onCustomMove(move, context))
-
-    return moves
-  }
-
-  onRuleEnd(_move: RuleMove, _context?: PlayMoveContext): MaterialMove[] {
-    new MemoryHelper(this.game).clearMemory()
-    return this.basicActionCardRule.onRuleEnd(_move, _context)
-  }
-
-  get inkjarLocationId(): number {
-    return this.material(MaterialType.InkJar).location(LocationType.InkJarPiste).getItem()?.location.id
-  }
-
-  get cardInInkjarPlace(): BasicActionCard {
-    return this.material(MaterialType.BasicActionCard)
-      .location(LocationType.CardPiste)
-      .filter((it) => it.location.id === this.inkjarLocationId)
-      .getItem()?.id
-  }
-
-  get basicActionCardRule(): PlayerTurnRule {
-    return this.inkjarLocationId === 0 ? new BasicActionCard0Rule(this.game) : getBasicActionCardRule(this.cardInInkjarPlace, this.game)
-  }
+  allianceCardHelper = new AllianceCardHelper(this.game)
+  actionRules = this.remind<ActionType[]>(MemoryType.ComputedActions).map((it) => actionRules[it](this.game))
+    onRuleStart(_move: RuleMove, _previousRule?: RuleStep, _context?: PlayMoveContext): MaterialMove[] {
+      this.memorize(MemoryType.PreviousRule, RuleId.BasicAction)
+      return [...this.actionRules.flatMap((rule) => rule.onRuleStart(_move, _previousRule, _context))]
+    }
+  
+    getPlayerMoves(): MaterialMove[] {
+      return [...this.actionRules.flatMap((rule) => rule.getPlayerMoves())]
+    }
+  
+    beforeItemMove(move: ItemMove, context?: PlayMoveContext): MaterialMove[] {
+      return [...this.actionRules.flatMap((rule) => rule.beforeItemMove(move, context))]
+    }
+  
+    afterItemMove(move: ItemMove, context?: PlayMoveContext): MaterialMove[] {
+      return [...this.actionRules.flatMap((rule) => rule.afterItemMove(move, context))]
+    }
+  
+    onCustomMove(move: CustomMove, context?: PlayMoveContext): MaterialMove[] {
+      return [...this.actionRules.flatMap((rule) => rule.onCustomMove(move, context))]
+    }
+  
+    onRuleEnd(): MaterialMove[] {
+      new MemoryHelper(this.game).clearMemory()
+      return []
+    }
 }

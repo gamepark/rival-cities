@@ -1,9 +1,5 @@
 /** @jsxImportSource @emotion/react */
-
 import { PlayMoveButton, useLegalMove, usePlayerId, usePlayerName, useRules } from '@gamepark/react-game'
-import { BasicActionCard } from '@gamepark/rival-cities/material/BasicActionCard'
-import { LocationType } from '@gamepark/rival-cities/material/LocationType'
-import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
 import { RivalCitiesRules } from '@gamepark/rival-cities/RivalCitiesRules'
 import { CustomMoveType } from '@gamepark/rival-cities/rules/CustomMoveType'
 import { MemoryType } from '@gamepark/rival-cities/rules/MemoryType'
@@ -16,29 +12,8 @@ export const BasicActionHeader = () => {
   const activePlayer = rules.game.rule?.player
   const itsMe = player && activePlayer === player
   const name = usePlayerName(activePlayer)
-  const inkjarLocationId: number = rules.material(MaterialType.InkJar).location(LocationType.InkJarPiste).getItem()?.location.id
   const pass = useLegalMove((move) => isCustomMoveType(CustomMoveType.Pass)(move))
 
-  if(inkjarLocationId === 0) {
-    if(itsMe) {
-      return <Trans
-    defaults={`header.basic.action.card.0.you`}
-    components={{
-      pass: <PlayMoveButton move={pass} />
-    }}
-  />
-    }
-    return <Trans
-    defaults={`header.basic.action.card.0.player`} values={{ player: name }} />
-  }
-
-  const cardInInkjarPlace = (): BasicActionCard => {
-    return rules
-      .material(MaterialType.BasicActionCard)
-      .location(LocationType.CardPiste)
-      .filter((it) => it.location.id === inkjarLocationId)
-      .getItem()?.id
-  }
   
   const productChoosen = rules.remind(MemoryType.ProductChoosen)
     const isDonationInProgress = rules.remind(MemoryType.IsDonationInProgress)
@@ -66,10 +41,9 @@ export const BasicActionHeader = () => {
         />
       )
     }
-
     return (
       <Trans
-        defaults={`header.basic.action.card.${cardInInkjarPlace()}.you`}
+        defaults={`header.basic.action.you`}
         components={{
           pass: <PlayMoveButton move={pass} />
         }}
@@ -77,5 +51,5 @@ export const BasicActionHeader = () => {
     )
   }
 
-  return <Trans defaults={`header.basic.action.card.${cardInInkjarPlace()}.player`} values={{ player: name }} />
+  return <Trans defaults={`header.basic.action.player`} values={{ player: name }} />
 }
