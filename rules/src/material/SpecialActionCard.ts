@@ -30,7 +30,7 @@ export enum SpecialActionCard {
 
 export const specialActionCards = getEnumValues(SpecialActionCard)
 
-export const spectialActionCardActions: Record<SpecialActionCard, ActionType[]> = {
+export const specialActionCardActions: Record<SpecialActionCard, ActionType[]> = {
   [SpecialActionCard.SpecialAction1]: [ActionType.AdvanceLawsuit, ActionType.Gain2Letter],
   [SpecialActionCard.SpecialAction2]: [ActionType.AdvanceLawsuit, ActionType.Gift2Time],
   [SpecialActionCard.SpecialAction3]: [ActionType.AdvanceLawsuit, ActionType.PurchaseShip, ActionType.Gift],
@@ -44,8 +44,8 @@ export const spectialActionCardActions: Record<SpecialActionCard, ActionType[]> 
   [SpecialActionCard.SpecialAction11]: [ActionType.Production],
   [SpecialActionCard.SpecialAction12]: [ActionType.AdvanceLawsuit, ActionType.PurchaseShip, ActionType.GiftBeer2Time],
   [SpecialActionCard.SpecialAction13]: [ActionType.AdvanceLawsuit, ActionType.GiftBeer, ActionType.Donation1ClothFor1star],
-  [SpecialActionCard.SpecialAction14]: [ActionType.AdvanceLawsuit, ActionType.BuildFactory],
-  [SpecialActionCard.SpecialAction15]: [ActionType.AdvanceLawsuit, ActionType.BuildFactory],
+  [SpecialActionCard.SpecialAction14]: [ActionType.AdvanceLawsuit, ActionType.BuildFreeFactory],
+  [SpecialActionCard.SpecialAction15]: [ActionType.AdvanceLawsuit, ActionType.BuildFreeFactory],
   [SpecialActionCard.SpecialAction16]: [ActionType.ProductionFurniture],
   [SpecialActionCard.SpecialAction17]: [ActionType.AdvanceLawsuit, ActionType.EarnPrestige, ActionType.GiftFurniture],
   [SpecialActionCard.SpecialAction18]: [ActionType.AdvanceLawsuit, ActionType.PurchaseShip, ActionType.GainLetter],

@@ -28,6 +28,7 @@ import SpecialAction23 from '../images/cards/action/special/en/ActionSpecial23.j
 import SpecialAction24 from '../images/cards/action/special/en/ActionSpecial24.jpg'
 import SpecialActionBack from '../images/cards/action/special/ActionSpecialBack.png'
 import { isMoveItemType, MaterialMove } from '@gamepark/rules-api'
+import { SpecialActionCardHelp } from './help/SpecialActionCardHelp'
 
 export class SpecialActionCardDescription extends CardDescription {
   width = 6.75
@@ -65,6 +66,8 @@ export class SpecialActionCardDescription extends CardDescription {
   canShortClick(move: MaterialMove, context: ItemContext): boolean {
     return isMoveItemType(MaterialType.SpecialActionCard)(move) && move.location.type === LocationType.SpecialActionCardsDiscard && move.itemIndex === context.index
   }
+
+  help = SpecialActionCardHelp
 }
 
 export const specialActionCardDescription = new SpecialActionCardDescription()

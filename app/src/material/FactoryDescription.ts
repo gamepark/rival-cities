@@ -4,6 +4,7 @@ import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
 import { isMoveItemType, MaterialItem, MaterialMove } from '@gamepark/rules-api'
 import FactoryFront from '../images/tokens/FactoryFront.png'
 import FactoryBack from '../images/tokens/FactoryBack.png'
+import { FactoryHelp } from './help/FactoryHelp'
 
 export class FactoryDescription extends CardDescription {
   width = 2.4
@@ -26,6 +27,8 @@ export class FactoryDescription extends CardDescription {
   canShortClick(move: MaterialMove, context: ItemContext): boolean {
     return isMoveItemType(MaterialType.Factory)(move) && move.itemIndex === context.index
   }
+
+  help = FactoryHelp
 }
 
 export const factoryDescription = new FactoryDescription()

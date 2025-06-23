@@ -15,6 +15,7 @@ import BasicAction12 from '../images/cards/action/basic/en/ActionBasic12.jpg'
 import BasicAction13 from '../images/cards/action/basic/en/ActionBasic13.jpg'
 import BasicAction14 from '../images/cards/action/basic/en/ActionBasic14.jpg'
 import BasicAction15 from '../images/cards/action/basic/ActionBasic15.jpg'
+import { BasicActionCardHelp } from './help/BasicActionCardHelp'
 
 export class BasicActionCardDescription extends CardDescription {
   width = 6.75
@@ -37,6 +38,8 @@ export class BasicActionCardDescription extends CardDescription {
     [BasicActionCard.BasicAction14]: BasicAction14,
     [BasicActionCard.BasicAction15]: BasicAction15
   }
+
+  help = BasicActionCardHelp
 }
 
 export const basicActionCardDescription = new BasicActionCardDescription()

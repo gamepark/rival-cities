@@ -16,6 +16,7 @@ import AllianceLondon from '../images/cards/alliance/en/AllianceLondon.jpg'
 import AllianceNovgorod from '../images/cards/alliance/en/AllianceNovgorod.jpg'
 import AllianceOslo from '../images/cards/alliance/en/AllianceOslo.jpg'
 import AllianceBack from '../images/cards/alliance/AllianceBack.jpg'
+import { AllianceCardHelp } from './help/AllianceCardHelp'
 
 export class AllianceCardDescription extends CardDescription {
   width = 6.75
@@ -52,6 +53,9 @@ export class AllianceCardDescription extends CardDescription {
     }
     return undefined
   }
+
+  help = AllianceCardHelp
+
 }
 
 export const allianceCardDescription = new AllianceCardDescription()

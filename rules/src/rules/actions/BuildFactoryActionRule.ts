@@ -1,4 +1,4 @@
-import { isMoveItemType, ItemMove, MaterialGame, MaterialMove, PlayerTurnRule } from '@gamepark/rules-api'
+import { isMoveItemType, ItemMove, MaterialMove, PlayerTurnRule } from '@gamepark/rules-api'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { ActionType } from '../ActionType'
@@ -11,14 +11,9 @@ export class BuildFactoryActionRule extends PlayerTurnRule {
   actionType = ActionType.BuildFactory
   computedActionHelper = new ComputedActionsHelper(this.game)
   basicActionHelper = new BasicActionHelper(this.game)
-  price: number
+  price = 2
   isBuildInProgress = this.remind(MemoryType.IsBuildInProgress)
   nbProductsGiven = this.remind(MemoryType.NbProductGiven) ?? 0
-
-  constructor(game: MaterialGame, price = 0) {
-    super(game)
-    this.price = price
-  }
 
   getPlayerMoves(): MaterialMove[] {
     if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []

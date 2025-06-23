@@ -14,6 +14,7 @@ import { BasicActionCard6Rule } from '../rules/basicActions/BasicActionCard6Rule
 import { BasicActionCard7Rule } from '../rules/basicActions/BasicActionCard7Rule'
 import { BasicActionCard8Rule } from '../rules/basicActions/BasicActionCard8Rule'
 import { BasicActionCard9Rule } from '../rules/basicActions/BasicActionCard9Rule'
+import { ActionType } from '../rules/ActionType'
 
 export enum BasicActionCard {
   BasicAction1 = 1,
@@ -70,4 +71,22 @@ export const getBasicActionCardRule = (card: BasicActionCard, game: MaterialGame
     default:
       throw new Error(`BasicActionCard ${card} is not implemented`)
   }
+}
+
+export const basiqueActionCardActions: Record<BasicActionCard, ActionType[]> = {
+  [BasicActionCard.BasicAction1]: [ActionType.ProductionBeer, ActionType.ProductionCloth],
+  [BasicActionCard.BasicAction2]: [ActionType.DrawSpecialActionCard],
+  [BasicActionCard.BasicAction3]: [ActionType.FormAlliance],
+  [BasicActionCard.BasicAction4]: [ActionType.BuildFactory],
+  [BasicActionCard.BasicAction5]: [ActionType.ProductionFurniture, ActionType.GainLetter],
+  [BasicActionCard.BasicAction6]: [ActionType.ProductionCloth],
+  [BasicActionCard.BasicAction7]: [ActionType.PurchaseShip, ActionType.AdvanceLawsuit],
+  [BasicActionCard.BasicAction8]: [ActionType.ProductSwap, ActionType.Donation],
+  [BasicActionCard.BasicAction9]: [ActionType.AdvanceLawsuit, ActionType.ProductionLeather],
+  [BasicActionCard.BasicAction10]: [ActionType.EarnPrestige, ActionType.FormAlliance],
+  [BasicActionCard.BasicAction11]: [ActionType.ProductionLeather],
+  [BasicActionCard.BasicAction12]: [ActionType.Gift, ActionType.AdvanceLawsuit],
+  [BasicActionCard.BasicAction13]: [ActionType.CourtRuling, ActionType.PurchaseShip],
+  [BasicActionCard.BasicAction14]: [ActionType.EarnPrestige, ActionType.ProductionBeer],
+  [BasicActionCard.BasicAction15]: [ActionType.AdvanceLawsuit],
 }

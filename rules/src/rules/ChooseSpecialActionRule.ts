@@ -1,7 +1,7 @@
 import { isMoveItemType, ItemMove, MaterialMove, PlayerTurnRule } from '@gamepark/rules-api'
 import { LocationType } from '../material/LocationType'
 import { MaterialType } from '../material/MaterialType'
-import { SpecialActionCard, spectialActionCardActions } from '../material/SpecialActionCard'
+import { SpecialActionCard, specialActionCardActions } from '../material/SpecialActionCard'
 import { MemoryType } from './MemoryType'
 import { RuleId } from './RuleId'
 
@@ -15,7 +15,7 @@ export class ChooseSpecialActionRule extends PlayerTurnRule {
   afterItemMove(move: ItemMove): MaterialMove[] {
     if (isMoveItemType(MaterialType.SpecialActionCard)(move) && move.location.type === LocationType.SpecialActionCardsDiscard) {
       const cardId = this.material(MaterialType.SpecialActionCard).index(move.itemIndex).getItem()?.id as SpecialActionCard
-      this.memorize(MemoryType.ComputedActions, spectialActionCardActions[cardId])
+      this.memorize(MemoryType.ComputedActions, specialActionCardActions[cardId])
       return [this.startRule(RuleId.SpecialAction)]
     }
     return []
