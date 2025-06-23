@@ -25,6 +25,16 @@ export class DrawSpecialActionCardActionRule extends PlayerTurnRule {
     if (isMoveItemType(MaterialType.SpecialActionCard)(move)) {
       this.memorize(MemoryType.BasicActionChoosen, this.actionType)
       this.memorize<number>(MemoryType.NbCardsDraw, (old) => old + 1)
+      if (this.material(MaterialType.SpecialActionCard).location(LocationType.SpecialActionCardsDeck).length < 1) {
+        const moves: MaterialMove[] = []
+        moves.push(this.material(MaterialType.SpecialActionCard).location(LocationType.SpecialActionCardsDiscard).shuffle())
+        moves.push(
+          this.material(MaterialType.SpecialActionCard)
+            .location(LocationType.SpecialActionCardsDiscard)
+            .moveItemsAtOnce({ type: LocationType.SpecialActionCardsDeck })
+        )
+        return moves
+      }
     }
     return []
   }

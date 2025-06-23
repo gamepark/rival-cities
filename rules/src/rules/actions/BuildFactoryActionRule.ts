@@ -15,6 +15,13 @@ export class BuildFactoryActionRule extends PlayerTurnRule {
   isBuildInProgress = this.remind(MemoryType.IsBuildInProgress)
   nbProductsGiven = this.remind(MemoryType.NbProductGiven) ?? 0
 
+  onRuleStart(): MaterialMove[] {
+    if(this.playerProducts.getQuantity() < this.price) {
+      return [...this.computedActionHelper.removeActionAndnext(this.actionType)]
+    }
+    return []
+  }
+
   getPlayerMoves(): MaterialMove[] {
     if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
     const moves: MaterialMove[] = []

@@ -40,10 +40,12 @@ export class ProductSwapActionRule extends PlayerTurnRule {
     if (isMoveItemType(MaterialType.Product)(move)) {
       if (move.location.type === LocationType.ProductPiles) {
         this.memorize(MemoryType.IsProductReturn, true)
-      } else if (move.location.type === LocationType.PlayerProducts) {
+      } else if (move.location.type === LocationType.PlayerProducts) {    
+        this.forget(MemoryType.BasicActionChoosen)
         this.memorize(MemoryType.IsProductReturn, false)
         this.memorize(MemoryType.NbSwaps, this.nbSwaps + 1)
         if (this.remind(MemoryType.NbSwaps) === 2) {
+          this.memorize(MemoryType.NbSwaps, 0)
           return this.computedActionHelper.removeActionAndnext(this.actionType)
         }
       }
