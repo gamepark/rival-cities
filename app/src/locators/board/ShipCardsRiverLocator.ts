@@ -5,17 +5,13 @@ import { gameBoardLocator } from '../GameBoardLocator'
 class ShipCardsRiverLocator extends ListLocator {
   gap = { x: 5 }
 
-  getRotateZ(): number {
-    return 180
-  }
-
   getCoordinates(): Partial<Coordinates> {
     const base = gameBoardLocator.coordinates
     return { x: base.x - 14.5, y: base.y + 4.5 }
   }
 
   getHoverTransform = () => {
-    return ['translateZ(10em)', 'scale(2.5)', 'rotateZ(180deg)']
+    return ['translateZ(10em)', 'scale(2.5)']
   }
 }
 
