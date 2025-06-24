@@ -11,6 +11,10 @@ class CardPisteLocator extends Locator {
     const base = gameBoardLocator.coordinates
     return { x: base.x + coordinatesFromId[location.id].x, y: base.y + coordinatesFromId[location.id].y }
   }
+
+  getHoverTransform = () => {
+    return ['translateZ(10em)', 'scale(2.5)']
+  }
 }
 
 const rotateZFromId = [0, 0, 0, 90, 90, 90, 90, 90, 180, 180, 180, 180, 180, -90, -90, -90, -90, -90, 0, 0]
