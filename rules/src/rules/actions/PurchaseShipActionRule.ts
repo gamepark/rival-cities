@@ -32,7 +32,7 @@ export class PurchaseShipActionRule extends PlayerTurnRule {
     if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.ShipCard)(move) && move.location.type === LocationType.PlayerShipCards) {
-      this.memorize(MemoryType.BasicActionChoosen, ActionType.PurchaseShip)
+      this.memorize(MemoryType.BasicActionChoosen, this.actionType)
       moves.push(
         this.material(MaterialType.ShipCard)
           .location(LocationType.ShipCardsDeck)

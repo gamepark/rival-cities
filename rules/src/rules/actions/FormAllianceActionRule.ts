@@ -27,7 +27,7 @@ export class FormAllianceActionRule extends PlayerTurnRule {
   beforeItemMove(move: ItemMove): MaterialMove[] {
     if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
     if (isMoveItemType(MaterialType.AllianceCard)(move)) {
-      this.memorize(MemoryType.BasicActionChoosen, ActionType.FormAlliance)
+      this.memorize(MemoryType.BasicActionChoosen, this.actionType)
       const oldLocationType = this.material(MaterialType.AllianceCard).index(move.itemIndex).getItem()?.location.type
       if (oldLocationType === LocationType.PlayerAllianceCards) {
         return [this.playerLetters.moveItem(() => ({ type: LocationType.LetterDeck }))]

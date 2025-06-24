@@ -34,7 +34,7 @@ export class EarnPrestigeActionRule extends PlayerTurnRule {
     if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.PrestigeMarker)(move)) {
-      this.memorize(MemoryType.BasicActionChoosen, ActionType.EarnPrestige)
+      this.memorize(MemoryType.BasicActionChoosen, this.actionType)
     }
     return moves
   }

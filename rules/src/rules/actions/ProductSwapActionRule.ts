@@ -30,7 +30,7 @@ export class ProductSwapActionRule extends PlayerTurnRule {
     if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.ProductPiles) {
-      this.memorize(MemoryType.BasicActionChoosen, ActionType.ProductSwap)
+      this.memorize(MemoryType.BasicActionChoosen, this.actionType)
     }
     return moves
   }

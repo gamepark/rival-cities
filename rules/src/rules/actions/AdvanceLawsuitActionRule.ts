@@ -38,12 +38,6 @@ export class AdvanceLawsuitActionRule extends PlayerTurnRule {
 
   beforeItemMove(move: ItemMove): MaterialMove[] {
     if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
-
-    if (isMoveItemType(MaterialType.Letter)(move)) {
-      this.memorize<RuleId[]>(MemoryType.BonusesRules, (old) => [RuleId.SwapProduct, ...old])
-      return this.computedActionHelper.removeActionAndnext()
-    }
-
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.LawsuitMarker)(move)) {
       const card = this.lawsuitCards.filter(({ location }) => location.z === move.location.id).getItem()
@@ -57,13 +51,17 @@ export class AdvanceLawsuitActionRule extends PlayerTurnRule {
         })
       }
       if (!this.remind(MemoryType.BasicActionChoosen)) {
-        this.memorize(MemoryType.BasicActionChoosen, ActionType.AdvanceLawsuit)
+        this.memorize(MemoryType.BasicActionChoosen, this.actionType)
       }
     }
     return moves
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {
+    if (isMoveItemType(MaterialType.Letter)(move) && !this.remind(MemoryType.BasicActionChoosen)) {
+      this.memorize<RuleId[]>(MemoryType.BonusesRules, (old) => [RuleId.SwapProduct, ...old])
+      return this.computedActionHelper.removeActionAndnext()
+    }
     if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.LawsuitMarker)(move)) {

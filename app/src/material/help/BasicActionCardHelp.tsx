@@ -35,14 +35,14 @@ export const BasicActionCardHelp: FC<MaterialHelpProps> = ({ item }) => {
       </ul>
       <h3>{t(`help.actions`)}</h3>
       {actions.map((action, index) => (
-        <>
-          <p key={index}>
+        <div key={index}>
+          <p>
             <Trans defaults={`help.action.descr.${action}`} components={components} />
           </p>
           {
             isMultiChoiceCard && index < actions.length - 1 && <p><b>{t(`help.action.descr.or`)}</b></p>
           }
-        </>
+        </div>
       ))}
       {
         isMultiChoiceCard && (

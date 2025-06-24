@@ -33,7 +33,7 @@ export class CourtRulingActionRule extends PlayerTurnRule {
     if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.LawsuitCard)(move) && move.location.z !== 1) {
-      this.memorize(MemoryType.BasicActionChoosen, ActionType.CourtRuling)
+      this.memorize(MemoryType.BasicActionChoosen, this.actionType)
       moves.push(
         this.material(MaterialType.LawsuitCard)
           .location((loc) => loc.type === LocationType.LawsuitCardsRiver && loc.z === move.location.z)

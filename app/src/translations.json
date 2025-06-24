@@ -255,6 +255,8 @@
       "help.ship.card.bonus.19": "Les cartes navire coutent 1 ressource de moins",
       "help.ship.card.win": "Vous <bold>remportez immédiatement la partie</bold> si vous possédez <bold>3 navires de plus que votre adversaire</bold>.",
       "help.basic.action.card.note": "Vous ne pouvez faire qu'1 des 2 actions possibles. Sauf si vous possèdez la <alliance>carte alliance de Gdansk</alliance>.",
+      "help.actions": "Actions accordées par la carte",
+      "help.rule.actions": "Actions possibles",
       "help.action.descr.1": "Récupèrer 1 ressource, vous pouvez récupérer 1 ressource supplémentaire par jeton usine que vous retournez.",
       "help.action.descr.2": "Récupèrer 1 meuble, vous pouvez récupérer 1 meuble supplémentaire par jeton usine que vous retournez.",
       "help.action.descr.3": "Récupèrer 2 bières, vous pouvez récupérer 1 bière supplémentaire par jeton usine que vous retournez.",
