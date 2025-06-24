@@ -12,9 +12,7 @@ export const GainLetterHeader = () => {
   const name = usePlayerName(activePlayer)
 
   if (itsMe) {
-    return (
-      <Trans defaults={`header.gain.letter.you`}/>
-    )
+    return <Trans defaults={`header.gain.letter.you`} />
   }
 
   return <Trans defaults={`header.gain.letter.player`} values={{ player: name }} />

@@ -41,7 +41,7 @@ export class AllianceCardDescription extends CardDescription {
     return isMoveItemType(MaterialType.AllianceCard)(move) && move.itemIndex === context.index && move.location.player === context.player
   }
 
-  getItemMenu(item: MaterialItem, context: ItemContext, legalMoves: MaterialMove[]){
+  getItemMenu(item: MaterialItem, context: ItemContext, legalMoves: MaterialMove[]) {
     const pay = legalMoves.find((move) => isCustomMoveType(CustomMoveType.PayForAlliance)(move) && move.data.pay.id === item.id)
 
     if (pay && item.location.type === LocationType.PlayerAllianceCards && item.location.player === context.player) {
@@ -55,7 +55,6 @@ export class AllianceCardDescription extends CardDescription {
   }
 
   help = AllianceCardHelp
-
 }
 
 export const allianceCardDescription = new AllianceCardDescription()

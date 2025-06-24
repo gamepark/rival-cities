@@ -10,7 +10,6 @@ import DeutchAllianceNovgorod from '../../../images/cards/alliance/de/AllianceNo
 import DeutchAllianceOslo from '../../../images/cards/alliance/de/AllianceOslo.jpg'
 
 export class DeutchAllianceCardDescription extends AllianceCardDescription {
-
   images = {
     [AllianceCard.AllianceAmsterdam]: DeutchAllianceAmsterdam,
     [AllianceCard.AllianceBruxelles]: DeutchAllianceBruxelles,

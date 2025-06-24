@@ -33,7 +33,7 @@ const coordinatesFromId = [
   { x: 3, y: -0.3 },
   { x: 3, y: 0.2 },
   { x: 0.9, y: 3 },
-  { x: 0.2, y: 3 },
+  { x: 0.2, y: 3 }
 ]
 
 export const inkJarPisteLocator = new InkJarPisteLocator()

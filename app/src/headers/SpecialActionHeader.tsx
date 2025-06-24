@@ -14,43 +14,42 @@ export const SpecialActionHeader = () => {
   const itsMe = player && activePlayer === player
   const name = usePlayerName(activePlayer)
   const pass = useLegalMove((move) => isCustomMoveType(CustomMoveType.Pass)(move))
-  
-    
-    const productChoosen = rules.remind(MemoryType.ProductChoosen)
-      const isDonationInProgress = rules.remind(MemoryType.IsDonationInProgress)
-  
-    if (itsMe) {
-        if (isDonationInProgress) {
-          return (
-            <Trans
-              defaults="header.donation.in.progress.you"
-              components={{
-                pass: <PlayMoveButton move={pass} />
-              }}
-            />
-          )
-        }
-  
-      if(productChoosen) {
-        return (
-          <Trans
-            defaults="header.production.factory.you"
-            values={{ product: productChoosen }}
-            components={{
-              pass: <PlayMoveButton move={pass} />
-            }}
-          />
-        )
-      }
+
+  const productChoosen = rules.remind(MemoryType.ProductChoosen)
+  const isDonationInProgress = rules.remind(MemoryType.IsDonationInProgress)
+
+  if (itsMe) {
+    if (isDonationInProgress) {
       return (
         <Trans
-          defaults={`header.special.action.you`}
+          defaults="header.donation.in.progress.you"
           components={{
             pass: <PlayMoveButton move={pass} />
           }}
         />
       )
     }
-  
-    return <Trans defaults={`header.special.action.player`} values={{ player: name }} />
+
+    if (productChoosen) {
+      return (
+        <Trans
+          defaults="header.production.factory.you"
+          values={{ product: productChoosen }}
+          components={{
+            pass: <PlayMoveButton move={pass} />
+          }}
+        />
+      )
+    }
+    return (
+      <Trans
+        defaults={`header.special.action.you`}
+        components={{
+          pass: <PlayMoveButton move={pass} />
+        }}
+      />
+    )
+  }
+
+  return <Trans defaults={`header.special.action.player`} values={{ player: name }} />
 }

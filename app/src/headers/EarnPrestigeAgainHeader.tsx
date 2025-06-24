@@ -16,10 +16,11 @@ export const EarnPrestigeAgainHeader = () => {
 
   if (itsMe) {
     return (
-      <Trans defaults={`header.earn.prestige.again.you`}
-             components={{
-               pass: <PlayMoveButton move={pass} />
-             }}
+      <Trans
+        defaults={`header.earn.prestige.again.you`}
+        components={{
+          pass: <PlayMoveButton move={pass} />
+        }}
       />
     )
   }

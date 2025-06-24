@@ -12,25 +12,23 @@ export const LawsuitCardHelp: FC<MaterialHelpProps> = ({ item }) => {
     <>
       <h2>{t(`help.lawsuit.card`)}</h2>
       <p>
-        <Trans
-          defaults={`help.lawsuit.card.descr.1`} />
+        <Trans defaults={`help.lawsuit.card.descr.1`} />
       </p>
       <p>
-        <Trans
-          defaults={`help.lawsuit.card.descr.2`} />
+        <Trans defaults={`help.lawsuit.card.descr.2`} />
       </p>
-      {
-        item.id && (
-          <>
-            <p><b>{t(`help.lawsuit.price`)}</b> <Price cardId={item.id as LawsuitCard} /></p>
-            <h4>{t(`help.lawsuit.action.advance`)}</h4>
-            <ActionsOnAdvance cardId={item.id as LawsuitCard} />
-            <h4>{t(`help.lawsuit.action.win`)}</h4>
-            <ActionsOnWin cardId={item.id as LawsuitCard} />
-          </>
-        )
-      }
-      <p css={note} >
+      {item.id && (
+        <>
+          <p>
+            <b>{t(`help.lawsuit.price`)}</b> <Price cardId={item.id as LawsuitCard} />
+          </p>
+          <h4>{t(`help.lawsuit.action.advance`)}</h4>
+          <ActionsOnAdvance cardId={item.id as LawsuitCard} />
+          <h4>{t(`help.lawsuit.action.win`)}</h4>
+          <ActionsOnWin cardId={item.id as LawsuitCard} />
+        </>
+      )}
+      <p css={note}>
         <Trans defaults={`help.lawsuit.card.win`} components={components} />
       </p>
     </>
@@ -68,66 +66,66 @@ const ActionsOnAdvance = ({ cardId }: { cardId: LawsuitCard }) => {
   switch (cardId) {
     case LawsuitCard.Lawsuit1:
       return (
-        <p >
+        <p>
           <Trans defaults={`help.gain.leather`} values={{ quantity: 1 }} components={components} />
         </p>
       )
     case LawsuitCard.Lawsuit2:
       return (
-        <p >
+        <p>
           <Trans defaults={`help.gain.furniture`} values={{ quantity: 1 }} components={components} />
         </p>
       )
     case LawsuitCard.Lawsuit3:
       return (
-        <p >
+        <p>
           <Trans defaults={`help.gain.cloth`} values={{ quantity: 1 }} components={components} />
         </p>
       )
     case LawsuitCard.Lawsuit4:
       return (
-        <p >
+        <p>
           <Trans defaults={`help.gain.prestige`} components={components} />
         </p>
       )
     case LawsuitCard.Lawsuit5:
       return (
-        <p >
+        <p>
           <Trans defaults={`help.gain.return.factories`} values={{ quantity: 2 }} components={components} />
         </p>
       )
     case LawsuitCard.Lawsuit6:
       return (
-        <p >
+        <p>
           <Trans defaults={`help.gain.prestige`} components={components} />
         </p>
       )
     case LawsuitCard.Lawsuit7:
       return (
-        <p >
+        <p>
           <Trans defaults={`help.gain.beer`} values={{ quantity: 1 }} components={components} />
         </p>
       )
     case LawsuitCard.Lawsuit8:
       return (
         <>
-          <p >
+          <p>
             <Trans defaults={`help.gain.beer`} values={{ quantity: 1 }} components={components} />
           </p>
-          <p >
+          <p>
             <Trans defaults={`help.gain.letter`} values={{ quantity: 1 }} components={components} />
           </p>
         </>
       )
     case LawsuitCard.Lawsuit9:
       return (
-        <p >
+        <p>
           <Trans defaults={`help.gain.prestige`} components={components} />
         </p>
       )
     case LawsuitCard.Lawsuit10:
       return (
-        <p >
+        <p>
           <Trans defaults={`help.gain.cloth`} values={{ quantity: 1 }} components={components} />
         </p>
       )
@@ -141,75 +139,75 @@ const ActionsOnWin = ({ cardId }: { cardId: LawsuitCard }) => {
     case LawsuitCard.Lawsuit1:
       return (
         <>
-          <p >
+          <p>
             <Trans defaults={`help.gain.leather`} values={{ quantity: 3 }} components={components} />
           </p>
-          <p >
+          <p>
             <Trans defaults={`help.gain.prestige`} components={components} />
           </p>
         </>
       )
     case LawsuitCard.Lawsuit2:
       return (
-        <p >
+        <p>
           <Trans defaults={`help.gain.factory`} values={{ quantity: 1 }} components={components} />
         </p>
       )
     case LawsuitCard.Lawsuit3:
       return (
-        <p >
+        <p>
           <Trans defaults={`help.gain.choose.product`} values={{ quantity: 2 }} components={components} />
         </p>
       )
     case LawsuitCard.Lawsuit4:
       return (
-        <p >
+        <p>
           <Trans defaults={`help.gain.factory`} values={{ quantity: 1 }} components={components} />
         </p>
       )
     case LawsuitCard.Lawsuit5:
       return (
         <>
-          <p >
+          <p>
             <Trans defaults={`help.gain.beer`} values={{ quantity: 3 }} components={components} />
           </p>
-          <p >
+          <p>
             <Trans defaults={`help.gain.star`} values={{ quantity: 2 }} components={components} />
           </p>
         </>
       )
     case LawsuitCard.Lawsuit6:
       return (
-        <p >
+        <p>
           <Trans defaults={`help.gain.letter`} values={{ quantity: 2 }} components={components} />
         </p>
       )
     case LawsuitCard.Lawsuit7:
       return (
         <>
-          <p >
+          <p>
             <Trans defaults={`help.gain.prestige`} components={components} />
           </p>
-          <p >
+          <p>
             <Trans defaults={`help.gain.choose.product`} values={{ quantity: 1 }} components={components} />
           </p>
         </>
       )
     case LawsuitCard.Lawsuit8:
       return (
-        <p >
+        <p>
           <Trans defaults={`help.gain.factory`} values={{ quantity: 1 }} components={components} />
         </p>
       )
     case LawsuitCard.Lawsuit9:
       return (
-        <p >
+        <p>
           <Trans defaults={`help.gain.letter`} values={{ quantity: 1 }} components={components} />
         </p>
       )
     case LawsuitCard.Lawsuit10:
       return (
-        <p >
+        <p>
           <Trans defaults={`help.gain.factory`} values={{ quantity: 1 }} components={components} />
         </p>
       )

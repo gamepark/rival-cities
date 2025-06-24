@@ -15,7 +15,11 @@ export const SpecialActionsHelp = () => {
   const { t } = useTranslation()
   const rules = useRules<RivalCitiesRules>()
 
-  const specialCardPlayed = rules?.material(MaterialType.SpecialActionCard).location(LocationType.SpecialActionCardsDiscard).maxBy(it => it.location.x!).getItem()?.id
+  const specialCardPlayed = rules
+    ?.material(MaterialType.SpecialActionCard)
+    .location(LocationType.SpecialActionCardsDiscard)
+    .maxBy((it) => it.location.x!)
+    .getItem()?.id
 
   if (!specialCardPlayed) return <></>
 

@@ -13,7 +13,7 @@ class PlayerProductsLocator extends ListLocator {
   }
 
   getBaseCoordinates(location: Location): Partial<Coordinates> {
-    if(location.player === City.Altona) {
+    if (location.player === City.Altona) {
       return { x: -47, y: -1 }
     }
     return { x: 27, y: -1 }

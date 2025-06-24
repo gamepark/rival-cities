@@ -12,9 +12,7 @@ export const DrawSpecialActionCardActionHeader = () => {
   const name = usePlayerName(activePlayer)
 
   if (itsMe) {
-    return (
-      <Trans defaults={`header.draw.special.action.card.you`}/>
-    )
+    return <Trans defaults={`header.draw.special.action.card.you`} />
   }
 
   return <Trans defaults={`header.draw.special.action.card.player`} values={{ player: name }} />

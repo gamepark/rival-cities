@@ -14,23 +14,22 @@ export const BasicActionHeader = () => {
   const name = usePlayerName(activePlayer)
   const pass = useLegalMove((move) => isCustomMoveType(CustomMoveType.Pass)(move))
 
-  
   const productChoosen = rules.remind(MemoryType.ProductChoosen)
-    const isDonationInProgress = rules.remind(MemoryType.IsDonationInProgress)
+  const isDonationInProgress = rules.remind(MemoryType.IsDonationInProgress)
 
   if (itsMe) {
-      if (isDonationInProgress) {
-        return (
-          <Trans
-            defaults="header.donation.in.progress.you"
-            components={{
-              pass: <PlayMoveButton move={pass} />
-            }}
-          />
-        )
-      }
+    if (isDonationInProgress) {
+      return (
+        <Trans
+          defaults="header.donation.in.progress.you"
+          components={{
+            pass: <PlayMoveButton move={pass} />
+          }}
+        />
+      )
+    }
 
-    if(productChoosen) {
+    if (productChoosen) {
       return (
         <Trans
           defaults="header.production.factory.you"

@@ -1,10 +1,10 @@
 /** @jsxImportSource @emotion/react */
 
 import { PlayMoveButton, useLegalMove, usePlayerId, usePlayerName, useRules } from '@gamepark/react-game'
+import { RivalCitiesRules } from '@gamepark/rival-cities/RivalCitiesRules'
 import { CustomMoveType } from '@gamepark/rival-cities/rules/CustomMoveType'
 import { isCustomMoveType } from '@gamepark/rules-api'
 import { Trans } from 'react-i18next'
-import { RivalCitiesRules } from '@gamepark/rival-cities/RivalCitiesRules'
 
 export const ChooseActionHeader = () => {
   const player = usePlayerId()

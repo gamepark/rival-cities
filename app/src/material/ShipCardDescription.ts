@@ -53,7 +53,7 @@ export class ShipCardDescription extends CardDescription {
     [ShipCard.Ship18]: Ship18,
     [ShipCard.Ship19]: Ship19,
     [ShipCard.Ship20]: Ship20,
-    [ShipCard.Ship21]: Ship21,
+    [ShipCard.Ship21]: Ship21
   }
 
   canShortClick(move: MaterialMove, context: ItemContext): boolean {

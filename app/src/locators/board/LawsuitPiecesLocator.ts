@@ -3,7 +3,6 @@ import { Coordinates, Location, XYCoordinates } from '@gamepark/rules-api'
 import { gameBoardLocator } from '../GameBoardLocator'
 
 class LawsuitPiecesLocator extends Locator {
-
   getRotateZ(): number {
     return -90
   }

@@ -1,9 +1,9 @@
 /** @jsxImportSource @emotion/react */
 
 import { usePlayerId, usePlayerName, useRules } from '@gamepark/react-game'
+import { RivalCitiesRules } from '@gamepark/rival-cities/RivalCitiesRules'
 import { MemoryType } from '@gamepark/rival-cities/rules/MemoryType'
 import { Trans } from 'react-i18next'
-import { RivalCitiesRules } from '@gamepark/rival-cities/RivalCitiesRules'
 
 export const PayProductForAdvanceHeader = () => {
   const player = usePlayerId()

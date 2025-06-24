@@ -11,7 +11,7 @@ class LawsuitMarkerPisteLocator extends Locator {
 
   getCoordinates(location: Location, _context: MaterialContext): Partial<Coordinates> {
     const parentCoordinates = lawsuitPiecesLocator.getCoordinates(location)
-    return {x: parentCoordinates.x! + 0.05 + this.gap.x * location.x!, y: parentCoordinates.y! + 0.65}
+    return { x: parentCoordinates.x! + 0.05 + this.gap.x * location.x!, y: parentCoordinates.y! + 0.65 }
   }
 }
 

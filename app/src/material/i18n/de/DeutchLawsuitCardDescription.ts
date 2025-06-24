@@ -12,7 +12,6 @@ import DeutchLawsuit9 from '../../../images/cards/lawsuit/de/Lawsuit09.jpg'
 import DeutchLawsuit10 from '../../../images/cards/lawsuit/de/Lawsuit10.jpg'
 
 export class DeutchLawsuitCardDescription extends LawsuitCardDescription {
-
   images = {
     [LawsuitCard.Lawsuit1]: DeutchLawsuit1,
     [LawsuitCard.Lawsuit2]: DeutchLawsuit2,

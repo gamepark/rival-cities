@@ -10,33 +10,32 @@ export const SpecialActionCardHelp: FC<MaterialHelpProps> = ({ item }) => {
   const { t } = useTranslation()
   const actions = specialActionCardActions[item.id as SpecialActionCard]
 
-
   return (
     <>
       <h2>{t(`help.special.action.card`)}</h2>
       <p>
-        <Trans
-          defaults={`help.special.action.card.descr`} />
+        <Trans defaults={`help.special.action.card.descr`} />
       </p>
-      {
-        item.id && (
-          <>
-            <h3>{t(`help.actions`)}</h3>
-            {actions.map((action, index) => (
-              <>
-                <p key={index}>
-                  <Trans defaults={`help.action.descr.${action}`} components={components} />
-                </p>
-              </>
-            ))}
-          </>
-        )
-      }
-      <p css={note} >
-        <Trans defaults={`help.special.action.card.note`} components={{
-          ...components,
-          ship: shipBtn(ShipCard.Ship18)
-        }} />
+      {item.id && (
+        <>
+          <h3>{t(`help.actions`)}</h3>
+          {actions.map((action, index) => (
+            <>
+              <p key={index}>
+                <Trans defaults={`help.action.descr.${action}`} components={components} />
+              </p>
+            </>
+          ))}
+        </>
+      )}
+      <p css={note}>
+        <Trans
+          defaults={`help.special.action.card.note`}
+          components={{
+            ...components,
+            ship: shipBtn(ShipCard.Ship18)
+          }}
+        />
       </p>
     </>
   )

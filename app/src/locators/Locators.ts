@@ -59,5 +59,5 @@ export const Locators: Partial<Record<LocationType, Locator<City, MaterialType, 
   [LocationType.PlayerLetterDeck]: playerLettersDeckLocator,
   [LocationType.PlayerStarTokens]: playerStarTokensDeckLocator,
   [LocationType.PlayerBellToken]: playerBellTokenLocator,
-  [LocationType.PlayerLawsuitCards]: playerLawsuitCardsLocator,
+  [LocationType.PlayerLawsuitCards]: playerLawsuitCardsLocator
 }

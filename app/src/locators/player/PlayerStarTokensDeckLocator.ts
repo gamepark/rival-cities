@@ -7,7 +7,7 @@ class PlayerStarTokensDeckLocator extends PileLocator {
   radius = 1
 
   getCoordinates(location: Location) {
-    if(location.player === City.Altona) {
+    if (location.player === City.Altona) {
       return { x: -26, y: 18 }
     }
     return { x: 47, y: 18 }

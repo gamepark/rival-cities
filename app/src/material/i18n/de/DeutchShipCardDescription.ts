@@ -22,7 +22,6 @@ import DeutchShip19 from '../../../images/cards/ship/de/Ship19.jpg'
 import DeutchShip20 from '../../../images/cards/ship/de/Ship20.jpg'
 import DeutchShip21 from '../../../images/cards/ship/de/Ship21.jpg'
 export class DeutchShipCardDescription extends ShipCardDescription {
-
   images = {
     [ShipCard.Ship1]: DeutchShip1,
     [ShipCard.Ship2]: DeutchShip2,
@@ -44,7 +43,7 @@ export class DeutchShipCardDescription extends ShipCardDescription {
     [ShipCard.Ship18]: DeutchShip18,
     [ShipCard.Ship19]: DeutchShip19,
     [ShipCard.Ship20]: DeutchShip20,
-    [ShipCard.Ship21]: DeutchShip21,
+    [ShipCard.Ship21]: DeutchShip21
   }
 }
 

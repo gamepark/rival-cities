@@ -16,21 +16,17 @@ export const BasicActionCardHelp: FC<MaterialHelpProps> = ({ item }) => {
     <>
       <h2>{t(`help.basic.action.card`)}</h2>
       <p>
-        <Trans
-          defaults={`help.basic.action.card.descr`} />
+        <Trans defaults={`help.basic.action.card.descr`} />
       </p>
       <ul>
         <li>
-          <Trans
-            defaults={`help.basic.action.card.choice.1`} />
+          <Trans defaults={`help.basic.action.card.choice.1`} />
         </li>
         <li>
-          <Trans
-            defaults={`help.basic.action.card.choice.2`} />
+          <Trans defaults={`help.basic.action.card.choice.2`} />
         </li>
         <li>
-          <Trans
-            defaults={`help.basic.action.card.choice.3`} />
+          <Trans defaults={`help.basic.action.card.choice.3`} />
         </li>
       </ul>
       <h3>{t(`help.actions`)}</h3>
@@ -39,21 +35,24 @@ export const BasicActionCardHelp: FC<MaterialHelpProps> = ({ item }) => {
           <p>
             <Trans defaults={`help.action.descr.${action}`} components={components} />
           </p>
-          {
-            isMultiChoiceCard && index < actions.length - 1 && <p><b>{t(`help.action.descr.or`)}</b></p>
-          }
+          {isMultiChoiceCard && index < actions.length - 1 && (
+            <p>
+              <b>{t(`help.action.descr.or`)}</b>
+            </p>
+          )}
         </div>
       ))}
-      {
-        isMultiChoiceCard && (
-          <p css={note} >
-            <Trans defaults={`help.basic.action.card.note`} components={{
+      {isMultiChoiceCard && (
+        <p css={note}>
+          <Trans
+            defaults={`help.basic.action.card.note`}
+            components={{
               ...components,
               alliance: allianceBtn(AllianceCard.AllianceGdansk)
-            }} />
-          </p>
-        )
-      }
+            }}
+          />
+        </p>
+      )}
     </>
   )
 }

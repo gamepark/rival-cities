@@ -8,7 +8,7 @@ class PlayerLettersDeckLocator extends ListLocator {
   maxCount = 7
 
   getCoordinates(location: Location) {
-    if(location.player === City.Altona) {
+    if (location.player === City.Altona) {
       return { x: -48, y: 14 }
     }
     return { x: 26, y: 14 }

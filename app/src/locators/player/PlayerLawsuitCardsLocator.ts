@@ -8,7 +8,7 @@ class PlayerLawsuitCardsLocator extends ListLocator {
   maxCount = 3
 
   getCoordinates(location: Location) {
-    if(location.player === City.Altona) {
+    if (location.player === City.Altona) {
       return { x: -46, y: -20 }
     }
     return { x: 28, y: -20 }

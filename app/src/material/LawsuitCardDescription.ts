@@ -13,7 +13,6 @@ import Lawsuit10 from '../images/cards/lawsuit/en/Lawsuit10.jpg'
 import LawsuitBack from '../images/cards/lawsuit/LawsuitBack.jpg'
 import { LawsuitCardHelp } from './help/LawsuitCardHelp'
 
-
 export class LawsuitCardDescription extends CardDescription {
   width = 6.75
   height = 4.35

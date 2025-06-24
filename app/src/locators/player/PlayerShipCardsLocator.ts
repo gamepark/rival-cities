@@ -8,7 +8,7 @@ class PlayerShipCardsLocator extends ListLocator {
   maxCount = 5
 
   getCoordinates(location: Location) {
-    if(location.player === City.Altona) {
+    if (location.player === City.Altona) {
       return { x: -47, y: -13 }
     }
     return { x: 27, y: -13 }

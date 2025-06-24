@@ -1,8 +1,8 @@
 /** @jsxImportSource @emotion/react */
 
 import { usePlayerId, usePlayerName, useRules } from '@gamepark/react-game'
-import { Trans } from 'react-i18next'
 import { RivalCitiesRules } from '@gamepark/rival-cities/RivalCitiesRules'
+import { Trans } from 'react-i18next'
 
 export const AdvanceInkJarHeader = () => {
   const player = usePlayerId()

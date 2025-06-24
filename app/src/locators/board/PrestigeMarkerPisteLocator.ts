@@ -11,7 +11,7 @@ class PrestigeMarkerPisteLocator extends Locator {
 
   getCoordinates(location: Location, _context: MaterialContext): Partial<Coordinates> {
     const base = gameBoardLocator.coordinates
-    return {x: base.x -0.5 + this.gap.x * location.x!, y: base.y - 3 + this.gap.y * location.x!}
+    return { x: base.x - 0.5 + this.gap.x * location.x!, y: base.y - 3 + this.gap.y * location.x! }
   }
 }
 

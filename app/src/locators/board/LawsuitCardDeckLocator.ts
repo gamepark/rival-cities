@@ -3,7 +3,6 @@ import { Coordinates } from '@gamepark/rules-api'
 import { gameBoardLocator } from '../GameBoardLocator'
 
 class LawsuitCardDeckLocator extends DeckLocator {
-
   getRotateZ(): number {
     return -90
   }

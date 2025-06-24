@@ -11,86 +11,71 @@ export const GameOverviewHelp: FC<MaterialHelpProps> = () => {
     <>
       <h2>{t(`help.game.overview`)}</h2>
       <p>
-        <Trans
-          defaults={`help.game.overview.1`} components={components} />
+        <Trans defaults={`help.game.overview.1`} components={components} />
       </p>
       <p>
-        <Trans
-          defaults={`help.game.overview.2`} components={components} />
+        <Trans defaults={`help.game.overview.2`} components={components} />
       </p>
       <p>
-        <Trans
-          defaults={`help.game.overview.choice`} components={components} />
+        <Trans defaults={`help.game.overview.choice`} components={components} />
       </p>
       <ul>
-      <li>
-        <p>
-        <Trans
-          defaults={`help.basic.action.card.choice.1`} components={components} />
-        </p>
-      </li>
-      <li>
-        <p>
-        <Trans
-          defaults={`help.basic.action.card.choice.2`} components={components} />
-        </p>
-      </li>
-      <li>
-        <p>
-        <Trans
-          defaults={`help.basic.action.card.choice.3`} components={components} />
-        </p>
-      </li>
-      <li>
-        <p>
-        <Trans
-          defaults={`help.basic.action.card.choice.4`} components={components} />
-        </p>
-      </li>
+        <li>
+          <p>
+            <Trans defaults={`help.basic.action.card.choice.1`} components={components} />
+          </p>
+        </li>
+        <li>
+          <p>
+            <Trans defaults={`help.basic.action.card.choice.2`} components={components} />
+          </p>
+        </li>
+        <li>
+          <p>
+            <Trans defaults={`help.basic.action.card.choice.3`} components={components} />
+          </p>
+        </li>
+        <li>
+          <p>
+            <Trans defaults={`help.basic.action.card.choice.4`} components={components} />
+          </p>
+        </li>
       </ul>
       <h3>{t(`help.game.overview.instant.win`)}</h3>
       <ul>
-      <li>
-        <Trans
-          defaults={`help.game.overview.instant.win.1`} components={components} />
-      </li>
-      <p>{t('help.action.descr.or')}</p>
-      <li>
-        <Trans
-          defaults={`help.game.overview.instant.win.2`} components={components} />
-      </li>
-      <p>{t('help.action.descr.or')}</p>
-      <li>
-        <Trans
-          defaults={`help.game.overview.instant.win.3`} components={components} />
-      </li>
-      <p>{t('help.action.descr.or')}</p>
-      <li>
-        <Trans
-          defaults={`help.game.overview.instant.win.4`} components={components} />
-      </li>
+        <li>
+          <Trans defaults={`help.game.overview.instant.win.1`} components={components} />
+        </li>
+        <p>{t('help.action.descr.or')}</p>
+        <li>
+          <Trans defaults={`help.game.overview.instant.win.2`} components={components} />
+        </li>
+        <p>{t('help.action.descr.or')}</p>
+        <li>
+          <Trans defaults={`help.game.overview.instant.win.3`} components={components} />
+        </li>
+        <p>{t('help.action.descr.or')}</p>
+        <li>
+          <Trans defaults={`help.game.overview.instant.win.4`} components={components} />
+        </li>
       </ul>
       <h3>{t(`help.game.overview.end`)}</h3>
       <ul>
-      <li>
-        <Trans
-          defaults={`help.game.overview.end.1`} components={components} />
-      </li>
-      <p>{t('help.action.descr.or')}</p>
-      <li>
-        <Trans
-          defaults={`help.game.overview.end.2`} components={components} />
-      </li>
-      <p>{t('help.action.descr.or')}</p>
-      <li>
-        <Trans
-          defaults={`help.game.overview.end.3`} components={components} />
-      </li>
-      <p>{t('help.action.descr.or')}</p>
-      <li>
-        <Trans
-          defaults={`help.game.overview.end.4`} components={components} />
-      </li>
+        <li>
+          <Trans defaults={`help.game.overview.end.1`} components={components} />
+        </li>
+        <p>{t('help.action.descr.or')}</p>
+        <li>
+          <Trans defaults={`help.game.overview.end.2`} components={components} />
+        </li>
+        <p>{t('help.action.descr.or')}</p>
+        <li>
+          <Trans defaults={`help.game.overview.end.3`} components={components} />
+        </li>
+        <p>{t('help.action.descr.or')}</p>
+        <li>
+          <Trans defaults={`help.game.overview.end.4`} components={components} />
+        </li>
       </ul>
     </>
   )

@@ -12,9 +12,7 @@ export const OffSeasonTakeBellHeader = () => {
   const name = usePlayerName(activePlayer)
 
   if (itsMe) {
-    return (
-      <Trans defaults={`header.off.season.take.bell.you`}/>
-    )
+    return <Trans defaults={`header.off.season.take.bell.you`} />
   }
 
   return <Trans defaults={`header.off.season.take.bell.player`} values={{ player: name }} />

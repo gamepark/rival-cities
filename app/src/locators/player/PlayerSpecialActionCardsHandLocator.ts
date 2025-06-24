@@ -10,7 +10,7 @@ class PlayerSpecialActionCardsHandLocator extends HandLocator {
   }
 
   getCoordinates(location: Location) {
-    if(location.player === City.Altona) {
+    if (location.player === City.Altona) {
       return { x: -38, y: 20 }
     }
     return { x: 35, y: 20 }

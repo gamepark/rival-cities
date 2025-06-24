@@ -12,15 +12,16 @@ export const AllianceCardHelp: FC<MaterialHelpProps> = ({ item }) => {
     <>
       <h2>{t(`help.alliance.card`)}</h2>
       <p>
-        <Trans
-          defaults={`help.alliance.card.descr`} />
+        <Trans defaults={`help.alliance.card.descr`} />
       </p>
       <h3>{t(`help.alliance.card.${item.id}`)}</h3>
-      <p><b>{t(`help.price`)}</b> <Price cardId={item.id as AllianceCard} /></p>
+      <p>
+        <b>{t(`help.price`)}</b> <Price cardId={item.id as AllianceCard} />
+      </p>
       <p>
         <Trans defaults={`help.alliance.card.${item.id}.descr`} components={components} />
       </p>
-      <p css={note} >
+      <p css={note}>
         <Trans defaults={`help.alliance.card.win`} components={components} />
       </p>
     </>

@@ -11,8 +11,7 @@ export const LetterHelp: FC<MaterialHelpProps> = () => {
     <>
       <h2>{t(`help.letter`)}</h2>
       <p>
-        <Trans
-          defaults={`help.Letter.descr`} components={components} />
+        <Trans defaults={`help.Letter.descr`} components={components} />
       </p>
       <ul>
         <li>{t(`help.Letter.use.1`)}</li>

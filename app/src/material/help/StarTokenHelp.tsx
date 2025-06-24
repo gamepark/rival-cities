@@ -11,8 +11,7 @@ export const StarTokenHelp: FC<MaterialHelpProps> = () => {
     <>
       <h2>{t(`help.star.token`)}</h2>
       <p>
-        <Trans
-          defaults={`help.star.token.descr`} components={components} />
+        <Trans defaults={`help.star.token.descr`} components={components} />
       </p>
     </>
   )

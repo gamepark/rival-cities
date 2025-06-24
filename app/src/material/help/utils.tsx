@@ -1,10 +1,10 @@
-import { PlayMoveButton, linkButtonCss } from "@gamepark/react-game";
-import { MaterialType } from "@gamepark/rival-cities/material/MaterialType";
-import { MaterialMoveBuilder } from "@gamepark/rules-api";
+import { PlayMoveButton, linkButtonCss } from '@gamepark/react-game'
+import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
+import { MaterialMoveBuilder } from '@gamepark/rules-api'
 import displayMaterialHelp = MaterialMoveBuilder.displayMaterialHelp
-import { AllianceCard } from "@gamepark/rival-cities/material/AllianceCard";
-import { css } from "@emotion/react";
-import { ShipCard } from "@gamepark/rival-cities/material/ShipCard";
+import { AllianceCard } from '@gamepark/rival-cities/material/AllianceCard'
+import { css } from '@emotion/react'
+import { ShipCard } from '@gamepark/rival-cities/material/ShipCard'
 
 export const components = {
   bold: <strong />,

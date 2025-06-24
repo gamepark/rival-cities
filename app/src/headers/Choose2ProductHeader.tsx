@@ -12,9 +12,7 @@ export const Choose2ProductHeader = () => {
   const name = usePlayerName(activePlayer)
 
   if (itsMe) {
-    return (
-      <Trans defaults="header.choose.product.you" values={{ quantity: 2 }}/>
-    )
+    return <Trans defaults="header.choose.product.you" values={{ quantity: 2 }} />
   }
 
   return <Trans defaults="header.choose.product.player" values={{ player: name, quantity: 2 }} />

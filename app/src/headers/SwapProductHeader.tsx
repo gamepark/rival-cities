@@ -11,10 +11,7 @@ export const SwapProductHeader = () => {
   const name = usePlayerName(activePlayer)
 
   if (itsMe) {
-    return (
-      <Trans
-        defaults={`header.swap.you`} />
-    )
+    return <Trans defaults={`header.swap.you`} />
   }
 
   return <Trans defaults={`header.swap.player`} values={{ player: name }} />

@@ -4,5 +4,5 @@ import { SpecialActionsHelp } from './SpecialActionsHelp'
 
 export const RulesHelp = {
   [RuleId.BasicAction]: BasicActionsHelp,
-  [RuleId.SpecialAction]: SpecialActionsHelp,
+  [RuleId.SpecialAction]: SpecialActionsHelp
 }

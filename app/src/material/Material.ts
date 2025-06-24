@@ -53,6 +53,6 @@ export const MaterialI18n: Record<string, Partial<Record<MaterialType, MaterialD
     [MaterialType.LawsuitCard]: deutchLawsuitCardDescription,
     [MaterialType.ShipCard]: deutchShipCardDescription,
     [MaterialType.GameOverview]: deutchGameOverviewDescription,
-    [MaterialType.OffSeasonOverview]: deutchOffSeasonOverviewDescription,
+    [MaterialType.OffSeasonOverview]: deutchOffSeasonOverviewDescription
   }
 }
