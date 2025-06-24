@@ -5,10 +5,6 @@ import { Location } from '@gamepark/rules-api'
 class PlayerSpecialActionCardsHandLocator extends HandLocator {
   radius = 50
 
-  getItemRotateZ(): number {
-    return 90
-  }
-
   getCoordinates(location: Location) {
     if (location.player === City.Altona) {
       return { x: -38, y: 20 }
