@@ -5,6 +5,7 @@ import { gameBoardLocator } from '../GameBoardLocator'
 class ProductPilesLocator extends PileLocator {
   radius = 1
   limit = 12
+  maxAngle = 0
 
   getCoordinates(location: Location): Partial<Coordinates> {
     const base = this.getBaseCoordinates()
