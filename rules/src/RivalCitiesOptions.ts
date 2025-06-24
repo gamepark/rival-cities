@@ -29,6 +29,7 @@ export const RivalCitiesOptionsSpec: OptionsSpec<RivalCitiesOptions> = {
   },
   firstPlay: {
     label: (t) => t('firstPlay'),
-    help: (t) => t('firstPlay.help')
+    help: (t) => t('firstPlay.help'),
+    competitiveDisabled: true
   }
 }
