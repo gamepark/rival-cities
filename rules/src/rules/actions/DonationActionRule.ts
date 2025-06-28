@@ -1,31 +1,22 @@
-import { isMoveItemType, ItemMove, MaterialMove, PlayerTurnRule } from '@gamepark/rules-api'
+import { isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
+import { DonationAction } from '../../material/Actions/Actions'
+import { ActionType } from '../../material/Actions/ActionType'
+import { AllianceCard } from '../../material/AllianceCard'
+import { AllianceCardHelper } from '../../material/helper/AllianceCardHelper'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
-import { Product } from '../../material/Product'
-import { ActionType } from '../ActionType'
 import { CustomMoveType } from '../CustomMoveType'
-import { ComputedActionsHelper } from '../helper/ComputedActionsHelper'
 import { MemoryType } from '../MemoryType'
-import { AllianceCard } from '../../material/AllianceCard'
-import { BasicActionHelper } from '../helper/BasicActionHelper'
-import { AllianceCardHelper } from '../../material/helper/AllianceCardHelper'
-import { RuleId } from '../RuleId'
+import { ActionRule } from './ActionRule'
 
-export class DonationActionRule extends PlayerTurnRule {
-  actionType = ActionType.Donation
-  computedActionHelper = new ComputedActionsHelper(this.game)
-  basicActionHelper = new BasicActionHelper(this.game)
-  productType?: Product
-  nbProduct = 2
-  nbStars = 1
-  nbTimes = 1
-  nbProductsDonated: number = this.remind(MemoryType.NbProductsDonated) ?? 0
+export class DonationActionRule extends ActionRule<DonationAction> {
+  nbProductsDonated: number = this.remind(MemoryType.Counter) ?? 0
   isDonationInProgress = this.remind(MemoryType.IsDonationInProgress)
 
   getPlayerMoves(): MaterialMove[] {
-    if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
+    if (this.checkAnotherActionInProgress(this.action?.type)) return []
     const moves: MaterialMove[] = []
-    if (this.playerProducts.getQuantity() < this.nbProduct) return [this.customMove(CustomMoveType.Pass, this.actionType)]
+    if (this.playerProducts.getQuantity() < this.nbProduct) return [this.customMove(CustomMoveType.Pass, this.action?.type)]
     if (this.isDonationInProgress) {
       moves.push(...this.playerProducts.moveItems((item) => ({ type: LocationType.ProductPiles, id: item.id })))
     } else {
@@ -38,46 +29,45 @@ export class DonationActionRule extends PlayerTurnRule {
           )
         )
       }
-      moves.push(this.customMove(CustomMoveType.Pass, this.actionType))
+      moves.push(this.customMove(CustomMoveType.Pass, this.action?.type))
       moves.push(...this.playerLetters.moveItems({ type: LocationType.LetterDeck }))
     }
     return moves
   }
 
   beforeItemMove(move: ItemMove): MaterialMove[] {
-    if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
+    if (this.checkAnotherActionInProgress(this.action?.type)) return []
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.StarToken)(move) && move.location.type === LocationType.PlayerStarTokens) {
-      this.memorize(MemoryType.BasicActionChoosen, this.actionType)
-      if (this.productType) {
-        moves.push(...this.playerProducts.moveItems((item) => ({ type: LocationType.ProductPiles, id: item.id }), this.nbProduct))
+      this.memorize(MemoryType.BasicActionChoosen, this.action?.type)
+      if (this.action?.productType) {
+        moves.push(...this.playerProducts.moveItems((item) => ({ type: LocationType.ProductPiles, id: item.id }), this.action?.nbProduct))
       } else {
         this.memorize(MemoryType.IsDonationInProgress, true)
       }
     } else if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.ProductPiles && this.isDonationInProgress) {
-      this.memorize(MemoryType.NbProductsDonated, this.nbProductsDonated + 1)
+      this.memorize(MemoryType.Counter, this.nbProductsDonated + 1)
     }
     return moves
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {
-    if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
+    if (this.checkAnotherActionInProgress(this.action?.type)) return []
     if (isMoveItemType(MaterialType.Letter)(move)) {
-      this.memorize<RuleId[]>(MemoryType.BonusesRules, (old) => [RuleId.SwapProduct, ...old])
-      return this.computedActionHelper.removeActionAndnext()
+      return this.addActionBonusAndMove({type: ActionType.ProductSwap, nbPossibleSwaps: 1})
     }
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.ProductPiles) {
-      if (this.productType) {
-        this.memorize<number>(MemoryType.NbDonations, (old) => old + 1)
-        if (this.remind(MemoryType.NbDonations) === this.nbTimes) {
-          return this.computedActionHelper.removeActionAndnext(this.actionType)
+      if (this.action?.productType) {
+        this.memorize<number>(MemoryType.CounterActions, (old) => old + 1)
+        if (this.remind(MemoryType.CounterActions) === this.action.nbTimes) {
+          return this.removeActionAndMove()
         }
-      } else if (this.remind(MemoryType.NbProductsDonated) === this.nbProduct) {
+      } else if (this.remind(MemoryType.Counter) === this.nbProduct) {
         this.memorize(MemoryType.IsDonationInProgress, false)
-        this.memorize<number>(MemoryType.NbDonations, (old) => old + 1)
-        if (this.remind(MemoryType.NbDonations) === this.nbTimes) {
-          return this.computedActionHelper.removeActionAndnext(this.actionType)
+        this.memorize<number>(MemoryType.CounterActions, (old) => old + 1)
+        if (this.remind(MemoryType.CounterActions) === this.action?.nbTimes) {
+          return this.removeActionAndMove()
         }
       }
     }
@@ -85,10 +75,10 @@ export class DonationActionRule extends PlayerTurnRule {
   }
 
   get playerProducts() {
-    if (!this.productType) {
+    if (!this.action?.productType) {
       return this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(this.player)
     }
-    return this.material(MaterialType.Product).id(this.productType).location(LocationType.PlayerProducts).player(this.player)
+    return this.material(MaterialType.Product).id(this.action.productType).location(LocationType.PlayerProducts).player(this.player)
   }
 
   get starTokens() {
@@ -97,5 +87,13 @@ export class DonationActionRule extends PlayerTurnRule {
 
   get playerLetters() {
     return this.material(MaterialType.Letter).location(LocationType.PlayerLetterDeck).player(this.player)
+  }
+
+  get nbStars() {
+    return this.action?.nbStars ?? 0
+  }
+
+  get nbProduct() {
+    return this.action?.nbProduct ?? 0
   }
 }

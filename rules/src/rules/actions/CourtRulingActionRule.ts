@@ -1,21 +1,17 @@
-import { CustomMove, isCustomMoveType, isMoveItemType, ItemMove, MaterialMove, PlayerTurnRule } from '@gamepark/rules-api'
+import { CustomMove, isCustomMoveType, isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
 import { City } from '../../City'
+import { CourtRullingAction } from '../../material/Actions/Actions'
+import { ActionType } from '../../material/Actions/ActionType'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
-import { ActionType } from '../ActionType'
 import { CustomMoveType } from '../CustomMoveType'
-import { ComputedActionsHelper } from '../helper/ComputedActionsHelper'
 import { MemoryType } from '../MemoryType'
-import { RuleId } from '../RuleId'
-import { BasicActionHelper } from '../helper/BasicActionHelper'
+import { ActionRule } from './ActionRule'
 
-export class CourtRulingActionRule extends PlayerTurnRule {
-  actionType = ActionType.CourtRuling
-  computedActionHelper = new ComputedActionsHelper(this.game)
-  basicActionHelper = new BasicActionHelper(this.game)
+export class CourtRulingActionRule extends ActionRule<CourtRullingAction> {
 
   getPlayerMoves(): MaterialMove[] {
-    if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
+    if (this.checkAnotherActionInProgress(this.action?.type)) return []
     const moves: MaterialMove[] = []
     const xPositionToCanResolve = this.player === City.Altona ? [-2, -3, -4] : [2, 3, 4]
 
@@ -25,15 +21,15 @@ export class CourtRulingActionRule extends PlayerTurnRule {
 
     moves.push(this.lawsuitCardToMove.moveItem(({ location }) => ({ ...location, z: 0 })))
     moves.push(this.lawsuitCardToMove.moveItem(({ location }) => ({ ...location, z: 2 })))
-    moves.push(this.customMove(CustomMoveType.Pass, this.actionType))
+    moves.push(this.customMove(CustomMoveType.Pass, this.action?.type))
     return moves
   }
 
   beforeItemMove(move: ItemMove): MaterialMove[] {
-    if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
+    if (this.checkAnotherActionInProgress(this.action?.type)) return []
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.LawsuitCard)(move) && move.location.z !== 1) {
-      this.memorize(MemoryType.BasicActionChoosen, this.actionType)
+      this.memorize(MemoryType.BasicActionChoosen, this.action?.type)
       moves.push(
         this.material(MaterialType.LawsuitCard)
           .location((loc) => loc.type === LocationType.LawsuitCardsRiver && loc.z === move.location.z)
@@ -54,19 +50,18 @@ export class CourtRulingActionRule extends PlayerTurnRule {
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {
-    if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
+    if (this.checkAnotherActionInProgress(this.action?.type)) return []
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.LawsuitCard)(move) && move.location.z === 1) {
-      moves.push(...this.computedActionHelper.removeActionAndnext(this.actionType))
+      moves.push(...this.removeActionAndMove())
     }
     return moves
   }
 
   onCustomMove(move: CustomMove): MaterialMove[] {
-    if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
+    if (this.checkAnotherActionInProgress(this.action?.type)) return []
     if (isCustomMoveType(CustomMoveType.ResolveLawsuit)(move)) {
-      this.memorize<RuleId[]>(MemoryType.BonusesRules, (old) => [RuleId.ResolveLawsuit, ...old])
-      return this.computedActionHelper.removeActionAndnext(this.actionType)
+      this.addActionBonusAndMove({type: ActionType.ResolveLawsuit })
     }
     return []
   }

@@ -1,33 +1,29 @@
-import { isMoveItemType, ItemMove, MaterialMove, PlayerTurnRule } from '@gamepark/rules-api'
+import { isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
+import { FormAllianceAction } from '../../material/Actions/Actions'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
-import { ActionType } from '../ActionType'
-import { ComputedActionsHelper } from '../helper/ComputedActionsHelper'
-import { MemoryType } from '../MemoryType'
-import { BasicActionHelper } from '../helper/BasicActionHelper'
-import { EndOfGameHelper } from '../helper/EndOfGameHelper'
 import { CustomMoveType } from '../CustomMoveType'
+import { EndOfGameHelper } from '../helper/EndOfGameHelper'
+import { MemoryType } from '../MemoryType'
+import { ActionRule } from './ActionRule'
 
-export class FormAllianceActionRule extends PlayerTurnRule {
-  actionType = ActionType.FormAlliance
-  computedActionHelper = new ComputedActionsHelper(this.game)
-  basicActionHelper = new BasicActionHelper(this.game)
+export class FormAllianceActionRule extends ActionRule<FormAllianceAction> {
 
   getPlayerMoves(): MaterialMove[] {
-    if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
+    if (this.checkAnotherActionInProgress(this.action?.type)) return []
     const moves: MaterialMove[] = []
     moves.push(...this.allianceCards.moveItems({ type: LocationType.PlayerAllianceCards, player: this.player }))
     if (this.playerLetters.length) {
       moves.push(...this.opponentAllianceCards.moveItems({ type: LocationType.PlayerAllianceCards, player: this.player }))
     }
-    moves.push(this.customMove(CustomMoveType.Pass, this.actionType))
+    moves.push(this.customMove(CustomMoveType.Pass, this.action?.type))
     return moves
   }
 
   beforeItemMove(move: ItemMove): MaterialMove[] {
-    if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
+    if (this.checkAnotherActionInProgress(this.action?.type)) return []
     if (isMoveItemType(MaterialType.AllianceCard)(move)) {
-      this.memorize(MemoryType.BasicActionChoosen, this.actionType)
+      this.memorize(MemoryType.BasicActionChoosen, this.action?.type)
       const oldLocationType = this.material(MaterialType.AllianceCard).index(move.itemIndex).getItem()?.location.type
       if (oldLocationType === LocationType.PlayerAllianceCards) {
         return [this.playerLetters.moveItem(() => ({ type: LocationType.LetterDeck }))]
@@ -37,9 +33,9 @@ export class FormAllianceActionRule extends PlayerTurnRule {
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {
-    if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
+    if (this.checkAnotherActionInProgress(this.action?.type)) return []
     if (isMoveItemType(MaterialType.AllianceCard)(move)) {
-      return new EndOfGameHelper(this.game).checkInstantEndOfGame(this.computedActionHelper.removeActionAndnext(this.actionType))
+      return new EndOfGameHelper(this.game).checkInstantEndOfGame(this.removeActionAndMove())
     }
     return []
   }

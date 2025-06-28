@@ -1,35 +1,32 @@
-import { isMoveItemType, MaterialMove, PlayerTurnRule } from '@gamepark/rules-api'
+import { MaterialMove, PlayerTurnRule } from '@gamepark/rules-api'
+import { Action } from '../../material/Actions/Actions'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { ShipCard, shipCardsData, ShipEffectType } from '../../material/ShipCard'
+import { ActionRuleIds } from '../helper/ActionRuleIds'
 import { MemoryType } from '../MemoryType'
 import { RuleId } from '../RuleId'
-import { EndOfGameHelper } from '../helper/EndOfGameHelper'
 
 export class OffSeasonGetShipsBonusesRule extends PlayerTurnRule {
   onRuleStart(): MaterialMove[] {
-    if (this.shipsOffSeason.length === 0) {
-      return [this.startRule(RuleId.OffSeasonGetPrestigeBonuses)]
-    }
-    const moves: MaterialMove[] = []
-    this.memorize<number>(MemoryType.ProcessedBonuses, 0)
-    this.shipsOffSeason.forEach((it) => {
-      const shipCardData = shipCardsData[it.id as ShipCard]
-      if (shipCardData.effect.action) {
-        moves.push(...shipCardData.effect.action(this.game, it.location.player!))
-      }
-    })
-    return moves
-  }
+    const shipToProcess = this.shipsOffSeason.find((it) => !this.remind<ShipCard[]>(MemoryType.ShipsIdsAlreadyProcessed).includes(it.id as ShipCard))
 
-  afterItemMove(move: MaterialMove): MaterialMove[] {
-    if (this.remind<number>(MemoryType.ProcessedBonuses) === this.shipsOffSeason.length) {
-      if (isMoveItemType(MaterialType.PrestigeMarker)(move)) {
-        return new EndOfGameHelper(this.game).checkInstantEndOfGame([this.startRule(RuleId.OffSeasonGetPrestigeBonuses)])
+    if (shipToProcess) {
+      const shipCardData = shipCardsData[shipToProcess.id as ShipCard]
+      if (shipCardData.effect.action) {
+        this.memorize<ShipCard[]>(MemoryType.ShipsIdsAlreadyProcessed, (old) => [...old, shipToProcess.id as ShipCard])
+        this.memorize(
+          MemoryType.OffSeasonStep,
+          this.remind<ShipCard[]>(MemoryType.ShipsIdsAlreadyProcessed).length === this.shipsOffSeason.length
+            ? RuleId.OffSeasonGetPrestigeBonuses
+            : RuleId.OffSeasonGetShipsBonuses
+        )
+        this.memorize(MemoryType.Actions, shipCardData.effect.action(this.game, this.player))
+        return [this.startRule(ActionRuleIds[this.remind<Action[]>(MemoryType.Actions)[0].type])]
       }
-      return [this.startRule(RuleId.OffSeasonGetPrestigeBonuses)]
     }
-    return []
+
+    return [this.startRule(RuleId.OffSeasonGetPrestigeBonuses)]
   }
 
   get shipsOffSeason() {

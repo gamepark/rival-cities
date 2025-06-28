@@ -1,10 +1,12 @@
 import { isMoveItemType, ItemMove, MaterialMove, PlayerTurnRule } from '@gamepark/rules-api'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
+import { MemoryType } from '../MemoryType'
 import { RuleId } from '../RuleId'
 
 export class OffSeasonTakeBellRule extends PlayerTurnRule {
   onRuleStart(): MaterialMove[] {
+    this.memorize(MemoryType.ShipsIdsAlreadyProcessed, [])
     return [this.material(MaterialType.BellToken).moveItem({ type: LocationType.PlayerBellToken, player: this.player })]
   }
 

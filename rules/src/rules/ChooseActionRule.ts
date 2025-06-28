@@ -1,33 +1,32 @@
 import { CustomMove, isCustomMoveType, isMoveItemType, ItemMove, MaterialMove, PlayerTurnRule } from '@gamepark/rules-api'
 import { specialActionCardPlaces } from '../constantes'
+import { Action } from '../material/Actions/Actions'
+import { ActionType } from '../material/Actions/ActionType'
+import { BasicActionCard } from '../material/BasicActionCard'
+import { BasicActionCardHelper } from '../material/helper/BasicActionCardHelper'
+import { SpecialActionCardHelper } from '../material/helper/SpecialActionCardHelper'
 import { LocationType } from '../material/LocationType'
 import { MaterialType } from '../material/MaterialType'
 import { ShipCard } from '../material/ShipCard'
-import { SpecialActionCard, specialActionCardActions } from '../material/SpecialActionCard'
+import { SpecialActionCard } from '../material/SpecialActionCard'
 import { CustomMoveType } from './CustomMoveType'
-import { NextRuleHelper } from './helper/NextRuleHelper'
+import { ActionRuleIds } from './helper/ActionRuleIds'
 import { MemoryType } from './MemoryType'
 import { RuleId } from './RuleId'
-import { BasicActionCard, basicActionCardActions } from '../material/BasicActionCard'
-import { ActionType } from './ActionType'
 
 export class ChooseActionRule extends PlayerTurnRule {
-  nextRuleHelper = new NextRuleHelper(this.game)
   onRuleStart(): MaterialMove[] {
     this.memorize(MemoryType.IsUseLetter, false)
     if (specialActionCardPlaces.includes(this.inkjarLocationId) && this.specialActioncardInInkjarPlace.length > 0) {
       return [
         this.specialActioncardInInkjarPlace.moveItem({ type: LocationType.PlayerSpecialActionCardsHand, player: this.player }),
-        ...this.nextRuleHelper.moveToNextRule()
+        this.startPlayerTurn(RuleId.AdvanceInkJar, this.nextPlayer)
       ]
     }
     if (this.playerSpecialActionCards.length === 0) {
-      if (this.basicActionCardIdInInkjarPlace) {
-        this.memorize(MemoryType.ComputedActions, basicActionCardActions[this.basicActionCardIdInInkjarPlace])
-      } else if (this.inkjarLocationId === 0) {
-        this.memorize(MemoryType.ComputedActions, [ActionType.Gift])
-      }
-      return [this.startRule(RuleId.BasicAction)]
+      const actions = [this.basicCardActions]
+      this.memorize(MemoryType.Actions, actions)
+      return [this.startRule(ActionRuleIds[actions[0].type])]
     }
     return []
   }
@@ -51,31 +50,34 @@ export class ChooseActionRule extends PlayerTurnRule {
 
   afterItemMove(move: ItemMove): MaterialMove[] {
     if (isMoveItemType(MaterialType.SpecialActionCard)(move) && move.location.type === LocationType.SpecialActionCardsDiscard) {
+      const actions: Action[] = []
       const cardId = this.material(MaterialType.SpecialActionCard).index(move.itemIndex).getItem()?.id as SpecialActionCard
-      this.memorize(MemoryType.ComputedActions, specialActionCardActions[cardId])
+      actions.push(new SpecialActionCardHelper(this.game).specialActionCardActions[cardId])
       if (this.remind(MemoryType.IsUseLetter) || this.playerHaveShip18) {
-        this.memorize(MemoryType.NextRules, [RuleId.SpecialAction, RuleId.BasicAction])
-        return this.nextRuleHelper.moveToNextRule()
+        actions.push(this.basicCardActions)
       }
-      return [this.startRule(RuleId.SpecialAction)]
+      this.memorize(MemoryType.Actions, actions)
+      return [this.startRule(ActionRuleIds[actions[0].type])]
     }
     return []
   }
 
   onCustomMove(move: CustomMove): MaterialMove[] {
     if (isCustomMoveType(CustomMoveType.PlaysBasicAction)(move)) {
-      if (this.basicActionCardIdInInkjarPlace) {
-        this.memorize(MemoryType.ComputedActions, basicActionCardActions[this.basicActionCardIdInInkjarPlace])
-      } else if (this.inkjarLocationId === 0) {
-        this.memorize(MemoryType.ComputedActions, [ActionType.Gift])
-      }
+      const actions = [this.basicCardActions]
       if (this.remind(MemoryType.IsUseLetter) || this.playerHaveShip18) {
-        this.memorize(MemoryType.NextRules, [RuleId.BasicAction, RuleId.ChooseSpecialAction])
-        return this.nextRuleHelper.moveToNextRule()
+        actions.push({ type: ActionType.ChooseSpecialActionCard })
       }
-      return [this.startRule(RuleId.BasicAction)]
+      this.memorize(MemoryType.Actions, actions)
+      return [this.startRule(ActionRuleIds[actions[0].type])]
     }
     return []
+  }
+
+  get basicCardActions(): Action {
+    if(this.inkjarLocationId === 0) return { type: ActionType.Gift, nbProductToTake: 1, productType: undefined }
+    const cardId = this.basicActioncardInInkjarPlace.getItem()?.id as BasicActionCard
+    return new BasicActionCardHelper(this.game).basicActionCardActions[cardId]
   }
 
   get playerLetters() {
@@ -87,7 +89,7 @@ export class ChooseActionRule extends PlayerTurnRule {
   }
 
   get inkjarLocationId(): number {
-    return this.material(MaterialType.InkJar).location(LocationType.InkJarPiste).getItem()?.location.id
+    return this.material(MaterialType.InkJar).location(LocationType.InkJarPiste).getItem()?.location.id as number
   }
 
   get specialActioncardInInkjarPlace() {
@@ -96,11 +98,10 @@ export class ChooseActionRule extends PlayerTurnRule {
       .filter((it) => it.location.id === this.inkjarLocationId)
   }
 
-  get basicActionCardIdInInkjarPlace(): BasicActionCard {
+  get basicActioncardInInkjarPlace() {
     return this.material(MaterialType.BasicActionCard)
       .location(LocationType.CardPiste)
       .filter((it) => it.location.id === this.inkjarLocationId)
-      .getItem()?.id
   }
 
   get playerHaveShip18() {

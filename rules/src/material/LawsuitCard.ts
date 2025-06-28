@@ -1,4 +1,5 @@
-import { getEnumValues, MaterialGame, MaterialMove } from '@gamepark/rules-api'
+import { getEnumValues, MaterialGame } from '@gamepark/rules-api'
+import { Action } from './Actions/Actions'
 import { LawsuitCardHelper } from './helper/LawsuitCardHelper'
 import { Product } from './Product'
 
@@ -20,8 +21,8 @@ export type LawsuitCardData = {
     type: Product | 'Letter'
     quantity: number
   }[]
-  actionInAdvance: (game: MaterialGame, player: number) => MaterialMove[]
-  actionInWin: (game: MaterialGame, player: number) => MaterialMove[]
+  actionInAdvance: (game: MaterialGame, player: number) => Action[]
+  actionInWin: (game: MaterialGame, player: number) => Action[]
   nbStars: number
 }
 

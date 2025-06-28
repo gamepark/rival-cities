@@ -1,14 +1,20 @@
 /** @jsxImportSource @emotion/react */
-import { MaterialHelpProps } from '@gamepark/react-game'
+import { MaterialHelpProps, useRules } from '@gamepark/react-game'
+import { SpecialActionCardHelper } from '@gamepark/rival-cities/material/helper/SpecialActionCardHelper'
+import { RivalCitiesRules } from '@gamepark/rival-cities/RivalCitiesRules'
 import { FC } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
-import { SpecialActionCard, specialActionCardActions } from '@gamepark/rival-cities/material/SpecialActionCard'
+import { SpecialActionCard } from '@gamepark/rival-cities/material/SpecialActionCard'
 import { components, note, shipBtn } from './utils'
 import { ShipCard } from '@gamepark/rival-cities/material/ShipCard'
 
 export const SpecialActionCardHelp: FC<MaterialHelpProps> = ({ item }) => {
   const { t } = useTranslation()
-  const actions = specialActionCardActions[item.id as SpecialActionCard]
+  const rules = useRules<RivalCitiesRules>()
+
+  if (!rules) return <></>
+
+  const action = new SpecialActionCardHelper(rules.game).specialActionCardActions[item.id as SpecialActionCard]
 
   return (
     <>
@@ -19,12 +25,10 @@ export const SpecialActionCardHelp: FC<MaterialHelpProps> = ({ item }) => {
       {item.id && (
         <>
           <h3>{t(`help.actions`)}</h3>
-          {actions.map((action, index) => (
-            <>
-              <p key={index}>
-                <Trans defaults={`help.action.descr.${action}`} components={components} />
-              </p>
-            </>
+          {action.actions.map((a, index) => (
+            <p key={index}>
+              <Trans defaults={`help.action.descr.${a.type}`} values={a} components={components} />
+            </p>
           ))}
         </>
       )}

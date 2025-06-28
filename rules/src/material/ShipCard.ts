@@ -1,5 +1,5 @@
 import { getEnumValues, MaterialGame, MaterialMove } from '@gamepark/rules-api'
-import { RuleId } from '../rules/RuleId'
+import { Action } from './Actions/Actions'
 import { ShipCardHelper } from './helper/ShipCardHelper'
 import { Product } from './Product'
 
@@ -42,8 +42,8 @@ export type ShipCardData = {
   }
   effect: {
     type: ShipEffectType
-    rules?: RuleId[]
-    action?: (game: MaterialGame, player: number) => MaterialMove[]
+    action?: (game: MaterialGame, player: number) => Action[]
+    move?: (game: MaterialGame, player: number) => MaterialMove[]
   }
   getNbStars: (_nbShip: number) => number
 }
@@ -53,27 +53,27 @@ export const shipCards = getEnumValues(ShipCard)
 export const shipCardsData: Record<ShipCard, ShipCardData> = {
   [ShipCard.Ship1]: {
     cost: { type: Product.Furniture, quantity: 3 },
-    effect: { type: ShipEffectType.Instant, rules: [RuleId.EarnPrestige, RuleId.EarnPrestige] },
+    effect: { type: ShipEffectType.Instant, action: (game, player) => new ShipCardHelper(game, player).shipCard1() },
     getNbStars: () => 1
   },
   [ShipCard.Ship2]: {
     cost: { type: Product.Cloth, quantity: 3 },
-    effect: { type: ShipEffectType.Instant, rules: [RuleId.AdvanceLawsuitAction, RuleId.AdvanceLawsuitAction] },
+    effect: { type: ShipEffectType.Instant, action: (game, player) => new ShipCardHelper(game, player).shipCard2() },
     getNbStars: () => 2
   },
   [ShipCard.Ship3]: {
     cost: { type: Product.Leather, quantity: 3 },
-    effect: { type: ShipEffectType.Instant, rules: [RuleId.DrawSpecialActionCardAction, RuleId.DrawSpecialActionCardAction] },
+    effect: { type: ShipEffectType.Instant, action: (game, player) => new ShipCardHelper(game, player).shipCard3() },
     getNbStars: () => 2
   },
   [ShipCard.Ship4]: {
     cost: { type: Product.Furniture, quantity: 2 },
-    effect: { type: ShipEffectType.Instant, rules: [RuleId.GainLetter] },
+    effect: { type: ShipEffectType.Instant, action: (game, player) => new ShipCardHelper(game, player).shipCard4() },
     getNbStars: () => 3
   },
   [ShipCard.Ship5]: {
     cost: { type: Product.Furniture, quantity: 2 },
-    effect: { type: ShipEffectType.Instant, rules: [RuleId.GainLetter, RuleId.GainLetter] },
+    effect: { type: ShipEffectType.Instant, action: (game, player) => new ShipCardHelper(game, player).shipCard5() },
     getNbStars: () => 1
   },
   [ShipCard.Ship6]: {
@@ -120,7 +120,7 @@ export const shipCardsData: Record<ShipCard, ShipCardData> = {
     cost: { type: Product.Cloth, quantity: 4 },
     effect: {
       type: ShipEffectType.OnProduction,
-      action: (game, player) => new ShipCardHelper(game, player).getProductMove(Product.Beer, 1)
+      move: (game, player) => new ShipCardHelper(game, player).getProductMove(Product.Beer, 1)
     },
     getNbStars: () => 1
   },
@@ -128,7 +128,7 @@ export const shipCardsData: Record<ShipCard, ShipCardData> = {
     cost: { type: Product.Beer, quantity: 6 },
     effect: {
       type: ShipEffectType.OnProduction,
-      action: (game, player) => new ShipCardHelper(game, player).getProductMove(Product.Leather, 1)
+      move: (game, player) => new ShipCardHelper(game, player).getProductMove(Product.Leather, 1)
     },
     getNbStars: () => 1
   },
@@ -136,7 +136,7 @@ export const shipCardsData: Record<ShipCard, ShipCardData> = {
     cost: { type: Product.Leather, quantity: 4 },
     effect: {
       type: ShipEffectType.OnProduction,
-      action: (game, player) => new ShipCardHelper(game, player).getProductMove(Product.Cloth, 1)
+      move: (game, player) => new ShipCardHelper(game, player).getProductMove(Product.Cloth, 1)
     },
     getNbStars: () => 1
   },
@@ -144,7 +144,7 @@ export const shipCardsData: Record<ShipCard, ShipCardData> = {
     cost: { type: Product.Cloth, quantity: 5 },
     effect: {
       type: ShipEffectType.OnProduction,
-      action: (game, player) => new ShipCardHelper(game, player).getProductMove(Product.Furniture, 1)
+      move: (game, player) => new ShipCardHelper(game, player).getProductMove(Product.Furniture, 1)
     },
     getNbStars: () => 1
   },

@@ -27,7 +27,7 @@ export class AdvanceInkJarRule extends PlayerTurnRule {
     const nbCaseAdvanced = endId > startId ? endId - startId : endId + 20 - startId
     this.memorize(MemoryType.NbProductToPayForAdvance, this.determineNbProductToPay(nbCaseAdvanced))
     if (endId < startId) {
-      this.memorize(MemoryType.IsOffSeason, true)
+      this.memorize(MemoryType.OffSeasonStep, RuleId.OffSeasonTakeBell)
     }
     return []
   }
@@ -37,7 +37,7 @@ export class AdvanceInkJarRule extends PlayerTurnRule {
     if (this.remind(MemoryType.NbProductToPayForAdvance) > 0) {
       return [this.startRule(RuleId.PayProductForAdvance)]
     }
-    return [this.startRule(this.remind(MemoryType.IsOffSeason) ? RuleId.OffSeasonTakeBell : RuleId.ChooseAction)]
+    return [this.startRule(this.remind<RuleId | undefined>(MemoryType.OffSeasonStep) ?? RuleId.ChooseAction)]
   }
 
   possiblesNbCaseToAdvance() {

@@ -1,22 +1,18 @@
 /** @jsxImportSource @emotion/react */
 import { RuleId } from '@gamepark/rival-cities/rules/RuleId'
 import { ComponentType } from 'react'
-import { AdvanceAgainInLawsuitHeader } from './AdvanceAgainInLawsuitHeader'
 import { AdvanceInkJarHeader } from './AdvanceInkJarHeader'
-import { AdvanceLawsuitActionHeader } from './AdvanceLawsuitActionHeader'
-import { AllianceCardAdvanceAgainInLawsuitHeader } from './AllianceCardAdvanceAgainInLawsuitHeader'
-import { AllianceCardDrawSpecialActionCardAgainHeader } from './AllianceCardDrawSpecialActionCardAgainHeader'
-import { AllianceCardEarnPrestigeAgainHeader } from './AllianceCardEarnPrestigeAgainHeader'
-import { BasicActionHeader } from './BasicActionHeader'
-import { Choose1ProductHeader } from './Choose1ProductHeader'
-import { Choose2ProductHeader } from './Choose2ProductHeader'
+import { AdvanceLawsuitHeader } from './AdvanceLawsuitHeader'
+import { ChoiceHeader } from './ChoiceHeader'
+import { BuildFactoryHeader } from './BuildFactoryHeader'
 import { ChooseActionHeader } from './ChooseActionHeader'
 import { ChooseFirstProductHeader } from './ChooseFirstProductHeader'
 import { ChooseSpecialActionHeader } from './ChooseSpecialActionHeader'
-import { DrawSpecialActionCardActionHeader } from './DrawSpecialActionCardActionHeader'
-import { EarnPrestigeAgainHeader } from './EarnPrestigeAgainHeader'
+import { DrawSpecialActionCardHeader } from './DrawSpecialActionCardHeader'
 import { EarnPrestigeHeader } from './EarnPrestigeHeader'
+import { FormAllianceHeader } from './FormAllianceHeader'
 import { GainLetterHeader } from './GainLetterHeader'
+import { GiftHeader } from './GiftHeader'
 import { OffSeasonChangeSpecialCardsHeader } from './OffSeasonChangeSpecialCardsHeader'
 import { OffSeasonGetPrestigeBonusesHeader } from './OffSeasonGetPrestigeBonusesHeader'
 import { OffSeasonGetShipsBonusesHeader } from './OffSeasonGetShipsBonusesHeader'
@@ -26,26 +22,21 @@ import { OffSeasonReactivateFactoriesHeader } from './OffSeasonReactivateFactori
 import { OffSeasonReturnBellHeader } from './OffSeasonReturnBellHeader'
 import { OffSeasonTakeBellHeader } from './OffSeasonTakeBellHeader'
 import { PayProductForAdvanceHeader } from './PayProductForAdvanceHeader'
+import { ProductionHeader } from './ProductionHeader'
+import { ProductSwapHeader } from './ProductSwapHeader'
 import { ResolveLawsuitHeader } from './ResolveLawsuitHeader'
-import { SpecialActionHeader } from './SpecialActionHeader'
-import { SwapProductHeader } from './SwapProductHeader'
+import { ComputedHeader } from './ComputedHeader'
 
 export const Headers: Partial<Record<RuleId, ComponentType>> = {
   [RuleId.ChooseFirstProduct]: ChooseFirstProductHeader,
   [RuleId.AdvanceInkJar]: AdvanceInkJarHeader,
   [RuleId.PayProductForAdvance]: PayProductForAdvanceHeader,
   [RuleId.ChooseAction]: ChooseActionHeader,
-  [RuleId.BasicAction]: BasicActionHeader,
-  [RuleId.SpecialAction]: SpecialActionHeader,
-  [RuleId.Choose2Product]: Choose2ProductHeader,
-  [RuleId.Choose1Product]: Choose1ProductHeader,
-  [RuleId.AdvanceAgainInLawsuit]: AdvanceAgainInLawsuitHeader,
-  [RuleId.AllianceCardAdvanceAgainInLawsuit]: AllianceCardAdvanceAgainInLawsuitHeader,
-  [RuleId.AllianceCardDrawSpecialActionCardAgain]: AllianceCardDrawSpecialActionCardAgainHeader,
-  [RuleId.AllianceCardEarnPrestigeAgain]: AllianceCardEarnPrestigeAgainHeader,
+  [RuleId.Choice]: ChoiceHeader,
+  [RuleId.Computed]: ComputedHeader,
   [RuleId.ResolveLawsuit]: ResolveLawsuitHeader,
-  [RuleId.AdvanceLawsuitAction]: AdvanceLawsuitActionHeader,
-  [RuleId.DrawSpecialActionCardAction]: DrawSpecialActionCardActionHeader,
+  [RuleId.AdvanceLawsuit]: AdvanceLawsuitHeader,
+  [RuleId.DrawSpecialActionCard]: DrawSpecialActionCardHeader,
   [RuleId.EarnPrestige]: EarnPrestigeHeader,
   [RuleId.GainLetter]: GainLetterHeader,
   [RuleId.OffSeasonTakeBell]: OffSeasonTakeBellHeader,
@@ -55,8 +46,11 @@ export const Headers: Partial<Record<RuleId, ComponentType>> = {
   [RuleId.OffSeasonChangeSpecialCards]: OffSeasonChangeSpecialCardsHeader,
   [RuleId.OffSeasonReactivateFactories]: OffSeasonReactivateFactoriesHeader,
   [RuleId.OffSeasonReturnBell]: OffSeasonReturnBellHeader,
-  [RuleId.EarnPrestigeAgain]: EarnPrestigeAgainHeader,
   [RuleId.ChooseSpecialAction]: ChooseSpecialActionHeader,
   [RuleId.OffSeasonPlayerWithMostShipCardsEarnPrestige]: OffSeasonPlayerWithMostShipCardsEarnPrestigeHeader,
-  [RuleId.SwapProduct]: SwapProductHeader
+  [RuleId.FormAlliance]: FormAllianceHeader,
+  [RuleId.BuildFactory]: BuildFactoryHeader,
+  [RuleId.Production]: ProductionHeader,
+  [RuleId.Gift]: GiftHeader,
+  [RuleId.ProductSwap]: ProductSwapHeader
 }

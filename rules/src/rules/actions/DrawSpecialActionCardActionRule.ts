@@ -1,30 +1,23 @@
-import { isMoveItemType, ItemMove, MaterialMove, PlayerTurnRule } from '@gamepark/rules-api'
+import { isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
+import { DrawSpecialActionCardAction } from '../../material/Actions/Actions'
+import { ActionType } from '../../material/Actions/ActionType'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
-import { ActionType } from '../ActionType'
-import { ComputedActionsHelper } from '../helper/ComputedActionsHelper'
-import { MemoryType } from '../MemoryType'
-import { AllianceCard } from '../../material/AllianceCard'
 import { Product } from '../../material/Product'
-import { RuleId } from '../RuleId'
-import { BasicActionHelper } from '../helper/BasicActionHelper'
-import { AllianceCardHelper } from '../../material/helper/AllianceCardHelper'
+import { MemoryType } from '../MemoryType'
+import { ActionRule } from './ActionRule'
 
-export class DrawSpecialActionCardActionRule extends PlayerTurnRule {
-  actionType = ActionType.DrawSpecialActionCard
-  computedActionHelper = new ComputedActionsHelper(this.game)
-  basicActionHelper = new BasicActionHelper(this.game)
-  nbCardsToDraw = 1
+export class DrawSpecialActionCardActionRule extends ActionRule<DrawSpecialActionCardAction> {
 
   onRuleStart(): MaterialMove[] {
     return [this.specialActionCard.moveItem({ type: LocationType.PlayerSpecialActionCardsHand, player: this.player })]
   }
 
   beforeItemMove(move: ItemMove): MaterialMove[] {
-    if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
+    if (this.checkAnotherActionInProgress(this.action?.type)) return []
     if (isMoveItemType(MaterialType.SpecialActionCard)(move)) {
-      this.memorize(MemoryType.BasicActionChoosen, this.actionType)
-      this.memorize<number>(MemoryType.NbCardsDraw, (old) => old + 1)
+      this.memorize(MemoryType.BasicActionChoosen, this.action?.type)
+      this.memorize<number>(MemoryType.Counter, (old) => old + 1)
       if (this.material(MaterialType.SpecialActionCard).location(LocationType.SpecialActionCardsDeck).length < 1) {
         const moves: MaterialMove[] = []
         moves.push(this.material(MaterialType.SpecialActionCard).location(LocationType.SpecialActionCardsDiscard).shuffle())
@@ -40,15 +33,24 @@ export class DrawSpecialActionCardActionRule extends PlayerTurnRule {
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {
-    if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
+    if (this.checkAnotherActionInProgress(this.action?.type)) return []
     if (isMoveItemType(MaterialType.SpecialActionCard)(move)) {
-      if (this.remind(MemoryType.NbCardsDraw) === this.nbCardsToDraw) {
-        this.memorize(MemoryType.NbCardsDraw, 0)
-        const playerHaveAllianceKjjobenhavn = new AllianceCardHelper(this.game).checkPlayerAllianceCardById(AllianceCard.AllianceKjjobenhavn)
-        if (playerHaveAllianceKjjobenhavn && this.playerBeers.getQuantity() > 0) {
-          this.memorize<RuleId[]>(MemoryType.BonusesRules, (old) => [RuleId.AllianceCardDrawSpecialActionCardAgain, ...old])
+      if (this.remind(MemoryType.Counter) === this.action?.nbCardsToDraw) {
+        this.removeAction()
+        this.memorize(MemoryType.Counter, 0)
+        if (this.action?.playerCanUseAllianceKjjobenhavn && this.playerBeers.getQuantity() > 0) {
+          this.addActionBonus({
+            type: ActionType.PayToPerformActionAgain,
+            productType: Product.Beer,
+            price: 1,
+            actionToPerformAgain: {
+              type: ActionType.DrawSpecialActionCard,
+              nbCardsToDraw: 1,
+              playerCanUseAllianceKjjobenhavn: false
+            }
+          })
         }
-        return this.computedActionHelper.removeActionAndnext(this.actionType)
+        return this.moveToNextAction()
       }
     }
     return [this.specialActionCard.moveItem({ type: LocationType.PlayerSpecialActionCardsHand, player: this.player })]

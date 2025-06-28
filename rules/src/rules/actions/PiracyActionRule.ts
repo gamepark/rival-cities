@@ -1,45 +1,40 @@
-import { isMoveItemType, ItemMove, MaterialMove, PlayerTurnRule } from '@gamepark/rules-api'
+import { isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
+import { PiracyAction } from '../../material/Actions/Actions'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
-import { ActionType } from '../ActionType'
 import { CustomMoveType } from '../CustomMoveType'
-import { ComputedActionsHelper } from '../helper/ComputedActionsHelper'
 import { MemoryType } from '../MemoryType'
-import { BasicActionHelper } from '../helper/BasicActionHelper'
+import { ActionRule } from './ActionRule'
 
-export class PiracyActionRule extends PlayerTurnRule {
-  actionType = ActionType.Piracy
-  computedActionHelper = new ComputedActionsHelper(this.game)
-  basicActionHelper = new BasicActionHelper(this.game)
-  nbProductsToSteal = 1
+export class PiracyActionRule extends ActionRule<PiracyAction> {
 
   onRuleStart(): MaterialMove[] {
     return []
   }
 
   getPlayerMoves(): MaterialMove[] {
-    if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
+    if (this.checkAnotherActionInProgress(this.action?.type)) return []
     const moves: MaterialMove[] = []
     if (this.opponentProducts.length > 0) {
       moves.push(...this.opponentProducts.moveItems((item) => ({ type: LocationType.PlayerProducts, player: this.player, id: item.id })))
     }
-    moves.push(this.customMove(CustomMoveType.Pass, this.actionType))
+    moves.push(this.customMove(CustomMoveType.Pass, this.action?.type))
     return moves
   }
 
   beforeItemMove(move: ItemMove): MaterialMove[] {
-    if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
+    if (this.checkAnotherActionInProgress(this.action?.type)) return []
     if (isMoveItemType(MaterialType.Product)(move)) {
-      this.memorize(MemoryType.BasicActionChoosen, this.actionType)
-      this.memorize<number>(MemoryType.NbProductStealed, (old) => old + 1)
+      this.memorize(MemoryType.BasicActionChoosen, this.action?.type)
+      this.memorize<number>(MemoryType.Counter, (old) => old + 1)
     }
     return []
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {
-    if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
-    if (isMoveItemType(MaterialType.Product)(move) && this.remind(MemoryType.NbProductStealed) === this.nbProductsToSteal) {
-      return this.computedActionHelper.removeActionAndnext(this.actionType)
+    if (this.checkAnotherActionInProgress(this.action?.type)) return []
+    if (isMoveItemType(MaterialType.Product)(move) && this.remind(MemoryType.Counter) === this.action?.nbProductsToSteal) {
+      return this.removeActionAndMove()
     }
     return []
   }

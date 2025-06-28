@@ -1,8 +1,8 @@
 import { RuleId } from '@gamepark/rival-cities/rules/RuleId'
-import { BasicActionsHelp } from './BasicActionsHelp'
-import { SpecialActionsHelp } from './SpecialActionsHelp'
+import { ChoiceHelp } from './ChoiceHelp'
+import { ComputedHelp } from './ComputedHelp'
 
 export const RulesHelp = {
-  [RuleId.BasicAction]: BasicActionsHelp,
-  [RuleId.SpecialAction]: SpecialActionsHelp
+  [RuleId.Choice]: ChoiceHelp,
+  [RuleId.Computed]: ComputedHelp
 }

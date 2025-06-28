@@ -3,8 +3,6 @@ import { AllianceCard } from '../AllianceCard'
 import { LocationType } from '../LocationType'
 import { MaterialType } from '../MaterialType'
 import { Product } from '../Product'
-import { ActionType } from '../../rules/ActionType'
-import { MemoryType } from '../../rules/MemoryType'
 
 export class AllianceCardHelper extends MaterialRulesPart {
   player?: number
@@ -14,14 +12,6 @@ export class AllianceCardHelper extends MaterialRulesPart {
     super(game)
     this.player = player
     this.nextPlayer = game.players.find((player) => player !== this.player)
-  }
-
-  computeActionIfPlayerHasGdanskAlliance(actions: ActionType[]) {
-    if (this.remind(MemoryType.ComputedActions).length > 0) return
-
-    if (this.checkPlayerAllianceCardById(AllianceCard.AllianceGdansk)) {
-      this.memorize(MemoryType.ComputedActions, actions)
-    }
   }
 
   checkPlayerAllianceCardById(allianceCard: AllianceCard) {

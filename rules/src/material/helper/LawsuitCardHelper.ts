@@ -1,12 +1,11 @@
-import { MaterialGame, MaterialMove, MaterialRulesPart } from '@gamepark/rules-api'
-import { City } from '../../City'
-import { LocationType } from '../../material/LocationType'
-import { MaterialType } from '../../material/MaterialType'
-import { RuleId } from '../../rules/RuleId'
+import { MaterialGame, MaterialRulesPart } from '@gamepark/rules-api'
+import { Action } from '../Actions/Actions'
+import { AllianceCard } from '../AllianceCard'
+import { LocationType } from '../LocationType'
+import { MaterialType } from '../MaterialType'
 import { Product } from '../Product'
-import { ActionType } from '../../rules/ActionType'
-import { ComputedActionsHelper } from '../../rules/helper/ComputedActionsHelper'
-import { MemoryType } from '../../rules/MemoryType'
+import { ActionType } from '../Actions/ActionType'
+import { ShipCard } from '../ShipCard'
 
 export class LawsuitCardHelper extends MaterialRulesPart {
   player: number
@@ -16,134 +15,231 @@ export class LawsuitCardHelper extends MaterialRulesPart {
     this.player = player
   }
 
-  lawersuitCard1ActionOnAdvance(): MaterialMove[] {
-    return [this.getProductMove(Product.Leather)]
-  }
-
-  lawersuitCard1ActionOnWin(): MaterialMove[] {
+  lawersuitCard1ActionOnAdvance(): Action[] {
     return [
-      this.getProductMove(Product.Leather),
-      this.getProductMove(Product.Leather),
-      this.getProductMove(Product.Leather),
-      this.movePrestigeMarker(),
-      ...this.onBonusesEnd()
+      {
+        type: ActionType.Gift,
+        productType: Product.Leather,
+        nbProductToTake: 1
+      }
     ]
   }
 
-  lawersuitCard2ActionOnAdvance(): MaterialMove[] {
-    return [this.getProductMove(Product.Furniture)]
-  }
-
-  lawersuitCard2ActionOnWin(): MaterialMove[] {
-    return [this.buildFactoryMove(), ...this.onBonusesEnd()]
-  }
-
-  lawersuitCard3ActionOnAdvance(): MaterialMove[] {
-    return [this.getProductMove(Product.Cloth)]
-  }
-
-  lawersuitCard3ActionOnWin(): MaterialMove[] {
-    return [this.startPlayerTurn(RuleId.Choose2Product, this.player)]
-  }
-
-  lawersuitCard4ActionOnAdvance(): MaterialMove[] {
-    return [this.movePrestigeMarker()]
-  }
-
-  lawersuitCard4ActionOnWin(): MaterialMove[] {
-    return [this.buildFactoryMove(), ...this.onBonusesEnd()]
-  }
-
-  lawersuitCard5ActionOnAdvance(): MaterialMove[] {
-    return [...this.returnFactoryMove(), ...this.returnFactoryMove()]
-  }
-
-  lawersuitCard5ActionOnWin(): MaterialMove[] {
+  lawersuitCard1ActionOnWin(): Action[] {
     return [
-      this.getProductMove(Product.Beer),
-      this.getProductMove(Product.Beer),
-      this.getProductMove(Product.Beer),
-      this.getStarTokensMove(),
-      this.getStarTokensMove(),
-      ...this.onBonusesEnd()
+      {
+        type: ActionType.Gift,
+        productType: Product.Leather,
+        nbProductToTake: 3
+      },
+      {
+        type: ActionType.EarnPrestige,
+        playerWhoEarnedPrestige: this.player,
+        playerCanUseAllianceBruxelles: this.checkPlayerHaveBruxellesCard,
+        playerCanUseShip16: this.checkPlayerHaveShip16
+      }
     ]
   }
 
-  lawersuitCard6ActionOnAdvance(): MaterialMove[] {
-    return [this.movePrestigeMarker()]
+  lawersuitCard2ActionOnAdvance(): Action[] {
+    return [
+      {
+        type: ActionType.Gift,
+        productType: Product.Furniture,
+        nbProductToTake: 1
+      }
+    ]
   }
 
-  lawersuitCard6ActionOnWin(): MaterialMove[] {
-    return [this.getLetterMove(), this.getLetterMove(), ...this.onBonusesEnd()]
+  lawersuitCard2ActionOnWin(): Action[] {
+    return [
+      {
+        type: ActionType.BuildFactory,
+        price: 0
+      }
+    ]
   }
 
-  lawersuitCard7ActionOnAdvance(): MaterialMove[] {
-    return [this.getProductMove(Product.Beer)]
+  lawersuitCard3ActionOnAdvance(): Action[] {
+    return [
+      {
+        type: ActionType.Gift,
+        productType: Product.Cloth,
+        nbProductToTake: 1
+      }
+    ]
   }
 
-  lawersuitCard7ActionOnWin(): MaterialMove[] {
-    return [this.movePrestigeMarker(), this.startPlayerTurn(RuleId.Choose1Product, this.player)]
+  lawersuitCard3ActionOnWin(): Action[] {
+    return [
+      {
+        type: ActionType.Gift,
+        productType: undefined,
+        nbProductToTake: 2
+      }
+    ]
   }
 
-  lawersuitCard8ActionOnAdvance(): MaterialMove[] {
-    return [this.getProductMove(Product.Beer), this.getLetterMove()]
+  lawersuitCard4ActionOnAdvance(): Action[] {
+    return [
+      {
+        type: ActionType.EarnPrestige,
+        playerWhoEarnedPrestige: this.player,
+        playerCanUseAllianceBruxelles: this.checkPlayerHaveBruxellesCard,
+        playerCanUseShip16: this.checkPlayerHaveShip16
+      }
+    ]
   }
 
-  lawersuitCard8ActionOnWin(): MaterialMove[] {
-    return [this.buildFactoryMove(), ...this.onBonusesEnd()]
+  lawersuitCard4ActionOnWin(): Action[] {
+    return [
+      {
+        type: ActionType.BuildFactory,
+        price: 0
+      }
+    ]
   }
 
-  lawersuitCard9ActionOnAdvance(): MaterialMove[] {
-    return [this.movePrestigeMarker()]
+  lawersuitCard5ActionOnAdvance(): Action[] {
+    return [
+      {
+        type: ActionType.ReturnFactory,
+        nbFactoryCanReturn: 2
+      }
+    ]
   }
 
-  lawersuitCard9ActionOnWin(): MaterialMove[] {
-    return [this.getLetterMove(), ...this.onBonusesEnd()]
+  lawersuitCard5ActionOnWin(): Action[] {
+    return [
+      {
+        type: ActionType.Gift,
+        productType: Product.Beer,
+        nbProductToTake: 3
+      },
+      {
+        type: ActionType.Donation,
+        productType: undefined,
+        nbProduct: 0,
+        nbStars: 2,
+        nbTimes: 1
+      }
+    ]
   }
 
-  lawersuitCard10ActionOnAdvance(): MaterialMove[] {
-    return [this.getProductMove(Product.Cloth)]
+  lawersuitCard6ActionOnAdvance(): Action[] {
+    return [
+      {
+        type: ActionType.EarnPrestige,
+        playerWhoEarnedPrestige: this.player,
+        playerCanUseAllianceBruxelles: this.checkPlayerHaveBruxellesCard,
+        playerCanUseShip16: this.checkPlayerHaveShip16
+      }
+    ]
   }
 
-  lawersuitCard10ActionOnWin(): MaterialMove[] {
-    return [this.buildFactoryMove(), ...this.onBonusesEnd()]
+  lawersuitCard6ActionOnWin(): Action[] {
+    return [
+      {
+        type: ActionType.GainLetter,
+        nbLettersToTake: 2
+      }
+    ]
   }
 
-  private movePrestigeMarker(): MaterialMove {
-    const prestigeMarkerMove = this.player === City.Altona ? -1 : 1
-    return this.material(MaterialType.PrestigeMarker)
-      .location(LocationType.PrestigeMarkerPiste)
-      .moveItem(({ location }) => ({ ...location, x: location.x! + prestigeMarkerMove }))
+  lawersuitCard7ActionOnAdvance(): Action[] {
+    return [
+      {
+        type: ActionType.Gift,
+        productType: Product.Beer,
+        nbProductToTake: 1
+      }
+    ]
   }
 
-  private getProductMove(product: Product): MaterialMove {
-    return this.material(MaterialType.Product)
-      .location(LocationType.ProductPiles)
-      .id(product)
-      .moveItem({ type: LocationType.PlayerProducts, player: this.player, id: product })
+  lawersuitCard7ActionOnWin(): Action[] {
+    return [
+      {
+        type: ActionType.EarnPrestige,
+        playerWhoEarnedPrestige: this.player,
+        playerCanUseAllianceBruxelles: this.checkPlayerHaveBruxellesCard,
+        playerCanUseShip16: this.checkPlayerHaveShip16
+      },
+      {
+        type: ActionType.Gift,
+        productType: undefined,
+        nbProductToTake: 1
+      }
+    ]
   }
 
-  private getStarTokensMove(): MaterialMove {
-    return this.material(MaterialType.StarToken).location(LocationType.StarTokenDeck).moveItem({ type: LocationType.PlayerStarTokens, player: this.player })
+  lawersuitCard8ActionOnAdvance(): Action[] {
+    return [
+      {
+        type: ActionType.Gift,
+        productType: Product.Beer,
+        nbProductToTake: 1
+      },
+      {
+        type: ActionType.GainLetter,
+        nbLettersToTake: 1
+      }
+    ]
   }
 
-  private getLetterMove(): MaterialMove {
-    return this.material(MaterialType.Letter).location(LocationType.LetterDeck).moveItem({ type: LocationType.PlayerLetterDeck, player: this.player })
+  lawersuitCard8ActionOnWin(): Action[] {
+    return [
+      {
+        type: ActionType.BuildFactory,
+        price: 0
+      }
+    ]
   }
 
-  private buildFactoryMove(): MaterialMove {
-    return this.material(MaterialType.Factory).location(LocationType.FactoryDeck).moveItem({ type: LocationType.PlayerFactories, player: this.player })
+  lawersuitCard9ActionOnAdvance(): Action[] {
+    return [
+      {
+        type: ActionType.EarnPrestige,
+        playerWhoEarnedPrestige: this.player,
+        playerCanUseAllianceBruxelles: this.checkPlayerHaveBruxellesCard,
+        playerCanUseShip16: this.checkPlayerHaveShip16
+      }
+    ]
   }
 
-  private returnFactoryMove(): MaterialMove[] {
-    const playerReturnedFactories = this.material(MaterialType.Factory).location(LocationType.PlayerFactories).player(this.player).rotation(true)
-    if (playerReturnedFactories.length === 0) return []
-    return [playerReturnedFactories.rotateItem(undefined)]
+  lawersuitCard9ActionOnWin(): Action[] {
+    return [
+      {
+        type: ActionType.GainLetter,
+        nbLettersToTake: 1
+      }
+    ]
   }
 
-  private onBonusesEnd(): MaterialMove[] {
-    return this.remind(MemoryType.IsOffSeason)
-      ? [this.startRule(RuleId.OffSeasonChangeSpecialCards)]
-      : new ComputedActionsHelper(this.game).removeActionAndnext(ActionType.CourtRuling)
+  lawersuitCard10ActionOnAdvance(): Action[] {
+    return [
+      {
+        type: ActionType.Gift,
+        productType: Product.Cloth,
+        nbProductToTake: 1
+      }
+    ]
   }
+
+  lawersuitCard10ActionOnWin(): Action[] {
+    return [
+      {
+        type: ActionType.BuildFactory,
+        price: 0
+      }
+    ]
+  }
+
+  get checkPlayerHaveBruxellesCard(): boolean {
+    return this.material(MaterialType.AllianceCard).location(LocationType.PlayerAllianceCards).player(this.player).id(AllianceCard.AllianceBruxelles).length > 0
+  }
+
+  get checkPlayerHaveShip16(): boolean {
+    return this.material(MaterialType.ShipCard).location(LocationType.PlayerShipCards).player(this.player).id(ShipCard.Ship16).length > 0
+  }
+
 }

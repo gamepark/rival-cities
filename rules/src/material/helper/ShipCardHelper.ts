@@ -1,9 +1,11 @@
 import { MaterialGame, MaterialMove, MaterialRulesPart } from '@gamepark/rules-api'
-import { City } from '../../City'
+import { Action } from '../Actions/Actions'
+import { ActionType } from '../Actions/ActionType'
+import { AllianceCard } from '../AllianceCard'
 import { LocationType } from '../LocationType'
 import { MaterialType } from '../MaterialType'
-import { MemoryType } from '../../rules/MemoryType'
 import { Product } from '../Product'
+import { ShipCard } from '../ShipCard'
 
 export class ShipCardHelper extends MaterialRulesPart {
   player: number
@@ -13,36 +15,116 @@ export class ShipCardHelper extends MaterialRulesPart {
     this.player = player
   }
 
-  shipCard6(): MaterialMove[] {
-    this.addProcessedShip()
-    return this.getStarTokensMove(1)
+  shipCard1(): Action[] {
+    return [
+      {
+        type: ActionType.EarnPrestige,
+        playerWhoEarnedPrestige: this.player,
+        playerCanUseAllianceBruxelles: this.checkPlayerHaveBruxellesCard,
+        playerCanUseShip16: this.checkPlayerHaveShip16
+      },
+      {
+        type: ActionType.EarnPrestige,
+        playerWhoEarnedPrestige: this.player,
+        playerCanUseAllianceBruxelles: this.checkPlayerHaveBruxellesCard,
+        playerCanUseShip16: this.checkPlayerHaveShip16
+      }
+    ]
   }
 
-  shipCard7(): MaterialMove[] {
-    this.addProcessedShip()
-    return this.getProductMove(Product.Furniture, 2)
+  shipCard2(): Action[] {
+    return [
+      {
+        type: ActionType.AdvanceLawsuit,
+        nbTimeAlreadyAdvanced: 0,
+        playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
+      },
+      {
+        type: ActionType.AdvanceLawsuit,
+        nbTimeAlreadyAdvanced: 0,
+        playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
+      }
+    ]
   }
 
-  shipCard8(): MaterialMove[] {
-    this.addProcessedShip()
-    return [this.movePrestigeMarker()]
+  shipCard3(): Action[] {
+    return [
+      {
+        type: ActionType.DrawSpecialActionCard,
+        nbCardsToDraw: 2,
+        playerCanUseAllianceKjjobenhavn: this.checkPlayerHaveKjjobenhavnAllianceCard
+      }
+    ]
   }
 
-  shipCard9(): MaterialMove[] {
-    this.addProcessedShip()
-    return this.getProductMove(Product.Cloth, 2)
+  shipCard4(): Action[] {
+    return [
+      {
+        type: ActionType.GainLetter,
+        nbLettersToTake: 1
+      }
+    ]
   }
 
-  shipCard10(): MaterialMove[] {
-    this.addProcessedShip()
-    return this.getLetterMove(1)
+  shipCard5(): Action[] {
+    return [
+      {
+        type: ActionType.GainLetter,
+        nbLettersToTake: 2
+      }
+    ]
   }
 
-  private movePrestigeMarker(): MaterialMove {
-    const prestigeMarkerMove = this.player === City.Altona ? -1 : 1
-    return this.material(MaterialType.PrestigeMarker)
-      .location(LocationType.PrestigeMarkerPiste)
-      .moveItem(({ location }) => ({ ...location, x: location.x! + prestigeMarkerMove }))
+  shipCard6(): Action[] {
+    return [
+      {
+        type: ActionType.Donation,
+        productType: undefined,
+        nbProduct: 0,
+        nbStars: 1,
+        nbTimes: 1
+      }
+    ]
+  }
+
+  shipCard7(): Action[] {
+    return [
+      {
+        type: ActionType.Gift,
+        productType: Product.Furniture,
+        nbProductToTake: 2
+      }
+    ]
+  }
+
+  shipCard8(): Action[] {
+    return [
+      {
+        type: ActionType.EarnPrestige,
+        playerWhoEarnedPrestige: this.player,
+        playerCanUseAllianceBruxelles: this.checkPlayerHaveBruxellesCard,
+        playerCanUseShip16: this.checkPlayerHaveShip16
+      }
+    ]
+  }
+
+  shipCard9(): Action[] {
+    return [
+      {
+        type: ActionType.Gift,
+        productType: Product.Cloth,
+        nbProductToTake: 2
+      }
+    ]
+  }
+
+  shipCard10(): Action[] {
+    return [
+      {
+        type: ActionType.GainLetter,
+        nbLettersToTake: 1
+      }
+    ]
   }
 
   getProductMove(product: Product, quantity: number): MaterialMove[] {
@@ -52,19 +134,19 @@ export class ShipCardHelper extends MaterialRulesPart {
       .moveItems({ type: LocationType.PlayerProducts, player: this.player, id: product }, quantity)
   }
 
-  private getStarTokensMove(quantity: number): MaterialMove[] {
-    return this.material(MaterialType.StarToken)
-      .location(LocationType.StarTokenDeck)
-      .moveItems({ type: LocationType.PlayerStarTokens, player: this.player }, quantity)
+  get checkPlayerHaveLeHavreAllianceCard(): boolean {
+    return this.material(MaterialType.AllianceCard).location(LocationType.PlayerAllianceCards).player(this.player).id(AllianceCard.AllianceLeHavre).length > 0
   }
 
-  private getLetterMove(quantity: number): MaterialMove[] {
-    return this.material(MaterialType.Letter)
-      .location(LocationType.LetterDeck)
-      .moveItems({ type: LocationType.PlayerLetterDeck, player: this.player }, quantity)
+  get checkPlayerHaveKjjobenhavnAllianceCard(): boolean {
+    return this.material(MaterialType.AllianceCard).location(LocationType.PlayerAllianceCards).player(this.player).id(AllianceCard.AllianceKjjobenhavn).length > 0
   }
 
-  private addProcessedShip() {
-    this.memorize<number>(MemoryType.ProcessedBonuses, (old) => old + 1)
+  get checkPlayerHaveBruxellesCard(): boolean {
+    return this.material(MaterialType.AllianceCard).location(LocationType.PlayerAllianceCards).player(this.player).id(AllianceCard.AllianceBruxelles).length > 0
+  }
+
+  get checkPlayerHaveShip16(): boolean {
+    return this.material(MaterialType.ShipCard).location(LocationType.PlayerShipCards).player(this.player).id(ShipCard.Ship16).length > 0
   }
 }

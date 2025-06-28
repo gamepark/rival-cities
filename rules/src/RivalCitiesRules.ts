@@ -15,18 +15,26 @@ import { LocationType } from './material/LocationType'
 import { MaterialType } from './material/MaterialType'
 import { City } from './City'
 import { AdvanceLawsuitActionRule } from './rules/actions/AdvanceLawsuitActionRule'
+import { BuildFactoryActionRule } from './rules/actions/BuildFactoryActionRule'
+import { CourtRulingActionRule } from './rules/actions/CourtRulingActionRule'
+import { DonationActionRule } from './rules/actions/DonationActionRule'
 import { DrawSpecialActionCardActionRule } from './rules/actions/DrawSpecialActionCardActionRule'
-import { EarnPrestigeRule } from './rules/shipCardActions/EarnPrestigeRule'
-import { AdvanceAgainInLawsuitRule } from './rules/AdvanceAgainInLawsuitRule'
+import { EarnPrestigeActionRule } from './rules/actions/EarnPrestigeActionRule'
+import { FormAllianceActionRule } from './rules/actions/FormAllianceActionRule'
+import { GainLetterActionRule } from './rules/actions/GainLetterActionRule'
+import { GiftActionRule } from './rules/actions/GiftActionRule'
+import { OpponentEarnPrestigeActionRule } from './rules/actions/OpponentEarnPrestigeActionRule'
+import { PiracyActionRule } from './rules/actions/PiracyActionRule'
+import { ProductionActionRule } from './rules/actions/ProductionActionRule'
+import { ProductSwapActionRule } from './rules/actions/ProductSwapActionRule'
+import { PurchaseShipActionRule } from './rules/actions/PurchaseShipActionRule'
+import { ReturnFactoryActionRule } from './rules/actions/ReturnFactoryActionRule'
 import { AdvanceInkJarRule } from './rules/AdvanceInkJarRule'
-import { BasicActionRule } from './rules/BasicActionRule'
-import { Choose1ProductRule } from './rules/Choose1ProductRule'
-import { Choose2ProductRule } from './rules/Choose2ProductRule'
+import { ChoiceActionRule } from './rules/actions/ChoiceActionRule'
 import { ChooseActionRule } from './rules/ChooseActionRule'
 import { ChooseFirstProductRule } from './rules/ChooseFirstProductRule'
 import { ChooseSpecialActionRule } from './rules/ChooseSpecialActionRule'
 import { CustomMoveType } from './rules/CustomMoveType'
-import { EarnPrestigeAgainRule } from './rules/EarnPrestigeAgainRule'
 import { OffSeasonChangeSpecialCardsRule } from './rules/OffSeason/OffSeasonChangeSpecialCardsRule'
 import { OffSeasonGetPrestigeBonusesRule } from './rules/OffSeason/OffSeasonGetPrestigeBonusesRule'
 import { OffSeasonGetShipsBonusesRule } from './rules/OffSeason/OffSeasonGetShipsBonusesRule'
@@ -35,18 +43,13 @@ import { OffSeasonReactivateFactoriesRule } from './rules/OffSeason/OffSeasonRea
 import { OffSeasonReturnBellRule } from './rules/OffSeason/OffSeasonReturnBellRule'
 import { OffSeasonTakeBellRule } from './rules/OffSeason/OffSeasonTakeBellRule'
 import { PayProductForAdvanceRule } from './rules/PayProductForAdvanceRule'
-import { ResolveLawsuitRule } from './rules/ResolveLawsuitRule'
+import { ResolveLawsuitActionRule } from './rules/actions/ResolveLawsuitActionRule'
+import { PayToPerformActionAgainRule } from './rules/PayToPerformActionAgainRule'
 import { RuleId } from './rules/RuleId'
-import { SpecialActionRule } from './rules/SpecialActionRule'
+import { ComputedActionRule } from './rules/actions/ComputedActionRule'
 import { OffSeasonPayForAllianceRule } from './rules/OffSeason/OffSeasonPayForAllianceRule'
-import { AllianceCardAdvanceAgainInLawsuitRule } from './rules/AllianceCardAdvanceAgainInLawsuitRule'
-import { AllianceCardDrawSpecialActionCardAgainRule } from './rules/AllianceCardDrawSpecialActionCardAgainRule'
-import { AllianceCardEarnPrestigeAgainRule } from './rules/AllianceCardEarnPrestigeAgainRule'
 import { EndOfGameHelper } from './rules/helper/EndOfGameHelper'
-import { ComputedActionsHelper } from './rules/helper/ComputedActionsHelper'
 import { MemoryHelper } from './rules/helper/MemoryHelper'
-import { GainLetterRule } from './rules/shipCardActions/GainLetterRule'
-import { SwapProductRule } from './rules/SwapProductRule'
 
 /**
  * This class implements the rules of the board game.
@@ -56,37 +59,40 @@ export class RivalCitiesRules
   extends SecretMaterialRules<City, MaterialType, LocationType>
   implements TimeLimit<MaterialGame, MaterialMove, City>, CompetitiveRank<MaterialGame, MaterialMove, City>
 {
-  computedActionsHelper = new ComputedActionsHelper(this.game)
   endOfGameHelper = new EndOfGameHelper(this.game)
-  rules = {
+  rules: Record<RuleId, any> = {
     [RuleId.ChooseFirstProduct]: ChooseFirstProductRule,
     [RuleId.AdvanceInkJar]: AdvanceInkJarRule,
     [RuleId.PayProductForAdvance]: PayProductForAdvanceRule,
     [RuleId.ChooseAction]: ChooseActionRule,
-    [RuleId.BasicAction]: BasicActionRule,
-    [RuleId.SpecialAction]: SpecialActionRule,
-    [RuleId.AdvanceAgainInLawsuit]: AdvanceAgainInLawsuitRule,
-    [RuleId.AllianceCardAdvanceAgainInLawsuit]: AllianceCardAdvanceAgainInLawsuitRule,
-    [RuleId.AllianceCardDrawSpecialActionCardAgain]: AllianceCardDrawSpecialActionCardAgainRule,
-    [RuleId.AllianceCardEarnPrestigeAgain]: AllianceCardEarnPrestigeAgainRule,
-    [RuleId.ResolveLawsuit]: ResolveLawsuitRule,
-    [RuleId.AdvanceLawsuitAction]: AdvanceLawsuitActionRule,
-    [RuleId.DrawSpecialActionCardAction]: DrawSpecialActionCardActionRule,
-    [RuleId.EarnPrestige]: EarnPrestigeRule,
-    [RuleId.GainLetter]: GainLetterRule,
+    [RuleId.Choice]: ChoiceActionRule,
+    [RuleId.Computed]: ComputedActionRule,
+    [RuleId.ResolveLawsuit]: ResolveLawsuitActionRule,
+    [RuleId.AdvanceLawsuit]: AdvanceLawsuitActionRule,
+    [RuleId.DrawSpecialActionCard]: DrawSpecialActionCardActionRule,
+    [RuleId.EarnPrestige]: EarnPrestigeActionRule,
+    [RuleId.OpponentEarnPrestige]: OpponentEarnPrestigeActionRule,
+    [RuleId.GainLetter]: GainLetterActionRule,
     [RuleId.OffSeasonTakeBell]: OffSeasonTakeBellRule,
     [RuleId.OffSeasonPayForAlliance]: OffSeasonPayForAllianceRule,
     [RuleId.OffSeasonGetShipsBonuses]: OffSeasonGetShipsBonusesRule,
     [RuleId.OffSeasonGetPrestigeBonuses]: OffSeasonGetPrestigeBonusesRule,
     [RuleId.OffSeasonChangeSpecialCards]: OffSeasonChangeSpecialCardsRule,
     [RuleId.OffSeasonReactivateFactories]: OffSeasonReactivateFactoriesRule,
-    [RuleId.OffSeasonReturnBell]: OffSeasonReturnBellRule,
-    [RuleId.EarnPrestigeAgain]: EarnPrestigeAgainRule,
-    [RuleId.ChooseSpecialAction]: ChooseSpecialActionRule,
-    [RuleId.Choose2Product]: Choose2ProductRule,
-    [RuleId.Choose1Product]: Choose1ProductRule,
     [RuleId.OffSeasonPlayerWithMostShipCardsEarnPrestige]: OffSeasonPlayerWithMostShipCardsEarnPrestigeRule,
-    [RuleId.SwapProduct]: SwapProductRule
+    [RuleId.OffSeasonReturnBell]: OffSeasonReturnBellRule,
+    [RuleId.ChooseSpecialAction]: ChooseSpecialActionRule,
+    [RuleId.Piracy]: PiracyActionRule,
+    [RuleId.PurchaseShip]: PurchaseShipActionRule,
+    [RuleId.BuildFactory]: BuildFactoryActionRule,
+    [RuleId.Donation]: DonationActionRule,
+    [RuleId.FormAlliance]: FormAllianceActionRule,
+    [RuleId.Gift]: GiftActionRule,
+    [RuleId.ProductSwap]: ProductSwapActionRule,
+    [RuleId.ReturnFactory]: ReturnFactoryActionRule,
+    [RuleId.CourtRuling]: CourtRulingActionRule,
+    [RuleId.Production]: ProductionActionRule,
+    [RuleId.PayToPerformActionAgain]: PayToPerformActionAgainRule
   }
 
   locationsStrategies = {
@@ -132,7 +138,6 @@ export class RivalCitiesRules
 
     if (isCustomMoveType(CustomMoveType.Pass)(move)) {
       new MemoryHelper(this.game).clearMemory()
-      moves.push(...this.computedActionsHelper.removeActionAndnext(move.data))
     }
 
     return moves

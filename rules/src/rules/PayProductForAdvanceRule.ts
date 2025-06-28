@@ -6,7 +6,6 @@ import { RuleId } from './RuleId'
 
 export class PayProductForAdvanceRule extends PlayerTurnRule {
   onRuleStart(): MaterialMove[] {
-    this.memorize(MemoryType.PlayerNbProducts, this.playerProducts.getQuantity())
     return []
   }
 
@@ -16,10 +15,10 @@ export class PayProductForAdvanceRule extends PlayerTurnRule {
 
   afterItemMove(move: ItemMove): MaterialMove[] {
     if (!isMoveItemType(MaterialType.Product)(move)) return []
-    const playerBaseBnProducts = this.remind(MemoryType.PlayerNbProducts)
-    const nbProductToPay = this.remind(MemoryType.NbProductToPayForAdvance)
-    if (this.playerProducts.getQuantity() === playerBaseBnProducts - nbProductToPay) {
-      return [this.startRule(this.remind(MemoryType.IsOffSeason) ? RuleId.OffSeasonTakeBell : RuleId.ChooseAction)]
+    this.memorize<number>(MemoryType.Counter, (oldValue: number) => oldValue + 1)
+    if (this.remind(MemoryType.Counter) === this.remind(MemoryType.NbProductToPayForAdvance)) {
+      this.memorize(MemoryType.Counter, 0)
+      return [this.startRule(this.remind<RuleId | undefined>(MemoryType.OffSeasonStep) ?? RuleId.ChooseAction)]
     }
     return []
   }

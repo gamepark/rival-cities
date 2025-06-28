@@ -109,20 +109,11 @@ export class RivalCitiesSetup extends MaterialGameSetup<City, MaterialType, Loca
 
   private initializeMemory() {
     this.memorize(MemoryType.NbProductToPayForAdvance, 0)
-    this.memorize(MemoryType.PlayerNbProducts, 0)
-    this.memorize(MemoryType.NbProductGiven, 0)
-    this.memorize(MemoryType.NbTimeAdvancedInLawsuit, 0)
-    this.memorize(MemoryType.IsOffSeason, false)
+    this.memorize(MemoryType.Counter, 0)
+    this.memorize(MemoryType.CounterActions, 0)
     this.memorize(MemoryType.IsBuildInProgress, false)
-    this.memorize(MemoryType.NbSwaps, 0)
     this.memorize(MemoryType.IsProductReturn, false)
-    this.memorize(MemoryType.NbProductsDonated, 0)
-    this.memorize(MemoryType.NbProductStealed, 0)
-    this.memorize(MemoryType.NbDonations, 0)
-    this.memorize(MemoryType.NbCardsDraw, 0)
     this.memorize(MemoryType.IsDonationInProgress, false)
-    this.memorize(MemoryType.ComputedActions, [])
-    this.memorize(MemoryType.NextRules, [])
-    this.memorize(MemoryType.BonusesRules, [])
+    this.memorize(MemoryType.Actions, [])
   }
 }

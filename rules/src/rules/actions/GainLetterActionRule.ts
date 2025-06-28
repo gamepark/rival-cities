@@ -1,44 +1,39 @@
-import { isMoveItemType, ItemMove, MaterialMove, PlayerTurnRule } from '@gamepark/rules-api'
+import { isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
+import { GainLetterAction } from '../../material/Actions/Actions'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
-import { ActionType } from '../ActionType'
-import { ComputedActionsHelper } from '../helper/ComputedActionsHelper'
-import { MemoryType } from '../MemoryType'
-import { BasicActionHelper } from '../helper/BasicActionHelper'
 import { CustomMoveType } from '../CustomMoveType'
+import { MemoryType } from '../MemoryType'
+import { ActionRule } from './ActionRule'
 
-export class GainLetterActionRule extends PlayerTurnRule {
-  actionType = ActionType.GainLetter
-  computedActionHelper = new ComputedActionsHelper(this.game)
-  basicActionHelper = new BasicActionHelper(this.game)
-  nbLettersToTake = 1
+export class GainLetterActionRule extends ActionRule<GainLetterAction> {
 
-  //onRuleStart(): MaterialMove[] {
-  //  return this.letters.moveItem({ type: LocationType.PlayerLetterDeck, player: this.player }, this.nbLettersToTake)
-  //}
+  onRuleStart(): MaterialMove[] {
+    return this.letters.moveItems({ type: LocationType.PlayerLetterDeck, player: this.player }, this.action?.nbLettersToTake)
+  }
 
   getPlayerMoves(): MaterialMove[] {
-    if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
+    if (this.checkAnotherActionInProgress(this.action?.type)) return []
     return [
-      ...this.letters.moveItems({ type: LocationType.PlayerLetterDeck, player: this.player }, this.nbLettersToTake),
-      this.customMove(CustomMoveType.Pass, this.actionType)
+      ...this.letters.moveItems({ type: LocationType.PlayerLetterDeck, player: this.player }, this.action?.nbLettersToTake),
+      this.customMove(CustomMoveType.Pass, this.action?.type)
     ]
   }
 
   beforeItemMove(move: ItemMove): MaterialMove[] {
-    if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
+    if (this.checkAnotherActionInProgress(this.action?.type)) return []
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.Letter)(move)) {
-      this.memorize(MemoryType.BasicActionChoosen, this.actionType)
+      this.memorize(MemoryType.BasicActionChoosen, this.action?.type)
     }
     return moves
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {
-    if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
+    if (this.checkAnotherActionInProgress(this.action?.type)) return []
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.Letter)(move)) {
-      moves.push(...this.computedActionHelper.removeActionAndnext(this.actionType))
+      moves.push(...this.removeActionAndMove())
     }
     return moves
   }

@@ -1,6 +1,9 @@
 /** @jsxImportSource @emotion/react */
-import { MaterialHelpProps } from '@gamepark/react-game'
-import { BasicActionCard, basicActionCardActions } from '@gamepark/rival-cities/material/BasicActionCard'
+import { MaterialHelpProps, useRules } from '@gamepark/react-game'
+import { ActionType } from '@gamepark/rival-cities/material/Actions/ActionType'
+import { BasicActionCard } from '@gamepark/rival-cities/material/BasicActionCard'
+import { BasicActionCardHelper } from '@gamepark/rival-cities/material/helper/BasicActionCardHelper'
+import { RivalCitiesRules } from '@gamepark/rival-cities/RivalCitiesRules'
 import { FC } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { allianceBtn, components, note } from './utils'
@@ -8,9 +11,10 @@ import { AllianceCard } from '@gamepark/rival-cities/material/AllianceCard'
 
 export const BasicActionCardHelp: FC<MaterialHelpProps> = ({ item }) => {
   const { t } = useTranslation()
-  const actions = basicActionCardActions[item.id as BasicActionCard]
-
-  const isMultiChoiceCard = actions.length > 1 && item.id !== BasicActionCard.BasicAction8
+  const rules = useRules<RivalCitiesRules>()
+  if(!rules) return <></>
+  const action = new BasicActionCardHelper(rules.game).basicActionCardActions[item.id as BasicActionCard]
+  const isMultiChoiceCard = action.type === ActionType.Choice
 
   return (
     <>
@@ -30,18 +34,26 @@ export const BasicActionCardHelp: FC<MaterialHelpProps> = ({ item }) => {
         </li>
       </ul>
       <h3>{t(`help.actions`)}</h3>
-      {actions.map((action, index) => (
-        <div key={index}>
-          <p>
-            <Trans defaults={`help.action.descr.${action}`} components={components} />
-          </p>
-          {isMultiChoiceCard && index < actions.length - 1 && (
-            <p>
-              <b>{t(`help.action.descr.or`)}</b>
-            </p>
-          )}
-        </div>
-      ))}
+      {action.type === ActionType.Computed || action.type === ActionType.Choice ? (
+        <>
+          {action.actions.map((a, index) => (
+            <div key={index}>
+              <p>
+                <Trans defaults={`help.action.descr.${a.type}`} values={a} components={components} />
+              </p>
+              {isMultiChoiceCard && index < action.actions.length - 1 && (
+                <p>
+                  <b>{t(`help.action.descr.or`)}</b>
+                </p>
+              )}
+            </div>
+          ))}
+        </>
+      ) : (
+        <p>
+          <Trans defaults={`help.action.descr.${action.type}`} values={action} components={components} />
+        </p>
+      )}
       {isMultiChoiceCard && (
         <p css={note}>
           <Trans

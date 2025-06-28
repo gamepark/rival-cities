@@ -1,38 +1,30 @@
-import { isMoveItemType, ItemMove, MaterialMove, PlayerTurnRule } from '@gamepark/rules-api'
+import { isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
+import { PurchaseShipAction } from '../../material/Actions/Actions'
+import { ActionType } from '../../material/Actions/ActionType'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { ShipCard, shipCardsData, ShipEffectType } from '../../material/ShipCard'
-import { ActionType } from '../ActionType'
-import { ComputedActionsHelper } from '../helper/ComputedActionsHelper'
-import { MemoryType } from '../MemoryType'
-import { RuleId } from '../RuleId'
-import { BasicActionHelper } from '../helper/BasicActionHelper'
-import { EndOfGameHelper } from '../helper/EndOfGameHelper'
 import { CustomMoveType } from '../CustomMoveType'
+import { EndOfGameHelper } from '../helper/EndOfGameHelper'
+import { MemoryType } from '../MemoryType'
+import { ActionRule } from './ActionRule'
 
-export class PurchaseShipActionRule extends PlayerTurnRule {
-  actionType = ActionType.PurchaseShip
-  computedActionHelper = new ComputedActionsHelper(this.game)
-  basicActionHelper = new BasicActionHelper(this.game)
-  shipChoosen = this.remind(MemoryType.ShipChoosen)
+export class PurchaseShipActionRule extends ActionRule<PurchaseShipAction> {
 
   getPlayerMoves(): MaterialMove[] {
-    if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
-    if (!this.shipChoosen) {
-      return [
-        ...this.possibleCardsToGet().moveItems({ type: LocationType.PlayerShipCards, player: this.player }),
-        ...this.playerLetters.moveItems({ type: LocationType.LetterDeck }),
-        this.customMove(CustomMoveType.Pass, this.actionType)
-      ]
-    }
-    return []
+    if (this.checkAnotherActionInProgress(this.action?.type)) return []
+    return [
+      ...this.possibleCardsToGet().moveItems({ type: LocationType.PlayerShipCards, player: this.player }),
+      ...this.playerLetters.moveItems({ type: LocationType.LetterDeck }),
+      this.customMove(CustomMoveType.Pass, this.action?.type)
+    ]
   }
 
   beforeItemMove(move: ItemMove): MaterialMove[] {
-    if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
+    if (this.checkAnotherActionInProgress(this.action?.type)) return []
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.ShipCard)(move) && move.location.type === LocationType.PlayerShipCards) {
-      this.memorize(MemoryType.BasicActionChoosen, this.actionType)
+      this.memorize(MemoryType.BasicActionChoosen, this.action?.type)
       moves.push(
         this.material(MaterialType.ShipCard)
           .location(LocationType.ShipCardsDeck)
@@ -44,10 +36,9 @@ export class PurchaseShipActionRule extends PlayerTurnRule {
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {
-    if (this.basicActionHelper.checkAnotherActionInProgress(this.actionType)) return []
-    if (isMoveItemType(MaterialType.Letter)(move)) {
-      this.memorize<RuleId[]>(MemoryType.BonusesRules, (old) => [RuleId.SwapProduct, ...old])
-      return this.computedActionHelper.removeActionAndnext()
+    if (this.checkAnotherActionInProgress(this.action?.type)) return []
+    if (isMoveItemType(MaterialType.Letter)(move) && !this.remind(MemoryType.BasicActionChoosen)) {
+      return this.addActionBonusAndMove({type: ActionType.ProductSwap, nbPossibleSwaps: 1})
     }
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.ShipCard)(move) && move.location.type === LocationType.PlayerShipCards) {
@@ -60,16 +51,16 @@ export class PurchaseShipActionRule extends PlayerTurnRule {
     if (!isMoveItemType(MaterialType.ShipCard)(move)) return []
     const moves: MaterialMove[] = []
     const shipId: ShipCard = this.material(MaterialType.ShipCard).index(move.itemIndex).getItem()?.id
-    if (!this.shipChoosen) {
-      this.memorize(MemoryType.ShipChoosen, shipId)
-    }
     const shipData = shipCardsData[shipId]
     const costQuantity = this.playerShip19.length ? shipData.cost.quantity - 1 : shipData.cost.quantity
     moves.push(...this.playerProducts.id(shipData.cost.type).moveItems({ type: LocationType.ProductPiles, id: shipData.cost.type }, costQuantity))
+    this.removeAction()
     if (shipData.effect.type === ShipEffectType.Instant) {
-      this.memorize<RuleId[]>(MemoryType.BonusesRules, shipData.effect.rules!)
+      if(shipData.effect.action) {
+        shipData.effect.action(this.game, this.player).forEach((it) => this.addActionBonus(it))
+      }
     }
-    moves.push(...this.computedActionHelper.removeActionAndnext(this.actionType))
+    moves.push(...this.moveToNextAction())
     return moves
   }
 
