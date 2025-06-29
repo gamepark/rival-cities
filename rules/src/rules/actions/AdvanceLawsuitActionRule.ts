@@ -116,7 +116,6 @@ export class AdvanceLawsuitActionRule extends ActionRule<AdvanceLawsuitAction> {
   }
 
   get lawsuitCards() {
-    console.log(this.action)
     if (!this.action?.lawsuitAdvancedLocation) {
       return this.material(MaterialType.LawsuitCard).location(LocationType.LawsuitCardsRiver)
     }

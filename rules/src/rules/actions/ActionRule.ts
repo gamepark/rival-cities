@@ -30,8 +30,6 @@ export abstract class ActionRule<E extends Action = Action> extends PlayerTurnRu
   removeAction() {
     this.forget(MemoryType.BasicActionChoosen)
     const firstAction = this.actions[0]
-    console.log(firstAction)
-    console.log(this.action)
     if (firstAction.type === ActionType.Computed && this.action?.type !== ActionType.Computed) {
       firstAction.actions = firstAction.actions.filter((it) => it.type !== this.action?.type)
       if (firstAction.actions.length === 0) {
