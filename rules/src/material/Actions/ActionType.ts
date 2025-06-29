@@ -18,5 +18,5 @@ export enum ActionType {
   Computed,
   ResolveLawsuit,
   ChooseSpecialActionCard,
-  PayToPerformActionAgain,
+  PayToPerformActionAgain
 }

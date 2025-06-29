@@ -241,5 +241,4 @@ export class LawsuitCardHelper extends MaterialRulesPart {
   get checkPlayerHaveShip16(): boolean {
     return this.material(MaterialType.ShipCard).location(LocationType.PlayerShipCards).player(this.player).id(ShipCard.Ship16).length > 0
   }
-
 }

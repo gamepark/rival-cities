@@ -61,7 +61,7 @@ export class BuildFactoryActionRule extends ActionRule<BuildFactoryAction> {
   }
 
   onCustomMove(move: CustomMove, _context?: PlayMoveContext): MaterialMove[] {
-    if(isCustomMoveType(CustomMoveType.Pass)(move)) {
+    if (isCustomMoveType(CustomMoveType.Pass)(move)) {
       return this.removeActionAndMove()
     }
     return []

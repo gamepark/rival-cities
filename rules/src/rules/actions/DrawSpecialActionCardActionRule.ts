@@ -8,7 +8,6 @@ import { MemoryType } from '../MemoryType'
 import { ActionRule } from './ActionRule'
 
 export class DrawSpecialActionCardActionRule extends ActionRule<DrawSpecialActionCardAction> {
-
   onRuleStart(): MaterialMove[] {
     return [this.specialActionCard.moveItem({ type: LocationType.PlayerSpecialActionCardsHand, player: this.player })]
   }

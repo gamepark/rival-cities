@@ -96,7 +96,7 @@ export class ResolveLawsuitActionRule extends ActionRule<ResolveLawsuitAction> {
     const cardId = this.material(MaterialType.LawsuitCard).getItem(move.itemIndex).id as LawsuitCard
     const lawsuitData = lawsuitCardData[cardId]
     this.memorize(MemoryType.Actions, lawsuitData.actionInWin(this.game, move.location.player!))
-    return [this.startRule(ActionRuleIds[this.remind<Action[]>(MemoryType.Actions)[0].type])];
+    return [this.startRule(ActionRuleIds[this.remind<Action[]>(MemoryType.Actions)[0].type])]
   }
 
   get lawsuitMarkerToResolve() {

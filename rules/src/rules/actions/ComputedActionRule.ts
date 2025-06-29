@@ -6,7 +6,7 @@ import { ActionRule } from './ActionRule'
 import { MemoryHelper } from '../helper/MemoryHelper'
 
 export class ComputedActionRule extends ActionRule<ComputedAction> {
-  actionRules = this.action?.actions?.map((it) => getActionRule(this.game, it)) ?? []
+  actionRules = this.action?.actions.map((it) => getActionRule(this.game, it)) ?? []
   onRuleStart(_move: RuleMove, _previousRule?: RuleStep, _context?: PlayMoveContext): MaterialMove[] {
     return [...this.actionRules.flatMap((rule) => rule.onRuleStart(_move, _previousRule, _context))]
   }
@@ -24,7 +24,7 @@ export class ComputedActionRule extends ActionRule<ComputedAction> {
   }
 
   onCustomMove(move: CustomMove, context?: PlayMoveContext): MaterialMove[] {
-    if(isCustomMoveType(CustomMoveType.Pass)(move)) {
+    if (isCustomMoveType(CustomMoveType.Pass)(move)) {
       return this.removeActionAndMove()
     }
     return [...this.actionRules.flatMap((rule) => rule.onCustomMove(move, context))]

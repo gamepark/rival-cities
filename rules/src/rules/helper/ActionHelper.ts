@@ -65,6 +65,5 @@ export const getActionRule = (game: MaterialGame, action: Action): ActionRule =>
       return new ChooseSpecialActionRule(game, action)
     case ActionType.PayToPerformActionAgain:
       return new PayToPerformActionAgainRule(game, action)
-
   }
 }

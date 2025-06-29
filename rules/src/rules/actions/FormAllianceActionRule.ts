@@ -8,7 +8,6 @@ import { MemoryType } from '../MemoryType'
 import { ActionRule } from './ActionRule'
 
 export class FormAllianceActionRule extends ActionRule<FormAllianceAction> {
-
   getPlayerMoves(): MaterialMove[] {
     if (this.checkAnotherActionInProgress(this.action?.type)) return []
     const moves: MaterialMove[] = []

@@ -6,7 +6,7 @@ import { ActionRule } from './ActionRule'
 import { MemoryHelper } from '../helper/MemoryHelper'
 
 export class ChoiceActionRule extends ActionRule<ChoiceAction> {
-  actionRules = this.action?.actions?.map((it) => getActionRule(this.game, it)) ?? []
+  actionRules = this.action?.actions.map((it) => getActionRule(this.game, it)) ?? []
   getPlayerMoves(): MaterialMove[] {
     return [...this.actionRules.flatMap((rule) => rule.getPlayerMoves())]
   }
@@ -20,7 +20,7 @@ export class ChoiceActionRule extends ActionRule<ChoiceAction> {
   }
 
   onCustomMove(move: CustomMove, context?: PlayMoveContext): MaterialMove[] {
-    if(isCustomMoveType(CustomMoveType.Pass)(move)) {
+    if (isCustomMoveType(CustomMoveType.Pass)(move)) {
       return this.removeActionAndMove()
     }
     return [...this.actionRules.flatMap((rule) => rule.onCustomMove(move, context))]

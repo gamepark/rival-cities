@@ -7,7 +7,6 @@ import { MemoryType } from '../MemoryType'
 import { ActionRule } from './ActionRule'
 
 export class GainLetterActionRule extends ActionRule<GainLetterAction> {
-
   onRuleStart(): MaterialMove[] {
     return this.letters.moveItems({ type: LocationType.PlayerLetterDeck, player: this.player }, this.action?.nbLettersToTake)
   }

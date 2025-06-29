@@ -26,7 +26,7 @@ export class ProductionActionRule extends ActionRule<ProductionAction> {
         this.customMove(CustomMoveType.Pass)
       ]
     }
-    if (this.playerFactories.length && (!this.action?.productType || this.action?.productType === this.productChoosen)) {
+    if (this.playerFactories.length && (!this.action?.productType || this.action.productType === this.productChoosen)) {
       return [...this.playerFactories.rotateItems(true), this.customMove(CustomMoveType.Pass)]
     }
     return [this.customMove(CustomMoveType.Pass)]
@@ -34,7 +34,7 @@ export class ProductionActionRule extends ActionRule<ProductionAction> {
 
   beforeItemMove(move: ItemMove): MaterialMove[] {
     if (this.checkAnotherActionInProgress(this.action?.type)) return []
-    if (isMoveItemType(MaterialType.Product)(move) && (!this.action?.productType || this.action?.productType === move.location.id)) {
+    if (isMoveItemType(MaterialType.Product)(move) && (!this.action?.productType || this.action.productType === move.location.id)) {
       if (!this.remind(MemoryType.BasicActionChoosen)) {
         this.memorize(MemoryType.BasicActionChoosen, this.action?.type)
       }
@@ -53,7 +53,7 @@ export class ProductionActionRule extends ActionRule<ProductionAction> {
   afterItemMove(move: ItemMove): MaterialMove[] {
     if (this.checkAnotherActionInProgress(this.action?.type)) return []
     const moves: MaterialMove[] = []
-    if (isMoveItemType(MaterialType.Product)(move) && (!this.action?.productType || this.action?.productType === move.location.id)) {
+    if (isMoveItemType(MaterialType.Product)(move) && (!this.action?.productType || this.action.productType === move.location.id)) {
       if (!this.productChoosen) {
         this.memorize(MemoryType.ProductChoosen, move.location.id)
         if (this.playerShipCards.length > 0) {

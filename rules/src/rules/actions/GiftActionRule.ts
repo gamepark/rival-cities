@@ -18,8 +18,8 @@ export class GiftActionRule extends ActionRule<GiftAction> {
       return moves
     }
     if (this.action?.productType) {
-      for (let i = 0; i < this.action?.nbProductToTake; i++) {
-        moves.push(this.products.moveItem({ type: LocationType.PlayerProducts, player: this.player, id: this.action?.productType }))
+      for (let i = 0; i < this.action.nbProductToTake; i++) {
+        moves.push(this.products.moveItem({ type: LocationType.PlayerProducts, player: this.player, id: this.action.productType }))
       }
     }
     return moves
@@ -31,7 +31,9 @@ export class GiftActionRule extends ActionRule<GiftAction> {
       return moves
     }
     if (this.action?.productType) {
-      moves.push(...this.products.moveItems({ type: LocationType.PlayerProducts, player: this.player, id: this.action?.productType }, this.action?.nbProductToTake))
+      moves.push(
+        ...this.products.moveItems({ type: LocationType.PlayerProducts, player: this.player, id: this.action.productType }, this.action.nbProductToTake)
+      )
     } else {
       moves.push(...this.allProducts.moveItems((item) => ({ type: LocationType.PlayerProducts, player: this.player, id: item.id }), 1))
     }

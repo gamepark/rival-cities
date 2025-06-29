@@ -10,7 +10,6 @@ import { MemoryType } from '../MemoryType'
 import { ActionRule } from './ActionRule'
 
 export class PurchaseShipActionRule extends ActionRule<PurchaseShipAction> {
-
   getPlayerMoves(): MaterialMove[] {
     if (this.checkAnotherActionInProgress(this.action?.type)) return []
     return [
@@ -38,7 +37,7 @@ export class PurchaseShipActionRule extends ActionRule<PurchaseShipAction> {
   afterItemMove(move: ItemMove): MaterialMove[] {
     if (this.checkAnotherActionInProgress(this.action?.type)) return []
     if (isMoveItemType(MaterialType.Letter)(move) && !this.remind(MemoryType.BasicActionChoosen)) {
-      return this.addActionBonusAndMove({type: ActionType.ProductSwap, nbPossibleSwaps: 1})
+      return this.addActionBonusAndMove({ type: ActionType.ProductSwap, nbPossibleSwaps: 1 })
     }
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.ShipCard)(move) && move.location.type === LocationType.PlayerShipCards) {
@@ -56,7 +55,7 @@ export class PurchaseShipActionRule extends ActionRule<PurchaseShipAction> {
     moves.push(...this.playerProducts.id(shipData.cost.type).moveItems({ type: LocationType.ProductPiles, id: shipData.cost.type }, costQuantity))
     this.removeAction()
     if (shipData.effect.type === ShipEffectType.Instant) {
-      if(shipData.effect.action) {
+      if (shipData.effect.action) {
         shipData.effect.action(this.game, this.player).forEach((it) => this.addActionBonus(it))
       }
     }

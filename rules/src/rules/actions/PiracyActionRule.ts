@@ -7,7 +7,6 @@ import { MemoryType } from '../MemoryType'
 import { ActionRule } from './ActionRule'
 
 export class PiracyActionRule extends ActionRule<PiracyAction> {
-
   onRuleStart(): MaterialMove[] {
     return []
   }

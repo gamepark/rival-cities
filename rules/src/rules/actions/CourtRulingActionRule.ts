@@ -9,7 +9,6 @@ import { MemoryType } from '../MemoryType'
 import { ActionRule } from './ActionRule'
 
 export class CourtRulingActionRule extends ActionRule<CourtRullingAction> {
-
   getPlayerMoves(): MaterialMove[] {
     if (this.checkAnotherActionInProgress(this.action?.type)) return []
     const moves: MaterialMove[] = []
@@ -61,7 +60,7 @@ export class CourtRulingActionRule extends ActionRule<CourtRullingAction> {
   onCustomMove(move: CustomMove): MaterialMove[] {
     if (this.checkAnotherActionInProgress(this.action?.type)) return []
     if (isCustomMoveType(CustomMoveType.ResolveLawsuit)(move)) {
-      this.addActionBonusAndMove({type: ActionType.ResolveLawsuit })
+      this.addActionBonusAndMove({ type: ActionType.ResolveLawsuit })
     }
     return []
   }

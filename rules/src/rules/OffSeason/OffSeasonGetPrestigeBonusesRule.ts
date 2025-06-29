@@ -11,7 +11,7 @@ export class OffSeasonGetPrestigeBonusesRule extends PlayerTurnRule {
   onRuleStart(): MaterialMove[] {
     if (Math.abs(this.prestigeMarkerLocation) < 2) {
       this.memorize(MemoryType.OffSeasonStep, RuleId.OffSeasonChangeSpecialCards)
-      this.memorize(MemoryType.Actions, [{type: ActionType.ResolveLawsuit}])
+      this.memorize(MemoryType.Actions, [{ type: ActionType.ResolveLawsuit }])
       return [this.startRule(RuleId.ResolveLawsuit)]
     }
     return this.getBonusesMoves()
@@ -60,7 +60,7 @@ export class OffSeasonGetPrestigeBonusesRule extends PlayerTurnRule {
         moves.push(this.getStarsTokens().moveItem({ type: LocationType.PlayerStarTokens, player }))
     }
     this.memorize(MemoryType.OffSeasonStep, RuleId.OffSeasonChangeSpecialCards)
-    this.memorize(MemoryType.Actions, [{type: ActionType.ResolveLawsuit}])
+    this.memorize(MemoryType.Actions, [{ type: ActionType.ResolveLawsuit }])
     moves.push(this.startRule(RuleId.ResolveLawsuit))
     return moves
   }

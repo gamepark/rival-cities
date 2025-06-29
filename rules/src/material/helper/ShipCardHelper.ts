@@ -139,7 +139,9 @@ export class ShipCardHelper extends MaterialRulesPart {
   }
 
   get checkPlayerHaveKjjobenhavnAllianceCard(): boolean {
-    return this.material(MaterialType.AllianceCard).location(LocationType.PlayerAllianceCards).player(this.player).id(AllianceCard.AllianceKjjobenhavn).length > 0
+    return (
+      this.material(MaterialType.AllianceCard).location(LocationType.PlayerAllianceCards).player(this.player).id(AllianceCard.AllianceKjjobenhavn).length > 0
+    )
   }
 
   get checkPlayerHaveBruxellesCard(): boolean {

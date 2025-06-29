@@ -86,7 +86,7 @@ export class AdvanceLawsuitActionRule extends ActionRule<AdvanceLawsuitAction> {
             playerCanUseAllianceLeHavre: false
           })
         }
-        if(this.nbTimeAlreadyAdvanced === 0) {
+        if (this.nbTimeAlreadyAdvanced === 0) {
           lawsuitCardData[card.id as LawsuitCard].actionInAdvance(this.game, this.player).forEach((action) => this.addActionBonus(action))
         }
         moves.push(...this.moveToNextAction())
@@ -97,7 +97,7 @@ export class AdvanceLawsuitActionRule extends ActionRule<AdvanceLawsuitAction> {
 
   onCustomMove(move: CustomMove): MaterialMove[] {
     if (this.checkAnotherActionInProgress(this.action?.type)) return []
-    if(isCustomMoveType(CustomMoveType.Pass)(move)) {
+    if (isCustomMoveType(CustomMoveType.Pass)(move)) {
       return this.removeActionAndMove()
     }
     return []
@@ -120,7 +120,9 @@ export class AdvanceLawsuitActionRule extends ActionRule<AdvanceLawsuitAction> {
     if (!this.action?.lawsuitAdvancedLocation) {
       return this.material(MaterialType.LawsuitCard).location(LocationType.LawsuitCardsRiver)
     }
-    return this.material(MaterialType.LawsuitCard).location((loc) => loc.type === LocationType.LawsuitCardsRiver && loc.z === this.action?.lawsuitAdvancedLocation)
+    return this.material(MaterialType.LawsuitCard).location(
+      (loc) => loc.type === LocationType.LawsuitCardsRiver && loc.z === this.action?.lawsuitAdvancedLocation
+    )
   }
 
   get nbTimeAlreadyAdvanced() {
