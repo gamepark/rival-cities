@@ -1,4 +1,4 @@
-import { isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
+import { CustomMove, isCustomMoveType, isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
 import { ProductionAction } from '../../material/Actions/Actions'
 import { AllianceCardHelper } from '../../material/helper/AllianceCardHelper'
 import { LocationType } from '../../material/LocationType'
@@ -14,6 +14,7 @@ export class ProductionActionRule extends ActionRule<ProductionAction> {
   productChoosen = this.remind(MemoryType.ProductChoosen)
 
   onRuleStart(): MaterialMove[] {
+    this.forget(MemoryType.ProductChoosen)
     return this.products.moveItems((item) => ({ type: LocationType.PlayerProducts, player: this.player, id: item.id }), this.action?.quantity)
   }
 
@@ -72,6 +73,14 @@ export class ProductionActionRule extends ActionRule<ProductionAction> {
       }
     }
     return moves
+  }
+
+  onCustomMove(move: CustomMove): MaterialMove[] {
+    if(isCustomMoveType(CustomMoveType.Pass)(move)) {
+      this.forget(MemoryType.ProductChoosen)
+      return this.removeActionAndMove()
+    }
+    return []
   }
 
   get playerFactories() {

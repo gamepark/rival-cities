@@ -98,7 +98,8 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
           type: ActionType.Piracy,
           nbProductsToSteal: 3
         }
-      ]
+      ],
+      player: this.player
     },
     [SpecialActionCard.SpecialAction7]: {
       type: ActionType.Computed,

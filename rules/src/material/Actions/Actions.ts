@@ -10,6 +10,7 @@ export type ChoiceAction = {
 export type ComputedAction = {
   type: ActionType.Computed
   actions: Action[]
+  player?: City
 }
 
 export type ProductionAction = {

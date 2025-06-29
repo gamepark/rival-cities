@@ -47,7 +47,7 @@ export class EarnPrestigeActionRule extends ActionRule<EarnPrestigeAction> {
         price: 2,
         actionToPerformAgain: {
           type: ActionType.EarnPrestige,
-          playerWhoEarnedPrestige: this.player,
+          playerWhoEarnedPrestige: this.action.playerWhoEarnedPrestige,
           playerCanUseAllianceBruxelles: false,
           playerCanUseShip16: false
         }
@@ -60,7 +60,7 @@ export class EarnPrestigeActionRule extends ActionRule<EarnPrestigeAction> {
         price: 1,
         actionToPerformAgain: {
           type: ActionType.EarnPrestige,
-          playerWhoEarnedPrestige: this.player,
+          playerWhoEarnedPrestige: this.action.playerWhoEarnedPrestige,
           playerCanUseAllianceBruxelles: false,
           playerCanUseShip16: false
         }

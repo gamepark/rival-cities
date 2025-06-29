@@ -30,6 +30,8 @@ export abstract class ActionRule<E extends Action = Action> extends PlayerTurnRu
   removeAction() {
     this.forget(MemoryType.BasicActionChoosen)
     const firstAction = this.actions[0]
+    console.log(firstAction)
+    console.log(this.action)
     if (firstAction.type === ActionType.Computed && this.action?.type !== ActionType.Computed) {
       firstAction.actions = firstAction.actions.filter((it) => it.type !== this.action?.type)
       if (firstAction.actions.length === 0) {
@@ -62,6 +64,14 @@ export abstract class ActionRule<E extends Action = Action> extends PlayerTurnRu
         return [this.startRule(this.remind(MemoryType.OffSeasonStep))]
       }
       return [this.startPlayerTurn(RuleId.AdvanceInkJar, this.nextPlayer)]
+    }
+
+    const nextAction = this.actions[0]
+    if(nextAction.type === ActionType.EarnPrestige && nextAction.playerWhoEarnedPrestige !== this.player) {
+      return [this.startPlayerTurn(ActionRuleIds[this.actions[0].type], this.nextPlayer)]
+    }
+    if(nextAction.type === ActionType.Computed && nextAction.player && nextAction.player !== this.player) {
+      return [this.startPlayerTurn(ActionRuleIds[this.actions[0].type], this.nextPlayer)]
     }
 
     return [this.startRule(ActionRuleIds[this.actions[0].type])]
