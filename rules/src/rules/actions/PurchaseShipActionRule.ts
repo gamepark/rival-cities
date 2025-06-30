@@ -11,12 +11,14 @@ import { ActionRule } from './ActionRule'
 
 export class PurchaseShipActionRule extends ActionRule<PurchaseShipAction> {
   getPlayerMoves(): MaterialMove[] {
+    const moves: MaterialMove[] = []
     if (this.checkAnotherActionInProgress(this.action?.type)) return []
-    return [
-      ...this.possibleCardsToGet().moveItems({ type: LocationType.PlayerShipCards, player: this.player }),
-      this.customMove(CustomMoveType.TakeLetterToSwapProduct),
-      this.customMove(CustomMoveType.Pass, this.action?.type)
-    ]
+    moves.push(...this.possibleCardsToGet().moveItems({ type: LocationType.PlayerShipCards, player: this.player }))
+    if (this.playerProducts.length) {
+      moves.push(this.customMove(CustomMoveType.TakeLetterToSwapProduct))
+    }
+    moves.push(this.customMove(CustomMoveType.Pass, this.action?.type))
+    return moves
   }
 
   beforeItemMove(move: ItemMove): MaterialMove[] {

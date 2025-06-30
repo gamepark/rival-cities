@@ -30,7 +30,9 @@ export class DonationActionRule extends ActionRule<DonationAction> {
         )
       }
       moves.push(this.customMove(CustomMoveType.Pass, this.action?.type))
-      moves.push(this.customMove(CustomMoveType.TakeLetterToSwapProduct))
+      if(this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(this.player).length) {
+        moves.push(this.customMove(CustomMoveType.TakeLetterToSwapProduct))
+      }
     }
     return moves
   }

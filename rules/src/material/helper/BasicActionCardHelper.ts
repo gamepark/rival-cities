@@ -164,7 +164,7 @@ export class BasicActionCardHelper extends MaterialRulesPart {
         {
           type: ActionType.Production,
           productType: Product.Beer,
-          quantity: 1
+          quantity: 2
         }
       ]
     },
