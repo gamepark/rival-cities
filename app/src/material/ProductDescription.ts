@@ -4,14 +4,16 @@ import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
 import { Product } from '@gamepark/rival-cities/material/Product'
 import { isMoveItemType, MaterialMove } from '@gamepark/rules-api'
 import Beer from '../images/tokens/resources/Beer.png'
-import Leather from '../images/tokens/resources/Leather.png'
 import Cloth from '../images/tokens/resources/Cloth.png'
 import Furniture from '../images/tokens/resources/Furniture.png'
+import Leather from '../images/tokens/resources/Leather.png'
 
 export class ProductDescription extends TokenDescription {
   getSize(id: Product): ComponentSize {
     return productSize[id]
   }
+
+  borderRadius = 0.3
 
   images = {
     [Product.Beer]: Beer,

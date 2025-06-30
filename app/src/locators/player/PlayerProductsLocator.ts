@@ -1,26 +1,24 @@
 /** @jsxImportSource @emotion/react */
-import { ListLocator } from '@gamepark/react-game'
+import { FlexLocator } from '@gamepark/react-game'
 import { City } from '@gamepark/rival-cities/City'
-import { Coordinates, Location, MaterialItem } from '@gamepark/rules-api'
+import { Coordinates, Location } from '@gamepark/rules-api'
 
-class PlayerProductsLocator extends ListLocator {
+class PlayerProductsLocator extends FlexLocator {
   gap = { x: 1.7 }
-  maxCount = 12
+  lineGap = { y: 1.7 }
+  lineSize = 3
+  maxLines = 4
 
   getCoordinates(location: Location): Partial<Coordinates> {
     const base = this.getBaseCoordinates(location)
-    return { x: base.x, y: base.y! + 2.5 * (location.id - 1) }
+    return { x: base.x! + 6 * (location.id - 1), y: base.y }
   }
 
   getBaseCoordinates(location: Location): Partial<Coordinates> {
     if (location.player === City.Altona) {
-      return { x: -47, y: -1 }
+      return { x: -48, y: -1 }
     }
-    return { x: 27, y: -1 }
-  }
-
-  getPileId(item: MaterialItem): string {
-    return `player-${item.id}`
+    return { x: 26, y: -1 }
   }
 }
 
