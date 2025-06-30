@@ -13,6 +13,13 @@ import { deutchLawsuitCardDescription } from './i18n/de/DeutchLawsuitCardDescrip
 import { deutchOffSeasonOverviewDescription } from './i18n/de/DeutchOffSeasonOverviewDescription'
 import { deutchShipCardDescription } from './i18n/de/DeutchShipCardDescription'
 import { deutchSpecialActionCardDescription } from './i18n/de/DeutchSpecialActionCardDescription'
+import { frenchAllianceCardDescription } from './i18n/fr/FrenchAllianceCardDescription'
+import { frenchBasicActionCardDescription } from './i18n/fr/FrenchBasicActionCardDescription'
+import { frenchGameOverviewDescription } from './i18n/fr/FrenchGameOverviewDescription'
+import { frenchLawsuitCardDescription } from './i18n/fr/FrenchLawsuitCardDescription'
+import { frenchOffSeasonOverviewDescription } from './i18n/fr/FrenchOffSeasonOverviewDescription'
+import { frenchShipCardDescription } from './i18n/fr/FrenchShipCardDescription'
+import { frenchSpecialActionCardDescription } from './i18n/fr/FrenchSpecialActionCardDescription'
 import { inkJarDescription } from './InkJarDescription'
 import { lawsuitCardDescription } from './LawsuitCardDescription'
 import { lawsuitMarkerDescription } from './LawsuitMarkerDescription'
@@ -54,5 +61,14 @@ export const MaterialI18n: Record<string, Partial<Record<MaterialType, MaterialD
     [MaterialType.ShipCard]: deutchShipCardDescription,
     [MaterialType.GameOverview]: deutchGameOverviewDescription,
     [MaterialType.OffSeasonOverview]: deutchOffSeasonOverviewDescription
+  },
+  fr: {
+    [MaterialType.BasicActionCard]: frenchBasicActionCardDescription,
+    [MaterialType.SpecialActionCard]: frenchSpecialActionCardDescription,
+    [MaterialType.AllianceCard]: frenchAllianceCardDescription,
+    [MaterialType.LawsuitCard]: frenchLawsuitCardDescription,
+    [MaterialType.ShipCard]: frenchShipCardDescription,
+    [MaterialType.GameOverview]: frenchGameOverviewDescription,
+    [MaterialType.OffSeasonOverview]: frenchOffSeasonOverviewDescription
   }
 }

@@ -16,9 +16,9 @@ class PlayerProductsLocator extends FlexLocator {
 
   getBaseCoordinates(location: Location): Partial<Coordinates> {
     if (location.player === City.Altona) {
-      return { x: -48, y: -1 }
+      return { x: -48, y: -15 }
     }
-    return { x: 26, y: -1 }
+    return { x: 26, y: -15 }
   }
 }
 

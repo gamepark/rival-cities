@@ -1,5 +1,5 @@
 import { Locator } from '@gamepark/react-game'
-import { Coordinates, Location } from '@gamepark/rules-api'
+import { Coordinates, Location, MaterialItem } from '@gamepark/rules-api'
 import { gameBoardLocator } from '../GameBoardLocator'
 
 class CardPisteLocator extends Locator {
@@ -12,8 +12,8 @@ class CardPisteLocator extends Locator {
     return { x: base.x + coordinatesFromId[location.id].x, y: base.y + coordinatesFromId[location.id].y }
   }
 
-  getHoverTransform = () => {
-    return ['translateZ(10em)', 'scale(2.5)']
+  getHoverTransform(item: MaterialItem): string[] {
+    return ['translateZ(10em)', 'scale(2.5)', `rotateZ(${-this.getRotateZ(item.location)}deg)`]
   }
 }
 

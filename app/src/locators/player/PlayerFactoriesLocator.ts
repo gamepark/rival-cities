@@ -9,9 +9,9 @@ class PlayerFactoriesLocator extends ListLocator {
 
   getCoordinates(location: Location) {
     if (location.player === City.Altona) {
-      return { x: -48, y: 10 }
+      return { x: -48, y: -18 }
     }
-    return { x: 26, y: 10 }
+    return { x: 26, y: -18 }
   }
 }
 

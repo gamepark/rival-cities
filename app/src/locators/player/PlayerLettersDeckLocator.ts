@@ -5,13 +5,13 @@ import { Location } from '@gamepark/rules-api'
 
 class PlayerLettersDeckLocator extends ListLocator {
   gap = { x: 3.5 }
-  maxCount = 7
+  maxCount = 6
 
   getCoordinates(location: Location) {
     if (location.player === City.Altona) {
-      return { x: -48, y: 14 }
+      return { x: -48, y: -6 }
     }
-    return { x: 26, y: 14 }
+    return { x: 26, y: -6 }
   }
 }
 

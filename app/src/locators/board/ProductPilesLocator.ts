@@ -1,4 +1,4 @@
-import { PileLocator } from '@gamepark/react-game'
+import { DropAreaDescription, PileLocator } from '@gamepark/react-game'
 import { Coordinates, Location, MaterialItem } from '@gamepark/rules-api'
 import { gameBoardLocator } from '../GameBoardLocator'
 
@@ -20,6 +20,14 @@ class ProductPilesLocator extends PileLocator {
   getPileId(item: MaterialItem): string {
     return `${item.id}`
   }
+
+  locationDescription = new ProductPileDescription()
+}
+
+class ProductPileDescription extends DropAreaDescription {
+  width = 3
+  height = 3
+  borderRadius = 3
 }
 
 export const productPilesLocator = new ProductPilesLocator()

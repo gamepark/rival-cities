@@ -9,9 +9,9 @@ class PlayerLawsuitCardsLocator extends ListLocator {
 
   getCoordinates(location: Location) {
     if (location.player === City.Altona) {
-      return { x: -46, y: -20 }
+      return { x: -46, y: 13 }
     }
-    return { x: 28, y: -20 }
+    return { x: 28, y: 13 }
   }
 }
 

@@ -1,4 +1,5 @@
 /** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react'
 import { MaterialHelpProps } from '@gamepark/react-game'
 import { FC } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
@@ -46,37 +47,62 @@ export const GameOverviewHelp: FC<MaterialHelpProps> = () => {
         <li>
           <Trans defaults={`help.game.overview.instant.win.1`} components={components} />
         </li>
-        <p>{t('help.action.descr.or')}</p>
+        <p css={or}>{t('help.action.descr.or')}</p>
         <li>
           <Trans defaults={`help.game.overview.instant.win.2`} components={components} />
         </li>
-        <p>{t('help.action.descr.or')}</p>
+        <p css={or}>{t('help.action.descr.or')}</p>
         <li>
           <Trans defaults={`help.game.overview.instant.win.3`} components={components} />
         </li>
-        <p>{t('help.action.descr.or')}</p>
+        <p css={or}>{t('help.action.descr.or')}</p>
         <li>
           <Trans defaults={`help.game.overview.instant.win.4`} components={components} />
         </li>
       </ul>
       <h3>{t(`help.game.overview.end`)}</h3>
+      <p>
+        <Trans defaults={`help.game.overview.end.descr`} components={components} />
+      </p>
       <ul>
         <li>
           <Trans defaults={`help.game.overview.end.1`} components={components} />
         </li>
-        <p>{t('help.action.descr.or')}</p>
+        <p css={or}>{t('help.action.descr.or')}</p>
         <li>
           <Trans defaults={`help.game.overview.end.2`} components={components} />
         </li>
-        <p>{t('help.action.descr.or')}</p>
+        <p css={or}>{t('help.action.descr.or')}</p>
         <li>
           <Trans defaults={`help.game.overview.end.3`} components={components} />
         </li>
-        <p>{t('help.action.descr.or')}</p>
+        <p css={or}>{t('help.action.descr.or')}</p>
         <li>
           <Trans defaults={`help.game.overview.end.4`} components={components} />
         </li>
       </ul>
+      <h3>{t(`help.game.overview.score`)}</h3>
+      <p>
+        <Trans defaults={`help.game.overview.score.descr`} components={components} />
+      </p>
+      <ul>
+        <li>
+          <Trans defaults={`help.game.overview.score.1`} components={components} />
+        </li>
+        <li>
+          <Trans defaults={`help.game.overview.end.2`} components={components} />
+        </li>
+        <li>
+          <Trans defaults={`help.game.overview.end.3`} components={components} />
+        </li>
+      </ul>
+      <p>
+        <Trans defaults={`help.game.overview.score.win`} components={components} />
+      </p>
     </>
   )
 }
+
+const or = css`
+  margin: 0;
+`
