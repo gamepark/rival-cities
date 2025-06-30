@@ -226,6 +226,7 @@
       "help.Letter.use.1": "D'échanger 1 ressource contre 1 au choix",
       "help.Letter.use.2": "D'effectuer à la fois les actions de la carte basique et les actions d'une carte spéciale",
       "help.Letter.use.3": "De payer pour des navires ou pour avancer dans des procès",
+      "help.Letter.takeLetterToSwapProduct": "<takeLetterToSwapProduct>Défausser une lettre pour échanger une ressource</takeLetterToSwapProduct>",
       "help.star.token": "Jeton étoile",
       "help.star.token.descr": "Les jetons étoiles sont récupérables en tant que bonus de certaines cartes ou lors des actions \"Don\". Elles sont utiles en cas de calcul des points à la fin de la partie.",
       "help.ship.card": "Carte navire",

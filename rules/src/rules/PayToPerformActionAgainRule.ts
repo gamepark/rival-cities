@@ -23,8 +23,8 @@ export class PayToPerformActionAgainRule extends ActionRule<PayToPerformActionAg
   afterItemMove(move: ItemMove): MaterialMove[] {
     if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.ProductPiles) {
       if (this.remind(MemoryType.Counter) === this.action?.price) {
+        this.memorize(MemoryType.Counter, 0)
         if (this.action?.actionToPerformAgain) {
-          this.memorize(MemoryType.Counter, 0)
           const actionToPerformAgain = this.action.actionToPerformAgain
           this.removeAction()
           return this.addActionBonusAndMove(actionToPerformAgain)

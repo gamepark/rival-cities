@@ -27,7 +27,7 @@ export class AdvanceLawsuitActionRule extends ActionRule<AdvanceLawsuitAction> {
       }
     })
 
-    moves.push(...this.playerLetters.moveItems({ type: LocationType.LetterDeck }))
+    moves.push(this.customMove(CustomMoveType.TakeLetterToSwapProduct))
     moves.push(this.customMove(CustomMoveType.Pass, this.action?.type))
     return moves
   }
@@ -54,9 +54,6 @@ export class AdvanceLawsuitActionRule extends ActionRule<AdvanceLawsuitAction> {
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {
-    if (isMoveItemType(MaterialType.Letter)(move) && !this.remind(MemoryType.BasicActionChoosen)) {
-      return this.addActionBonusAndMove({ type: ActionType.ProductSwap, nbPossibleSwaps: 1 })
-    }
     if (this.checkAnotherActionInProgress(this.action?.type)) return []
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.LawsuitMarker)(move)) {
@@ -99,6 +96,12 @@ export class AdvanceLawsuitActionRule extends ActionRule<AdvanceLawsuitAction> {
     if (this.checkAnotherActionInProgress(this.action?.type)) return []
     if (isCustomMoveType(CustomMoveType.Pass)(move)) {
       return this.removeActionAndMove()
+    }
+    if (isCustomMoveType(CustomMoveType.TakeLetterToSwapProduct)(move)) {
+      return [
+        this.playerLetters.moveItem({ type: LocationType.LetterDeck }),
+        ...this.addActionBonusAndMove({ type: ActionType.ProductSwap, nbPossibleSwaps: 1 })
+      ]
     }
     return []
   }

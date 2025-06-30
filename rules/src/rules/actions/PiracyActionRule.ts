@@ -33,6 +33,7 @@ export class PiracyActionRule extends ActionRule<PiracyAction> {
   afterItemMove(move: ItemMove): MaterialMove[] {
     if (this.checkAnotherActionInProgress(this.action?.type)) return []
     if (isMoveItemType(MaterialType.Product)(move) && this.remind(MemoryType.Counter) === this.action?.nbProductsToSteal) {
+      this.memorize(MemoryType.Counter, 0)
       return this.removeActionAndMove()
     }
     return []

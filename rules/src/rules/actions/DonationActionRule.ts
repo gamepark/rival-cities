@@ -1,4 +1,4 @@
-import { isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
+import { CustomMove, isCustomMoveType, isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
 import { DonationAction } from '../../material/Actions/Actions'
 import { ActionType } from '../../material/Actions/ActionType'
 import { AllianceCard } from '../../material/AllianceCard'
@@ -30,7 +30,7 @@ export class DonationActionRule extends ActionRule<DonationAction> {
         )
       }
       moves.push(this.customMove(CustomMoveType.Pass, this.action?.type))
-      moves.push(...this.playerLetters.moveItems({ type: LocationType.LetterDeck }))
+      moves.push(this.customMove(CustomMoveType.TakeLetterToSwapProduct))
     }
     return moves
   }
@@ -53,9 +53,6 @@ export class DonationActionRule extends ActionRule<DonationAction> {
 
   afterItemMove(move: ItemMove): MaterialMove[] {
     if (this.checkAnotherActionInProgress(this.action?.type)) return []
-    if (isMoveItemType(MaterialType.Letter)(move)) {
-      return this.addActionBonusAndMove({ type: ActionType.ProductSwap, nbPossibleSwaps: 1 })
-    }
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.ProductPiles) {
       if (this.action?.productType) {
@@ -64,6 +61,7 @@ export class DonationActionRule extends ActionRule<DonationAction> {
           return this.removeActionAndMove()
         }
       } else if (this.remind(MemoryType.Counter) === this.nbProduct) {
+        this.memorize(MemoryType.Counter, 0)
         this.memorize(MemoryType.IsDonationInProgress, false)
         this.memorize<number>(MemoryType.CounterActions, (old) => old + 1)
         if (this.remind(MemoryType.CounterActions) === this.action?.nbTimes) {
@@ -72,6 +70,16 @@ export class DonationActionRule extends ActionRule<DonationAction> {
       }
     }
     return moves
+  }
+
+  onCustomMove(move: CustomMove): MaterialMove[] {
+    if (isCustomMoveType(CustomMoveType.TakeLetterToSwapProduct)(move)) {
+      return [
+        this.playerLetters.moveItem({ type: LocationType.LetterDeck }),
+        ...this.addActionBonusAndMove({ type: ActionType.ProductSwap, nbPossibleSwaps: 1 })
+      ]
+    }
+    return []
   }
 
   get playerProducts() {

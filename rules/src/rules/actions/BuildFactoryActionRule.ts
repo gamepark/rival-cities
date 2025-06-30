@@ -11,6 +11,7 @@ export class BuildFactoryActionRule extends ActionRule<BuildFactoryAction> {
   nbProductsGiven = this.remind(MemoryType.Counter) ?? 0
 
   onRuleStart(): MaterialMove[] {
+    this.memorize(MemoryType.Counter, 0)
     if (this.playerProducts.getQuantity() < (this.action?.price ?? 0)) {
       return this.removeActionAndMove()
     }
@@ -49,6 +50,7 @@ export class BuildFactoryActionRule extends ActionRule<BuildFactoryAction> {
     if (this.remind(MemoryType.BasicActionChoosen) !== this.action?.type) return moves
     if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.ProductPiles) {
       if (this.remind(MemoryType.Counter) === this.action?.price) {
+        this.memorize(MemoryType.Counter, 0)
         return this.removeActionAndMove()
       }
     }

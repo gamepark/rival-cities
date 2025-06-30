@@ -1,4 +1,4 @@
-import { isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
+import { CustomMove, isCustomMoveType, isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
 import { PurchaseShipAction } from '../../material/Actions/Actions'
 import { ActionType } from '../../material/Actions/ActionType'
 import { LocationType } from '../../material/LocationType'
@@ -14,7 +14,7 @@ export class PurchaseShipActionRule extends ActionRule<PurchaseShipAction> {
     if (this.checkAnotherActionInProgress(this.action?.type)) return []
     return [
       ...this.possibleCardsToGet().moveItems({ type: LocationType.PlayerShipCards, player: this.player }),
-      ...this.playerLetters.moveItems({ type: LocationType.LetterDeck }),
+      this.customMove(CustomMoveType.TakeLetterToSwapProduct),
       this.customMove(CustomMoveType.Pass, this.action?.type)
     ]
   }
@@ -36,14 +36,21 @@ export class PurchaseShipActionRule extends ActionRule<PurchaseShipAction> {
 
   afterItemMove(move: ItemMove): MaterialMove[] {
     if (this.checkAnotherActionInProgress(this.action?.type)) return []
-    if (isMoveItemType(MaterialType.Letter)(move) && !this.remind(MemoryType.BasicActionChoosen)) {
-      return this.addActionBonusAndMove({ type: ActionType.ProductSwap, nbPossibleSwaps: 1 })
-    }
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.ShipCard)(move) && move.location.type === LocationType.PlayerShipCards) {
       return new EndOfGameHelper(this.game).checkInstantEndOfGame(this.movesOnPushasedShip(move))
     }
     return moves
+  }
+
+  onCustomMove(move: CustomMove): MaterialMove[] {
+    if (isCustomMoveType(CustomMoveType.TakeLetterToSwapProduct)(move)) {
+      return [
+        this.playerLetters.moveItem({ type: LocationType.LetterDeck }),
+        ...this.addActionBonusAndMove({ type: ActionType.ProductSwap, nbPossibleSwaps: 1 })
+      ]
+    }
+    return []
   }
 
   movesOnPushasedShip(move: MaterialMove): MaterialMove[] {

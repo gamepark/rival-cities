@@ -6,6 +6,7 @@ import { RuleId } from './RuleId'
 
 export class PayProductForAdvanceRule extends PlayerTurnRule {
   onRuleStart(): MaterialMove[] {
+    this.memorize(MemoryType.Counter, 0)
     return []
   }
 

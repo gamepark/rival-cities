@@ -65,6 +65,7 @@ export class GiftActionRule extends ActionRule<GiftAction> {
         moves.push(...this.allianceCardHelper.getLondonProducts(move.location.id as Product))
       }
       if (this.remind(MemoryType.Counter) === this.action?.nbProductToTake) {
+        this.memorize(MemoryType.Counter, 0)
         moves.push(...this.movesAfterProductsGiven())
       }
     }
