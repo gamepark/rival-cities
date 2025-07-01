@@ -22,6 +22,7 @@ import { OffSeasonReactivateFactoriesHeader } from './OffSeasonReactivateFactori
 import { OffSeasonReturnBellHeader } from './OffSeasonReturnBellHeader'
 import { OffSeasonTakeBellHeader } from './OffSeasonTakeBellHeader'
 import { PayProductForAdvanceHeader } from './PayProductForAdvanceHeader'
+import { PayToPerformActionAgainHeader } from './PayToPerformActionAgainHeader'
 import { ProductionHeader } from './ProductionHeader'
 import { ProductSwapHeader } from './ProductSwapHeader'
 import { ResolveLawsuitHeader } from './ResolveLawsuitHeader'
@@ -52,5 +53,6 @@ export const Headers: Partial<Record<RuleId, ComponentType>> = {
   [RuleId.BuildFactory]: BuildFactoryHeader,
   [RuleId.Production]: ProductionHeader,
   [RuleId.Gift]: GiftHeader,
-  [RuleId.ProductSwap]: ProductSwapHeader
+  [RuleId.ProductSwap]: ProductSwapHeader,
+  [RuleId.PayToPerformActionAgain]: PayToPerformActionAgainHeader
 }

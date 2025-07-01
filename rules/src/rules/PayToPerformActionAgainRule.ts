@@ -1,16 +1,21 @@
-import { isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
+import { CustomMove, isCustomMoveType, isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
 import { PayToPerformActionAgainAction } from '../material/Actions/Actions'
 import { LocationType } from '../material/LocationType'
 import { MaterialType } from '../material/MaterialType'
 import { ActionRule } from './actions/ActionRule'
+import { CustomMoveType } from './CustomMoveType'
 import { MemoryType } from './MemoryType'
 
 export class PayToPerformActionAgainRule extends ActionRule<PayToPerformActionAgainAction> {
   getPlayerMoves(): MaterialMove[] {
+    const moves: MaterialMove[] = []
     if (this.action?.productType) {
-      return this.playerProducts.id(this.action.productType).moveItems((it) => ({ type: LocationType.ProductPiles, id: it.id }))
+      moves.push(...this.playerProducts.id(this.action.productType).moveItems((it) => ({ type: LocationType.ProductPiles, id: it.id })))
+    } else {
+      moves.push(...this.playerProducts.moveItems((it) => ({ type: LocationType.ProductPiles, id: it.id })))
     }
-    return this.playerProducts.moveItems((it) => ({ type: LocationType.ProductPiles, id: it.id }))
+    moves.push(this.customMove(CustomMoveType.Pass, this.action?.type))
+    return moves
   }
 
   beforeItemMove(move: ItemMove): MaterialMove[] {
@@ -30,6 +35,13 @@ export class PayToPerformActionAgainRule extends ActionRule<PayToPerformActionAg
           return this.addActionBonusAndMove(actionToPerformAgain)
         }
       }
+    }
+    return []
+  }
+
+  onCustomMove(move: CustomMove): MaterialMove[] {
+    if (isCustomMoveType(CustomMoveType.Pass)(move)) {
+      return this.removeActionAndMove()
     }
     return []
   }
