@@ -27,7 +27,7 @@ export class AdvanceLawsuitActionRule extends ActionRule<AdvanceLawsuitAction> {
       }
     })
 
-    if(this.playerProducts.length) {
+    if(this.playerProducts.length && this.playerLetters.length) {
       moves.push(this.customMove(CustomMoveType.TakeLetterToSwapProduct))
     }
     moves.push(this.customMove(CustomMoveType.Pass, this.action?.type))

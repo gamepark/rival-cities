@@ -14,7 +14,7 @@ export class PurchaseShipActionRule extends ActionRule<PurchaseShipAction> {
     const moves: MaterialMove[] = []
     if (this.checkAnotherActionInProgress(this.action?.type)) return []
     moves.push(...this.possibleCardsToGet().moveItems({ type: LocationType.PlayerShipCards, player: this.player }))
-    if (this.playerProducts.length) {
+    if (this.playerProducts.length && this.playerLetters.length) {
       moves.push(this.customMove(CustomMoveType.TakeLetterToSwapProduct))
     }
     moves.push(this.customMove(CustomMoveType.Pass, this.action?.type))

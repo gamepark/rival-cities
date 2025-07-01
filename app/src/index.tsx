@@ -7,6 +7,7 @@ import { StrictMode } from 'react'
 import ReactDOM from 'react-dom'
 import { gameAnimations } from './animations/GameAnimations'
 import App from './App'
+import { RivalCitiesLogs } from './history/RivalCitiesLogs'
 import { Locators } from './locators/Locators'
 import { Material, MaterialI18n } from './material/Material'
 import translations from './translations.json'
@@ -25,6 +26,7 @@ ReactDOM.render(
       materialI18n={MaterialI18n}
       locators={Locators}
       rulesHelp={RulesHelp}
+      logs={new RivalCitiesLogs()}
       animations={gameAnimations}
     >
       <App />
