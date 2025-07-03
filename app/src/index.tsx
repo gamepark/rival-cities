@@ -12,6 +12,7 @@ import { Locators } from './locators/Locators'
 import { Material, MaterialI18n } from './material/Material'
 import translations from './translations.json'
 import { RulesHelp } from './dialogs/RulesHelp'
+import { Tutorial } from './tutorial/Tutorial'
 
 setupTranslation(translations, { debug: false })
 
@@ -27,6 +28,7 @@ ReactDOM.render(
       locators={Locators}
       rulesHelp={RulesHelp}
       logs={new RivalCitiesLogs()}
+      tutorial={new Tutorial()}
       animations={gameAnimations}
     >
       <App />

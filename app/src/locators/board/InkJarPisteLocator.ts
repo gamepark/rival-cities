@@ -1,5 +1,9 @@
-import { Locator } from '@gamepark/react-game'
-import { Coordinates, Location } from '@gamepark/rules-api'
+/** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react'
+import { DropAreaDescription, Locator } from '@gamepark/react-game'
+import { LocationType } from '@gamepark/rival-cities/material/LocationType'
+import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
+import { Coordinates, isMoveItemType, Location, MaterialMove } from '@gamepark/rules-api'
 import { cardPisteLocator } from './CardPisteLocator'
 
 class InkJarPisteLocator extends Locator {
@@ -11,6 +15,33 @@ class InkJarPisteLocator extends Locator {
     const base = cardPisteLocator.getCoordinates(location)
     return { x: base.x! + coordinatesFromId[location.id].x, y: base.y! + coordinatesFromId[location.id].y }
   }
+
+  getLocations(): Partial<Location>[] {
+    const locations: Partial<Location>[] = []
+    for (let i = 0; i < 20; i++) {
+      locations.push({ type: LocationType.InkJarPiste, id: i })
+    }
+    return locations
+  }
+
+  locationDescription = new InkjarPisteDescription()
+}
+
+class InkjarPisteDescription extends DropAreaDescription {
+  width = 2.7
+  height = 2.55
+  extraCss = css`
+    background-color: rgba(0, 255, 0, 0.3);
+
+    &:hover {
+      background-color: rgba(0, 255, 0, 0.6) !important;
+    }
+  `
+
+  canShortClick(move: MaterialMove, location: Location): boolean {
+    return isMoveItemType(MaterialType.InkJar)(move) && move.location.type === LocationType.InkJarPiste &&  move.location.id === location.id
+  }
+
 }
 
 const coordinatesFromId = [
