@@ -1,12 +1,14 @@
 /** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react'
-import { DropAreaDescription, Locator } from '@gamepark/react-game'
+import { DropAreaDescription, Locator, MaterialContext } from '@gamepark/react-game'
 import { LocationType } from '@gamepark/rival-cities/material/LocationType'
 import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
 import { Coordinates, isMoveItemType, Location, MaterialMove } from '@gamepark/rules-api'
 import { cardPisteLocator } from './CardPisteLocator'
+import { InkJarPisteHelper } from '@gamepark/rival-cities/rules/helper/InkjarPisteHelper'
+import { RuleId } from '@gamepark/rival-cities/rules/RuleId'
 
 class InkJarPisteLocator extends Locator {
+  parentItemType = MaterialType.GameBoard
   getRotateZ(location: Location): number {
     return cardPisteLocator.getRotateZ(location)
   }
@@ -16,12 +18,10 @@ class InkJarPisteLocator extends Locator {
     return { x: base.x! + coordinatesFromId[location.id].x, y: base.y! + coordinatesFromId[location.id].y }
   }
 
-  getLocations(): Partial<Location>[] {
-    const locations: Partial<Location>[] = []
-    for (let i = 0; i < 20; i++) {
-      locations.push({ type: LocationType.InkJarPiste, id: i })
-    }
-    return locations
+  getLocations(context: MaterialContext): Partial<Location>[] {
+    if(context.rules.game.rule?.player !== context.player) return []
+    if(context.rules.game.rule?.id !== RuleId.AdvanceInkJar) return []
+    return new InkJarPisteHelper(context.rules.game).possibleInkjarLocation()
   }
 
   locationDescription = new InkjarPisteDescription()
@@ -30,13 +30,6 @@ class InkJarPisteLocator extends Locator {
 class InkjarPisteDescription extends DropAreaDescription {
   width = 2.7
   height = 2.55
-  extraCss = css`
-    background-color: rgba(0, 255, 0, 0.3);
-
-    &:hover {
-      background-color: rgba(0, 255, 0, 0.6) !important;
-    }
-  `
 
   canShortClick(move: MaterialMove, location: Location): boolean {
     return isMoveItemType(MaterialType.InkJar)(move) && move.location.type === LocationType.InkJarPiste &&  move.location.id === location.id

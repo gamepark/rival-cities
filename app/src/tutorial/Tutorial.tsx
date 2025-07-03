@@ -14,6 +14,7 @@ import Decision from '../images/illustrations/decision.png'
 import Letter from '../images/tokens/LetterFront.jpg'
 import Presitge from '../images/tokens/PrestigeMarker.png'
 import { css } from '@emotion/react'
+import { offSeasonOverviewDescription } from '../material/OffSeasonOverviewDescription'
 
 const image = css`
   width: 1.5em;
@@ -210,9 +211,11 @@ export class Tutorial extends MaterialTutorial<number, MaterialType, LocationTyp
       },
       focus: (game: MaterialGame) => ({
         materials: [
-          this.material(game, MaterialType.Factory).location(LocationType.PlayerFactories).player(me),
-          this.material(game, MaterialType.OffSeasonOverview)
+          this.material(game, MaterialType.Factory).location(LocationType.PlayerFactories).player(me)
         ],
+        staticItems: {
+          [MaterialType.OffSeasonOverview]: [offSeasonOverviewDescription.staticItem]
+        },
         scale: 0.5
       })
     },
