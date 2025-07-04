@@ -1,4 +1,4 @@
-import { isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
+import { CustomMove, isCustomMoveType, isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
 import { FormAllianceAction } from '../../material/Actions/Actions'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
@@ -35,6 +35,14 @@ export class FormAllianceActionRule extends ActionRule<FormAllianceAction> {
     if (this.checkAnotherActionInProgress(this.action?.type)) return []
     if (isMoveItemType(MaterialType.AllianceCard)(move)) {
       return new EndOfGameHelper(this.game).checkInstantEndOfGame(this.removeActionAndMove())
+    }
+    return []
+  }
+
+  onCustomMove(move: CustomMove): MaterialMove[] {
+    if (isCustomMoveType(CustomMoveType.Pass)(move)) {
+      this.forget(MemoryType.ProductChoosen)
+      return this.removeActionAndMove()
     }
     return []
   }

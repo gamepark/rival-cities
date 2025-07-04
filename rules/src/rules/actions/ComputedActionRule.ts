@@ -6,7 +6,7 @@ import { ActionRule } from './ActionRule'
 import { MemoryHelper } from '../helper/MemoryHelper'
 
 export class ComputedActionRule extends ActionRule<ComputedAction> {
-  actionRules = this.action?.actions?.map((it) => getActionRule(this.game, it)) ?? []
+  actionRules = this.action?.actions.map((it) => getActionRule(this.game, it)) ?? []
   getPlayerMoves(): MaterialMove[] {
     return [...this.actionRules.flatMap((rule) => rule.getPlayerMoves())]
   }

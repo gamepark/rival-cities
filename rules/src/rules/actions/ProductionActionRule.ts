@@ -76,7 +76,7 @@ export class ProductionActionRule extends ActionRule<ProductionAction> {
   }
 
   onCustomMove(move: CustomMove): MaterialMove[] {
-    if(isCustomMoveType(CustomMoveType.Pass)(move)) {
+    if (isCustomMoveType(CustomMoveType.Pass)(move)) {
       this.forget(MemoryType.ProductChoosen)
       return this.removeActionAndMove()
     }

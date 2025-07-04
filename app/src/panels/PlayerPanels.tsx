@@ -1,6 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
 import { City } from '@gamepark/rival-cities/City'
+import Altona from '../images/panels/altona.png'
+import Hamburg from '../images/panels/hambourg.png'
 import { StyledPlayerPanel, usePlayers } from '@gamepark/react-game'
 import { createPortal } from 'react-dom'
 
@@ -14,12 +16,18 @@ export const PlayerPanels = () => {
   return createPortal(
     <>
       {players.map((player) => (
-        <StyledPlayerPanel key={player.id} color={player.id === 1 ? '#904639' : '#365164'} player={player} css={panelPosition(player.id)} activeRing />
+        <StyledPlayerPanel key={player.id} backgroundImage={backgroundImage[player.id]} player={player} css={panelPosition(player.id)} activeRing />
       ))}
     </>,
     root
   )
 }
+
+const backgroundImage: Record<City, string> = {
+  [City.Altona]: Altona,
+  [City.Hamburg]: Hamburg
+}
+
 
 const panelPosition = (player: number) => {
   if (player === 1) {

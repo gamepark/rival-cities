@@ -10,9 +10,7 @@ export class AdvanceInkJarRule extends PlayerTurnRule {
   getPlayerMoves(): MaterialMove[] {
     const moves: MaterialMove[] = []
     this.inkjarPisteHelper.possibleInkjarLocation().forEach((location) => {
-      moves.push(
-        this.inkjar.moveItem(location)
-      )
+      moves.push(this.inkjar.moveItem(location))
     })
     return moves
   }

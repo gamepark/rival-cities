@@ -27,7 +27,7 @@ export class AdvanceLawsuitActionRule extends ActionRule<AdvanceLawsuitAction> {
       }
     })
 
-    if(this.playerProducts.length && this.playerLetters.length) {
+    if (this.playerProducts.length && this.playerLetters.length) {
       moves.push(this.customMove(CustomMoveType.TakeLetterToSwapProduct))
     }
     moves.push(this.customMove(CustomMoveType.Pass, this.action?.type))
@@ -65,9 +65,14 @@ export class AdvanceLawsuitActionRule extends ActionRule<AdvanceLawsuitAction> {
         const playerHaveAllianceLeHavre = new AllianceCardHelper(this.game).checkPlayerAllianceCardById(AllianceCard.AllianceLeHavre)
         if (playerHaveAllianceLeHavre && this.playerProducts.length) {
           this.addActionBonus({
-            type: ActionType.AdvanceLawsuit,
-            nbTimeAlreadyAdvanced: 0,
-            playerCanUseAllianceLeHavre: false
+            type: ActionType.PayToPerformActionAgain,
+            productType: undefined,
+            price: 1,
+            actionToPerformAgain: {
+              type: ActionType.AdvanceLawsuit,
+              nbTimeAlreadyAdvanced: 0,
+              playerCanUseAllianceLeHavre: false
+            }
           })
         }
         if (move.location.id === 1 && this.nbTimeAlreadyAdvanced < 1) {

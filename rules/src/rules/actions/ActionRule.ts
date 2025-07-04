@@ -1,6 +1,4 @@
-import { MaterialGame, MaterialMove, PlayerTurnRule, PlayMoveContext } from '@gamepark/rules-api'
-import { RuleMove } from '@gamepark/rules-api/dist/material/moves'
-import { RuleStep } from '@gamepark/rules-api/dist/material/rules/RuleStep'
+import { MaterialGame, PlayerTurnRule } from '@gamepark/rules-api'
 import { Action } from '../../material/Actions/Actions'
 import { ActionType } from '../../material/Actions/ActionType'
 import { ActionRuleIds } from '../helper/ActionRuleIds'
@@ -13,14 +11,6 @@ export abstract class ActionRule<E extends Action = Action> extends PlayerTurnRu
   constructor(game: MaterialGame, action?: E) {
     super(game)
     this.action = action ?? (this.actions[0] as E)
-  }
-
-  onRuleStart(_move?: RuleMove, _previousRule?: RuleStep, _context?: PlayMoveContext): MaterialMove[] {
-    return []
-  }
-
-  getAutomaticActionMoves(): MaterialMove[] {
-    return []
   }
 
   get actions(): Action[] {
@@ -65,10 +55,10 @@ export abstract class ActionRule<E extends Action = Action> extends PlayerTurnRu
     }
 
     const nextAction = this.actions[0]
-    if(nextAction.type === ActionType.EarnPrestige && nextAction.playerWhoEarnedPrestige !== this.player) {
+    if (nextAction.type === ActionType.EarnPrestige && nextAction.playerWhoEarnedPrestige !== this.player) {
       return [this.startPlayerTurn(ActionRuleIds[this.actions[0].type], this.nextPlayer)]
     }
-    if(nextAction.type === ActionType.Computed && nextAction.player && nextAction.player !== this.player) {
+    if (nextAction.type === ActionType.Computed && nextAction.player && nextAction.player !== this.player) {
       return [this.startPlayerTurn(ActionRuleIds[this.actions[0].type], this.nextPlayer)]
     }
 
