@@ -8,7 +8,5 @@ export const PayLetterHistory = (props: MoveComponentProps) => {
   const actionPlayer = context.action.playerId
   const name = usePlayerName(actionPlayer)
 
-  return (
-    <Trans defaults="history.pay.letter" values={{ player: name }} />
-  )
+  return <Trans defaults="history.pay.letter" values={{ player: name }} />
 }

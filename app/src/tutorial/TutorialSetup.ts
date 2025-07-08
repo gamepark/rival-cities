@@ -23,7 +23,7 @@ const lawsuitCardsToUse: LawsuitCard[] = [
   LawsuitCard.Lawsuit3,
   LawsuitCard.Lawsuit4,
   LawsuitCard.Lawsuit5,
-  LawsuitCard.Lawsuit6,
+  LawsuitCard.Lawsuit6
 ]
 export class TutorialSetup extends RivalCitiesSetup {
   setupAllianceCards() {
@@ -32,9 +32,7 @@ export class TutorialSetup extends RivalCitiesSetup {
   }
 
   setupShipCards() {
-    const shipCardsItems = shipCards
-      .slice(0, 10)
-      .map((it) => ({ id: it, location: { type: LocationType.ShipCardsDeck } }))
+    const shipCardsItems = shipCards.slice(0, 10).map((it) => ({ id: it, location: { type: LocationType.ShipCardsDeck } }))
     this.material(MaterialType.ShipCard).createItems(shipCardsItems)
     this.material(MaterialType.ShipCard).location(LocationType.ShipCardsDeck).limit(4).moveItems({
       type: LocationType.ShipCardsRiver
@@ -42,8 +40,7 @@ export class TutorialSetup extends RivalCitiesSetup {
   }
 
   setupLawsuitCards() {
-    const lawsuitCardItems = lawsuitCardsToUse
-      .map((it) => ({ id: it, location: { type: LocationType.LawsuitCardDeck } }))
+    const lawsuitCardItems = lawsuitCardsToUse.map((it) => ({ id: it, location: { type: LocationType.LawsuitCardDeck } }))
     this.material(MaterialType.LawsuitCard).createItems(lawsuitCardItems)
     this.material(MaterialType.LawsuitCard).location(LocationType.LawsuitCardDeck).limit(3).moveItems({
       type: LocationType.LawsuitCardsRiver

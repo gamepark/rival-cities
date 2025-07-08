@@ -28,7 +28,6 @@ const backgroundImage: Record<City, string> = {
   [City.Hamburg]: Hamburg
 }
 
-
 const panelPosition = (player: number) => {
   if (player === 1) {
     return css`

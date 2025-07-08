@@ -19,8 +19,8 @@ class InkJarPisteLocator extends Locator {
   }
 
   getLocations(context: MaterialContext): Partial<Location>[] {
-    if(context.rules.game.rule?.player !== context.player) return []
-    if(context.rules.game.rule?.id !== RuleId.AdvanceInkJar) return []
+    if (context.rules.game.rule?.player !== context.player) return []
+    if (context.rules.game.rule?.id !== RuleId.AdvanceInkJar) return []
     return new InkJarPisteHelper(context.rules.game).possibleInkjarLocation()
   }
 
@@ -32,9 +32,8 @@ class InkjarPisteDescription extends DropAreaDescription {
   height = 2.55
 
   canShortClick(move: MaterialMove, location: Location): boolean {
-    return isMoveItemType(MaterialType.InkJar)(move) && move.location.type === LocationType.InkJarPiste &&  move.location.id === location.id
+    return isMoveItemType(MaterialType.InkJar)(move) && move.location.type === LocationType.InkJarPiste && move.location.id === location.id
   }
-
 }
 
 const coordinatesFromId = [

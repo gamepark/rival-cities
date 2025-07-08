@@ -25,7 +25,7 @@ export const SpecialActionCardHelp: FC<MaterialHelpProps> = ({ item }) => {
       {item.id && (
         <>
           <h3>{t(`help.actions`)}</h3>
-          {action.actions.map((a, index) => (
+          {action.actions?.map((a, index) => (
             <p key={index}>
               <Trans defaults={`help.action.descr.${a.type}`} values={a} components={components} />
             </p>

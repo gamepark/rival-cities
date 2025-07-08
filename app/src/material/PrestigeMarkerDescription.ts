@@ -17,7 +17,7 @@ export class PrestigeMarkerDescription extends TokenDescription {
   getFrontExtraCss(_itemId: any): Interpolation<Theme> {
     return css`
       clip-path: polygon(23% 0%, 40% 0%, 53% 16%, 69% 1%, 85% 1%, 95% 10%, 100% 23%, 100% 40%, 46% 100%, 0% 48%, 0% 24%);
-      `
+    `
   }
 }
 

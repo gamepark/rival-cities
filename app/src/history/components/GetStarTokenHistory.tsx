@@ -8,7 +8,5 @@ export const GetStarTokenHistory = (props: MoveComponentProps) => {
   const actionPlayer = context.action.playerId
   const name = usePlayerName(actionPlayer)
 
-  return (
-    <Trans defaults="history.get.star" values={{ player: name }} />
-  )
+  return <Trans defaults="history.get.star" values={{ player: name }} />
 }

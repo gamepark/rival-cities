@@ -20,10 +20,10 @@ class PlayerShipCardsLocator extends ListLocator {
 
   private getHoverTranslateX(location: Location): number {
     const locationX = location.x ?? 0
-    if(location.player === City.Altona && locationX === 0) {
+    if (location.player === City.Altona && locationX === 0) {
       return 1.3
     }
-    if(location.player === City.Hamburg && locationX > 3) {
+    if (location.player === City.Hamburg && locationX > 3) {
       return -1.3
     }
     return 0

@@ -8,7 +8,5 @@ export const GetFactoryHistory = (props: MoveComponentProps) => {
   const actionPlayer = context.action.playerId
   const name = usePlayerName(actionPlayer)
 
-  return (
-    <Trans defaults="history.get.factory" values={{ player: name }} />
-  )
+  return <Trans defaults="history.get.factory" values={{ player: name }} />
 }

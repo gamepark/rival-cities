@@ -17,7 +17,6 @@ export const ProductionHeader = () => {
   const productChoosen = rules.remind(MemoryType.ProductChoosen)
 
   if (itsMe) {
-
     if (productChoosen) {
       return (
         <Trans

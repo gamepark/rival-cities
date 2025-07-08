@@ -14,13 +14,12 @@ export const ComputedHelp = () => {
   const { t } = useTranslation()
   const rules = useRules<RivalCitiesRules>()
 
-
   const action: ComputedAction = rules?.remind<Action[]>(MemoryType.Actions)[0] as ComputedAction
 
   return (
     <>
       <h2>{t(`help.rule.actions`)}</h2>
-      {action.actions.map((a, index) => (
+      {action.actions?.map((a, index) => (
         <p key={index}>
           <Trans defaults={`help.action.descr.${a.type}`} values={a} components={components} />
         </p>

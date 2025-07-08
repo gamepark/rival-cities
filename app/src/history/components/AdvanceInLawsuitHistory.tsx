@@ -8,7 +8,5 @@ export const AdvanceInLawsuitHistory = (props: MoveComponentProps) => {
   const actionPlayer = context.action.playerId
   const name = usePlayerName(actionPlayer)
 
-  return (
-    <Trans defaults="history.advance.lawsuit" values={{ player: name, id: move.location.id + 1 }} />
-  )
+  return <Trans defaults="history.advance.lawsuit" values={{ player: name, id: move.location.id + 1 }} />
 }

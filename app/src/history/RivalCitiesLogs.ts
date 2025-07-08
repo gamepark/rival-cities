@@ -53,7 +53,7 @@ export class RivalCitiesLogs implements LogDescription {
       }
     }
     if (this.getMoveLocationType(move) === LocationType.PlayerFactories) {
-      if(isMoveItem(move) && move.location.rotation) {
+      if (isMoveItem(move) && move.location.rotation) {
         return {
           Component: UseFactoryHistory,
           player: actionPlayer

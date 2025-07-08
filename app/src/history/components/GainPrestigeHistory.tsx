@@ -8,7 +8,5 @@ export const GainPrestigeHistory = (props: MoveComponentProps) => {
   const actionPlayer = context.action.playerId
   const name = usePlayerName(actionPlayer)
 
-  return (
-    <Trans defaults="history.gain.prestige" values={{ player: name }} />
-  )
+  return <Trans defaults="history.gain.prestige" values={{ player: name }} />
 }
