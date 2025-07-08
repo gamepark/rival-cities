@@ -18,8 +18,10 @@ export class CourtRulingActionRule extends ActionRule<CourtRullingAction> {
       moves.push(this.customMove(CustomMoveType.ResolveLawsuit))
     }
 
-    moves.push(this.lawsuitCardToMove.moveItem(({ location }) => ({ ...location, z: 0 })))
-    moves.push(this.lawsuitCardToMove.moveItem(({ location }) => ({ ...location, z: 2 })))
+    if (this.lawsuitCardToMove.length) {
+      moves.push(this.lawsuitCardToMove.moveItem(({ location }) => ({ ...location, z: 0 })))
+      moves.push(this.lawsuitCardToMove.moveItem(({ location }) => ({ ...location, z: 2 })))
+    }
     moves.push(this.customMove(CustomMoveType.Pass, this.action?.type))
     return moves
   }
