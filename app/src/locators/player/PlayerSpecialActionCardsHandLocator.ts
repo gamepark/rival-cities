@@ -11,6 +11,10 @@ class PlayerSpecialActionCardsHandLocator extends HandLocator {
     }
     return { x: 35, y: 20 }
   }
+
+  getHoverTransform(): string[] {
+    return ['translateZ(10em)', 'scale(2.5)', 'translateY(-1.5em)']
+  }
 }
 
 export const playerSpecialActionCardsHandLocator = new PlayerSpecialActionCardsHandLocator()

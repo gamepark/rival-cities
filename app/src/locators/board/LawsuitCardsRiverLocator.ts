@@ -10,7 +10,7 @@ class LawsuitCardsRiverLocator extends ListLocator {
     return { x: base.x - 13.2, y: base.y - (location.z === 1 ? 13.8 : 14.3) }
   }
 
-  getHoverTransform = () => {
+  getHoverTransform(): string[] {
     return ['translateZ(10em)', 'scale(2.5)']
   }
 }

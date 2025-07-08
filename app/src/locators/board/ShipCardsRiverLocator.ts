@@ -10,7 +10,7 @@ class ShipCardsRiverLocator extends ListLocator {
     return { x: base.x - 14.5, y: base.y + 4.5 }
   }
 
-  getHoverTransform = () => {
+  getHoverTransform(): string[] {
     return ['translateZ(10em)', 'scale(2.5)']
   }
 }

@@ -7,6 +7,10 @@ class GameOverviewPlaceLocator extends Locator {
     const base = gameBoardLocator.coordinates
     return { x: base.x - 4.4, y: base.y + 12.5 }
   }
+
+  getHoverTransform(): string[] {
+    return ['translateZ(10em)', 'scale(2.5)']
+  }
 }
 
 export const gameOverviewPlaceLocator = new GameOverviewPlaceLocator()

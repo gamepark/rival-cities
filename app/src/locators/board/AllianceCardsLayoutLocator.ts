@@ -13,7 +13,7 @@ class AllianceCardsLayoutLocator extends Locator {
     return { x: base.x + itemCoordinates.x, y: base.y + itemCoordinates.y }
   }
 
-  getHoverTransform = () => {
+  getHoverTransform(): string[] {
     return ['translateZ(10em)', 'scale(2.5)']
   }
 }
