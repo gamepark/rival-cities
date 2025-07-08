@@ -9,7 +9,6 @@ import { ActionRule } from './ActionRule'
 
 export class DrawSpecialActionCardActionRule extends ActionRule<DrawSpecialActionCardAction> {
   onRuleStart(): MaterialMove[] {
-    console.log('DrawSpecialActionCardActionRule.onRuleStart')
     return [this.specialActionCard.moveItem({ type: LocationType.PlayerSpecialActionCardsHand, player: this.player })]
   }
 

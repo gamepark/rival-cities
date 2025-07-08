@@ -69,6 +69,7 @@ export class ProductionActionRule extends ActionRule<ProductionAction> {
         moves.push(...this.allianceCardHelper.getNovgorodProducts(move.location.id as Product))
         moves.push(...this.allianceCardHelper.getLondonProducts(move.location.id as Product))
       } else if (this.playerFactories.length === 0) {
+        this.forget(MemoryType.ProductChoosen)
         moves.push(...this.removeActionAndMove())
       }
     }
