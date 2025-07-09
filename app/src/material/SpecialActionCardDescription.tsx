@@ -1,7 +1,10 @@
-import { CardDescription, ItemContext } from '@gamepark/react-game'
+import { faArrowUp } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { CardDescription, ItemContext, ItemMenuButton, pointerCursorCss } from '@gamepark/react-game'
 import { LocationType } from '@gamepark/rival-cities/material/LocationType'
 import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
 import { SpecialActionCard } from '@gamepark/rival-cities/material/SpecialActionCard'
+import { Trans } from 'react-i18next'
 import SpecialAction1 from '../images/cards/action/special/ActionSpecial01.jpg'
 import SpecialAction2 from '../images/cards/action/special/en/ActionSpecial02.jpg'
 import SpecialAction3 from '../images/cards/action/special/en/ActionSpecial03.jpg'
@@ -27,12 +30,14 @@ import SpecialAction22 from '../images/cards/action/special/en/ActionSpecial22.j
 import SpecialAction23 from '../images/cards/action/special/en/ActionSpecial23.jpg'
 import SpecialAction24 from '../images/cards/action/special/en/ActionSpecial24.jpg'
 import SpecialActionBack from '../images/cards/action/special/ActionSpecialBack.png'
-import { isMoveItemType, MaterialMove } from '@gamepark/rules-api'
+import { isMoveItemType, MaterialItem, MaterialMove } from '@gamepark/rules-api'
 import { SpecialActionCardHelp } from './help/SpecialActionCardHelp'
 
 export class SpecialActionCardDescription extends CardDescription {
   width = 6.75
   height = 4.35
+
+  menuAlwaysVisible = true
 
   backImage = SpecialActionBack
 
@@ -67,6 +72,21 @@ export class SpecialActionCardDescription extends CardDescription {
     return (
       isMoveItemType(MaterialType.SpecialActionCard)(move) && move.location.type === LocationType.SpecialActionCardsDiscard && move.itemIndex === context.index
     )
+  }
+
+  getItemMenu(_item: MaterialItem, context: ItemContext, legalMoves: MaterialMove[]) {
+    const take = legalMoves.find(
+      (move) => isMoveItemType(MaterialType.SpecialActionCard)(move) && move.location.type === LocationType.SpecialActionCardsDiscard && move.itemIndex === context.index
+    )
+
+    if (take) {
+      return (
+        <ItemMenuButton label={<Trans defaults="button.play" />} angle={50} x={2.5} y={-2.5} radius={4} move={take}>
+          <FontAwesomeIcon icon={faArrowUp} css={pointerCursorCss} />
+        </ItemMenuButton>
+      )
+    }
+    return undefined
   }
 
   help = SpecialActionCardHelp

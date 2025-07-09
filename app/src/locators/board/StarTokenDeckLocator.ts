@@ -1,10 +1,8 @@
-import { PileLocator } from '@gamepark/react-game'
+import { DeckLocator } from '@gamepark/react-game'
 import { Coordinates } from '@gamepark/rules-api'
 import { gameBoardLocator } from '../GameBoardLocator'
 
-class StarTokenDeckLocator extends PileLocator {
-  radius = 1
-  limit = 12
+class StarTokenDeckLocator extends DeckLocator {
 
   getCoordinates(): Partial<Coordinates> {
     const base = gameBoardLocator.coordinates

@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { faMoneyCheckDollar } from '@fortawesome/free-solid-svg-icons'
+import { faArrowDown, faMoneyCheckDollar } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { CardDescription, ItemContext, ItemMenuButton, pointerCursorCss } from '@gamepark/react-game'
 import { AllianceCard } from '@gamepark/rival-cities/material/AllianceCard'
@@ -7,6 +7,7 @@ import { LocationType } from '@gamepark/rival-cities/material/LocationType'
 import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
 import { CustomMoveType } from '@gamepark/rival-cities/rules/CustomMoveType'
 import { isCustomMoveType, isMoveItemType, MaterialItem, MaterialMove } from '@gamepark/rules-api'
+import { Trans } from 'react-i18next'
 import AllianceAmsterdam from '../images/cards/alliance/en/AllianceAmsterdam.jpg'
 import AllianceBruxelles from '../images/cards/alliance/en/AllianceBruxelles.jpg'
 import AllianceGdansk from '../images/cards/alliance/en/AllianceGdansk.jpg'
@@ -43,11 +44,21 @@ export class AllianceCardDescription extends CardDescription {
 
   getItemMenu(item: MaterialItem, context: ItemContext, legalMoves: MaterialMove[]) {
     const pay = legalMoves.find((move) => isCustomMoveType(CustomMoveType.PayForAlliance)(move) && move.data.pay.id === item.id)
-
+    const take = legalMoves.find(
+      (move) => isMoveItemType(MaterialType.AllianceCard)(move) && move.location.type === LocationType.PlayerAllianceCards && move.itemIndex === context.index
+    )
     if (pay && item.location.type === LocationType.PlayerAllianceCards && item.location.player === context.player) {
       return (
         <ItemMenuButton angle={50} radius={4} move={pay}>
           <FontAwesomeIcon icon={faMoneyCheckDollar} css={pointerCursorCss} />
+        </ItemMenuButton>
+      )
+    }
+
+    if (take) {
+      return (
+        <ItemMenuButton label={<Trans defaults="button.take" />} angle={50} radius={4} move={take}>
+          <FontAwesomeIcon icon={faArrowDown} css={pointerCursorCss} />
         </ItemMenuButton>
       )
     }

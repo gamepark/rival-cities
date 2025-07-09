@@ -1,7 +1,11 @@
-import { CardDescription, ItemContext } from '@gamepark/react-game'
+import { faArrowDown } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { CardDescription, ItemContext, ItemMenuButton, pointerCursorCss } from '@gamepark/react-game'
+import { LocationType } from '@gamepark/rival-cities/material/LocationType'
 import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
 import { ShipCard } from '@gamepark/rival-cities/material/ShipCard'
-import { isMoveItemType, MaterialMove } from '@gamepark/rules-api'
+import { isMoveItemType, MaterialItem, MaterialMove } from '@gamepark/rules-api'
+import { Trans } from 'react-i18next'
 import Ship1 from '../images/cards/ship/en/Ship01.jpg'
 import Ship2 from '../images/cards/ship/en/Ship02.jpg'
 import Ship3 from '../images/cards/ship/en/Ship03.jpg'
@@ -29,6 +33,8 @@ import { ShipCardHelp } from './help/ShipCardHelp'
 export class ShipCardDescription extends CardDescription {
   width = 4.35
   height = 6.75
+
+  menuAlwaysVisible = true
 
   backImage = ShipBack
 
@@ -58,6 +64,21 @@ export class ShipCardDescription extends CardDescription {
 
   canShortClick(move: MaterialMove, context: ItemContext): boolean {
     return isMoveItemType(MaterialType.ShipCard)(move) && context.index === move.itemIndex
+  }
+
+  getItemMenu(_item: MaterialItem, context: ItemContext, legalMoves: MaterialMove[]) {
+    const take = legalMoves.find(
+      (move) => isMoveItemType(MaterialType.ShipCard)(move) && move.location.type === LocationType.PlayerShipCards && move.itemIndex === context.index
+    )
+
+    if (take) {
+      return (
+        <ItemMenuButton label={<Trans defaults="button.take" />} angle={50} x={1.5} y={-4} radius={4} move={take}>
+          <FontAwesomeIcon icon={faArrowDown} css={pointerCursorCss} />
+        </ItemMenuButton>
+      )
+    }
+    return undefined
   }
 
   help = ShipCardHelp
