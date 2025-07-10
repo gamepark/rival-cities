@@ -33,14 +33,14 @@ export class OffSeasonPayForAllianceRule extends SimultaneousRule {
     const allianceToPay = this.remind(MemoryType.AlliancePay, player).find((it: AlliancePay) => it.alreadyPay < it.cost.amount)
     if (allianceToPay) {
       if (allianceToPay.cost.product === 'Letter') {
-        return this.getPlayerLetters(player).moveItems({ type: LocationType.LetterDeck, player })
+        return this.getPlayerLetters(player).moveItems({ type: LocationType.LetterDeck })
       }
       if (allianceToPay.cost.product) {
         return this.getPlayerProduct(player)
           .id(allianceToPay.cost.product)
-          .moveItems((it) => ({ type: LocationType.ProductPiles, id: it.id, player }))
+          .moveItems((it) => ({ type: LocationType.ProductPiles, id: it.id }))
       }
-      return this.getPlayerProduct(player).moveItems((it) => ({ type: LocationType.ProductPiles, id: it.id, player }))
+      return this.getPlayerProduct(player).moveItems((it) => ({ type: LocationType.ProductPiles, id: it.id }))
     }
     this.getPlayerAlliances(player).forEach((it) => {
       const allianceData = allianceDatas[it.id as AllianceCard]
@@ -57,7 +57,7 @@ export class OffSeasonPayForAllianceRule extends SimultaneousRule {
           this.material(MaterialType.AllianceCard)
             .location(LocationType.PlayerAllianceCards)
             .id(it.id)
-            .moveItem({ ...loc, player })
+            .moveItem(loc)
         )
       })
     })
@@ -66,26 +66,30 @@ export class OffSeasonPayForAllianceRule extends SimultaneousRule {
 
   beforeItemMove(move: ItemMove): MaterialMove[] {
     if (isMoveItemType(MaterialType.Product)(move) || isMoveItemType(MaterialType.Letter)(move)) {
-      const alliancePays = this.remind<AlliancePay[]>(MemoryType.AlliancePay, move.location.player)
+      const player =
+        this.material(MaterialType.Letter).index(move.itemIndex).getItem()?.location.player ??
+        this.material(MaterialType.Product).index(move.itemIndex).getItem()?.location.player
+      const alliancePays = this.remind<AlliancePay[]>(MemoryType.AlliancePay, player)
       const alliancePay = alliancePays.find((it: AlliancePay) => it.alreadyPay < it.cost.amount)
       if (alliancePay) {
         alliancePay.alreadyPay += 1
-        this.memorize(MemoryType.AlliancePay, alliancePays, move.location.player)
+        this.memorize(MemoryType.AlliancePay, alliancePays, player)
+      }
+      if (this.getPlayerAlrdeadyPayedAlliance(player!).length === this.getPlayerAlliances(player!).length) {
+        return [this.endPlayerTurn(player!)]
+      }
+    }
+    if (isMoveItemType(MaterialType.AllianceCard)(move)) {
+      const player = this.material(MaterialType.AllianceCard).index(move.itemIndex).getItem()?.location.player
+      if (this.getPlayerAlliances(player!).length - 1 === 0) {
+        return [this.endPlayerTurn(player!)]
       }
     }
     return []
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {
-    if (isMoveItemType(MaterialType.AllianceCard)(move)) {
-      if (this.getPlayerAlliances(move.location.player!).length === 0) {
-        return [this.endPlayerTurn(move.location.player!)]
-      }
-    }
     if (isMoveItemType(MaterialType.Product)(move) || isMoveItemType(MaterialType.Letter)(move)) {
-      if (this.getPlayerAlrdeadyPayedAlliance(move.location.player!).length === this.getPlayerAlliances(move.location.player!).length) {
-        return [this.endPlayerTurn(move.location.player!)]
-      }
     }
     return []
   }
