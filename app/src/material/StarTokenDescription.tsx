@@ -24,7 +24,7 @@ export class StarTokenDescription extends CardDescription {
 
   getItemMenu(_item: MaterialItem, context: ItemContext, legalMoves: MaterialMove[]): React.ReactNode {
     const take = legalMoves.find(
-      (move) => isMoveItemType(MaterialType.Letter)(move) && move.location.type === LocationType.PlayerLetterDeck && move.itemIndex === context.index
+      (move) => isMoveItemType(MaterialType.StarToken)(move) && move.location.type === LocationType.PlayerStarTokens && move.itemIndex === context.index
     )
 
     if (context.displayIndex !== 0) return <></>
