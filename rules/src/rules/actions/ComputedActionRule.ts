@@ -1,12 +1,25 @@
-import { CustomMove, isCustomMoveType, ItemMove, MaterialMove, PlayMoveContext } from '@gamepark/rules-api'
+import { CustomMove, isCustomMoveType, ItemMove, MaterialMove, PlayMoveContext, RuleMove, RuleStep } from '@gamepark/rules-api'
 import { ComputedAction } from '../../material/Actions/Actions'
+import { ActionType } from '../../material/Actions/ActionType'
 import { CustomMoveType } from '../CustomMoveType'
 import { getActionRule } from '../helper/ActionHelper'
-import { ActionRule } from './ActionRule'
 import { MemoryHelper } from '../helper/MemoryHelper'
+import { MemoryType } from '../MemoryType'
+import { ActionRule } from './ActionRule'
 
 export class ComputedActionRule extends ActionRule<ComputedAction> {
   actionRules = this.action?.actions?.map((it) => getActionRule(this.game, it)) ?? []
+  onRuleStart(_move: RuleMove, _previousRule?: RuleStep, _context?: PlayMoveContext): MaterialMove[] {
+    this.forget(MemoryType.ProductChoosen)
+    const moves: MaterialMove[] = []
+    this.action?.actions?.forEach((a) => {
+      if (a.type === ActionType.OpponentEarnPrestige || a.type === ActionType.ReturnFactory) {
+        moves.push(...getActionRule(this.game, a).onRuleStart(_move, _previousRule, _context))
+      }
+    })
+    return moves
+  }
+
   getPlayerMoves(): MaterialMove[] {
     return [...this.actionRules.flatMap((rule) => rule.getPlayerMoves())]
   }

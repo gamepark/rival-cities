@@ -27,14 +27,15 @@ export class InkJarPisteHelper extends MaterialRulesPart {
   possiblesNbCaseToAdvance() {
     const nbFreeCases = this.playerShip17.length ? 3 : 2
     let nbMovesForProducts = 0
-    for (let i = 1; i <= this.playerProducts.getQuantity(); i++) {
+    for (let i = nbFreeCases - 1; i <= this.playerProducts.getQuantity(); i++) {
       if (i < nbFreeCases + 1) {
         nbMovesForProducts += 1
       } else {
         nbMovesForProducts += 0.5
       }
     }
-
+    console.log(nbFreeCases)
+    console.log(nbMovesForProducts)
     return nbFreeCases + Math.floor(nbMovesForProducts)
   }
 

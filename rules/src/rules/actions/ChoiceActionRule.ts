@@ -2,11 +2,18 @@ import { CustomMove, isCustomMoveType, ItemMove, MaterialMove, PlayMoveContext }
 import { ChoiceAction } from '../../material/Actions/Actions'
 import { CustomMoveType } from '../CustomMoveType'
 import { getActionRule } from '../helper/ActionHelper'
+import { MemoryType } from '../MemoryType'
 import { ActionRule } from './ActionRule'
 import { MemoryHelper } from '../helper/MemoryHelper'
 
 export class ChoiceActionRule extends ActionRule<ChoiceAction> {
   actionRules = this.action?.actions?.map((it) => getActionRule(this.game, it)) ?? []
+
+  onRuleStart(): MaterialMove[] {
+    this.forget(MemoryType.ProductChoosen)
+    return []
+  }
+
   getPlayerMoves(): MaterialMove[] {
     return [...this.actionRules.flatMap((rule) => rule.getPlayerMoves())]
   }

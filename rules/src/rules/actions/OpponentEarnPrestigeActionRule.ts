@@ -1,8 +1,10 @@
 import { MaterialMove } from '@gamepark/rules-api'
 import { OpponentEarnPrestigeAction } from '../../material/Actions/Actions'
 import { ActionType } from '../../material/Actions/ActionType'
+import { AllianceCard } from '../../material/AllianceCard'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
+import { ShipCard } from '../../material/ShipCard'
 import { ActionRule } from './ActionRule'
 
 export class OpponentEarnPrestigeActionRule extends ActionRule<OpponentEarnPrestigeAction> {
@@ -17,10 +19,10 @@ export class OpponentEarnPrestigeActionRule extends ActionRule<OpponentEarnPrest
   }
 
   get nextPlayerHaveAllianceBruxelles() {
-    return this.material(MaterialType.AllianceCard).location(LocationType.PlayerAllianceCards).player(this.nextPlayer).length > 0
+    return this.material(MaterialType.AllianceCard).location(LocationType.PlayerAllianceCards).player(this.nextPlayer).id(AllianceCard.AllianceBruxelles).length > 0
   }
 
   get nextPlayerHaveShip16() {
-    return this.material(MaterialType.ShipCard).location(LocationType.PlayerShipCards).player(this.nextPlayer).length > 0
+    return this.material(MaterialType.ShipCard).location(LocationType.PlayerShipCards).player(this.nextPlayer).id(ShipCard.Ship16).length > 0
   }
 }

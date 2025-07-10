@@ -28,7 +28,8 @@ export default tseslint.config([
             '@typescript-eslint/consistent-type-definitions': 'off',
             '@typescript-eslint/no-non-null-assertion': 'off',
             '@typescript-eslint/no-unsafe-enum-comparison': 'off',
-            '@typescript-eslint/no-unsafe-assignment': 'off'
+            '@typescript-eslint/no-unsafe-assignment': 'off',
+            '@typescript-eslint/no-unnecessary-condition': 'off',
         }
     },
     eslintPluginPrettierRecommended
