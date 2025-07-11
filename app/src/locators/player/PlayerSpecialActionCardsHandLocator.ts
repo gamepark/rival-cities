@@ -1,19 +1,31 @@
-import { HandLocator } from '@gamepark/react-game'
+import { ListLocator } from '@gamepark/react-game'
 import { City } from '@gamepark/rival-cities/City'
-import { Location } from '@gamepark/rules-api'
+import { Location, MaterialItem } from '@gamepark/rules-api'
 
-class PlayerSpecialActionCardsHandLocator extends HandLocator {
-  radius = 50
+class PlayerSpecialActionCardsHandLocator extends ListLocator {
+  gap = { x: 7 }
+  maxCount = 3
 
   getCoordinates(location: Location) {
     if (location.player === City.Altona) {
-      return { x: -38, y: 20 }
+      return { x: -46, y: 20 }
     }
-    return { x: 35, y: 20 }
+    return { x: 28, y: 20 }
   }
 
-  getHoverTransform(): string[] {
-    return ['translateZ(10em)', 'scale(2.5)', 'translateY(-1.5em)']
+  getHoverTransform(item: MaterialItem): string[] {
+    return ['translateZ(10em)', 'translateY(-3em)', 'scale(2.5)', `translateX(${this.getHoverTranslateX(item.location)}em)`]
+  }
+
+  private getHoverTranslateX(location: Location): number {
+    const locationX = location.x ?? 0
+    if (location.player === City.Altona && locationX === 0) {
+      return 2
+    }
+    if (location.player === City.Hamburg && locationX > 1) {
+      return -0.5
+    }
+    return 0
   }
 }
 
