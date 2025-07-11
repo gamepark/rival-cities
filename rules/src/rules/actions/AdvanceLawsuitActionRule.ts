@@ -2,8 +2,6 @@ import { CustomMove, isCustomMoveType, isMoveItemType, ItemMove, MaterialMove } 
 import { City } from '../../City'
 import { AdvanceLawsuitAction } from '../../material/Actions/Actions'
 import { ActionType } from '../../material/Actions/ActionType'
-import { AllianceCard } from '../../material/AllianceCard'
-import { AllianceCardHelper } from '../../material/helper/AllianceCardHelper'
 import { LawsuitCard, lawsuitCardData } from '../../material/LawsuitCard'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
@@ -62,8 +60,7 @@ export class AdvanceLawsuitActionRule extends ActionRule<AdvanceLawsuitAction> {
       this.removeAction()
       const card = this.lawsuitCards.filter(({ location }) => location.z === move.location.id).getItem()
       if (card) {
-        const playerHaveAllianceLeHavre = new AllianceCardHelper(this.game).checkPlayerAllianceCardById(AllianceCard.AllianceLeHavre)
-        if (playerHaveAllianceLeHavre && this.playerProducts.length) {
+        if (this.action?.playerCanUseAllianceLeHavre && this.playerProducts.length) {
           this.addActionBonus({
             type: ActionType.PayToPerformActionAgain,
             productType: undefined,
