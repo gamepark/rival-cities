@@ -16,7 +16,8 @@ export const AdvanceLawsuitHeader = () => {
   const name = usePlayerName(activePlayer)
   const pass = useLegalMove((move) => isCustomMoveType(CustomMoveType.Pass)(move))
 
-  const currentAction = rules.remind(MemoryType.Actions)[0] as AdvanceLawsuitAction
+  const actions = rules.remind(MemoryType.Actions) ?? []
+  const currentAction = actions[0] as AdvanceLawsuitAction
 
   if (itsMe) {
     if(currentAction?.nbTimeAlreadyAdvanced && currentAction.nbTimeAlreadyAdvanced > 0) {

@@ -34,8 +34,6 @@ export class InkJarPisteHelper extends MaterialRulesPart {
         nbMovesForProducts += 0.5
       }
     }
-    console.log(nbFreeCases)
-    console.log(nbMovesForProducts)
     return nbFreeCases + Math.floor(nbMovesForProducts)
   }
 
