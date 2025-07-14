@@ -20,7 +20,7 @@ export abstract class ActionRule<E extends Action = Action> extends PlayerTurnRu
   removeAction() {
     this.forget(MemoryType.BasicActionChoosen)
     const firstAction = this.actions[0]
-    if (firstAction.type === ActionType.Computed && this.action?.type !== ActionType.Computed) {
+    if (firstAction?.type === ActionType.Computed && this.action?.type !== ActionType.Computed) {
       firstAction.actions = firstAction.actions?.filter((it) => it.type !== this.action?.type) ?? []
       if (firstAction.actions.length === 0) {
         this.memorize<Action[]>(MemoryType.Actions, (old) => old.splice(1))

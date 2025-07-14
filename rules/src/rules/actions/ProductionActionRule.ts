@@ -24,13 +24,13 @@ export class ProductionActionRule extends ActionRule<ProductionAction> {
       const productsToMove = this.action?.productType ? this.products : this.allProducts
       return [
         ...productsToMove.moveItems((item) => ({ type: LocationType.PlayerProducts, player: this.player, id: item.id }), this.action?.quantity),
-        this.customMove(CustomMoveType.Pass)
+        this.customMove(CustomMoveType.Pass, this.action?.type)
       ]
     }
     if (this.playerFactories.length && (!this.action?.productType || this.action.productType === this.productChoosen)) {
-      return [...this.playerFactories.rotateItems(true), this.customMove(CustomMoveType.Pass)]
+      return [...this.playerFactories.rotateItems(true), this.customMove(CustomMoveType.Pass, this.action?.type)]
     }
-    return [this.customMove(CustomMoveType.Pass)]
+    return [this.customMove(CustomMoveType.Pass, this.action?.type)]
   }
 
   beforeItemMove(move: ItemMove): MaterialMove[] {
@@ -77,7 +77,7 @@ export class ProductionActionRule extends ActionRule<ProductionAction> {
   }
 
   onCustomMove(move: CustomMove): MaterialMove[] {
-    if (isCustomMoveType(CustomMoveType.Pass)(move)) {
+    if (isCustomMoveType(CustomMoveType.Pass)(move) && move.data === this.action?.type) {
       this.forget(MemoryType.ProductChoosen)
       return this.removeActionAndMove()
     }

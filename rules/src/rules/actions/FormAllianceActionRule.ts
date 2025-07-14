@@ -40,7 +40,7 @@ export class FormAllianceActionRule extends ActionRule<FormAllianceAction> {
   }
 
   onCustomMove(move: CustomMove): MaterialMove[] {
-    if (isCustomMoveType(CustomMoveType.Pass)(move)) {
+    if (isCustomMoveType(CustomMoveType.Pass)(move) && move.data === this.action?.type) {
       this.forget(MemoryType.ProductChoosen)
       return this.removeActionAndMove()
     }

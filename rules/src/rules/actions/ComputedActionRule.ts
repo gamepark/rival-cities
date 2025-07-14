@@ -33,10 +33,18 @@ export class ComputedActionRule extends ActionRule<ComputedAction> {
   }
 
   onCustomMove(move: CustomMove, context?: PlayMoveContext): MaterialMove[] {
+    const actionsMoves = this.actionRules.flatMap((rule) => rule.onCustomMove(move, context))
+    if(actionsMoves.length > 0) {
+      return actionsMoves
+    }
+    return this.onPassMove(move)
+  }
+
+  onPassMove(move: CustomMove): MaterialMove[] {
     if (isCustomMoveType(CustomMoveType.Pass)(move)) {
       return this.removeActionAndMove()
     }
-    return [...this.actionRules.flatMap((rule) => rule.onCustomMove(move, context))]
+    return []
   }
 
   onRuleEnd(): MaterialMove[] {

@@ -98,7 +98,7 @@ export class AdvanceLawsuitActionRule extends ActionRule<AdvanceLawsuitAction> {
 
   onCustomMove(move: CustomMove): MaterialMove[] {
     if (this.checkAnotherActionInProgress(this.action?.type)) return []
-    if (isCustomMoveType(CustomMoveType.Pass)(move)) {
+    if (isCustomMoveType(CustomMoveType.Pass)(move) && move.data === this.action?.type) {
       return this.removeActionAndMove()
     }
     if (isCustomMoveType(CustomMoveType.TakeLetterToSwapProduct)(move)) {
