@@ -51,7 +51,7 @@ export abstract class ActionRule<E extends Action = Action> extends PlayerTurnRu
       if (this.remind(MemoryType.OffSeasonStep)) {
         return [this.startRule(this.remind(MemoryType.OffSeasonStep))]
       }
-      return [this.startPlayerTurn(RuleId.AdvanceInkJar, this.nextPlayer)]
+      return [this.startRule(RuleId.ConfirmEndTurn)]
     }
 
     const nextAction = this.actions[0]

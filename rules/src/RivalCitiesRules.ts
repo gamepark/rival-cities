@@ -34,6 +34,7 @@ import { ChoiceActionRule } from './rules/actions/ChoiceActionRule'
 import { ChooseActionRule } from './rules/ChooseActionRule'
 import { ChooseFirstProductRule } from './rules/ChooseFirstProductRule'
 import { ChooseSpecialActionRule } from './rules/ChooseSpecialActionRule'
+import { ConfirmEndTurnRule } from './rules/ConfirmEndTurnRule'
 import { CustomMoveType } from './rules/CustomMoveType'
 import { OffSeasonChangeSpecialCardsRule } from './rules/OffSeason/OffSeasonChangeSpecialCardsRule'
 import { OffSeasonGetPrestigeBonusesRule } from './rules/OffSeason/OffSeasonGetPrestigeBonusesRule'
@@ -92,7 +93,8 @@ export class RivalCitiesRules
     [RuleId.ReturnFactory]: ReturnFactoryActionRule,
     [RuleId.CourtRuling]: CourtRulingActionRule,
     [RuleId.Production]: ProductionActionRule,
-    [RuleId.PayToPerformActionAgain]: PayToPerformActionAgainRule
+    [RuleId.PayToPerformActionAgain]: PayToPerformActionAgainRule,
+    [RuleId.ConfirmEndTurn]: ConfirmEndTurnRule
   }
 
   locationsStrategies = {

@@ -8,6 +8,7 @@ import { BuildFactoryHeader } from './BuildFactoryHeader'
 import { ChooseActionHeader } from './ChooseActionHeader'
 import { ChooseFirstProductHeader } from './ChooseFirstProductHeader'
 import { ChooseSpecialActionHeader } from './ChooseSpecialActionHeader'
+import { ConfirmEndTurnHeader } from './ConfirmEndTurnHeader'
 import { DrawSpecialActionCardHeader } from './DrawSpecialActionCardHeader'
 import { EarnPrestigeHeader } from './EarnPrestigeHeader'
 import { FormAllianceHeader } from './FormAllianceHeader'
@@ -54,5 +55,6 @@ export const Headers: Partial<Record<RuleId, ComponentType>> = {
   [RuleId.Production]: ProductionHeader,
   [RuleId.Gift]: GiftHeader,
   [RuleId.ProductSwap]: ProductSwapHeader,
-  [RuleId.PayToPerformActionAgain]: PayToPerformActionAgainHeader
+  [RuleId.PayToPerformActionAgain]: PayToPerformActionAgainHeader,
+  [RuleId.ConfirmEndTurn]: ConfirmEndTurnHeader
 }

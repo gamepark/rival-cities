@@ -3,5 +3,6 @@ export enum CustomMoveType {
   PlaysBasicAction,
   ResolveLawsuit,
   TakeLetterToSwapProduct,
-  PayForAlliance
+  PayForAlliance,
+  ConfirmEndTurn
 }

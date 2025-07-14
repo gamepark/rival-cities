@@ -30,5 +30,6 @@ export enum RuleId {
   OffSeasonReactivateFactories,
   OffSeasonReturnBell,
   OffSeasonPlayerWithMostShipCardsEarnPrestige,
-  PayToPerformActionAgain
+  PayToPerformActionAgain,
+  ConfirmEndTurn,
 }
