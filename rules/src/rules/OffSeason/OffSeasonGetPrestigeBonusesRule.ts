@@ -10,9 +10,7 @@ import { RuleId } from '../RuleId'
 export class OffSeasonGetPrestigeBonusesRule extends PlayerTurnRule {
   onRuleStart(): MaterialMove[] {
     if (Math.abs(this.prestigeMarkerLocation) < 2) {
-      this.memorize(MemoryType.OffSeasonStep, RuleId.OffSeasonChangeSpecialCards)
-      this.memorize(MemoryType.Actions, [{ type: ActionType.ResolveLawsuit }])
-      return [this.startRule(RuleId.ResolveLawsuit)]
+      return [this.startResolveLawsuit()]
     }
     return this.getBonusesMoves()
   }
@@ -59,9 +57,7 @@ export class OffSeasonGetPrestigeBonusesRule extends PlayerTurnRule {
         moves.push(this.getLetters().moveItem({ type: LocationType.PlayerLetterDeck, player }))
         moves.push(this.getStarsTokens().moveItem({ type: LocationType.PlayerStarTokens, player }))
     }
-    this.memorize(MemoryType.OffSeasonStep, RuleId.OffSeasonChangeSpecialCards)
-    this.memorize(MemoryType.Actions, [{ type: ActionType.ResolveLawsuit }])
-    moves.push(this.startRule(RuleId.ResolveLawsuit))
+    moves.push(this.startResolveLawsuit())
     return moves
   }
 
@@ -93,6 +89,23 @@ export class OffSeasonGetPrestigeBonusesRule extends PlayerTurnRule {
     if (opponentLetters.length > playerLetters.length) return opponentLetters
 
     return lettersInReserve
+  }
+
+  startResolveLawsuit() {
+    this.memorize(MemoryType.OffSeasonStep, RuleId.OffSeasonChangeSpecialCards)
+    this.memorize(MemoryType.Actions, [{ type: ActionType.ResolveLawsuit }])
+
+    const lawsuitMarkerToResolve = this.material(MaterialType.LawsuitMarker)
+      .location((loc) => loc.type === LocationType.LawsuitMarkerPiste && loc.id === 0)
+      .getItem()?.location.x!
+
+    if(lawsuitMarkerToResolve === 0) {
+      return this.startRule(RuleId.ResolveLawsuit)
+    }
+
+    const player = lawsuitMarkerToResolve < 0 ? City.Altona : City.Hamburg
+
+    return this.startPlayerTurn(RuleId.ResolveLawsuit, player)
   }
 
   getStarsTokens() {

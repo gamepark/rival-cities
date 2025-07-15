@@ -62,7 +62,7 @@ export class CourtRulingActionRule extends ActionRule<CourtRullingAction> {
   onCustomMove(move: CustomMove): MaterialMove[] {
     if (this.checkAnotherActionInProgress(this.action?.type)) return []
     if (isCustomMoveType(CustomMoveType.ResolveLawsuit)(move)) {
-      this.addActionBonusAndMove({ type: ActionType.ResolveLawsuit })
+      return this.addActionBonusAndMove({ type: ActionType.ResolveLawsuit })
     }
     return []
   }
