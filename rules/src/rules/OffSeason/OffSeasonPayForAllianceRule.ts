@@ -52,14 +52,16 @@ export class OffSeasonPayForAllianceRule extends SimultaneousRule {
         }
         moves.push(this.customMove(CustomMoveType.PayForAlliance, { pay: alliancePay, player }))
       }
-      this.possiblePlaces().forEach((loc) => {
-        moves.push(
-          this.material(MaterialType.AllianceCard)
-            .location(LocationType.PlayerAllianceCards)
-            .id(it.id)
-            .moveItem(loc)
-        )
-      })
+      if(!this.getPlayerAlrdeadyPayedAlliance(player).find((pay) => pay.id === it.id)) {
+        this.possiblePlaces().forEach((loc) => {
+          moves.push(
+            this.material(MaterialType.AllianceCard)
+              .location(LocationType.PlayerAllianceCards)
+              .id(it.id)
+              .moveItem(loc)
+          )
+        })
+      }
     })
     return moves
   }
@@ -69,7 +71,7 @@ export class OffSeasonPayForAllianceRule extends SimultaneousRule {
       const player =
         this.material(MaterialType.Letter).index(move.itemIndex).getItem()?.location.player ??
         this.material(MaterialType.Product).index(move.itemIndex).getItem()?.location.player
-      const alliancePays = this.remind<AlliancePay[]>(MemoryType.AlliancePay, player)
+      const alliancePays: AlliancePay[] | undefined = this.remind<AlliancePay[]>(MemoryType.AlliancePay, player) ?? []
       const alliancePay = alliancePays.find((it: AlliancePay) => it.alreadyPay < it.cost.amount)
       if (alliancePay) {
         alliancePay.alreadyPay += 1
@@ -81,7 +83,7 @@ export class OffSeasonPayForAllianceRule extends SimultaneousRule {
     }
     if (isMoveItemType(MaterialType.AllianceCard)(move)) {
       const player = this.material(MaterialType.AllianceCard).index(move.itemIndex).getItem()?.location.player
-      if (this.getPlayerAlliances(player!).length - 1 === 0) {
+      if (this.getPlayerAlliances(player!).length - 1 === this.getPlayerAlrdeadyPayedAlliance(player!).length) {
         return [this.endPlayerTurn(player!)]
       }
     }
@@ -139,6 +141,6 @@ export class OffSeasonPayForAllianceRule extends SimultaneousRule {
   }
 
   getPlayerAlrdeadyPayedAlliance(player: number): AlliancePay[] {
-    return this.remind<AlliancePay[]>(MemoryType.AlliancePay, player).filter((it: AlliancePay) => it.alreadyPay >= it.cost.amount)
+    return this.remind<AlliancePay[]>(MemoryType.AlliancePay, player)?.filter((it: AlliancePay) => it.alreadyPay >= it.cost.amount) ?? []
   }
 }
