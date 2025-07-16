@@ -64,9 +64,8 @@ export class SpecialActionCardDescription extends CardDescription {
   }
 
   canShortClick(move: MaterialMove, context: ItemContext): boolean {
-    return (
-      isMoveItemType(MaterialType.SpecialActionCard)(move) && move.location.type === LocationType.SpecialActionCardsDiscard && move.itemIndex === context.index
-    )
+    const locations = [LocationType.SpecialActionCardsDiscard, LocationType.PlayerSpecialActionCardsHand]
+    return isMoveItemType(MaterialType.SpecialActionCard)(move) && locations.includes(move.location.type ?? 0) && move.itemIndex === context.index
   }
 
   help = SpecialActionCardHelp

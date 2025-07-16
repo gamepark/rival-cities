@@ -416,7 +416,7 @@ export class Tutorial extends MaterialTutorial<number, MaterialType, LocationTyp
     {
       move: {
         auto: true,
-        filter: (move: MaterialMove) => isCustomMoveType(CustomMoveType.PlaysBasicAction)(move)
+        filter: (move: MaterialMove) => isCustomMoveType(CustomMoveType.PlaysInkjarCard)(move)
       }
     },
     {

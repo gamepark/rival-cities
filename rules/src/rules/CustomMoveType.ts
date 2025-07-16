@@ -1,6 +1,6 @@
 export enum CustomMoveType {
   Pass = 1,
-  PlaysBasicAction,
+  PlaysInkjarCard,
   ResolveLawsuit,
   TakeLetterToSwapProduct,
   PayForAlliance,
