@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { faMoneyCheckDollar } from '@fortawesome/free-solid-svg-icons'
+import { faMoneyCheckDollar, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { CardDescription, ItemContext, ItemMenuButton, pointerCursorCss } from '@gamepark/react-game'
 import { AllianceCard } from '@gamepark/rival-cities/material/AllianceCard'
@@ -44,12 +44,26 @@ export class AllianceCardDescription extends CardDescription {
 
   getItemMenu(item: MaterialItem, context: ItemContext, legalMoves: MaterialMove[]) {
     const pay = legalMoves.find((move) => isCustomMoveType(CustomMoveType.PayForAlliance)(move) && move.data.pay.id === item.id)
+    const discard = legalMoves.find(
+      (move) => isMoveItemType(MaterialType.AllianceCard)(move) && move.location.type === LocationType.AllianceCardsLayout && move.itemIndex === context.index
+    )
 
-    if (pay && item.location.type === LocationType.PlayerAllianceCards && item.location.player === context.player) {
+    if (item.location.type !== LocationType.PlayerAllianceCards || item.location.player !== context.player) return undefined
+
+    if (pay || discard) {
       return (
-        <ItemMenuButton label={<Trans defaults="button.pay" />} angle={50} radius={4} move={pay}>
-          <FontAwesomeIcon icon={faMoneyCheckDollar} css={pointerCursorCss} />
-        </ItemMenuButton>
+        <>
+          {pay && (
+            <ItemMenuButton label={<Trans defaults="button.pay" />} angle={50} radius={4} move={pay}>
+              <FontAwesomeIcon icon={faMoneyCheckDollar} css={pointerCursorCss} />
+            </ItemMenuButton>
+          )}
+          {discard && (
+            <ItemMenuButton label={<Trans defaults="button.discard" />} angle={50} radius={4} y={pay ? -0.5 : undefined} move={discard}>
+              <FontAwesomeIcon icon={faTrash} css={pointerCursorCss} />
+            </ItemMenuButton>
+          )}
+        </>
       )
     }
     return undefined
