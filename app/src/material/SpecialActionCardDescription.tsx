@@ -1,7 +1,11 @@
-import { CardDescription, ItemContext } from '@gamepark/react-game'
+import { faArrowDown, faHand } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { CardDescription, ItemContext, ItemMenuButton, pointerCursorCss } from '@gamepark/react-game'
 import { LocationType } from '@gamepark/rival-cities/material/LocationType'
 import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
 import { SpecialActionCard } from '@gamepark/rival-cities/material/SpecialActionCard'
+import { CustomMoveType } from '@gamepark/rival-cities/rules/CustomMoveType'
+import { Trans } from 'react-i18next'
 import SpecialAction1 from '../images/cards/action/special/ActionSpecial01.jpg'
 import SpecialAction2 from '../images/cards/action/special/en/ActionSpecial02.jpg'
 import SpecialAction3 from '../images/cards/action/special/en/ActionSpecial03.jpg'
@@ -27,7 +31,7 @@ import SpecialAction22 from '../images/cards/action/special/en/ActionSpecial22.j
 import SpecialAction23 from '../images/cards/action/special/en/ActionSpecial23.jpg'
 import SpecialAction24 from '../images/cards/action/special/en/ActionSpecial24.jpg'
 import SpecialActionBack from '../images/cards/action/special/ActionSpecialBack.png'
-import { isMoveItemType, MaterialMove } from '@gamepark/rules-api'
+import { isCustomMoveType, isMoveItemType, MaterialItem, MaterialMove } from '@gamepark/rules-api'
 import { SpecialActionCardHelp } from './help/SpecialActionCardHelp'
 
 export class SpecialActionCardDescription extends CardDescription {
@@ -35,6 +39,8 @@ export class SpecialActionCardDescription extends CardDescription {
   height = 4.35
 
   backImage = SpecialActionBack
+
+  menuAlwaysVisible = true
 
   images = {
     [SpecialActionCard.SpecialAction1]: SpecialAction1,
@@ -66,6 +72,48 @@ export class SpecialActionCardDescription extends CardDescription {
   canShortClick(move: MaterialMove, context: ItemContext): boolean {
     const locations = [LocationType.SpecialActionCardsDiscard, LocationType.PlayerSpecialActionCardsHand]
     return isMoveItemType(MaterialType.SpecialActionCard)(move) && locations.includes(move.location.type ?? 0) && move.itemIndex === context.index
+  }
+
+  getItemMenu(item: MaterialItem, context: ItemContext, legalMoves: MaterialMove[]) {
+    const play = legalMoves.find((move) => isCustomMoveType(CustomMoveType.PlaysInkjarCard)(move) && move.data === item.location.id)
+    const take = legalMoves.find(
+      (move) =>
+        isMoveItemType(MaterialType.SpecialActionCard)(move) &&
+        move.location.type === LocationType.PlayerSpecialActionCardsHand &&
+        move.itemIndex === context.index
+    )
+    const discard = legalMoves.find(
+      (move) =>
+        isMoveItemType(MaterialType.SpecialActionCard)(move) &&
+        move.location.type === LocationType.SpecialActionCardsDiscard &&
+        move.itemIndex === context.index
+    )
+
+    if (item.location.type === LocationType.CardPiste && (play || take)) {
+      return (
+        <>
+          {play && (
+            <ItemMenuButton label={<Trans defaults="button.play" />} angle={50} radius={4} move={play}>
+              <FontAwesomeIcon icon={faHand} css={pointerCursorCss} />
+            </ItemMenuButton>
+          )}
+          {take && (
+            <ItemMenuButton label={<Trans defaults="button.take" />} angle={50} radius={4} y={play ? -0.5 : undefined} move={take}>
+              <FontAwesomeIcon icon={faArrowDown} css={pointerCursorCss} />
+            </ItemMenuButton>
+          )}
+        </>
+      )
+    }
+
+    if (item.location.type === LocationType.PlayerSpecialActionCardsHand && discard) {
+      return (
+        <ItemMenuButton label={<Trans defaults="button.play" />} angle={50} radius={4} move={discard}>
+          <FontAwesomeIcon icon={faHand} css={pointerCursorCss} />
+        </ItemMenuButton>
+      )
+    }
+    return undefined
   }
 
   help = SpecialActionCardHelp

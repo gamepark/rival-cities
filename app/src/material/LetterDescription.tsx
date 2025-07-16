@@ -1,4 +1,4 @@
-import { faArrowDown } from '@fortawesome/free-solid-svg-icons'
+import { faArrowDown, faHand } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { CardDescription, ItemContext, ItemMenuButton, pointerCursorCss } from '@gamepark/react-game'
 import { LocationType } from '@gamepark/rival-cities/material/LocationType'
@@ -16,7 +16,9 @@ export class LetterDescription extends CardDescription {
 
   backImage = LetterBack
 
-  menuAlwaysVisible = true
+  isMenuAlwaysVisible(item: MaterialItem, _context: ItemContext): boolean {
+    return item.location.type === LocationType.LetterDeck
+  }
 
   image = LetterFront
 
@@ -25,7 +27,7 @@ export class LetterDescription extends CardDescription {
   }
 
   canShortClick(move: MaterialMove, context: ItemContext): boolean {
-    return isMoveItemType(MaterialType.Letter)(move) && context.index === move.itemIndex
+    return isMoveItemType(MaterialType.Letter)(move) && context.index === move.itemIndex && move.location.type === LocationType.PlayerLetterDeck
   }
 
   help = LetterHelp
@@ -34,6 +36,17 @@ export class LetterDescription extends CardDescription {
     const take = legalMoves.find(
       (move) => isMoveItemType(MaterialType.Letter)(move) && move.location.type === LocationType.PlayerLetterDeck && move.itemIndex === context.index
     )
+    const useLetter = legalMoves.find(
+      (move) => isMoveItemType(MaterialType.Letter)(move) && move.location.type === LocationType.LetterDeck && move.itemIndex === context.index
+    )
+
+    if (useLetter) {
+      return (
+        <ItemMenuButton label={<Trans defaults="button.useLetter" />} angle={50} radius={4} y={-1} x={-0.8} move={useLetter}>
+          <FontAwesomeIcon icon={faHand} css={pointerCursorCss} />
+        </ItemMenuButton>
+      )
+    }
 
     if (context.displayIndex !== 0) return <></>
 

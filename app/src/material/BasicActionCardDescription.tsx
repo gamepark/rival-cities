@@ -1,5 +1,11 @@
-import { CardDescription } from '@gamepark/react-game'
+import { faHand } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { CardDescription, ItemContext, ItemMenuButton, pointerCursorCss } from '@gamepark/react-game'
 import { BasicActionCard } from '@gamepark/rival-cities/material/BasicActionCard'
+import { LocationType } from '@gamepark/rival-cities/material/LocationType'
+import { CustomMoveType } from '@gamepark/rival-cities/rules/CustomMoveType'
+import { isCustomMoveType, MaterialItem, MaterialMove } from '@gamepark/rules-api'
+import { Trans } from 'react-i18next'
 import BasicAction1 from '../images/cards/action/basic/en/ActionBasic01.jpg'
 import BasicAction2 from '../images/cards/action/basic/ActionBasic02.jpg'
 import BasicAction3 from '../images/cards/action/basic/en/ActionBasic03.jpg'
@@ -21,6 +27,8 @@ export class BasicActionCardDescription extends CardDescription {
   width = 6.75
   height = 4.35
 
+  menuAlwaysVisible = true
+
   images = {
     [BasicActionCard.BasicAction1]: BasicAction1,
     [BasicActionCard.BasicAction2]: BasicAction2,
@@ -37,6 +45,19 @@ export class BasicActionCardDescription extends CardDescription {
     [BasicActionCard.BasicAction13]: BasicAction13,
     [BasicActionCard.BasicAction14]: BasicAction14,
     [BasicActionCard.BasicAction15]: BasicAction15
+  }
+
+  getItemMenu(item: MaterialItem, _context: ItemContext, legalMoves: MaterialMove[]) {
+    const play = legalMoves.find((move) => isCustomMoveType(CustomMoveType.PlaysInkjarCard)(move) && move.data === item.location.id)
+
+    if (item.location.type === LocationType.CardPiste && play) {
+      return (
+        <ItemMenuButton label={<Trans defaults="button.play" />} angle={50} radius={4} move={play}>
+          <FontAwesomeIcon icon={faHand} css={pointerCursorCss} />
+        </ItemMenuButton>
+      )
+    }
+    return undefined
   }
 
   help = BasicActionCardHelp

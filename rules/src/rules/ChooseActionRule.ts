@@ -34,7 +34,7 @@ export class ChooseActionRule extends PlayerTurnRule {
       moves.push(...this.playerLetters.moveItems({ type: LocationType.LetterDeck }))
     }
     moves.push(...this.playerSpecialActionCards.moveItems({ type: LocationType.SpecialActionCardsDiscard }))
-    moves.push(this.customMove(CustomMoveType.PlaysInkjarCard))
+    moves.push(this.customMove(CustomMoveType.PlaysInkjarCard, this.inkjarLocationId))
     if(specialActionCardPlaces.includes(this.inkjarLocationId) && !this.remind(MemoryType.IsUseLetter)) {
       moves.push(this.specialActioncardInInkjarPlace.moveItem({ type: LocationType.PlayerSpecialActionCardsHand, player: this.player }))
     }
