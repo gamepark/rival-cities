@@ -20,7 +20,7 @@ export class AdvanceInkJarRule extends PlayerTurnRule {
     const startId = this.material(MaterialType.InkJar).index(move.itemIndex).getItem()?.location.id ?? 0
     const endId = move.location.id as number
     const nbCaseAdvanced = endId > startId ? endId - startId : endId + 20 - startId
-    this.memorize(MemoryType.NbProductToPayForAdvance, this.inkjarPisteHelper.determineNbProductToPay(nbCaseAdvanced))
+    this.memorize(MemoryType.PayForAdvance, { nbProduct: this.inkjarPisteHelper.determineNbProductToPay(nbCaseAdvanced), nbCase: nbCaseAdvanced })
     if (endId < startId) {
       this.memorize(MemoryType.OffSeasonStep, RuleId.OffSeasonTakeBell)
     }
@@ -29,7 +29,7 @@ export class AdvanceInkJarRule extends PlayerTurnRule {
 
   afterItemMove(move: ItemMove): MaterialMove[] {
     if (!isMoveItemType(MaterialType.InkJar)(move)) return []
-    if (this.remind(MemoryType.NbProductToPayForAdvance) > 0) {
+    if (this.remind<{ nbProduct: number; nbCase: number }>(MemoryType.PayForAdvance).nbProduct > 0) {
       return [this.startRule(RuleId.PayProductForAdvance)]
     }
     return [this.startRule(this.remind<RuleId | undefined>(MemoryType.OffSeasonStep) ?? RuleId.ChooseAction)]

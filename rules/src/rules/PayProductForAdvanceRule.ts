@@ -17,7 +17,7 @@ export class PayProductForAdvanceRule extends PlayerTurnRule {
   afterItemMove(move: ItemMove): MaterialMove[] {
     if (!isMoveItemType(MaterialType.Product)(move)) return []
     this.memorize<number>(MemoryType.Counter, (oldValue: number) => oldValue + 1)
-    if (this.remind(MemoryType.Counter) === this.remind(MemoryType.NbProductToPayForAdvance)) {
+    if (this.remind(MemoryType.Counter) === this.remind<{ nbProduct: number; nbCase: number }>(MemoryType.PayForAdvance).nbProduct) {
       this.memorize(MemoryType.Counter, 0)
       return [this.startRule(this.remind<RuleId | undefined>(MemoryType.OffSeasonStep) ?? RuleId.ChooseAction)]
     }

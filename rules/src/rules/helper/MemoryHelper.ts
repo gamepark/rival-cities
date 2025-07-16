@@ -3,7 +3,7 @@ import { MemoryType } from '../MemoryType'
 
 export class MemoryHelper extends MaterialRulesPart {
   clearMemory(): void {
-    this.memorize(MemoryType.NbProductToPayForAdvance, 0)
+    this.memorize(MemoryType.PayForAdvance, { nbProduct: 0, nbCase: 0 })
     this.memorize(MemoryType.Counter, 0)
     this.memorize(MemoryType.IsProductReturn, false)
     this.memorize(MemoryType.IsBuildInProgress, false)
