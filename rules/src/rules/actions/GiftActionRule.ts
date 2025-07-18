@@ -10,7 +10,6 @@ import { ActionRule } from './ActionRule'
 
 export class GiftActionRule extends ActionRule<GiftAction> {
   allianceCardHelper = new AllianceCardHelper(this.game)
-  productChoosen = this.remind(MemoryType.ProductChoosen)
 
   onRuleStart(): MaterialMove[] {
     const moves: MaterialMove[] = []
@@ -58,16 +57,10 @@ export class GiftActionRule extends ActionRule<GiftAction> {
     }
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.PlayerProducts) {
-      if (!this.productChoosen) {
-        this.memorize(MemoryType.ProductChoosen, move.location.id)
-        moves.push(...this.allianceCardHelper.getOsloProducts(move.location.id as Product))
-        moves.push(...this.allianceCardHelper.getNovgorodProducts(move.location.id as Product))
-        moves.push(...this.allianceCardHelper.getLondonProducts(move.location.id as Product))
-      }
-      if (this.remind(MemoryType.Counter) === this.action?.nbProductToTake) {
-        this.memorize(MemoryType.Counter, 0)
-        moves.push(...this.movesAfterProductsGiven())
-      }
+      moves.push(...this.allianceCardHelper.getOsloProducts(move.location.id as Product))
+      moves.push(...this.allianceCardHelper.getNovgorodProducts(move.location.id as Product))
+      moves.push(...this.allianceCardHelper.getLondonProducts(move.location.id as Product))
+      moves.push(...this.movesAfterProductsGiven())
     }
     return moves
   }
