@@ -42,7 +42,7 @@ export class ProductionActionRule extends ActionRule<ProductionAction> {
     }
     if (isMoveItemType(MaterialType.Factory)(move)) {
       if (!this.action?.productType) {
-        this.forget(MemoryType.ProductChoosen)
+        return [this.allProducts.id(this.productChoosen).moveItem({ type: LocationType.PlayerProducts, id: this.productChoosen, player: this.player })]
       }
       if (this.productChoosen === this.action?.productType) {
         return [this.products.moveItem({ type: LocationType.PlayerProducts, id: this.productChoosen, player: this.player })]
