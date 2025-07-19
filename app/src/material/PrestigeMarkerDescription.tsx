@@ -33,7 +33,7 @@ export class PrestigeMarkerDescription extends TokenDescription {
       (move) => isMoveItemType(MaterialType.PrestigeMarker)(move) && move.location.type === LocationType.PrestigeMarkerPiste && move.itemIndex === context.index
     )
 
-    if (context.displayIndex !== 0) return <></>
+    if (context.displayIndex !== 0) return undefined
 
     if (advance) {
       const icon = context.rules.game.rule?.player === City.Altona ? faArrowLeft : faArrowRight
@@ -43,7 +43,7 @@ export class PrestigeMarkerDescription extends TokenDescription {
         </ItemMenuButton>
       )
     }
-    return <></>
+    return undefined
   }
 }
 

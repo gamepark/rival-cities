@@ -27,7 +27,7 @@ export class StarTokenDescription extends CardDescription {
       (move) => isMoveItemType(MaterialType.StarToken)(move) && move.location.type === LocationType.PlayerStarTokens && move.itemIndex === context.index
     )
 
-    if (context.displayIndex !== 0) return <></>
+    if (context.displayIndex !== 0) return undefined
 
     if (take) {
       return (
@@ -36,7 +36,7 @@ export class StarTokenDescription extends CardDescription {
         </ItemMenuButton>
       )
     }
-    return <></>
+    return undefined
   }
 
   help = StarTokenHelp

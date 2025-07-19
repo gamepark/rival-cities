@@ -33,7 +33,6 @@ export class AllianceCardHelper extends MaterialRulesPart {
   private getProductsFromAllianceCard(product: Product, allianceProduct: Product, allianceCard: AllianceCard): MaterialMove[] {
     const alliance = this.material(MaterialType.AllianceCard).location(LocationType.PlayerAllianceCards).player(this.player).id(allianceCard)
     if (alliance.length && product === allianceProduct) {
-      console.log(this.getProducts(allianceProduct))
       return [this.getProducts(allianceProduct).moveItem({ type: LocationType.PlayerProducts, id: allianceProduct, player: this.player })]
     }
     return []

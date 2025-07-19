@@ -48,7 +48,7 @@ export class LetterDescription extends CardDescription {
       )
     }
 
-    if (context.displayIndex !== 0) return <></>
+    if (context.displayIndex !== 0) return undefined
 
     if (take) {
       return (
@@ -57,7 +57,7 @@ export class LetterDescription extends CardDescription {
         </ItemMenuButton>
       )
     }
-    return <></>
+    return undefined
   }
 }
 

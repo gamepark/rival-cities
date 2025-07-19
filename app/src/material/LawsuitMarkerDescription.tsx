@@ -26,7 +26,7 @@ export class LawsuitMarkerDescription extends TokenDescription {
       (move) => isMoveItemType(MaterialType.LawsuitMarker)(move) && move.location.type === LocationType.LawsuitMarkerPiste && move.itemIndex === context.index
     )
 
-    if (context.displayIndex !== 0) return <></>
+    if (context.displayIndex !== 0) return undefined
 
     if (advance) {
       const icon = context.rules.game.rule?.player === City.Altona ? faArrowLeft : faArrowRight
@@ -36,7 +36,7 @@ export class LawsuitMarkerDescription extends TokenDescription {
         </ItemMenuButton>
       )
     }
-    return <></>
+    return undefined
   }
 }
 

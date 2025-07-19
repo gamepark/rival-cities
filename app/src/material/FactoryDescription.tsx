@@ -51,7 +51,7 @@ export class FactoryDescription extends CardDescription {
         move.itemIndex === context.index
     )
 
-    if (context.displayIndex !== 0) return <></>
+    if (context.displayIndex !== 0) return undefined
 
     if (take) {
       return (
@@ -68,7 +68,7 @@ export class FactoryDescription extends CardDescription {
         </ItemMenuButton>
       )
     }
-    return <></>
+    return undefined
   }
 
   help = FactoryHelp

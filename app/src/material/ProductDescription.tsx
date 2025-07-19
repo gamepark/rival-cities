@@ -93,7 +93,7 @@ export class ProductDescription extends TokenDescription {
         move.location.id === item.location.id
     )
 
-    if (context.displayIndex !== 0) return <></>
+    if (context.displayIndex !== 0) return undefined
 
     if (take) {
       return (
@@ -111,7 +111,7 @@ export class ProductDescription extends TokenDescription {
         </ItemMenuButton>
       )
     }
-    return <></>
+    return undefined
   }
 
   checkIfIsExchange(context: ItemContext): boolean {
