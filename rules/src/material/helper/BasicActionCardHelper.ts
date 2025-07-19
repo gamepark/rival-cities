@@ -132,7 +132,8 @@ export class BasicActionCardHelper extends MaterialRulesPart {
         {
           type: ActionType.Gift,
           nbProductToTake: 1,
-          productType: undefined
+          productType: undefined,
+          canUseAlliance: true
         },
         {
           type: ActionType.AdvanceLawsuit,

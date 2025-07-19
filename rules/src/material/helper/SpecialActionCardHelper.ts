@@ -42,7 +42,8 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
         {
           type: ActionType.Gift,
           productType: undefined,
-          nbProductToTake: 2
+          nbProductToTake: 2,
+          canUseAlliance: true
         }
       ]
     },
@@ -60,7 +61,8 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
         {
           type: ActionType.Gift,
           productType: undefined,
-          nbProductToTake: 1
+          nbProductToTake: 1,
+          canUseAlliance: true
         }
       ]
     },
@@ -112,7 +114,8 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
         {
           type: ActionType.Gift,
           productType: Product.Cloth,
-          nbProductToTake: 1
+          nbProductToTake: 1,
+          canUseAlliance: true
         },
         {
           type: ActionType.FormAlliance
@@ -156,7 +159,8 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
         {
           type: ActionType.Gift,
           productType: Product.Cloth,
-          nbProductToTake: 1
+          nbProductToTake: 1,
+          canUseAlliance: true
         }
       ]
     },
@@ -171,7 +175,8 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
         {
           type: ActionType.Gift,
           productType: Product.Beer,
-          nbProductToTake: 1
+          nbProductToTake: 1,
+          canUseAlliance: true
         },
         {
           type: ActionType.Donation,
@@ -206,7 +211,8 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
         {
           type: ActionType.Gift,
           productType: Product.Beer,
-          nbProductToTake: 2
+          nbProductToTake: 2,
+          canUseAlliance: true
         }
       ]
     },
@@ -221,7 +227,8 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
         {
           type: ActionType.Gift,
           productType: Product.Beer,
-          nbProductToTake: 1
+          nbProductToTake: 1,
+          canUseAlliance: true
         },
         {
           type: ActionType.Donation,
@@ -287,7 +294,8 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
         {
           type: ActionType.Gift,
           productType: Product.Furniture,
-          nbProductToTake: 1
+          nbProductToTake: 1,
+          canUseAlliance: true
         }
       ]
     },
@@ -333,7 +341,8 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
         {
           type: ActionType.Gift,
           productType: Product.Furniture,
-          nbProductToTake: 1
+          nbProductToTake: 1,
+          canUseAlliance: true
         },
         {
           type: ActionType.FormAlliance
@@ -378,7 +387,8 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
         {
           type: ActionType.Gift,
           productType: undefined,
-          nbProductToTake: 1
+          nbProductToTake: 1,
+          canUseAlliance: true
         },
         {
           type: ActionType.Donation,
@@ -395,7 +405,8 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
         {
           type: ActionType.Gift,
           productType: undefined,
-          nbProductToTake: 2
+          nbProductToTake: 2,
+          canUseAlliance: true
         },
         {
           type: ActionType.Donation,

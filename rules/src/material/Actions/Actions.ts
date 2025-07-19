@@ -69,6 +69,7 @@ export type GiftAction = {
   type: ActionType.Gift
   productType: Product | undefined
   nbProductToTake: number
+  canUseAlliance: boolean
 }
 
 export type ProductSwapAction = {

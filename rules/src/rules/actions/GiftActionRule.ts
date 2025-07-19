@@ -57,9 +57,11 @@ export class GiftActionRule extends ActionRule<GiftAction> {
     }
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.PlayerProducts) {
-      moves.push(...this.allianceCardHelper.getOsloProducts(move.location.id as Product))
-      moves.push(...this.allianceCardHelper.getNovgorodProducts(move.location.id as Product))
-      moves.push(...this.allianceCardHelper.getLondonProducts(move.location.id as Product))
+      if(this.action?.canUseAlliance) {
+        moves.push(...this.allianceCardHelper.getOsloProducts(move.location.id as Product))
+        moves.push(...this.allianceCardHelper.getNovgorodProducts(move.location.id as Product))
+        moves.push(...this.allianceCardHelper.getLondonProducts(move.location.id as Product))
+      }
       moves.push(...this.movesAfterProductsGiven())
     }
     return moves

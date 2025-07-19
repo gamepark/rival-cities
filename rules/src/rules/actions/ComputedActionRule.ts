@@ -13,7 +13,7 @@ export class ComputedActionRule extends ActionRule<ComputedAction> {
     this.forget(MemoryType.ProductChoosen)
     const moves: MaterialMove[] = []
     this.action?.actions?.forEach((a) => {
-      if (a.type === ActionType.OpponentEarnPrestige || a.type === ActionType.ReturnFactory) {
+      if (a.type === ActionType.OpponentEarnPrestige || a.type === ActionType.ReturnFactory || a.type === ActionType.DrawSpecialActionCard) {
         moves.push(...getActionRule(this.game, a).onRuleStart(_move, _previousRule, _context))
       }
     })

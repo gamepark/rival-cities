@@ -92,7 +92,8 @@ export class ShipCardHelper extends MaterialRulesPart {
       {
         type: ActionType.Gift,
         productType: Product.Furniture,
-        nbProductToTake: 2
+        nbProductToTake: 2,
+        canUseAlliance: false
       }
     ]
   }
@@ -113,7 +114,8 @@ export class ShipCardHelper extends MaterialRulesPart {
       {
         type: ActionType.Gift,
         productType: Product.Cloth,
-        nbProductToTake: 2
+        nbProductToTake: 2,
+        canUseAlliance: false
       }
     ]
   }

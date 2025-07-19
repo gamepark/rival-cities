@@ -20,7 +20,8 @@ export class LawsuitCardHelper extends MaterialRulesPart {
       {
         type: ActionType.Gift,
         productType: Product.Leather,
-        nbProductToTake: 1
+        nbProductToTake: 1,
+        canUseAlliance: false
       }
     ]
   }
@@ -30,7 +31,8 @@ export class LawsuitCardHelper extends MaterialRulesPart {
       {
         type: ActionType.Gift,
         productType: Product.Leather,
-        nbProductToTake: 3
+        nbProductToTake: 3,
+        canUseAlliance: false
       },
       {
         type: ActionType.EarnPrestige,
@@ -46,7 +48,8 @@ export class LawsuitCardHelper extends MaterialRulesPart {
       {
         type: ActionType.Gift,
         productType: Product.Furniture,
-        nbProductToTake: 1
+        nbProductToTake: 1,
+        canUseAlliance: false
       }
     ]
   }
@@ -65,7 +68,8 @@ export class LawsuitCardHelper extends MaterialRulesPart {
       {
         type: ActionType.Gift,
         productType: Product.Cloth,
-        nbProductToTake: 1
+        nbProductToTake: 1,
+        canUseAlliance: false
       }
     ]
   }
@@ -75,7 +79,8 @@ export class LawsuitCardHelper extends MaterialRulesPart {
       {
         type: ActionType.Gift,
         productType: undefined,
-        nbProductToTake: 2
+        nbProductToTake: 2,
+        canUseAlliance: false
       }
     ]
   }
@@ -114,7 +119,8 @@ export class LawsuitCardHelper extends MaterialRulesPart {
       {
         type: ActionType.Gift,
         productType: Product.Beer,
-        nbProductToTake: 3
+        nbProductToTake: 3,
+        canUseAlliance: false
       },
       {
         type: ActionType.Donation,
@@ -151,7 +157,8 @@ export class LawsuitCardHelper extends MaterialRulesPart {
       {
         type: ActionType.Gift,
         productType: Product.Beer,
-        nbProductToTake: 1
+        nbProductToTake: 1,
+        canUseAlliance: false
       }
     ]
   }
@@ -167,7 +174,8 @@ export class LawsuitCardHelper extends MaterialRulesPart {
       {
         type: ActionType.Gift,
         productType: undefined,
-        nbProductToTake: 1
+        nbProductToTake: 1,
+        canUseAlliance: false
       }
     ]
   }
@@ -177,7 +185,8 @@ export class LawsuitCardHelper extends MaterialRulesPart {
       {
         type: ActionType.Gift,
         productType: Product.Beer,
-        nbProductToTake: 1
+        nbProductToTake: 1,
+        canUseAlliance: false
       },
       {
         type: ActionType.GainLetter,
@@ -220,7 +229,8 @@ export class LawsuitCardHelper extends MaterialRulesPart {
       {
         type: ActionType.Gift,
         productType: Product.Cloth,
-        nbProductToTake: 1
+        nbProductToTake: 1,
+        canUseAlliance: false
       }
     ]
   }
