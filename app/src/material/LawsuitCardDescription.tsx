@@ -1,9 +1,11 @@
-import { faCheck } from '@fortawesome/free-solid-svg-icons'
+import { faArrowRightArrowLeft, faCheck } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { CardDescription, ItemContext, ItemMenuButton, pointerCursorCss } from '@gamepark/react-game'
 import { LawsuitCard } from '@gamepark/rival-cities/material/LawsuitCard'
+import { LocationType } from '@gamepark/rival-cities/material/LocationType'
+import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
 import { CustomMoveType } from '@gamepark/rival-cities/rules/CustomMoveType'
-import { isCustomMoveType, MaterialItem, MaterialMove } from '@gamepark/rules-api'
+import { isCustomMoveType, isMoveItemType, MaterialItem, MaterialMove } from '@gamepark/rules-api'
 import React from 'react'
 import { Trans } from 'react-i18next'
 import Lawsuit1 from '../images/cards/lawsuit/en/Lawsuit01.jpg'
@@ -40,10 +42,41 @@ export class LawsuitCardDescription extends CardDescription {
     [LawsuitCard.Lawsuit10]: Lawsuit10
   }
 
-  getItemMenu(_item: MaterialItem, _context: ItemContext, legalMoves: MaterialMove[]): React.ReactNode {
+  getItemMenu(_item: MaterialItem, context: ItemContext, legalMoves: MaterialMove[]): React.ReactNode {
     const resolveLawsuit = legalMoves.find((move) => isCustomMoveType(CustomMoveType.ResolveLawsuit)(move))
+    const left = legalMoves.find(
+      (move) =>
+        isMoveItemType(MaterialType.LawsuitCard)(move) &&
+        move.location.type === LocationType.LawsuitCardsRiver &&
+        move.location.z === 0 &&
+        move.itemIndex === context.index
+    )
+    const right = legalMoves.find(
+      (move) =>
+        isMoveItemType(MaterialType.LawsuitCard)(move) &&
+        move.location.type === LocationType.LawsuitCardsRiver &&
+        move.location.z === 2 &&
+        move.itemIndex === context.index
+    )
 
-    if(resolveLawsuit && _item.location.z === 0) {
+    if (left || right) {
+      return (
+        <>
+          {left && (
+            <ItemMenuButton label={<Trans defaults="button.exchange" />} labelPosition="left" angle={50} y={1} x={-4.5} move={left}>
+              <FontAwesomeIcon icon={faArrowRightArrowLeft} css={pointerCursorCss} />
+            </ItemMenuButton>
+          )}
+          {right && (
+            <ItemMenuButton label={<Trans defaults="button.exchange" />} labelPosition="right" angle={50} y={1} x={4.5} move={right}>
+              <FontAwesomeIcon icon={faArrowRightArrowLeft} css={pointerCursorCss} />
+            </ItemMenuButton>
+          )}
+        </>
+      )
+    }
+
+    if (resolveLawsuit && _item.location.z === 0) {
       return (
         <ItemMenuButton label={<Trans defaults="button.resolve" />} labelPosition="left" angle={50} y={-2} x={2.5} move={resolveLawsuit}>
           <FontAwesomeIcon icon={faCheck} css={pointerCursorCss} />
