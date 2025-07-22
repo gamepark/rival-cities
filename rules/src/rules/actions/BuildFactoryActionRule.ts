@@ -27,7 +27,7 @@ export class BuildFactoryActionRule extends ActionRule<BuildFactoryAction> {
       if (this.factories.length > 0) {
         moves.push(...this.factories.moveItems({ type: LocationType.PlayerFactories, player: this.player }, 1))
       }
-      moves.push(this.customMove(CustomMoveType.Pass, this.action?.type))
+      moves.push(this.customMove(CustomMoveType.Pass, this.action))
     }
     return moves
   }
@@ -63,7 +63,7 @@ export class BuildFactoryActionRule extends ActionRule<BuildFactoryAction> {
   }
 
   onCustomMove(move: CustomMove, _context?: PlayMoveContext): MaterialMove[] {
-    if (isCustomMoveType(CustomMoveType.Pass)(move) && move.data === this.action?.type) {
+    if (isCustomMoveType(CustomMoveType.Pass)(move) && this.isSameAction(move.data)) {
       return this.removeActionAndMove()
     }
     return []

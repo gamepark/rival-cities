@@ -17,7 +17,7 @@ export class PurchaseShipActionRule extends ActionRule<PurchaseShipAction> {
     if (this.playerProducts.length && this.playerLetters.length) {
       moves.push(this.customMove(CustomMoveType.TakeLetterToSwapProduct))
     }
-    moves.push(this.customMove(CustomMoveType.Pass, this.action?.type))
+    moves.push(this.customMove(CustomMoveType.Pass, this.action))
     return moves
   }
 

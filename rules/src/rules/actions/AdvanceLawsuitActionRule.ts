@@ -28,7 +28,7 @@ export class AdvanceLawsuitActionRule extends ActionRule<AdvanceLawsuitAction> {
     if (this.playerProducts.length && this.playerLetters.length) {
       moves.push(this.customMove(CustomMoveType.TakeLetterToSwapProduct))
     }
-    moves.push(this.customMove(CustomMoveType.Pass, this.action?.type))
+    moves.push(this.customMove(CustomMoveType.Pass, this.action))
     return moves
   }
 
@@ -98,7 +98,7 @@ export class AdvanceLawsuitActionRule extends ActionRule<AdvanceLawsuitAction> {
 
   onCustomMove(move: CustomMove): MaterialMove[] {
     if (this.checkAnotherActionInProgress(this.action?.type)) return []
-    if (isCustomMoveType(CustomMoveType.Pass)(move) && move.data === this.action?.type) {
+    if (isCustomMoveType(CustomMoveType.Pass)(move) && this.isSameAction(move.data)) {
       return this.removeActionAndMove()
     }
     if (isCustomMoveType(CustomMoveType.TakeLetterToSwapProduct)(move)) {

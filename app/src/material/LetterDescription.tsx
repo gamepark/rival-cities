@@ -40,7 +40,6 @@ export class LetterDescription extends CardDescription {
 
     if (useLetter) {
       const nbLetters = context.rules.material(MaterialType.Letter).location(LocationType.PlayerLetterDeck).player(context.player).getQuantity()
-      console.log(nbLetters)
       if (context.displayIndex !== nbLetters - 1) return undefined
       return (
         <ItemMenuButton label={<Trans defaults="button.useLetter" />} labelPosition="right" angle={50} radius={4} y={-1} x={1} move={useLetter}>

@@ -15,7 +15,7 @@ export class GainLetterActionRule extends ActionRule<GainLetterAction> {
     if (this.checkAnotherActionInProgress(this.action?.type)) return []
     return [
       ...this.letters.moveItems({ type: LocationType.PlayerLetterDeck, player: this.player }, this.action?.nbLettersToTake),
-      this.customMove(CustomMoveType.Pass, this.action?.type)
+      this.customMove(CustomMoveType.Pass, this.action)
     ]
   }
 

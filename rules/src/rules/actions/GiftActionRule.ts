@@ -36,7 +36,7 @@ export class GiftActionRule extends ActionRule<GiftAction> {
     } else {
       moves.push(...this.allProducts.moveItems((item) => ({ type: LocationType.PlayerProducts, player: this.player, id: item.id }), 1))
     }
-    moves.push(this.customMove(CustomMoveType.Pass, this.action?.type))
+    moves.push(this.customMove(CustomMoveType.Pass, this.action))
     return moves
   }
 

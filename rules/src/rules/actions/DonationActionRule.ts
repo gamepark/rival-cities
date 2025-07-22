@@ -16,7 +16,7 @@ export class DonationActionRule extends ActionRule<DonationAction> {
   getPlayerMoves(): MaterialMove[] {
     if (this.checkAnotherActionInProgress(this.action?.type)) return []
     const moves: MaterialMove[] = []
-    if (this.playerProducts.getQuantity() < this.nbProduct) return [this.customMove(CustomMoveType.Pass, this.action?.type)]
+    if (this.playerProducts.getQuantity() < this.nbProduct) return [this.customMove(CustomMoveType.Pass, this.action)]
     if (this.isDonationInProgress) {
       moves.push(...this.playerProducts.moveItems((item) => ({ type: LocationType.ProductPiles, id: item.id })))
     } else {
@@ -29,7 +29,7 @@ export class DonationActionRule extends ActionRule<DonationAction> {
           )
         )
       }
-      moves.push(this.customMove(CustomMoveType.Pass, this.action?.type))
+      moves.push(this.customMove(CustomMoveType.Pass, this.action))
       if (this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(this.player).length && this.playerLetters.length) {
         moves.push(this.customMove(CustomMoveType.TakeLetterToSwapProduct))
       }

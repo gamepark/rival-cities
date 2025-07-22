@@ -15,7 +15,7 @@ export class FormAllianceActionRule extends ActionRule<FormAllianceAction> {
     if (this.playerLetters.length) {
       moves.push(...this.opponentAllianceCards.moveItems({ type: LocationType.PlayerAllianceCards, player: this.player }))
     }
-    moves.push(this.customMove(CustomMoveType.Pass, this.action?.type))
+    moves.push(this.customMove(CustomMoveType.Pass, this.action))
     return moves
   }
 
@@ -40,7 +40,7 @@ export class FormAllianceActionRule extends ActionRule<FormAllianceAction> {
   }
 
   onCustomMove(move: CustomMove): MaterialMove[] {
-    if (isCustomMoveType(CustomMoveType.Pass)(move) && move.data === this.action?.type) {
+    if (isCustomMoveType(CustomMoveType.Pass)(move) && this.isSameAction(move.data)) {
       this.forget(MemoryType.ProductChoosen)
       return this.removeActionAndMove()
     }

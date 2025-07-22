@@ -22,7 +22,7 @@ export class CourtRulingActionRule extends ActionRule<CourtRullingAction> {
       moves.push(this.lawsuitCardToMove.moveItem(({ location }) => ({ ...location, z: 0 })))
       moves.push(this.lawsuitCardToMove.moveItem(({ location }) => ({ ...location, z: 2 })))
     }
-    moves.push(this.customMove(CustomMoveType.Pass, this.action?.type))
+    moves.push(this.customMove(CustomMoveType.Pass, this.action))
     return moves
   }
 

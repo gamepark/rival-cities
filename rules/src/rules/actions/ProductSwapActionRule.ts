@@ -18,7 +18,7 @@ export class ProductSwapActionRule extends ActionRule<ProductSwapAction> {
     } else if (this.nbSwaps < this.nbPossibleSwaps) {
       moves.push(...this.playerProducts.moveItems((item) => ({ type: LocationType.ProductPiles, id: item.id }), 1))
     }
-    moves.push(this.customMove(CustomMoveType.Pass, this.action?.type))
+    moves.push(this.customMove(CustomMoveType.Pass, this.action))
     return moves
   }
 

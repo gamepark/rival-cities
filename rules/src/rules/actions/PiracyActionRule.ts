@@ -14,7 +14,7 @@ export class PiracyActionRule extends ActionRule<PiracyAction> {
     if (this.opponentProducts.length > 0) {
       moves.push(...this.opponentProducts.moveItems((item) => ({ type: LocationType.PlayerProducts, player: this.player, id: item.id })))
     }
-    moves.push(this.customMove(CustomMoveType.Pass, this.action?.type))
+    moves.push(this.customMove(CustomMoveType.Pass, this.action))
     return moves
   }
 
