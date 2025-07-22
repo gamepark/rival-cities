@@ -8,5 +8,5 @@ export const PayProductHistory = (props: MoveComponentProps) => {
   const actionPlayer = context.action.playerId
   const name = usePlayerName(actionPlayer)
 
-  return <Trans defaults="history.pay.product" values={{ player: name, product: move.id }} />
+  return <Trans defaults="history.pay.product" values={{ player: name, product: move.location.id, quantity: move.quantity ?? 1 }} />
 }
