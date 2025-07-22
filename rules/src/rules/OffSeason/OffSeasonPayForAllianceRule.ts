@@ -32,14 +32,6 @@ export class OffSeasonPayForAllianceRule extends SimultaneousRule {
     const moves: MaterialMove[] = []
     const allianceToPay = this.remind(MemoryType.AlliancePay, player).find((it: AlliancePay) => it.alreadyPay < it.cost.amount)
     if (allianceToPay) {
-      if (allianceToPay.cost.product === 'Letter') {
-        return this.getPlayerLetters(player).moveItems({ type: LocationType.LetterDeck })
-      }
-      if (allianceToPay.cost.product) {
-        return this.getPlayerProduct(player)
-          .id(allianceToPay.cost.product)
-          .moveItems((it) => ({ type: LocationType.ProductPiles, id: it.id }))
-      }
       return this.getPlayerProduct(player).moveItems((it) => ({ type: LocationType.ProductPiles, id: it.id }))
     }
     this.getPlayerAlliances(player).forEach((it) => {
@@ -99,6 +91,15 @@ export class OffSeasonPayForAllianceRule extends SimultaneousRule {
   onCustomMove(move: CustomMove): MaterialMove[] {
     if (isCustomMoveType(CustomMoveType.PayForAlliance)(move)) {
       this.memorize<AlliancePay[]>(MemoryType.AlliancePay, (alliancePays) => [...alliancePays, move.data.pay], move.data.player)
+
+      if (move.data.pay.cost.product === 'Letter') {
+        return this.getPlayerLetters(move.data.player).moveItems({ type: LocationType.LetterDeck })
+      }
+      if (move.data.pay.cost.product) {
+        return this.getPlayerProduct(move.data.player)
+          .id(move.data.pay.cost.product)
+          .moveItems((it) => ({ type: LocationType.ProductPiles, id: it.id }))
+      }
     }
     return []
   }
