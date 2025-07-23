@@ -30,7 +30,7 @@ export class ChooseActionRule extends PlayerTurnRule {
 
   getPlayerMoves(): MaterialMove[] {
     const moves: MaterialMove[] = []
-    if (this.playerLetters.length > 0 && !this.remind(MemoryType.IsUseLetter)) {
+    if (this.playerCanUseLetter) {
       moves.push(...this.playerLetters.moveItems({ type: LocationType.LetterDeck }))
     }
     moves.push(...this.playerSpecialActionCards.moveItems({ type: LocationType.SpecialActionCardsDiscard }))
@@ -85,6 +85,13 @@ export class ChooseActionRule extends PlayerTurnRule {
     }
     const cardId = this.basicActioncardInInkjarPlace.getItem()?.id as BasicActionCard
     return new BasicActionCardHelper(this.game).basicActionCardActions[cardId]
+  }
+
+  get playerCanUseLetter() {
+    return this.playerLetters.length > 0
+      && !this.remind(MemoryType.IsUseLetter)
+      && this.playerSpecialActionCards.getQuantity() > 0
+      && !this.playerHaveShip18
   }
 
   get playerLetters() {
