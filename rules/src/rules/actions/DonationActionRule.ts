@@ -13,6 +13,23 @@ export class DonationActionRule extends ActionRule<DonationAction> {
   nbProductsDonated: number = this.remind(MemoryType.Counter) ?? 0
   isDonationInProgress = this.remind(MemoryType.IsDonationInProgress)
 
+  onRuleStart(): MaterialMove[] {
+    const moves: MaterialMove[] = []
+    if (this.checkAnotherActionInProgress(this.action?.type)) {
+      return moves
+    }
+    if (this.action?.nbProduct === 0) {
+      const playerHaveAllianceAmsterdam = new AllianceCardHelper(this.game).checkPlayerAllianceCardById(AllianceCard.AllianceAmsterdam)
+      moves.push(
+        ...this.starTokens.moveItems(
+          { type: LocationType.PlayerStarTokens, player: this.player },
+          playerHaveAllianceAmsterdam ? this.nbStars + 1 : this.nbStars
+        )
+      )
+    }
+    return moves
+  }
+
   getPlayerMoves(): MaterialMove[] {
     if (this.checkAnotherActionInProgress(this.action?.type)) return []
     const moves: MaterialMove[] = []
@@ -69,6 +86,14 @@ export class DonationActionRule extends ActionRule<DonationAction> {
         if (this.remind(MemoryType.CounterActions) === this.action?.nbTimes) {
           return this.removeActionAndMove()
         }
+      }
+    }
+    if (isMoveItemType(MaterialType.StarToken)(move) && move.location.type === LocationType.PlayerStarTokens) {
+      if(this.action?.nbProduct === 0) {
+        this.memorize(MemoryType.Counter, 0)
+        this.memorize(MemoryType.IsDonationInProgress, false)
+        this.memorize<number>(MemoryType.CounterActions, 0)
+        return this.removeActionAndMove()
       }
     }
     return moves
