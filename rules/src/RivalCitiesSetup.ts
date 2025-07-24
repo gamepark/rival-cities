@@ -1,5 +1,5 @@
 import { MaterialGameSetup } from '@gamepark/rules-api'
-import { shuffle } from 'lodash'
+import shuffle from 'lodash/shuffle'
 import { City } from './City'
 import { basicActionCardPlaces, specialActionCardPlaces } from './constantes'
 import { allianceCards } from './material/AllianceCard'
