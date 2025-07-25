@@ -1,8 +1,11 @@
 import { Locator } from '@gamepark/react-game'
+import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
 import { Coordinates } from '@gamepark/rules-api'
 import { gameBoardLocator } from '../GameBoardLocator'
 
 class BellTokenIdleLocator extends Locator {
+  parentItemType = MaterialType.GameBoard
+
   getRotateZ(): number {
     return 10
   }

@@ -1,8 +1,11 @@
 import { Locator } from '@gamepark/react-game'
+import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
 import { Coordinates, Location, XYCoordinates } from '@gamepark/rules-api'
 import { gameBoardLocator } from '../GameBoardLocator'
 
 class LawsuitPiecesLocator extends Locator {
+  parentItemType = MaterialType.GameBoard
+
   getRotateZ(): number {
     return -90
   }

@@ -1,8 +1,11 @@
 import { ListLocator } from '@gamepark/react-game'
+import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
 import { Coordinates, Location } from '@gamepark/rules-api'
 import { gameBoardLocator } from '../GameBoardLocator'
 
 class LawsuitCardsRiverLocator extends ListLocator {
+  parentItemType = MaterialType.GameBoard
+
   gap = { x: 9.6 }
 
   getCoordinates(location: Location): Partial<Coordinates> {

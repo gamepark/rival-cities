@@ -1,8 +1,11 @@
 import { DeckLocator } from '@gamepark/react-game'
+import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
 import { Coordinates } from '@gamepark/rules-api'
 import { gameBoardLocator } from '../GameBoardLocator'
 
 class SepcialActionCardsDeckLocator extends DeckLocator {
+  parentItemType = MaterialType.GameBoard
+
   gap = { x: -0.05, y: -0.02 }
   getRotateZ(): number {
     return 90

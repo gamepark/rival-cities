@@ -1,8 +1,11 @@
 import { Locator } from '@gamepark/react-game'
+import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
 import { Coordinates, Location, MaterialItem } from '@gamepark/rules-api'
 import { gameBoardLocator } from '../GameBoardLocator'
 
 class CardPisteLocator extends Locator {
+  parentItemType = MaterialType.GameBoard
+
   getRotateZ(location: Location): number {
     return rotateZFromId[location.id]
   }
