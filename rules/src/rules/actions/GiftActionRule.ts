@@ -62,12 +62,15 @@ export class GiftActionRule extends ActionRule<GiftAction> {
         moves.push(...this.allianceCardHelper.getNovgorodProducts(move.location.id as Product))
         moves.push(...this.allianceCardHelper.getLondonProducts(move.location.id as Product))
       }
-      moves.push(...this.movesAfterProductsGiven())
+      if(this.remind(MemoryType.Counter) === this.action?.nbProductToTake) {
+        moves.push(...this.movesAfterProductsGiven())
+      }
     }
     return moves
   }
 
   movesAfterProductsGiven(): MaterialMove[] {
+    this.memorize(MemoryType.Counter, 0)
     return this.removeActionAndMove()
   }
 
