@@ -66,7 +66,7 @@ export class EndOfGameHelper extends PlayerTurnRule {
       .getItems()
       .map((it) => shipCardsData[it.id as ShipCard].getNbStars(this.getPlayerShipCards(playerId).length))
       .reduce((acc, cur) => acc + cur, 0)
-    score += this.material(MaterialType.StarToken).location(LocationType.PlayerStarTokens).player(playerId).length
+    score += this.material(MaterialType.StarToken).location(LocationType.PlayerStarTokens).player(playerId).getQuantity()
     if (playerId === City.Hamburg && this.prestigeMarkerLocation > 0) {
       score += this.prestigeMarkerStars
     }
