@@ -46,7 +46,7 @@ export class GiftActionRule extends ActionRule<GiftAction> {
     }
     if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.PlayerProducts) {
       this.memorize(MemoryType.BasicActionChoosen, this.action?.type)
-      this.memorize<number>(MemoryType.Counter, (old) => old + 1)
+      this.memorize<number>(MemoryType.Counter, (old) => old + (move.quantity ?? 0))
     }
     return []
   }
