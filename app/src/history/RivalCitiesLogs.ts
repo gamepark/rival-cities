@@ -59,9 +59,11 @@ export class RivalCitiesLogs implements LogDescription {
           player: actionPlayer
         }
       }
-      return {
-        Component: GetFactoryHistory,
-        player: actionPlayer
+      if (ruleId === RuleId.BuildFactory) {
+        return {
+          Component: GetFactoryHistory,
+          player: actionPlayer
+        }
       }
     }
     if (this.getMoveLocationType(move) === LocationType.PlayerAllianceCards) {
@@ -100,7 +102,7 @@ export class RivalCitiesLogs implements LogDescription {
         player: actionPlayer
       }
     }
-    if (this.getMoveLocationType(move) === LocationType.LawsuitMarkerPiste && ruleId !== RuleId.ResolveLawsuit) {
+    if (this.getMoveLocationType(move) === LocationType.LawsuitMarkerPiste && ruleId === RuleId.AdvanceLawsuit) {
       return {
         Component: AdvanceInLawsuitHistory,
         player: actionPlayer
