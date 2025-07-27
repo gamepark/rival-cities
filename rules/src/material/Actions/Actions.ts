@@ -79,6 +79,7 @@ export type ProductSwapAction = {
 
 export type PurchaseShipAction = {
   type: ActionType.PurchaseShip
+  playerHasShip19: boolean
 }
 
 export type CourtRullingAction = {

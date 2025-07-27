@@ -61,7 +61,7 @@ export class PurchaseShipActionRule extends ActionRule<PurchaseShipAction> {
     const shipId: ShipCard = this.material(MaterialType.ShipCard).index(move.itemIndex).getItem()?.id
     this.updateAction(shipId)
     const shipData = shipCardsData[shipId]
-    const costQuantity = this.playerShip19.length ? shipData.cost.quantity - 1 : shipData.cost.quantity
+    const costQuantity = this.action?.playerHasShip19 ? shipData.cost.quantity - 1 : shipData.cost.quantity
     moves.push(...this.playerProducts.id(shipData.cost.type).moveItems({ type: LocationType.ProductPiles, id: shipData.cost.type }, costQuantity))
     this.removeAction()
     if (shipData.effect.type === ShipEffectType.Instant) {
@@ -76,7 +76,7 @@ export class PurchaseShipActionRule extends ActionRule<PurchaseShipAction> {
   possibleCardsToGet() {
     return this.shipCards.filter((item) => {
       const shipData = shipCardsData[item.id as ShipCard]
-      const costQuantity = this.playerShip19.length ? shipData.cost.quantity - 1 : shipData.cost.quantity
+      const costQuantity = this.action?.playerHasShip19 ? shipData.cost.quantity - 1 : shipData.cost.quantity
       return this.playerProducts.id(shipData.cost.type).getQuantity() >= costQuantity
     })
   }
@@ -87,10 +87,6 @@ export class PurchaseShipActionRule extends ActionRule<PurchaseShipAction> {
 
   get shipCards() {
     return this.material(MaterialType.ShipCard).location(LocationType.ShipCardsRiver)
-  }
-
-  get playerShip19() {
-    return this.material(MaterialType.ShipCard).location(LocationType.PlayerShipCards).player(this.player).id(ShipCard.Ship19)
   }
 
   get playerLetters() {

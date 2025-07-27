@@ -67,7 +67,8 @@ export class BasicActionCardHelper extends MaterialRulesPart {
       type: this.computeActionIfPlayerHasGdanskAlliance(),
       actions: [
         {
-          type: ActionType.PurchaseShip
+          type: ActionType.PurchaseShip,
+          playerHasShip19: this.checkPlayerHaveShip19
         },
         {
           type: ActionType.AdvanceLawsuit,
@@ -149,7 +150,8 @@ export class BasicActionCardHelper extends MaterialRulesPart {
           type: ActionType.CourtRuling
         },
         {
-          type: ActionType.PurchaseShip
+          type: ActionType.PurchaseShip,
+          playerHasShip19: this.checkPlayerHaveShip19
         }
       ]
     },
@@ -200,5 +202,9 @@ export class BasicActionCardHelper extends MaterialRulesPart {
 
   get checkPlayerHaveShip16(): boolean {
     return this.material(MaterialType.ShipCard).location(LocationType.PlayerShipCards).player(this.player).id(ShipCard.Ship16).length > 0
+  }
+
+  get checkPlayerHaveShip19() {
+    return this.material(MaterialType.ShipCard).location(LocationType.PlayerShipCards).player(this.player).id(ShipCard.Ship19).length > 0
   }
 }

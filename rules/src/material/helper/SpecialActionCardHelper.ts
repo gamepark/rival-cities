@@ -56,7 +56,8 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
           playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
         },
         {
-          type: ActionType.PurchaseShip
+          type: ActionType.PurchaseShip,
+          playerHasShip19: this.checkPlayerHaveShip19
         },
         {
           type: ActionType.Gift,
@@ -206,7 +207,8 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
           playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
         },
         {
-          type: ActionType.PurchaseShip
+          type: ActionType.PurchaseShip,
+          playerHasShip19: this.checkPlayerHaveShip19
         },
         {
           type: ActionType.Gift,
@@ -308,7 +310,8 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
           playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
         },
         {
-          type: ActionType.PurchaseShip
+          type: ActionType.PurchaseShip,
+          playerHasShip19: this.checkPlayerHaveShip19
         },
         {
           type: ActionType.GainLetter,
@@ -435,5 +438,9 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
 
   get checkPlayerHaveShip16(): boolean {
     return this.material(MaterialType.ShipCard).location(LocationType.PlayerShipCards).player(this.player).id(ShipCard.Ship16).length > 0
+  }
+
+  get checkPlayerHaveShip19() {
+    return this.material(MaterialType.ShipCard).location(LocationType.PlayerShipCards).player(this.player).id(ShipCard.Ship19).length > 0
   }
 }
