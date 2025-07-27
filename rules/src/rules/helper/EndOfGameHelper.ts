@@ -85,7 +85,7 @@ export class EndOfGameHelper extends PlayerTurnRule {
 
   checkIfAPlayerhasWin3Lawsuits(): boolean {
     const altonaLawsuits = this.getPlayerLawsuitCards(City.Altona)
-    const hamburgLawsuits = this.getPlayerShipCards(City.Hamburg)
+    const hamburgLawsuits = this.getPlayerLawsuitCards(City.Hamburg)
 
     return altonaLawsuits.length >= 3 || hamburgLawsuits.length >= 3
   }
