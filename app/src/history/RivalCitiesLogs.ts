@@ -20,7 +20,7 @@ import { WinLawsuitHistory } from './components/WinLawsuitHistory'
 
 export class RivalCitiesLogs implements LogDescription {
   getMovePlayedLogDescription(move: MaterialMove, context: MoveComponentContext): MovePlayedLogDescription | undefined {
-    const ruleId: RuleId = context.game.rule.id
+    const ruleId: RuleId = context.game.rule?.id
     const actionPlayer = context.action.playerId
     if (this.getMoveLocationType(move) === LocationType.PlayerProducts) {
       return {
