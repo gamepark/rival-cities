@@ -66,7 +66,7 @@ export class OffSeasonPayForAllianceRule extends SimultaneousRule {
       const alliancePays: AlliancePay[] | undefined = this.remind<AlliancePay[]>(MemoryType.AlliancePay, player) ?? []
       const alliancePay = alliancePays.find((it: AlliancePay) => it.alreadyPay < it.cost.amount)
       if (alliancePay) {
-        alliancePay.alreadyPay += 1
+        alliancePay.alreadyPay += move.quantity ?? 1
         this.memorize(MemoryType.AlliancePay, alliancePays, player)
       }
       if (this.getPlayerAlrdeadyPayedAlliance(player!).length === this.getPlayerAlliances(player!).length) {
@@ -98,7 +98,7 @@ export class OffSeasonPayForAllianceRule extends SimultaneousRule {
       if (move.data.pay.cost.product) {
         return this.getPlayerProduct(move.data.player)
           .id(move.data.pay.cost.product)
-          .moveItems((it) => ({ type: LocationType.ProductPiles, id: it.id }))
+          .moveItems((it) => ({ type: LocationType.ProductPiles, id: it.id }), move.data.pay.cost.amount)
       }
     }
     return []
