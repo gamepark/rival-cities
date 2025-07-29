@@ -42,7 +42,7 @@ export class ProductionActionRule extends ActionRule<ProductionAction> {
     }
     if (isMoveItemType(MaterialType.Factory)(move)) {
       if (!this.action?.productType) {
-        return [this.allProducts.id(this.productChoosen).moveItem({ type: LocationType.PlayerProducts, id: this.productChoosen, player: this.player })]
+        this.forget(MemoryType.ProductChoosen)
       }
       if (this.productChoosen === this.action?.productType) {
         return [this.products.moveItem({ type: LocationType.PlayerProducts, id: this.productChoosen, player: this.player })]
@@ -57,17 +57,20 @@ export class ProductionActionRule extends ActionRule<ProductionAction> {
     if (isMoveItemType(MaterialType.Product)(move) && (!this.action?.productType || this.action.productType === move.location.id)) {
       if (!this.productChoosen) {
         this.memorize(MemoryType.ProductChoosen, move.location.id)
-        if (this.playerShipCards.length > 0) {
-          for (const shipCard of this.playerShipCards) {
-            const shipCardData = shipCardsData[shipCard.id as ShipCard]
-            if (shipCardData.effect.move) {
-              moves.push(...shipCardData.effect.move(this.game, this.player))
+        if (this.action?.canGetMore) {
+          if (this.playerShipCards.length > 0) {
+            for (const shipCard of this.playerShipCards) {
+              const shipCardData = shipCardsData[shipCard.id as ShipCard]
+              if (shipCardData.effect.move) {
+                moves.push(...shipCardData.effect.move(this.game, this.player))
+              }
             }
           }
+          moves.push(...this.allianceCardHelper.getOsloProducts(move.location.id as Product))
+          moves.push(...this.allianceCardHelper.getNovgorodProducts(move.location.id as Product))
+          moves.push(...this.allianceCardHelper.getLondonProducts(move.location.id as Product))
+          this.action.canGetMore = false
         }
-        moves.push(...this.allianceCardHelper.getOsloProducts(move.location.id as Product))
-        moves.push(...this.allianceCardHelper.getNovgorodProducts(move.location.id as Product))
-        moves.push(...this.allianceCardHelper.getLondonProducts(move.location.id as Product))
       } else if (this.playerFactories.length === 0) {
         this.forget(MemoryType.ProductChoosen)
         moves.push(...this.removeActionAndMove())

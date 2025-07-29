@@ -23,12 +23,14 @@ export class BasicActionCardHelper extends MaterialRulesPart {
         {
           type: ActionType.Production,
           productType: Product.Beer,
-          quantity: 2
+          quantity: 2,
+          canGetMore: true
         },
         {
           type: ActionType.Production,
           productType: Product.Cloth,
-          quantity: 1
+          quantity: 1,
+          canGetMore: true
         }
       ]
     },
@@ -50,7 +52,8 @@ export class BasicActionCardHelper extends MaterialRulesPart {
         {
           type: ActionType.Production,
           productType: Product.Furniture,
-          quantity: 1
+          quantity: 1,
+          canGetMore: true
         },
         {
           type: ActionType.GainLetter,
@@ -61,7 +64,8 @@ export class BasicActionCardHelper extends MaterialRulesPart {
     [BasicActionCard.BasicAction6]: {
       type: ActionType.Production,
       productType: Product.Cloth,
-      quantity: 1
+      quantity: 1,
+      canGetMore: true
     },
     [BasicActionCard.BasicAction7]: {
       type: this.computeActionIfPlayerHasGdanskAlliance(),
@@ -104,7 +108,8 @@ export class BasicActionCardHelper extends MaterialRulesPart {
         {
           type: ActionType.Production,
           productType: Product.Leather,
-          quantity: 1
+          quantity: 1,
+          canGetMore: true
         }
       ]
     },
@@ -125,7 +130,8 @@ export class BasicActionCardHelper extends MaterialRulesPart {
     [BasicActionCard.BasicAction11]: {
       type: ActionType.Production,
       productType: Product.Leather,
-      quantity: 1
+      quantity: 1,
+      canGetMore: true
     },
     [BasicActionCard.BasicAction12]: {
       type: this.computeActionIfPlayerHasGdanskAlliance(),
@@ -167,7 +173,8 @@ export class BasicActionCardHelper extends MaterialRulesPart {
         {
           type: ActionType.Production,
           productType: Product.Beer,
-          quantity: 2
+          quantity: 2,
+          canGetMore: true
         }
       ]
     },

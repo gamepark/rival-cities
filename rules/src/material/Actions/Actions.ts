@@ -17,6 +17,7 @@ export type ProductionAction = {
   type: ActionType.Production
   productType: Product | undefined
   quantity: number
+  canGetMore: boolean
 }
 
 export type AdvanceLawsuitAction = {

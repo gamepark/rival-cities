@@ -1,6 +1,8 @@
 /** @jsxImportSource @emotion/react */
 
 import { PlayMoveButton, useLegalMove, usePlayerId, usePlayerName, useRules } from '@gamepark/react-game'
+import { Action, ProductionAction } from '@gamepark/rival-cities/material/Actions/Actions'
+import { ActionType } from '@gamepark/rival-cities/material/Actions/ActionType'
 import { RivalCitiesRules } from '@gamepark/rival-cities/RivalCitiesRules'
 import { CustomMoveType } from '@gamepark/rival-cities/rules/CustomMoveType'
 import { MemoryType } from '@gamepark/rival-cities/rules/MemoryType'
@@ -31,10 +33,16 @@ export const ComputedHeader = () => {
     }
 
     if (productChoosen) {
+      const currentAction = rules.remind(MemoryType.Actions) ?? []
+      let productionAction
+      if (currentAction.length > 0) {
+        productionAction = currentAction[0].actions?.find((action: Action) => action.type === ActionType.Production) as ProductionAction
+      }
+      console.log(productionAction)
       return (
         <Trans
           defaults="header.production.factory.you"
-          values={{ product: productChoosen }}
+          values={{ product: productionAction ? productionAction.productType : productChoosen }}
           components={{
             pass: <PlayMoveButton move={pass} />
           }}
