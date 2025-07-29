@@ -1,4 +1,5 @@
-import { MaterialGame, MaterialRulesPart } from '@gamepark/rules-api'
+import { Material, MaterialGame, MaterialRulesPart } from '@gamepark/rules-api'
+import { City } from '../../City'
 import { LawsuitCard, lawsuitCardData } from '../../material/LawsuitCard'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
@@ -11,7 +12,7 @@ export class AdvanceLawsuitHelper extends MaterialRulesPart {
     super(game)
   }
 
-  checkIfCanAdvanceInLawsuit(itemId: LawsuitCard) {
+  checkIfCanAdvanceInLawsuit(itemId: LawsuitCard, position: number) {
     if (!itemId) return false
     const lawsuitData = lawsuitCardData[itemId]
     let haveSuffisantProducts = true
@@ -26,7 +27,16 @@ export class AdvanceLawsuitHelper extends MaterialRulesPart {
         }
       }
     })
-    return haveSuffisantProducts
+    const marker = this.material(MaterialType.LawsuitMarker).location(LocationType.LawsuitMarkerPiste).locationId(position)
+    return haveSuffisantProducts && this.checkMarkerIsNotAtMaxX(marker)
+  }
+
+  checkMarkerIsNotAtMaxX(marker: Material): boolean {
+    const markerLocationX = marker.getItem()?.location.x ?? 0
+    if(this.player === City.Altona) {
+      return markerLocationX > -4
+    }
+    return markerLocationX < 4
   }
 
   get playerProducts() {
