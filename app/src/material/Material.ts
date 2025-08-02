@@ -1,5 +1,5 @@
-import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
 import { MaterialDescription } from '@gamepark/react-game'
+import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
 import { allianceCardDescription } from './AllianceCardDescription'
 import { basicActionCardDescription } from './BasicActionCardDescription'
 import { bellTokenDescription } from './BellTokenDescription'
@@ -17,6 +17,7 @@ import { frenchAllianceCardDescription } from './i18n/fr/FrenchAllianceCardDescr
 import { frenchBasicActionCardDescription } from './i18n/fr/FrenchBasicActionCardDescription'
 import { frenchGameOverviewDescription } from './i18n/fr/FrenchGameOverviewDescription'
 import { frenchLawsuitCardDescription } from './i18n/fr/FrenchLawsuitCardDescription'
+import { frenchLawsuitPieceDescription } from './i18n/fr/FrenchLawsuitPieceDescription'
 import { frenchOffSeasonOverviewDescription } from './i18n/fr/FrenchOffSeasonOverviewDescription'
 import { frenchShipCardDescription } from './i18n/fr/FrenchShipCardDescription'
 import { frenchSpecialActionCardDescription } from './i18n/fr/FrenchSpecialActionCardDescription'
@@ -69,6 +70,7 @@ export const MaterialI18n: Record<string, Partial<Record<MaterialType, MaterialD
     [MaterialType.LawsuitCard]: frenchLawsuitCardDescription,
     [MaterialType.ShipCard]: frenchShipCardDescription,
     [MaterialType.GameOverview]: frenchGameOverviewDescription,
-    [MaterialType.OffSeasonOverview]: frenchOffSeasonOverviewDescription
+    [MaterialType.OffSeasonOverview]: frenchOffSeasonOverviewDescription,
+    [MaterialType.LawsuitPiece]: frenchLawsuitPieceDescription
   }
 }
