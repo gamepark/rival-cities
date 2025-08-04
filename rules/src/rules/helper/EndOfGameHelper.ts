@@ -132,8 +132,8 @@ export class EndOfGameHelper extends PlayerTurnRule {
 
   get noLawsuitCardsInBoard() {
     return (
-      this.material(MaterialType.LawsuitCard).location(LocationType.LawsuitCardDeck).length === 0 &&
-      this.material(MaterialType.LawsuitCard).location(LocationType.LawsuitCardsRiver).length === 0
+      this.material(MaterialType.LawsuitCard).location(LocationType.LawsuitDeck).length === 0 &&
+      this.material(MaterialType.LawsuitCard).location(LocationType.LawsuitSpace).length === 0
     )
   }
 

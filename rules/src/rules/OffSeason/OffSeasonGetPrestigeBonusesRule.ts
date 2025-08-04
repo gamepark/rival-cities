@@ -94,18 +94,7 @@ export class OffSeasonGetPrestigeBonusesRule extends PlayerTurnRule {
   startResolveLawsuit() {
     this.memorize(MemoryType.OffSeasonStep, RuleId.OffSeasonChangeSpecialCards)
     this.memorize(MemoryType.Actions, [{ type: ActionType.ResolveLawsuit }])
-
-    const lawsuitMarkerToResolve = this.material(MaterialType.LawsuitMarker)
-      .location((loc) => loc.type === LocationType.LawsuitMarkerPiste && loc.id === 0)
-      .getItem()?.location.x!
-
-    if(lawsuitMarkerToResolve === 0) {
-      return this.startRule(RuleId.ResolveLawsuit)
-    }
-
-    const player = lawsuitMarkerToResolve < 0 ? City.Altona : City.Hamburg
-
-    return this.startPlayerTurn(RuleId.ResolveLawsuit, player)
+    return this.startRule(RuleId.ResolveLawsuit)
   }
 
   getStarsTokens() {

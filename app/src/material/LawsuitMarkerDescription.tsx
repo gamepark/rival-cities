@@ -23,7 +23,7 @@ export class LawsuitMarkerDescription extends TokenDescription {
 
   getItemMenu(_item: MaterialItem, context: ItemContext, legalMoves: MaterialMove[]): React.ReactNode {
     const advance = legalMoves.find(
-      (move) => isMoveItemType(MaterialType.LawsuitMarker)(move) && move.location.type === LocationType.LawsuitMarkerPiste && move.itemIndex === context.index
+      (move) => isMoveItemType(MaterialType.LawsuitMarker)(move) && move.location.type === LocationType.LawsuitMarkerSpace && move.itemIndex === context.index
     )
 
     if (context.displayIndex !== 0) return undefined

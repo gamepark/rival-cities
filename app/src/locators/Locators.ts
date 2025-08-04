@@ -8,10 +8,10 @@ import { cardPisteLocator } from './board/CardPisteLocator'
 import { factoryDeckLocator } from './board/FactoryDeckLocator'
 import { gameOverviewPlaceLocator } from './board/GameOverviewPlaceLocator'
 import { inkJarPisteLocator } from './board/InkJarPisteLocator'
-import { lawsuitCardDeckLocator } from './board/LawsuitCardDeckLocator'
-import { lawsuitCardsRiverLocator } from './board/LawsuitCardsRiverLocator'
-import { lawsuitMarkerPisteLocator } from './board/LawsuitMarkerPisteLocator'
-import { lawsuitPiecesLocator } from './board/LawsuitPiecesLocator'
+import { lawsuitDeckLocator } from './board/LawsuitDeckLocator'
+import { lawsuitSpaceLocator } from './board/LawsuitSpaceLocator'
+import { lawsuitMarkerSpaceLocator } from './board/LawsuitMarkerSpaceLocator'
+import { lawsuitPieceSpotLocator } from './board/LawsuitPieceSpotLocator'
 import { letterDeckLocator } from './board/LetterDeckLocator'
 import { prestigeMarkerPisteLocator } from './board/PrestigeMarkerPisteLocator'
 import { productPilesLocator } from './board/ProductPilesLocator'
@@ -39,10 +39,10 @@ export const Locators: Partial<Record<LocationType, Locator<City, MaterialType, 
   [LocationType.SpecialActionCardsDiscard]: sepcialActionCardsDiscardLocator,
   [LocationType.ShipCardsDeck]: shipCardsDeckLocator,
   [LocationType.ShipCardsRiver]: shipCardsRiverLocator,
-  [LocationType.LawsuitCardDeck]: lawsuitCardDeckLocator,
-  [LocationType.LawsuitCardsRiver]: lawsuitCardsRiverLocator,
-  [LocationType.LawsuitPieces]: lawsuitPiecesLocator,
-  [LocationType.LawsuitMarkerPiste]: lawsuitMarkerPisteLocator,
+  [LocationType.LawsuitDeck]: lawsuitDeckLocator,
+  [LocationType.LawsuitSpace]: lawsuitSpaceLocator,
+  [LocationType.LawsuitPieceSpot]: lawsuitPieceSpotLocator,
+  [LocationType.LawsuitMarkerSpace]: lawsuitMarkerSpaceLocator,
   [LocationType.AllianceCardsLayout]: allianceCardsLayoutLocator,
   [LocationType.InkJarPiste]: inkJarPisteLocator,
   [LocationType.PrestigeMarkerPiste]: prestigeMarkerPisteLocator,

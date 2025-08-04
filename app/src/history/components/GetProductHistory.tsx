@@ -1,11 +1,12 @@
 /** @jsxImportSource @emotion/react */
 
 import { MoveComponentProps, usePlayerName } from '@gamepark/react-game'
+import { MoveItem } from '@gamepark/rules-api'
 import { Trans } from 'react-i18next'
 
-export const GetProductHistory = (props: MoveComponentProps) => {
-  const { context, move } = props
-  const actionPlayer = context.action.playerId
+export const GetProductHistory = (props: MoveComponentProps<MoveItem>) => {
+  const { move } = props
+  const actionPlayer = move.location.player
   const name = usePlayerName(actionPlayer)
 
   return <Trans defaults="history.get.product" values={{ player: name, product: move.location.id, quantity: move.quantity ?? 1 }} />

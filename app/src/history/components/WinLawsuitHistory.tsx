@@ -2,13 +2,13 @@
 
 import { MoveComponentProps, PlayMoveButton, usePlayerName } from '@gamepark/react-game'
 import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
-import { MaterialMoveBuilder } from '@gamepark/rules-api'
+import { MaterialMoveBuilder, MoveItem } from '@gamepark/rules-api'
 import { Trans } from 'react-i18next'
 import displayMaterialHelp = MaterialMoveBuilder.displayMaterialHelp
 
-export const WinLawsuitHistory = (props: MoveComponentProps) => {
+export const WinLawsuitHistory = (props: MoveComponentProps<MoveItem>) => {
   const { context, move } = props
-  const actionPlayer = context.action.playerId
+  const actionPlayer = move.location.player
   const name = usePlayerName(actionPlayer)
   const card = context.game.items[MaterialType.LawsuitCard][move.itemIndex]
 

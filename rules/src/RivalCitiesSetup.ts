@@ -37,7 +37,7 @@ export class RivalCitiesSetup extends MaterialGameSetup<City, MaterialType, Loca
     this.setupSpecialActionCards()
     this.setupShipCards()
     this.setupAllianceCards()
-    this.setupLawsuitCards()
+    this.setupLawsuits()
     this.setupProducts()
     this.setupPlayers()
     this.initializeMemory()
@@ -71,17 +71,22 @@ export class RivalCitiesSetup extends MaterialGameSetup<City, MaterialType, Loca
     this.material(MaterialType.AllianceCard).createItems(allianceCardItems)
   }
 
-  setupLawsuitCards() {
+  setupLawsuits() {
+    this.setupLawsuitDeck()
+    for (let i = 0; i < 3; i++) {
+      this.material(MaterialType.LawsuitPiece).createItem({ location: { type: LocationType.LawsuitPieceSpot } })
+    }
+    for (const index of this.material(MaterialType.LawsuitPiece).getIndexes()) {
+      this.material(MaterialType.LawsuitCard).location(LocationType.LawsuitDeck).moveItem({ type: LocationType.LawsuitSpace, parent: index })
+      this.material(MaterialType.LawsuitMarker).createItem({ location: { type: LocationType.LawsuitMarkerSpace, parent: index, x: 0 } })
+    }
+  }
+
+  setupLawsuitDeck() {
     const lawsuitCardItems = shuffle(lawsuitCards)
       .slice(0, 7)
-      .map((it) => ({ id: it, location: { type: LocationType.LawsuitCardDeck } }))
+      .map((it) => ({ id: it, location: { type: LocationType.LawsuitDeck } }))
     this.material(MaterialType.LawsuitCard).createItems(lawsuitCardItems)
-    this.material(MaterialType.LawsuitCard).location(LocationType.LawsuitCardDeck).limit(3).moveItems({
-      type: LocationType.LawsuitCardsRiver
-    })
-    for (let i = 0; i < 3; i++) {
-      this.material(MaterialType.LawsuitMarker).createItem({ location: { type: LocationType.LawsuitMarkerPiste, id: i, x: 0 } })
-    }
   }
 
   setupProducts() {

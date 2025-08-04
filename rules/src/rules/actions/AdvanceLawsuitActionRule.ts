@@ -18,7 +18,7 @@ export class AdvanceLawsuitActionRule extends ActionRule<AdvanceLawsuitAction> {
     const moveX = this.player === City.Altona ? -1 : 1
     const moves: MaterialMove[] = []
     this.possibleCardsToGet().forEach((card) => {
-      const marker = this.material(MaterialType.LawsuitMarker).location(LocationType.LawsuitMarkerPiste).locationId(card.location.z)
+      const marker = this.material(MaterialType.LawsuitMarker).location(LocationType.LawsuitMarkerSpace).parent(card.location.parent)
       if (marker.length) {
         moves.push(marker.moveItem(({ location }) => ({ ...location, x: location.x! + moveX })))
       }
@@ -35,7 +35,7 @@ export class AdvanceLawsuitActionRule extends ActionRule<AdvanceLawsuitAction> {
     if (this.checkAnotherActionInProgress(this.action?.type)) return []
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.LawsuitMarker)(move)) {
-      const card = this.lawsuitCards.filter(({ location }) => location.z === move.location.id).getItem()
+      const card = this.lawsuitCards.parent(move.location.parent).getItem()
       if (card) {
         lawsuitCardData[card.id as LawsuitCard].cost.forEach((cost) => {
           if (cost.type === 'Letter') {
@@ -57,7 +57,8 @@ export class AdvanceLawsuitActionRule extends ActionRule<AdvanceLawsuitAction> {
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.LawsuitMarker)(move)) {
       this.removeAction()
-      const card = this.lawsuitCards.filter(({ location }) => location.z === move.location.id).getItem()
+      const marker = this.material(MaterialType.LawsuitMarker).getItem(move.itemIndex)
+      const card = this.lawsuitCards.parent(marker.location.parent).getItem()
       if (card) {
         if (this.action?.playerCanUseAllianceLeHavre && this.playerProducts.length && this.possibleCardsToGet().length > 0) {
           this.addActionBonus({
@@ -71,18 +72,17 @@ export class AdvanceLawsuitActionRule extends ActionRule<AdvanceLawsuitAction> {
             }
           })
         }
-        const marker = this.material(MaterialType.LawsuitMarker).location(LocationType.LawsuitMarkerPiste).locationId(move.location.id)
         if (move.location.id === 1 && this.nbTimeAlreadyAdvanced < 1 && this.advanceLawsuitHelper.checkMarkerIsNotAtMaxX(marker)) {
           this.addActionBonus({
             type: ActionType.AdvanceLawsuit,
-            lawsuitAdvancedLocation: move.location.id,
+            lawsuitAdvancedLocation: marker.location.parent,
             nbTimeAlreadyAdvanced: this.nbTimeAlreadyAdvanced + 1,
             playerCanUseAllianceLeHavre: false
           })
         } else if (move.location.id === 2 && this.nbTimeAlreadyAdvanced < 2 && this.advanceLawsuitHelper.checkMarkerIsNotAtMaxX(marker)) {
           this.addActionBonus({
             type: ActionType.AdvanceLawsuit,
-            lawsuitAdvancedLocation: move.location.id,
+            lawsuitAdvancedLocation: marker.location.parent,
             nbTimeAlreadyAdvanced: this.nbTimeAlreadyAdvanced + 1,
             playerCanUseAllianceLeHavre: false
           })
@@ -111,7 +111,7 @@ export class AdvanceLawsuitActionRule extends ActionRule<AdvanceLawsuitAction> {
   }
 
   possibleCardsToGet() {
-    return this.lawsuitCards.getItems((item) => this.advanceLawsuitHelper.checkIfCanAdvanceInLawsuit(item.id as LawsuitCard, item.location.z ?? 0))
+    return this.lawsuitCards.getItems<LawsuitCard>((item) => this.advanceLawsuitHelper.checkIfCanAdvanceInLawsuit(item.id, item.location.parent!))
   }
 
   get playerProducts() {
@@ -123,12 +123,10 @@ export class AdvanceLawsuitActionRule extends ActionRule<AdvanceLawsuitAction> {
   }
 
   get lawsuitCards() {
-    if (!this.action?.lawsuitAdvancedLocation) {
-      return this.material(MaterialType.LawsuitCard).location(LocationType.LawsuitCardsRiver)
+    if (this.action?.lawsuitAdvancedLocation === undefined) {
+      return this.material(MaterialType.LawsuitCard).location(LocationType.LawsuitSpace)
     }
-    return this.material(MaterialType.LawsuitCard).location(
-      (loc) => loc.type === LocationType.LawsuitCardsRiver && loc.z === this.action?.lawsuitAdvancedLocation
-    )
+    return this.material(MaterialType.LawsuitCard).location(LocationType.LawsuitSpace).parent(this.action.lawsuitAdvancedLocation)
   }
 
   get nbTimeAlreadyAdvanced() {

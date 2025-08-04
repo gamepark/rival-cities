@@ -3,7 +3,7 @@ import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
 import { Coordinates } from '@gamepark/rules-api'
 import { gameBoardLocator } from '../GameBoardLocator'
 
-class LawsuitCardDeckLocator extends DeckLocator {
+class LawsuitDeckLocator extends DeckLocator {
   parentItemType = MaterialType.GameBoard
 
   getRotateZ(): number {
@@ -16,4 +16,4 @@ class LawsuitCardDeckLocator extends DeckLocator {
   }
 }
 
-export const lawsuitCardDeckLocator = new LawsuitCardDeckLocator()
+export const lawsuitDeckLocator = new LawsuitDeckLocator()

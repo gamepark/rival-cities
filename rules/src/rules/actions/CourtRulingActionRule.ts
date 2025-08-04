@@ -12,48 +12,31 @@ export class CourtRulingActionRule extends ActionRule<CourtRullingAction> {
   getPlayerMoves(): MaterialMove[] {
     if (this.checkAnotherActionInProgress(this.action?.type)) return []
     const moves: MaterialMove[] = []
-    const xPositionToCanResolve = this.player === City.Altona ? [-2, -3, -4] : [2, 3, 4]
 
-    if (xPositionToCanResolve.includes(this.lawsuitMarkerToResolve.getItem()?.location.x!)) {
+    const firstLawsuit = this.material(MaterialType.LawsuitPiece).location((l) => l.x === 0)
+    const firstLawsuitX = this.material(MaterialType.LawsuitMarker).parent(firstLawsuit.getIndex()).getItem()!.location.x!
+    if ((this.player === City.Altona && firstLawsuitX <= -2) || (this.player === City.Hamburg && firstLawsuitX >= 2)) {
       moves.push(this.customMove(CustomMoveType.ResolveLawsuit))
     }
 
-    if (this.lawsuitCardToMove.length) {
-      moves.push(this.lawsuitCardToMove.moveItem(({ location }) => ({ ...location, z: 0 })))
-      moves.push(this.lawsuitCardToMove.moveItem(({ location }) => ({ ...location, z: 2 })))
+    const lawsuitPieces = this.material(MaterialType.LawsuitPiece)
+    for (const index of lawsuitPieces.getIndexes()) {
+      const lawsuitPiece = lawsuitPieces.index(index)
+      const lawsuitX = lawsuitPiece.getItem()!.location.x!
+      if (lawsuitX > 0) {
+        moves.push(lawsuitPiece.moveItem({ type: LocationType.LawsuitPieceSpot, x: lawsuitX - 1 }))
+      }
     }
-    moves.push(this.customMove(CustomMoveType.Pass, this.action))
-    return moves
-  }
 
-  beforeItemMove(move: ItemMove): MaterialMove[] {
-    if (this.checkAnotherActionInProgress(this.action?.type)) return []
-    const moves: MaterialMove[] = []
-    if (isMoveItemType(MaterialType.LawsuitCard)(move) && move.location.z !== 1) {
-      this.memorize(MemoryType.BasicActionChoosen, this.action?.type)
-      moves.push(
-        this.material(MaterialType.LawsuitCard)
-          .location((loc) => loc.type === LocationType.LawsuitCardsRiver && loc.z === move.location.z)
-          .moveItem(({ location }) => ({ ...location, z: 1 }))
-      )
-      moves.push(
-        this.material(MaterialType.LawsuitMarker)
-          .location((loc) => loc.type === LocationType.LawsuitMarkerPiste && loc.id === move.location.z)
-          .moveItem(({ location }) => ({ ...location, id: 1 }))
-      )
-      moves.push(
-        this.material(MaterialType.LawsuitMarker)
-          .location((loc) => loc.type === LocationType.LawsuitMarkerPiste && loc.id === 1)
-          .moveItem(({ location }) => ({ ...location, id: move.location.z }))
-      )
-    }
+    moves.push(this.customMove(CustomMoveType.Pass, this.action))
     return moves
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {
     if (this.checkAnotherActionInProgress(this.action?.type)) return []
     const moves: MaterialMove[] = []
-    if (isMoveItemType(MaterialType.LawsuitCard)(move) && move.location.z === 1) {
+    if (isMoveItemType(MaterialType.LawsuitPiece)(move)) {
+      this.memorize(MemoryType.BasicActionChoosen, this.action?.type)
       moves.push(...this.removeActionAndMove())
     }
     return moves
@@ -68,10 +51,9 @@ export class CourtRulingActionRule extends ActionRule<CourtRullingAction> {
   }
 
   get lawsuitMarkerToResolve() {
-    return this.material(MaterialType.LawsuitMarker).location((loc) => loc.type === LocationType.LawsuitMarkerPiste && loc.id === 0)
-  }
-
-  get lawsuitCardToMove() {
-    return this.material(MaterialType.LawsuitCard).location((loc) => loc.type === LocationType.LawsuitCardsRiver && loc.z === 1)
+    const firstLawsuit = this.material(MaterialType.LawsuitPiece)
+      .location((l) => l.x === 0)
+      .getIndex()
+    return this.material(MaterialType.LawsuitMarker).location((loc) => loc.type === LocationType.LawsuitMarkerSpace && loc.parent === firstLawsuit)
   }
 }

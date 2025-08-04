@@ -1,7 +1,9 @@
 import { LogDescription, MoveComponentContext, MovePlayedLogDescription } from '@gamepark/react-game'
 import { LocationType } from '@gamepark/rival-cities/material/LocationType'
+import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
+import { RivalCitiesRules } from '@gamepark/rival-cities/RivalCitiesRules'
 import { RuleId } from '@gamepark/rival-cities/rules/RuleId'
-import { isMoveItem, MaterialMove } from '@gamepark/rules-api'
+import { isMoveItem, MaterialGame, MaterialMove } from '@gamepark/rules-api'
 import { AdvanceInLawsuitHistory } from './components/AdvanceInLawsuitHistory'
 import { GainPrestigeHistory } from './components/GainPrestigeHistory'
 import { GetAllianceHistory } from './components/GetAllianceHistory'
@@ -20,12 +22,13 @@ import { WinLawsuitHistory } from './components/WinLawsuitHistory'
 
 export class RivalCitiesLogs implements LogDescription {
   getMovePlayedLogDescription(move: MaterialMove, context: MoveComponentContext): MovePlayedLogDescription | undefined {
-    const ruleId: RuleId = context.game.rule?.id
+    const game = context.game as MaterialGame
+    const ruleId = game.rule?.id
     const actionPlayer = context.action.playerId
-    if (this.getMoveLocationType(move) === LocationType.PlayerProducts) {
+    if (isMoveItem(move) && move.location.type === LocationType.PlayerProducts) {
       return {
         Component: ruleId === RuleId.Piracy ? StealProductHistory : GetProductHistory,
-        player: actionPlayer
+        player: move.location.player
       }
     }
     if (this.getMoveLocationType(move) === LocationType.ProductPiles) {
@@ -34,10 +37,10 @@ export class RivalCitiesLogs implements LogDescription {
         player: actionPlayer
       }
     }
-    if (this.getMoveLocationType(move) === LocationType.PlayerLetterDeck) {
+    if (isMoveItem(move) && move.location.type === LocationType.PlayerLetterDeck) {
       return {
         Component: GetLetterHistory,
-        player: actionPlayer
+        player: move.location.player
       }
     }
     if (this.getMoveLocationType(move) === LocationType.LetterDeck) {
@@ -46,23 +49,23 @@ export class RivalCitiesLogs implements LogDescription {
         player: actionPlayer
       }
     }
-    if (this.getMoveLocationType(move) === LocationType.PlayerStarTokens) {
+    if (isMoveItem(move) && move.location.type === LocationType.PlayerStarTokens) {
       return {
         Component: GetStarTokenHistory,
-        player: actionPlayer
+        player: move.location.player
       }
     }
-    if (this.getMoveLocationType(move) === LocationType.PlayerFactories) {
-      if (isMoveItem(move) && move.location.rotation) {
+    if (isMoveItem(move) && move.location.type === LocationType.PlayerFactories) {
+      if (move.location.rotation) {
         return {
           Component: UseFactoryHistory,
-          player: actionPlayer
+          player: move.location.player
         }
       }
       if (ruleId === RuleId.BuildFactory) {
         return {
           Component: GetFactoryHistory,
-          player: actionPlayer
+          player: move.location.player
         }
       }
     }
@@ -84,10 +87,10 @@ export class RivalCitiesLogs implements LogDescription {
         player: actionPlayer
       }
     }
-    if (this.getMoveLocationType(move) === LocationType.PlayerLawsuitCards) {
+    if (isMoveItem(move) && move.location.type === LocationType.PlayerLawsuitCards) {
       return {
         Component: WinLawsuitHistory,
-        player: actionPlayer
+        player: move.location.player
       }
     }
     if (this.getMoveLocationType(move) === LocationType.PlayerSpecialActionCardsHand) {
@@ -102,11 +105,14 @@ export class RivalCitiesLogs implements LogDescription {
         player: actionPlayer
       }
     }
-    if (this.getMoveLocationType(move) === LocationType.LawsuitMarkerPiste && ruleId === RuleId.AdvanceLawsuit) {
-      return {
-        Component: AdvanceInLawsuitHistory,
-        player: actionPlayer
-      }
+
+    if (isMoveItem(move) && move.location.type === LocationType.LawsuitMarkerSpace) {
+      const card = new RivalCitiesRules(game).material(MaterialType.LawsuitCard).location(LocationType.LawsuitSpace).parent(move.location.parent)
+      if (card.length)
+        return {
+          Component: AdvanceInLawsuitHistory,
+          player: actionPlayer
+        }
     }
     return undefined
   }

@@ -433,7 +433,7 @@ export class Tutorial extends MaterialTutorial<number, MaterialType, LocationTyp
         position: { x: 0, y: 30 }
       },
       focus: (game: MaterialGame) => ({
-        materials: [this.material(game, MaterialType.LawsuitCard).location(LocationType.LawsuitCardsRiver)]
+        materials: [this.material(game, MaterialType.LawsuitCard).location(LocationType.LawsuitSpace)]
       })
     },
     {

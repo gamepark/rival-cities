@@ -11,11 +11,13 @@ import {
   StackingStrategy,
   TimeLimit
 } from '@gamepark/rules-api'
+import { City } from './City'
 import { LocationType } from './material/LocationType'
 import { MaterialType } from './material/MaterialType'
-import { City } from './City'
 import { AdvanceLawsuitActionRule } from './rules/actions/AdvanceLawsuitActionRule'
 import { BuildFactoryActionRule } from './rules/actions/BuildFactoryActionRule'
+import { ChoiceActionRule } from './rules/actions/ChoiceActionRule'
+import { ComputedActionRule } from './rules/actions/ComputedActionRule'
 import { CourtRulingActionRule } from './rules/actions/CourtRulingActionRule'
 import { DonationActionRule } from './rules/actions/DonationActionRule'
 import { DrawSpecialActionCardActionRule } from './rules/actions/DrawSpecialActionCardActionRule'
@@ -28,29 +30,27 @@ import { PiracyActionRule } from './rules/actions/PiracyActionRule'
 import { ProductionActionRule } from './rules/actions/ProductionActionRule'
 import { ProductSwapActionRule } from './rules/actions/ProductSwapActionRule'
 import { PurchaseShipActionRule } from './rules/actions/PurchaseShipActionRule'
+import { ResolveLawsuitActionRule } from './rules/actions/ResolveLawsuitActionRule'
 import { ReturnFactoryActionRule } from './rules/actions/ReturnFactoryActionRule'
 import { AdvanceInkJarRule } from './rules/AdvanceInkJarRule'
-import { ChoiceActionRule } from './rules/actions/ChoiceActionRule'
 import { ChooseActionRule } from './rules/ChooseActionRule'
 import { ChooseFirstProductRule } from './rules/ChooseFirstProductRule'
 import { ChooseSpecialActionRule } from './rules/ChooseSpecialActionRule'
 import { ConfirmEndTurnRule } from './rules/ConfirmEndTurnRule'
 import { CustomMoveType } from './rules/CustomMoveType'
+import { EndOfGameHelper } from './rules/helper/EndOfGameHelper'
+import { MemoryHelper } from './rules/helper/MemoryHelper'
 import { OffSeasonChangeSpecialCardsRule } from './rules/OffSeason/OffSeasonChangeSpecialCardsRule'
 import { OffSeasonGetPrestigeBonusesRule } from './rules/OffSeason/OffSeasonGetPrestigeBonusesRule'
 import { OffSeasonGetShipsBonusesRule } from './rules/OffSeason/OffSeasonGetShipsBonusesRule'
+import { OffSeasonPayForAllianceRule } from './rules/OffSeason/OffSeasonPayForAllianceRule'
 import { OffSeasonPlayerWithMostShipCardsEarnPrestigeRule } from './rules/OffSeason/OffSeasonPlayerWithMostShipCardsEarnPrestigeRule'
 import { OffSeasonReactivateFactoriesRule } from './rules/OffSeason/OffSeasonReactivateFactoriesRule'
 import { OffSeasonReturnBellRule } from './rules/OffSeason/OffSeasonReturnBellRule'
 import { OffSeasonTakeBellRule } from './rules/OffSeason/OffSeasonTakeBellRule'
 import { PayProductForAdvanceRule } from './rules/PayProductForAdvanceRule'
-import { ResolveLawsuitActionRule } from './rules/actions/ResolveLawsuitActionRule'
 import { PayToPerformActionAgainRule } from './rules/PayToPerformActionAgainRule'
 import { RuleId } from './rules/RuleId'
-import { ComputedActionRule } from './rules/actions/ComputedActionRule'
-import { OffSeasonPayForAllianceRule } from './rules/OffSeason/OffSeasonPayForAllianceRule'
-import { EndOfGameHelper } from './rules/helper/EndOfGameHelper'
-import { MemoryHelper } from './rules/helper/MemoryHelper'
 
 /**
  * This class implements the rules of the board game.
@@ -112,10 +112,12 @@ export class RivalCitiesRules
       [LocationType.PlayerShipCards]: new PositiveSequenceStrategy(),
       [LocationType.ShipCardsRiver]: new StackingStrategy()
     },
+    [MaterialType.LawsuitPiece]: {
+      [LocationType.LawsuitPieceSpot]: new PositiveSequenceStrategy()
+    },
     [MaterialType.LawsuitCard]: {
-      [LocationType.LawsuitCardDeck]: new PositiveSequenceStrategy(),
-      [LocationType.PlayerLawsuitCards]: new PositiveSequenceStrategy(),
-      [LocationType.LawsuitCardsRiver]: new StackingStrategy()
+      [LocationType.LawsuitDeck]: new PositiveSequenceStrategy(),
+      [LocationType.PlayerLawsuitCards]: new PositiveSequenceStrategy()
     },
     [MaterialType.Factory]: {
       [LocationType.PlayerFactories]: new PositiveSequenceStrategy()
@@ -131,7 +133,7 @@ export class RivalCitiesRules
       [LocationType.ShipCardsDeck]: hideItemId
     },
     [MaterialType.LawsuitCard]: {
-      [LocationType.LawsuitCardDeck]: hideItemId
+      [LocationType.LawsuitDeck]: hideItemId
     }
   }
 
@@ -143,6 +145,10 @@ export class RivalCitiesRules
     }
 
     return moves
+  }
+
+  itemsCanMerge(type: MaterialType) {
+    return type !== MaterialType.LawsuitPiece && super.itemsCanMerge(type)
   }
 
   giveTime(): number {
