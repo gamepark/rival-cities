@@ -1,5 +1,5 @@
 import { City } from '@gamepark/rival-cities/City'
-import { AllianceCard } from '@gamepark/rival-cities/material/AllianceCard'
+import { Alliance } from '@gamepark/rival-cities/material/Alliance'
 import { LawsuitCard } from '@gamepark/rival-cities/material/LawsuitCard'
 import { LocationType } from '@gamepark/rival-cities/material/LocationType'
 import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
@@ -9,12 +9,7 @@ import { RivalCitiesSetup } from '@gamepark/rival-cities/RivalCitiesSetup'
 export const me = City.Altona
 export const opponent = City.Hamburg
 
-const allianceCardsToUse: AllianceCard[] = [
-  AllianceCard.AllianceOslo,
-  AllianceCard.AllianceLeHavre,
-  AllianceCard.AllianceBruxelles,
-  AllianceCard.AllianceKjjobenhavn
-]
+const allianceCardsToUse: Alliance[] = [Alliance.Oslo, Alliance.LeHavre, Alliance.Bruxelles, Alliance.Kjjobenhavn]
 
 const lawsuitCardsToUse: LawsuitCard[] = [
   LawsuitCard.Lawsuit10,
@@ -28,7 +23,7 @@ const lawsuitCardsToUse: LawsuitCard[] = [
 
 export class TutorialSetup extends RivalCitiesSetup {
   setupAllianceCards() {
-    const allianceCardItems = allianceCardsToUse.slice(0, 4).map((it, index) => ({ id: it, location: { type: LocationType.AllianceCardsLayout, x: index } }))
+    const allianceCardItems = allianceCardsToUse.slice(0, 4).map((it, index) => ({ id: it, location: { type: LocationType.AllianceSpace, x: index } }))
     this.material(MaterialType.AllianceCard).createItems(allianceCardItems)
   }
 

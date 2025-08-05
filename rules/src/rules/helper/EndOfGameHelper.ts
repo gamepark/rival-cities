@@ -1,6 +1,6 @@
 import { MaterialMove, PlayerTurnRule } from '@gamepark/rules-api'
 import { City } from '../../City'
-import { AllianceCard, allianceDatas } from '../../material/AllianceCard'
+import { Alliance, alliancesData } from '../../material/Alliance'
 import { LawsuitCard, lawsuitCardData } from '../../material/LawsuitCard'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
@@ -56,7 +56,7 @@ export class EndOfGameHelper extends PlayerTurnRule {
     let score = 0
     score += this.getPlayerAllianceCards(playerId)
       .getItems()
-      .map((it) => allianceDatas[it.id as AllianceCard].stars)
+      .map((it) => alliancesData[it.id as Alliance].stars)
       .reduce((acc, cur) => acc + cur, 0)
     score += this.getPlayerLawsuitCards(playerId)
       .getItems()
@@ -115,7 +115,7 @@ export class EndOfGameHelper extends PlayerTurnRule {
   }
 
   private getPlayerAllianceCards(player: City) {
-    return this.material(MaterialType.AllianceCard).location(LocationType.PlayerAllianceCards).player(player)
+    return this.material(MaterialType.AllianceCard).location(LocationType.PlayerAlliances).player(player)
   }
 
   get prestigeMarkerLocation() {

@@ -1,17 +1,17 @@
+import { Locator } from '@gamepark/react-game'
+import { City } from '@gamepark/rival-cities/City'
 import { LocationType } from '@gamepark/rival-cities/material/LocationType'
 import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
-import { City } from '@gamepark/rival-cities/City'
-import { Locator } from '@gamepark/react-game'
-import { allianceCardsLayoutLocator } from './board/AllianceCardsLayoutLocator'
+import { allianceSpaceLocator } from './board/AllianceSpaceLocator'
 import { bellTokenIdleLocator } from './board/BellTokenIdleLocator'
 import { cardPisteLocator } from './board/CardPisteLocator'
 import { factoryDeckLocator } from './board/FactoryDeckLocator'
 import { gameOverviewPlaceLocator } from './board/GameOverviewPlaceLocator'
 import { inkJarPisteLocator } from './board/InkJarPisteLocator'
 import { lawsuitDeckLocator } from './board/LawsuitDeckLocator'
-import { lawsuitSpaceLocator } from './board/LawsuitSpaceLocator'
 import { lawsuitMarkerSpaceLocator } from './board/LawsuitMarkerSpaceLocator'
 import { lawsuitPieceSpotLocator } from './board/LawsuitPieceSpotLocator'
+import { lawsuitSpaceLocator } from './board/LawsuitSpaceLocator'
 import { letterDeckLocator } from './board/LetterDeckLocator'
 import { prestigeMarkerPisteLocator } from './board/PrestigeMarkerPisteLocator'
 import { productPilesLocator } from './board/ProductPilesLocator'
@@ -21,14 +21,14 @@ import { shipCardsDeckLocator } from './board/ShipCardsDeckLocator'
 import { shipCardsRiverLocator } from './board/ShipCardsRiverLocator'
 import { starTokenDeckLocator } from './board/StarTokenDeckLocator'
 import { gameBoardLocator } from './GameBoardLocator'
-import { playerAllianceCardsLocator } from './player/PlayerAllianceCardsLocator'
+import { playerAlliancesLocator } from './player/PlayerAlliancesLocator'
 import { playerBellTokenLocator } from './player/PlayerBellTokenLocator'
 import { playerFactoriesLocator } from './player/PlayerFactoriesLocator'
 import { playerLawsuitCardsLocator } from './player/PlayerLawsuitCardsLocator'
 import { playerLettersDeckLocator } from './player/PlayerLettersDeckLocator'
 import { playerProductsLocator } from './player/PlayerProductsLocator'
-import { playerSpecialActionCardsHandLocator } from './player/PlayerSpecialActionCardsHandLocator'
 import { playerShipCardsLocator } from './player/PlayerShipCardsLocator'
+import { playerSpecialActionCardsHandLocator } from './player/PlayerSpecialActionCardsHandLocator'
 import { playerStarTokensDeckLocator } from './player/PlayerStarTokensDeckLocator'
 
 export const Locators: Partial<Record<LocationType, Locator<City, MaterialType, LocationType>>> = {
@@ -43,7 +43,7 @@ export const Locators: Partial<Record<LocationType, Locator<City, MaterialType, 
   [LocationType.LawsuitSpace]: lawsuitSpaceLocator,
   [LocationType.LawsuitPieceSpot]: lawsuitPieceSpotLocator,
   [LocationType.LawsuitMarkerSpace]: lawsuitMarkerSpaceLocator,
-  [LocationType.AllianceCardsLayout]: allianceCardsLayoutLocator,
+  [LocationType.AllianceSpace]: allianceSpaceLocator,
   [LocationType.InkJarPiste]: inkJarPisteLocator,
   [LocationType.PrestigeMarkerPiste]: prestigeMarkerPisteLocator,
   [LocationType.GameOverviewPlace]: gameOverviewPlaceLocator,
@@ -54,7 +54,7 @@ export const Locators: Partial<Record<LocationType, Locator<City, MaterialType, 
   [LocationType.PlayerFactories]: playerFactoriesLocator,
   [LocationType.PlayerProducts]: playerProductsLocator,
   [LocationType.PlayerSpecialActionCardsHand]: playerSpecialActionCardsHandLocator,
-  [LocationType.PlayerAllianceCards]: playerAllianceCardsLocator,
+  [LocationType.PlayerAlliances]: playerAlliancesLocator,
   [LocationType.PlayerShipCards]: playerShipCardsLocator,
   [LocationType.PlayerLetterDeck]: playerLettersDeckLocator,
   [LocationType.PlayerStarTokens]: playerStarTokensDeckLocator,

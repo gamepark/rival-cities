@@ -2,7 +2,7 @@
 import { faMoneyCheckDollar, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { CardDescription, ItemContext, ItemMenuButton, pointerCursorCss } from '@gamepark/react-game'
-import { AllianceCard } from '@gamepark/rival-cities/material/AllianceCard'
+import { Alliance } from '@gamepark/rival-cities/material/Alliance'
 import { LocationType } from '@gamepark/rival-cities/material/LocationType'
 import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
 import { CustomMoveType } from '@gamepark/rival-cities/rules/CustomMoveType'
@@ -29,14 +29,14 @@ export class AllianceCardDescription extends CardDescription {
   backImage = AllianceBack
 
   images = {
-    [AllianceCard.AllianceAmsterdam]: AllianceAmsterdam,
-    [AllianceCard.AllianceBruxelles]: AllianceBruxelles,
-    [AllianceCard.AllianceGdansk]: AllianceGdansk,
-    [AllianceCard.AllianceKjjobenhavn]: AllianceKjjobenhavn,
-    [AllianceCard.AllianceLeHavre]: AllianceLeHavre,
-    [AllianceCard.AllianceLondon]: AllianceLondon,
-    [AllianceCard.AllianceNovgorod]: AllianceNovgorod,
-    [AllianceCard.AllianceOslo]: AllianceOslo
+    [Alliance.Amsterdam]: AllianceAmsterdam,
+    [Alliance.Bruxelles]: AllianceBruxelles,
+    [Alliance.Gdansk]: AllianceGdansk,
+    [Alliance.Kjjobenhavn]: AllianceKjjobenhavn,
+    [Alliance.LeHavre]: AllianceLeHavre,
+    [Alliance.London]: AllianceLondon,
+    [Alliance.Novgorod]: AllianceNovgorod,
+    [Alliance.Oslo]: AllianceOslo
   }
 
   canShortClick(move: MaterialMove, context: ItemContext): boolean {
@@ -46,10 +46,10 @@ export class AllianceCardDescription extends CardDescription {
   getItemMenu(item: MaterialItem, context: ItemContext, legalMoves: MaterialMove[]) {
     const pay = legalMoves.find((move) => isCustomMoveType(CustomMoveType.PayForAlliance)(move) && (move.data as { pay: AlliancePay }).pay.id === item.id)
     const discard = legalMoves.find(
-      (move) => isMoveItemType(MaterialType.AllianceCard)(move) && move.location.type === LocationType.AllianceCardsLayout && move.itemIndex === context.index
+      (move) => isMoveItemType(MaterialType.AllianceCard)(move) && move.location.type === LocationType.AllianceSpace && move.itemIndex === context.index
     )
 
-    if (item.location.type !== LocationType.PlayerAllianceCards || item.location.player !== context.player) return undefined
+    if (item.location.type !== LocationType.PlayerAlliances || item.location.player !== context.player) return undefined
 
     if (pay || discard) {
       return (

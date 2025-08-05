@@ -3,7 +3,7 @@ import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
 import { Coordinates, Location, XYCoordinates } from '@gamepark/rules-api'
 import { gameBoardLocator } from '../GameBoardLocator'
 
-class AllianceCardsLayoutLocator extends Locator {
+class AllianceSpaceLocator extends Locator {
   parentItemType = MaterialType.GameBoard
 
   getRotateZ(): number {
@@ -28,4 +28,4 @@ const coordinates = [
   { x: 13.3, y: 13.9 }
 ]
 
-export const allianceCardsLayoutLocator = new AllianceCardsLayoutLocator()
+export const allianceSpaceLocator = new AllianceSpaceLocator()

@@ -1,20 +1,20 @@
 /** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react'
 import { MaterialTutorial, TutorialStep } from '@gamepark/react-game'
-import { AllianceCard } from '@gamepark/rival-cities/material/AllianceCard'
+import { Alliance } from '@gamepark/rival-cities/material/Alliance'
 import { LocationType } from '@gamepark/rival-cities/material/LocationType'
 import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
 import { Product } from '@gamepark/rival-cities/material/Product'
 import { ShipCard } from '@gamepark/rival-cities/material/ShipCard'
+import { CustomMoveType } from '@gamepark/rival-cities/rules/CustomMoveType'
 import { isCustomMoveType, isMoveItemType, MaterialGame, MaterialMove } from '@gamepark/rules-api'
 import { Trans } from 'react-i18next'
-import { me, opponent, TutorialSetup } from './TutorialSetup'
-import { CustomMoveType } from '@gamepark/rival-cities/rules/CustomMoveType'
 import Balance from '../images/illustrations/balance.png'
 import Decision from '../images/illustrations/decision.png'
 import Letter from '../images/tokens/LetterFront.jpg'
 import Presitge from '../images/tokens/PrestigeMarker.png'
-import { css } from '@emotion/react'
 import { offSeasonOverviewDescription } from '../material/OffSeasonOverviewDescription'
+import { me, opponent, TutorialSetup } from './TutorialSetup'
 
 const image = css`
   width: 1.5em;
@@ -244,7 +244,7 @@ export class Tutorial extends MaterialTutorial<number, MaterialType, LocationTyp
         position: { x: 0, y: -20 }
       },
       focus: (game: MaterialGame) => ({
-        materials: [this.material(game, MaterialType.AllianceCard).location(LocationType.AllianceCardsLayout)],
+        materials: [this.material(game, MaterialType.AllianceCard).location(LocationType.AllianceSpace)],
         scale: 0.5
       })
     },
@@ -264,7 +264,7 @@ export class Tutorial extends MaterialTutorial<number, MaterialType, LocationTyp
         auto: true,
         filter: (move: MaterialMove, game: MaterialGame) =>
           isMoveItemType(MaterialType.AllianceCard)(move) &&
-          this.material(game, MaterialType.AllianceCard).index(move.itemIndex).getItem()?.id === AllianceCard.AllianceOslo
+          this.material(game, MaterialType.AllianceCard).index(move.itemIndex).getItem()?.id === Alliance.Oslo
       }
     },
     {

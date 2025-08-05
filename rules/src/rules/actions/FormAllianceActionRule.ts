@@ -1,7 +1,7 @@
 import { CustomMove, isCustomMoveType, isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
 import { Action, AdvanceLawsuitAction, DrawSpecialActionCardAction, EarnPrestigeAction, FormAllianceAction } from '../../material/Actions/Actions'
 import { ActionType } from '../../material/Actions/ActionType'
-import { AllianceCard } from '../../material/AllianceCard'
+import { Alliance } from '../../material/Alliance'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { CustomMoveType } from '../CustomMoveType'
@@ -13,9 +13,9 @@ export class FormAllianceActionRule extends ActionRule<FormAllianceAction> {
   getPlayerMoves(): MaterialMove[] {
     if (this.checkAnotherActionInProgress(this.action?.type)) return []
     const moves: MaterialMove[] = []
-    moves.push(...this.allianceCards.moveItems({ type: LocationType.PlayerAllianceCards, player: this.player }))
+    moves.push(...this.allianceCards.moveItems({ type: LocationType.PlayerAlliances, player: this.player }))
     if (this.playerLetters.length) {
-      moves.push(...this.opponentAllianceCards.moveItems({ type: LocationType.PlayerAllianceCards, player: this.player }))
+      moves.push(...this.opponentAllianceCards.moveItems({ type: LocationType.PlayerAlliances, player: this.player }))
     }
     moves.push(this.customMove(CustomMoveType.Pass, this.action))
     return moves
@@ -26,7 +26,7 @@ export class FormAllianceActionRule extends ActionRule<FormAllianceAction> {
     if (isMoveItemType(MaterialType.AllianceCard)(move)) {
       this.memorize(MemoryType.BasicActionChosen, this.action?.type)
       const oldLocationType = this.material(MaterialType.AllianceCard).index(move.itemIndex).getItem()?.location.type
-      if (oldLocationType === LocationType.PlayerAllianceCards) {
+      if (oldLocationType === LocationType.PlayerAlliances) {
         return [this.playerLetters.moveItem(() => ({ type: LocationType.LetterDeck }))]
       }
     }
@@ -36,7 +36,7 @@ export class FormAllianceActionRule extends ActionRule<FormAllianceAction> {
   afterItemMove(move: ItemMove): MaterialMove[] {
     if (this.checkAnotherActionInProgress(this.action?.type)) return []
     if (isMoveItemType(MaterialType.AllianceCard)(move)) {
-      this.updateAction(this.material(MaterialType.AllianceCard).index(move.itemIndex).getItem()?.id as AllianceCard)
+      this.updateAction(this.material(MaterialType.AllianceCard).index(move.itemIndex).getItem()?.id as Alliance)
       return new EndOfGameHelper(this.game).checkInstantEndOfGame(this.removeActionAndMove())
     }
     return []
@@ -55,16 +55,16 @@ export class FormAllianceActionRule extends ActionRule<FormAllianceAction> {
   }
 
   get allianceCards() {
-    return this.material(MaterialType.AllianceCard).location(LocationType.AllianceCardsLayout)
+    return this.material(MaterialType.AllianceCard).location(LocationType.AllianceSpace)
   }
 
   get opponentAllianceCards() {
-    return this.material(MaterialType.AllianceCard).location(LocationType.PlayerAllianceCards).player(this.nextPlayer)
+    return this.material(MaterialType.AllianceCard).location(LocationType.PlayerAlliances).player(this.nextPlayer)
   }
 
-  updateAction(alliance: AllianceCard): void {
+  updateAction(alliance: Alliance): void {
     const action = this.remind<Action[]>(MemoryType.Actions)[0]
-    if (alliance === AllianceCard.AllianceBruxelles) {
+    if (alliance === Alliance.Bruxelles) {
       if (action.type === ActionType.Computed) {
         const prestigeAction: EarnPrestigeAction | undefined = action.actions?.find((a) => a.type === ActionType.EarnPrestige) as EarnPrestigeAction
         if (prestigeAction) {
@@ -72,7 +72,7 @@ export class FormAllianceActionRule extends ActionRule<FormAllianceAction> {
         }
       }
     }
-    if (alliance === AllianceCard.AllianceLeHavre) {
+    if (alliance === Alliance.LeHavre) {
       if (action.type === ActionType.Computed) {
         const lawsuitAction: AdvanceLawsuitAction | undefined = action.actions?.find((a) => a.type === ActionType.AdvanceLawsuit) as AdvanceLawsuitAction
         if (lawsuitAction) {
@@ -80,7 +80,7 @@ export class FormAllianceActionRule extends ActionRule<FormAllianceAction> {
         }
       }
     }
-    if (alliance === AllianceCard.AllianceKjjobenhavn) {
+    if (alliance === Alliance.Kjjobenhavn) {
       if (action.type === ActionType.Computed) {
         const drawSpecialActionCardAction: DrawSpecialActionCardAction | undefined = action.actions?.find(
           (a) => a.type === ActionType.DrawSpecialActionCard

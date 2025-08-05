@@ -1,5 +1,5 @@
 import { MaterialGame, MaterialMove, MaterialRulesPart } from '@gamepark/rules-api'
-import { AllianceCard } from '../AllianceCard'
+import { Alliance } from '../Alliance'
 import { LocationType } from '../LocationType'
 import { MaterialType } from '../MaterialType'
 import { Product } from '../Product'
@@ -14,24 +14,24 @@ export class AllianceCardHelper extends MaterialRulesPart {
     this.nextPlayer = game.players.find((player) => player !== this.player)
   }
 
-  checkPlayerAllianceCardById(allianceCard: AllianceCard) {
-    return this.material(MaterialType.AllianceCard).location(LocationType.PlayerAllianceCards).player(this.player).id(allianceCard).length > 0
+  checkPlayerAllianceCardById(allianceCard: Alliance) {
+    return this.material(MaterialType.AllianceCard).location(LocationType.PlayerAlliances).player(this.player).id(allianceCard).length > 0
   }
 
   getOsloProducts(moveProduct: Product): MaterialMove[] {
-    return [...this.getProductsFromAllianceCard(moveProduct, Product.Furniture, AllianceCard.AllianceOslo)]
+    return [...this.getProductsFromAllianceCard(moveProduct, Product.Furniture, Alliance.Oslo)]
   }
 
   getNovgorodProducts(moveProduct: Product): MaterialMove[] {
-    return [...this.getProductsFromAllianceCard(moveProduct, Product.Leather, AllianceCard.AllianceNovgorod)]
+    return [...this.getProductsFromAllianceCard(moveProduct, Product.Leather, Alliance.Novgorod)]
   }
 
   getLondonProducts(moveProduct: Product): MaterialMove[] {
-    return [...this.getProductsFromAllianceCard(moveProduct, Product.Cloth, AllianceCard.AllianceLondon)]
+    return [...this.getProductsFromAllianceCard(moveProduct, Product.Cloth, Alliance.London)]
   }
 
-  private getProductsFromAllianceCard(product: Product, allianceProduct: Product, allianceCard: AllianceCard): MaterialMove[] {
-    const alliance = this.material(MaterialType.AllianceCard).location(LocationType.PlayerAllianceCards).player(this.player).id(allianceCard)
+  private getProductsFromAllianceCard(product: Product, allianceProduct: Product, allianceCard: Alliance): MaterialMove[] {
+    const alliance = this.material(MaterialType.AllianceCard).location(LocationType.PlayerAlliances).player(this.player).id(allianceCard)
     if (alliance.length && product === allianceProduct) {
       return [this.getProducts(allianceProduct).moveItem({ type: LocationType.PlayerProducts, id: allianceProduct, player: this.player })]
     }

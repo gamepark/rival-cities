@@ -1,7 +1,7 @@
 import { CustomMove, isCustomMoveType, isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
 import { DonationAction } from '../../material/Actions/Actions'
 import { ActionType } from '../../material/Actions/ActionType'
-import { AllianceCard } from '../../material/AllianceCard'
+import { Alliance } from '../../material/Alliance'
 import { AllianceCardHelper } from '../../material/helper/AllianceCardHelper'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
@@ -19,7 +19,7 @@ export class DonationActionRule extends ActionRule<DonationAction> {
       return moves
     }
     if (this.action?.nbProduct === 0) {
-      const playerHaveAllianceAmsterdam = new AllianceCardHelper(this.game).checkPlayerAllianceCardById(AllianceCard.AllianceAmsterdam)
+      const playerHaveAllianceAmsterdam = new AllianceCardHelper(this.game).checkPlayerAllianceCardById(Alliance.Amsterdam)
       moves.push(
         ...this.starTokens.moveItems(
           { type: LocationType.PlayerStarTokens, player: this.player },
@@ -38,7 +38,7 @@ export class DonationActionRule extends ActionRule<DonationAction> {
       moves.push(...this.playerProducts.moveItems((item) => ({ type: LocationType.ProductPiles, id: item.id })))
     } else {
       if (this.nbProductsDonated < this.nbProduct && this.starTokens.length > 0) {
-        const playerHaveAllianceAmsterdam = new AllianceCardHelper(this.game).checkPlayerAllianceCardById(AllianceCard.AllianceAmsterdam)
+        const playerHaveAllianceAmsterdam = new AllianceCardHelper(this.game).checkPlayerAllianceCardById(Alliance.Amsterdam)
         moves.push(
           ...this.starTokens.moveItems(
             { type: LocationType.PlayerStarTokens, player: this.player },

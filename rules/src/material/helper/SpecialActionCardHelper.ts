@@ -1,7 +1,7 @@
 import { MaterialGame, MaterialRulesPart } from '@gamepark/rules-api'
 import { Action, ComputedAction } from '../Actions/Actions'
 import { ActionType } from '../Actions/ActionType'
-import { AllianceCard } from '../AllianceCard'
+import { Alliance } from '../Alliance'
 import { LocationType } from '../LocationType'
 import { MaterialType } from '../MaterialType'
 import { Product } from '../Product'
@@ -390,17 +390,15 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
   }
 
   get checkPlayerHaveLeHavreAllianceCard(): boolean {
-    return this.material(MaterialType.AllianceCard).location(LocationType.PlayerAllianceCards).player(this.player).id(AllianceCard.AllianceLeHavre).length > 0
+    return this.material(MaterialType.AllianceCard).location(LocationType.PlayerAlliances).player(this.player).id(Alliance.LeHavre).length > 0
   }
 
   get checkPlayerHaveKjjobenhavnAllianceCard(): boolean {
-    return (
-      this.material(MaterialType.AllianceCard).location(LocationType.PlayerAllianceCards).player(this.player).id(AllianceCard.AllianceKjjobenhavn).length > 0
-    )
+    return this.material(MaterialType.AllianceCard).location(LocationType.PlayerAlliances).player(this.player).id(Alliance.Kjjobenhavn).length > 0
   }
 
   get checkPlayerHaveBruxellesCard(): boolean {
-    return this.material(MaterialType.AllianceCard).location(LocationType.PlayerAllianceCards).player(this.player).id(AllianceCard.AllianceBruxelles).length > 0
+    return this.material(MaterialType.AllianceCard).location(LocationType.PlayerAlliances).player(this.player).id(Alliance.Bruxelles).length > 0
   }
 
   get checkPlayerHaveShip16(): boolean {

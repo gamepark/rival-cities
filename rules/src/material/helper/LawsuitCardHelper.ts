@@ -1,10 +1,10 @@
 import { MaterialGame, MaterialRulesPart } from '@gamepark/rules-api'
 import { Action } from '../Actions/Actions'
-import { AllianceCard } from '../AllianceCard'
+import { ActionType } from '../Actions/ActionType'
+import { Alliance } from '../Alliance'
 import { LocationType } from '../LocationType'
 import { MaterialType } from '../MaterialType'
 import { Product } from '../Product'
-import { ActionType } from '../Actions/ActionType'
 import { ShipCard } from '../ShipCard'
 
 export class LawsuitCardHelper extends MaterialRulesPart {
@@ -245,7 +245,7 @@ export class LawsuitCardHelper extends MaterialRulesPart {
   }
 
   get checkPlayerHaveBruxellesCard(): boolean {
-    return this.material(MaterialType.AllianceCard).location(LocationType.PlayerAllianceCards).player(this.player).id(AllianceCard.AllianceBruxelles).length > 0
+    return this.material(MaterialType.AllianceCard).location(LocationType.PlayerAlliances).player(this.player).id(Alliance.Bruxelles).length > 0
   }
 
   get checkPlayerHaveShip16(): boolean {

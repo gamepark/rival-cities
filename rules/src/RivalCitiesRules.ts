@@ -104,8 +104,8 @@ export class RivalCitiesRules
       [LocationType.SpecialActionCardsDiscard]: new PositiveSequenceStrategy()
     },
     [MaterialType.AllianceCard]: {
-      [LocationType.AllianceCardsLayout]: new StackingStrategy(),
-      [LocationType.PlayerAllianceCards]: new PositiveSequenceStrategy()
+      [LocationType.AllianceSpace]: new StackingStrategy(),
+      [LocationType.PlayerAlliances]: new PositiveSequenceStrategy()
     },
     [MaterialType.ShipCard]: {
       [LocationType.ShipCardsDeck]: new PositiveSequenceStrategy(),

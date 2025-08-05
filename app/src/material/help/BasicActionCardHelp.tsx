@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { MaterialHelpProps, useRules } from '@gamepark/react-game'
 import { ActionType } from '@gamepark/rival-cities/material/Actions/ActionType'
-import { AllianceCard } from '@gamepark/rival-cities/material/AllianceCard'
+import { Alliance } from '@gamepark/rival-cities/material/Alliance'
 import { BasicActionCard } from '@gamepark/rival-cities/material/BasicActionCard'
 import { BasicActionCardHelper } from '@gamepark/rival-cities/material/helper/BasicActionCardHelper'
 import { RivalCitiesRules } from '@gamepark/rival-cities/RivalCitiesRules'
@@ -60,7 +60,7 @@ export const BasicActionCardHelp: FC<MaterialHelpProps> = ({ item }) => {
             defaults={`help.basic.action.card.note`}
             components={{
               ...components,
-              alliance: allianceBtn(AllianceCard.AllianceGdansk)
+              alliance: allianceBtn(Alliance.Gdansk)
             }}
           />
         </p>

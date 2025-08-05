@@ -1,9 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import { MaterialHelpProps } from '@gamepark/react-game'
+import { Alliance } from '@gamepark/rival-cities/material/Alliance'
 import { FC } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { components, note } from './utils'
-import { AllianceCard } from '@gamepark/rival-cities/material/AllianceCard'
 
 export const AllianceCardHelp: FC<MaterialHelpProps> = ({ item }) => {
   const { t } = useTranslation()
@@ -16,7 +16,7 @@ export const AllianceCardHelp: FC<MaterialHelpProps> = ({ item }) => {
       </p>
       <h3>{t(`help.alliance.card.${item.id}`)}</h3>
       <p>
-        <b>{t(`help.price`)}</b> <Price cardId={item.id as AllianceCard} />
+        <b>{t(`help.price`)}</b> <Price cardId={item.id as Alliance} />
       </p>
       <p>
         <Trans defaults={`help.alliance.card.${item.id}.descr`} components={components} />
@@ -28,20 +28,20 @@ export const AllianceCardHelp: FC<MaterialHelpProps> = ({ item }) => {
   )
 }
 
-const Price = ({ cardId }: { cardId: AllianceCard }) => {
+const Price = ({ cardId }: { cardId: Alliance }) => {
   switch (cardId) {
-    case AllianceCard.AllianceAmsterdam:
+    case Alliance.Amsterdam:
       return <Trans defaults={`help.price.choice`} values={{ quantity: 2 }} components={components} />
-    case AllianceCard.AllianceBruxelles:
+    case Alliance.Bruxelles:
       return <Trans defaults={`help.price.furniture`} values={{ quantity: 1 }} components={components} />
-    case AllianceCard.AllianceGdansk:
+    case Alliance.Gdansk:
       return <Trans defaults={`help.price.letter`} values={{ quantity: 1 }} components={components} />
-    case AllianceCard.AllianceKjjobenhavn:
+    case Alliance.Kjjobenhavn:
       return <Trans defaults={`help.price.beer`} values={{ quantity: 2 }} components={components} />
-    case AllianceCard.AllianceLeHavre:
-    case AllianceCard.AllianceLondon:
-    case AllianceCard.AllianceNovgorod:
-    case AllianceCard.AllianceOslo:
+    case Alliance.LeHavre:
+    case Alliance.London:
+    case Alliance.Novgorod:
+    case Alliance.Oslo:
       return <Trans defaults={`help.price.choice`} values={{ quantity: 1 }} components={components} />
     default:
       return <></>

@@ -1,6 +1,6 @@
 import { CustomMove, isCustomMoveType, isMoveItemType, ItemMove, Location, MaterialMove, SimultaneousRule } from '@gamepark/rules-api'
 import { City } from '../../City'
-import { AllianceCard, AllianceData, allianceDatas } from '../../material/AllianceCard'
+import { Alliance, AllianceData, alliancesData } from '../../material/Alliance'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { Product } from '../../material/Product'
@@ -9,7 +9,7 @@ import { MemoryType } from '../MemoryType'
 import { RuleId } from '../RuleId'
 
 export type AlliancePay = {
-  id: AllianceCard
+  id: Alliance
   cost: {
     product?: Product | 'Letter'
     amount: number
@@ -36,7 +36,7 @@ export class OffSeasonPayForAllianceRule extends SimultaneousRule {
       return this.getPlayerProduct(player).moveItems((it) => ({ type: LocationType.ProductPiles, id: it.id }))
     }
     this.getPlayerAlliances(player).forEach((it) => {
-      const allianceData = allianceDatas[it.id as AllianceCard]
+      const allianceData = alliancesData[it.id as Alliance]
       if (this.checkIfPlayerHasEnougthProducts(player, allianceData) && !this.getPlayerAlreadyPayedAlliance(player).find((pay) => pay.id === it.id)) {
         const alliancePay: AlliancePay = {
           id: it.id,
@@ -47,7 +47,7 @@ export class OffSeasonPayForAllianceRule extends SimultaneousRule {
       }
       if (!this.getPlayerAlreadyPayedAlliance(player).find((pay) => pay.id === it.id)) {
         this.possiblePlaces().forEach((loc) => {
-          moves.push(this.material(MaterialType.AllianceCard).location(LocationType.PlayerAllianceCards).id(it.id).moveItem(loc))
+          moves.push(this.material(MaterialType.AllianceCard).location(LocationType.PlayerAlliances).id(it.id).moveItem(loc))
         })
       }
     })
@@ -103,8 +103,8 @@ export class OffSeasonPayForAllianceRule extends SimultaneousRule {
   possiblePlaces(): Location[] {
     const locations: Location[] = []
     for (let i = 0; i < 4; i++) {
-      if (this.material(MaterialType.AllianceCard).location((loc) => loc.type === LocationType.AllianceCardsLayout && loc.x === i).length === 0) {
-        locations.push({ type: LocationType.AllianceCardsLayout, x: i })
+      if (this.material(MaterialType.AllianceCard).location((loc) => loc.type === LocationType.AllianceSpace && loc.x === i).length === 0) {
+        locations.push({ type: LocationType.AllianceSpace, x: i })
       }
     }
     return locations
@@ -129,7 +129,7 @@ export class OffSeasonPayForAllianceRule extends SimultaneousRule {
   }
 
   getPlayerAlliances(player: number) {
-    return this.material(MaterialType.AllianceCard).location(LocationType.PlayerAllianceCards).player(player).getItems()
+    return this.material(MaterialType.AllianceCard).location(LocationType.PlayerAlliances).player(player).getItems()
   }
 
   getPlayerAlreadyPayedAlliance(player: number): AlliancePay[] {

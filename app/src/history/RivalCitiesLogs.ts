@@ -69,13 +69,13 @@ export class RivalCitiesLogs implements LogDescription {
         }
       }
     }
-    if (this.getMoveLocationType(move) === LocationType.PlayerAllianceCards) {
+    if (this.getMoveLocationType(move) === LocationType.PlayerAlliances) {
       return {
         Component: GetAllianceHistory,
         player: actionPlayer
       }
     }
-    if (this.getMoveLocationType(move) === LocationType.AllianceCardsLayout) {
+    if (this.getMoveLocationType(move) === LocationType.AllianceSpace) {
       return {
         Component: ReturnAllianceHistory,
         player: actionPlayer

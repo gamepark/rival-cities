@@ -2,7 +2,7 @@ import { MaterialGameSetup } from '@gamepark/rules-api'
 import shuffle from 'lodash/shuffle'
 import { City } from './City'
 import { basicActionCardPlaces, specialActionCardPlaces } from './constantes'
-import { allianceCards } from './material/AllianceCard'
+import { allianceCards } from './material/Alliance'
 import { basicActionCards } from './material/BasicActionCard'
 import { lawsuitCards } from './material/LawsuitCard'
 import { LocationType } from './material/LocationType'
@@ -67,7 +67,7 @@ export class RivalCitiesSetup extends MaterialGameSetup<City, MaterialType, Loca
   setupAllianceCards() {
     const allianceCardItems = shuffle(allianceCards)
       .slice(0, 4)
-      .map((it, index) => ({ id: it, location: { type: LocationType.AllianceCardsLayout, x: index } }))
+      .map((it, index) => ({ id: it, location: { type: LocationType.AllianceSpace, x: index } }))
     this.material(MaterialType.AllianceCard).createItems(allianceCardItems)
   }
 
