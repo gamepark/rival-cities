@@ -1,4 +1,4 @@
-import { CustomMove, isCustomMoveType, ItemMove, MaterialMove, PlayMoveContext } from '@gamepark/rules-api'
+import { CustomMove, isCustomMoveType, ItemMove, MaterialMove } from '@gamepark/rules-api'
 import { ChoiceAction } from '../../material/Actions/Actions'
 import { CustomMoveType } from '../CustomMoveType'
 import { getActionRule } from '../helper/ActionHelper'
@@ -16,19 +16,19 @@ export class ChooseSplitActionRule extends ActionRule<ChoiceAction> {
     return this.action.actions.flatMap((action) => getActionRule(this.game, action).getPlayerMoves())
   }
 
-  beforeItemMove(move: ItemMove, context?: PlayMoveContext): MaterialMove[] {
-    return this.action.actions.flatMap((action) => getActionRule(this.game, action).beforeItemMove(move, context))
+  beforeItemMove(move: ItemMove): MaterialMove[] {
+    return this.action.actions.flatMap((action) => getActionRule(this.game, action).beforeItemMove(move))
   }
 
-  afterItemMove(move: ItemMove, context?: PlayMoveContext): MaterialMove[] {
-    return this.action.actions.flatMap((action) => getActionRule(this.game, action).afterItemMove(move, context))
+  afterItemMove(move: ItemMove): MaterialMove[] {
+    return this.action.actions.flatMap((action) => getActionRule(this.game, action).afterItemMove(move))
   }
 
-  onCustomMove(move: CustomMove, context?: PlayMoveContext): MaterialMove[] {
+  onCustomMove(move: CustomMove): MaterialMove[] {
     if (isCustomMoveType(CustomMoveType.Pass)(move)) {
       return this.removeActionAndMove()
     }
-    return this.action.actions.flatMap((action) => getActionRule(this.game, action).onCustomMove(move, context))
+    return this.action.actions.flatMap((action) => getActionRule(this.game, action).onCustomMove(move))
   }
 
   onRuleEnd(): MaterialMove[] {

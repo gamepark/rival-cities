@@ -23,16 +23,16 @@ export class PerformMultipleActionsRule extends ActionRule<MultipleAction> {
     return this.action.actions.flatMap((action) => getActionRule(this.game, action).getPlayerMoves())
   }
 
-  beforeItemMove(move: ItemMove, context?: PlayMoveContext): MaterialMove[] {
-    return this.action.actions.flatMap((action) => getActionRule(this.game, action).beforeItemMove(move, context))
+  beforeItemMove(move: ItemMove): MaterialMove[] {
+    return this.action.actions.flatMap((action) => getActionRule(this.game, action).beforeItemMove(move))
   }
 
-  afterItemMove(move: ItemMove, context?: PlayMoveContext): MaterialMove[] {
-    return this.action.actions.flatMap((action) => getActionRule(this.game, action).afterItemMove(move, context))
+  afterItemMove(move: ItemMove): MaterialMove[] {
+    return this.action.actions.flatMap((action) => getActionRule(this.game, action).afterItemMove(move))
   }
 
-  onCustomMove(move: CustomMove, context?: PlayMoveContext): MaterialMove[] {
-    const actionsMoves = this.action.actions.flatMap((action) => getActionRule(this.game, action).onCustomMove(move, context))
+  onCustomMove(move: CustomMove): MaterialMove[] {
+    const actionsMoves = this.action.actions.flatMap((action) => getActionRule(this.game, action).onCustomMove(move))
     if (actionsMoves.length > 0) {
       return actionsMoves
     }
