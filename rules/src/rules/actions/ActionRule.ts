@@ -20,7 +20,7 @@ export abstract class ActionRule<E extends Action = Action> extends PlayerTurnRu
   removeAction() {
     this.forget(MemoryType.BasicActionChosen)
     const firstAction = this.actions[0]
-    if (firstAction?.type === ActionType.Computed && this.action.type !== ActionType.Computed) {
+    if (firstAction?.type === ActionType.Multiple && this.action.type !== ActionType.Multiple) {
       firstAction.actions = firstAction.actions?.filter((it) => !this.isSameAction(it as E)) ?? []
       if (firstAction.actions.length === 0) {
         this.memorize<Action[]>(MemoryType.Actions, (old) => old.splice(1))
@@ -58,7 +58,7 @@ export abstract class ActionRule<E extends Action = Action> extends PlayerTurnRu
     if (nextAction.type === ActionType.EarnPrestige && nextAction.playerWhoEarnedPrestige !== this.player) {
       return [this.startPlayerTurn(ActionRuleIds[this.actions[0].type], this.nextPlayer)]
     }
-    if (nextAction.type === ActionType.Computed && nextAction.player && nextAction.player !== this.player) {
+    if (nextAction.type === ActionType.Multiple && nextAction.player && nextAction.player !== this.player) {
       return [this.startPlayerTurn(ActionRuleIds[this.actions[0].type], this.nextPlayer)]
     }
 

@@ -17,7 +17,6 @@ import { MaterialType } from './material/MaterialType'
 import { AdvanceLawsuitActionRule } from './rules/actions/AdvanceLawsuitActionRule'
 import { BuildFactoryActionRule } from './rules/actions/BuildFactoryActionRule'
 import { ChoiceActionRule } from './rules/actions/ChoiceActionRule'
-import { ComputedActionRule } from './rules/actions/ComputedActionRule'
 import { CourtRulingActionRule } from './rules/actions/CourtRulingActionRule'
 import { DonationActionRule } from './rules/actions/DonationActionRule'
 import { DrawSpecialActionCardActionRule } from './rules/actions/DrawSpecialActionCardActionRule'
@@ -26,6 +25,7 @@ import { FormAllianceActionRule } from './rules/actions/FormAllianceActionRule'
 import { GainLetterActionRule } from './rules/actions/GainLetterActionRule'
 import { GiftActionRule } from './rules/actions/GiftActionRule'
 import { OpponentEarnPrestigeActionRule } from './rules/actions/OpponentEarnPrestigeActionRule'
+import { PerformMultipleActionsRule } from './rules/actions/PerformMultipleActionsRule'
 import { PiracyActionRule } from './rules/actions/PiracyActionRule'
 import { ProductionActionRule } from './rules/actions/ProductionActionRule'
 import { ProductSwapActionRule } from './rules/actions/ProductSwapActionRule'
@@ -67,7 +67,7 @@ export class RivalCitiesRules
     [RuleId.PayProductForAdvance]: PayProductForAdvanceRule,
     [RuleId.ChooseAction]: ChooseActionRule,
     [RuleId.Choice]: ChoiceActionRule,
-    [RuleId.Computed]: ComputedActionRule,
+    [RuleId.PerformMultipleActions]: PerformMultipleActionsRule,
     [RuleId.ResolveLawsuit]: ResolveLawsuitActionRule,
     [RuleId.AdvanceLawsuit]: AdvanceLawsuitActionRule,
     [RuleId.DrawSpecialActionCard]: DrawSpecialActionCardActionRule,

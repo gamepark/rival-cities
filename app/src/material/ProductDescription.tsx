@@ -2,7 +2,7 @@ import { css, Interpolation, Theme } from '@emotion/react'
 import { faArrowDown, faArrowUp } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { ComponentSize, ItemContext, ItemMenuButton, pointerCursorCss, TokenDescription } from '@gamepark/react-game'
-import { Action, ComputedAction } from '@gamepark/rival-cities/material/Actions/Actions'
+import { Action, MultipleAction } from '@gamepark/rival-cities/material/Actions/Actions'
 import { ActionType } from '@gamepark/rival-cities/material/Actions/ActionType'
 import { LocationType } from '@gamepark/rival-cities/material/LocationType'
 import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
@@ -116,7 +116,7 @@ export class ProductDescription extends TokenDescription {
 
   checkIfIsExchange(context: ItemContext): boolean {
     const pendingActions: Action[] | undefined = context.rules.remind(MemoryType.Actions) ?? []
-    const currentAction = pendingActions[0] as ComputedAction
+    const currentAction = pendingActions[0] as MultipleAction
     const isSwapAction = currentAction?.actions?.some((action) => action.type === ActionType.ProductSwap)
     return context.rules.game.rule?.id === RuleId.ProductSwap || isSwapAction
   }

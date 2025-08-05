@@ -34,7 +34,7 @@ export const BasicActionCardHelp: FC<MaterialHelpProps> = ({ item }) => {
         </li>
       </ul>
       <h3>{t(`help.actions`)}</h3>
-      {action.type === ActionType.Computed || action.type === ActionType.Choice ? (
+      {action.type === ActionType.Multiple || action.type === ActionType.Choice ? (
         <>
           {action.actions.map((a, index) => (
             <div key={index}>

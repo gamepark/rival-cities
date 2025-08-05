@@ -4,6 +4,7 @@ import { ActionType } from '../../material/Actions/ActionType'
 import { ActionRule } from '../actions/ActionRule'
 import { AdvanceLawsuitActionRule } from '../actions/AdvanceLawsuitActionRule'
 import { BuildFactoryActionRule } from '../actions/BuildFactoryActionRule'
+import { ChoiceActionRule } from '../actions/ChoiceActionRule'
 import { CourtRulingActionRule } from '../actions/CourtRulingActionRule'
 import { DonationActionRule } from '../actions/DonationActionRule'
 import { DrawSpecialActionCardActionRule } from '../actions/DrawSpecialActionCardActionRule'
@@ -12,14 +13,13 @@ import { FormAllianceActionRule } from '../actions/FormAllianceActionRule'
 import { GainLetterActionRule } from '../actions/GainLetterActionRule'
 import { GiftActionRule } from '../actions/GiftActionRule'
 import { OpponentEarnPrestigeActionRule } from '../actions/OpponentEarnPrestigeActionRule'
+import { PerformMultipleActionsRule } from '../actions/PerformMultipleActionsRule'
 import { PiracyActionRule } from '../actions/PiracyActionRule'
 import { ProductionActionRule } from '../actions/ProductionActionRule'
 import { ProductSwapActionRule } from '../actions/ProductSwapActionRule'
 import { PurchaseShipActionRule } from '../actions/PurchaseShipActionRule'
-import { ReturnFactoryActionRule } from '../actions/ReturnFactoryActionRule'
-import { ChoiceActionRule } from '../actions/ChoiceActionRule'
-import { ComputedActionRule } from '../actions/ComputedActionRule'
 import { ResolveLawsuitActionRule } from '../actions/ResolveLawsuitActionRule'
+import { ReturnFactoryActionRule } from '../actions/ReturnFactoryActionRule'
 import { ChooseSpecialActionRule } from '../ChooseSpecialActionRule'
 import { PayToPerformActionAgainRule } from '../PayToPerformActionAgainRule'
 
@@ -57,8 +57,8 @@ export const getActionRule = (game: MaterialGame, action: Action): ActionRule =>
       return new PiracyActionRule(game, action)
     case ActionType.Choice:
       return new ChoiceActionRule(game, action)
-    case ActionType.Computed:
-      return new ComputedActionRule(game, action)
+    case ActionType.Multiple:
+      return new PerformMultipleActionsRule(game, action)
     case ActionType.ResolveLawsuit:
       return new ResolveLawsuitActionRule(game, action)
     case ActionType.ChooseSpecialActionCard:

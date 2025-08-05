@@ -1,5 +1,5 @@
 import { MaterialGame, MaterialRulesPart } from '@gamepark/rules-api'
-import { Action, ComputedAction } from '../Actions/Actions'
+import { Action, MultipleAction } from '../Actions/Actions'
 import { ActionType } from '../Actions/ActionType'
 import { Alliance } from '../Alliance'
 import { LocationType } from '../LocationType'
@@ -16,9 +16,9 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
     super(game)
   }
 
-  getComputedAction(card: SpecialActionCard): ComputedAction {
-    const action: ComputedAction = {
-      type: ActionType.Computed,
+  getCardAction(card: SpecialActionCard): MultipleAction {
+    const action: MultipleAction = {
+      type: ActionType.Multiple,
       actions: new SpecialActionCardHelper(this.game).getCardActions(card)
     }
     if (card === SpecialActionCard.SpecialAction6) {

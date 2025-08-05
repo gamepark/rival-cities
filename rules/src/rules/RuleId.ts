@@ -4,7 +4,7 @@ export enum RuleId {
   PayProductForAdvance,
   ChooseAction,
   Choice,
-  Computed,
+  PerformMultipleActions,
   ResolveLawsuit,
   AdvanceLawsuit,
   DrawSpecialActionCard,

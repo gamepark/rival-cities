@@ -7,8 +7,8 @@ export type ChoiceAction = {
   actions: Action[]
 }
 
-export type ComputedAction = {
-  type: ActionType.Computed
+export type MultipleAction = {
+  type: ActionType.Multiple
   actions: Action[]
   player?: City
 }
@@ -114,7 +114,7 @@ export type PayToPerformActionAgainAction = {
 
 export type Action =
   | ChoiceAction
-  | ComputedAction
+  | MultipleAction
   | ProductionAction
   | AdvanceLawsuitAction
   | BuildFactoryAction

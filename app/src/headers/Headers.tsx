@@ -3,8 +3,8 @@ import { RuleId } from '@gamepark/rival-cities/rules/RuleId'
 import { ComponentType } from 'react'
 import { AdvanceInkJarHeader } from './AdvanceInkJarHeader'
 import { AdvanceLawsuitHeader } from './AdvanceLawsuitHeader'
-import { ChoiceHeader } from './ChoiceHeader'
 import { BuildFactoryHeader } from './BuildFactoryHeader'
+import { ChoiceHeader } from './ChoiceHeader'
 import { ChooseActionHeader } from './ChooseActionHeader'
 import { ChooseFirstProductHeader } from './ChooseFirstProductHeader'
 import { ChooseSpecialActionHeader } from './ChooseSpecialActionHeader'
@@ -24,10 +24,10 @@ import { OffSeasonReturnBellHeader } from './OffSeasonReturnBellHeader'
 import { OffSeasonTakeBellHeader } from './OffSeasonTakeBellHeader'
 import { PayProductForAdvanceHeader } from './PayProductForAdvanceHeader'
 import { PayToPerformActionAgainHeader } from './PayToPerformActionAgainHeader'
+import { PerformMultipleActionsHeader } from './PerformMultipleActionsHeader'
 import { ProductionHeader } from './ProductionHeader'
 import { ProductSwapHeader } from './ProductSwapHeader'
 import { ResolveLawsuitHeader } from './ResolveLawsuitHeader'
-import { ComputedHeader } from './ComputedHeader'
 
 export const Headers: Partial<Record<RuleId, ComponentType>> = {
   [RuleId.ChooseFirstProduct]: ChooseFirstProductHeader,
@@ -35,7 +35,7 @@ export const Headers: Partial<Record<RuleId, ComponentType>> = {
   [RuleId.PayProductForAdvance]: PayProductForAdvanceHeader,
   [RuleId.ChooseAction]: ChooseActionHeader,
   [RuleId.Choice]: ChoiceHeader,
-  [RuleId.Computed]: ComputedHeader,
+  [RuleId.PerformMultipleActions]: PerformMultipleActionsHeader,
   [RuleId.ResolveLawsuit]: ResolveLawsuitHeader,
   [RuleId.AdvanceLawsuit]: AdvanceLawsuitHeader,
   [RuleId.DrawSpecialActionCard]: DrawSpecialActionCardHeader,

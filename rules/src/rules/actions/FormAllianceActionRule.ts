@@ -65,7 +65,7 @@ export class FormAllianceActionRule extends ActionRule<FormAllianceAction> {
   updateAction(alliance: Alliance): void {
     const action = this.remind<Action[]>(MemoryType.Actions)[0]
     if (alliance === Alliance.Bruxelles) {
-      if (action.type === ActionType.Computed) {
+      if (action.type === ActionType.Multiple) {
         const prestigeAction: EarnPrestigeAction | undefined = action.actions.find((a) => a.type === ActionType.EarnPrestige) as EarnPrestigeAction
         if (prestigeAction) {
           prestigeAction.playerCanUseAllianceBruxelles = true
@@ -73,7 +73,7 @@ export class FormAllianceActionRule extends ActionRule<FormAllianceAction> {
       }
     }
     if (alliance === Alliance.Kjjobenhavn) {
-      if (action.type === ActionType.Computed) {
+      if (action.type === ActionType.Multiple) {
         const drawSpecialActionCardAction: DrawSpecialActionCardAction | undefined = action.actions.find(
           (a) => a.type === ActionType.DrawSpecialActionCard
         ) as DrawSpecialActionCardAction

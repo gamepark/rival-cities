@@ -1,5 +1,5 @@
 import { CustomMove, isCustomMoveType, ItemMove, MaterialMove, PlayMoveContext, RuleMove, RuleStep } from '@gamepark/rules-api'
-import { ComputedAction } from '../../material/Actions/Actions'
+import { MultipleAction } from '../../material/Actions/Actions'
 import { ActionType } from '../../material/Actions/ActionType'
 import { CustomMoveType } from '../CustomMoveType'
 import { getActionRule } from '../helper/ActionHelper'
@@ -7,7 +7,7 @@ import { MemoryHelper } from '../helper/MemoryHelper'
 import { MemoryType } from '../MemoryType'
 import { ActionRule } from './ActionRule'
 
-export class ComputedActionRule extends ActionRule<ComputedAction> {
+export class PerformMultipleActionsRule extends ActionRule<MultipleAction> {
   onRuleStart(_move: RuleMove, _previousRule?: RuleStep, _context?: PlayMoveContext): MaterialMove[] {
     this.forget(MemoryType.ProductChosen)
     const moves: MaterialMove[] = []

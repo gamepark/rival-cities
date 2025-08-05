@@ -90,7 +90,7 @@ export class BasicActionCardHelper extends MaterialRulesPart {
         }
       case BasicActionCard.BasicAction8:
         return {
-          type: ActionType.Computed,
+          type: ActionType.Multiple,
           actions: [
             {
               type: ActionType.ProductSwap,
@@ -198,8 +198,8 @@ export class BasicActionCardHelper extends MaterialRulesPart {
     }
   }
 
-  computeActionIfPlayerHasGdanskAlliance(): ActionType.Choice | ActionType.Computed {
-    return this.checkPlayerHaveGdanskAllianceCard ? ActionType.Computed : ActionType.Choice
+  computeActionIfPlayerHasGdanskAlliance(): ActionType.Choice | ActionType.Multiple {
+    return this.checkPlayerHaveGdanskAllianceCard ? ActionType.Multiple : ActionType.Choice
   }
 
   get checkPlayerHaveGdanskAllianceCard(): boolean {

@@ -31,7 +31,7 @@ export const ChoiceHelp = () => {
   return (
     <>
       <h2>{t(`help.rule.actions`)}</h2>
-      {action.type === ActionType.Computed || action.type === ActionType.Choice ? (
+      {action.type === ActionType.Multiple || action.type === ActionType.Choice ? (
         <>
           {action.actions.map((a, index) => (
             <div key={index}>

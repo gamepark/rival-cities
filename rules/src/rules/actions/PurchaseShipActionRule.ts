@@ -96,7 +96,7 @@ export class PurchaseShipActionRule extends ActionRule<PurchaseShipAction> {
   updateAction(ship: ShipCard): void {
     const action = this.remind<Action[]>(MemoryType.Actions)[0]
     if (ship === ShipCard.Ship16) {
-      if (action.type === ActionType.Computed) {
+      if (action.type === ActionType.Multiple) {
         const prestigeAction: EarnPrestigeAction | undefined = action.actions.find((a) => a.type === ActionType.EarnPrestige) as EarnPrestigeAction
         if (prestigeAction) {
           prestigeAction.playerCanUseShip16 = true
