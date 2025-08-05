@@ -1,19 +1,19 @@
 /** @jsxImportSource @emotion/react */
 import { MaterialHelpProps, useRules } from '@gamepark/react-game'
 import { ActionType } from '@gamepark/rival-cities/material/Actions/ActionType'
+import { AllianceCard } from '@gamepark/rival-cities/material/AllianceCard'
 import { BasicActionCard } from '@gamepark/rival-cities/material/BasicActionCard'
 import { BasicActionCardHelper } from '@gamepark/rival-cities/material/helper/BasicActionCardHelper'
 import { RivalCitiesRules } from '@gamepark/rival-cities/RivalCitiesRules'
 import { FC } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { allianceBtn, components, note } from './utils'
-import { AllianceCard } from '@gamepark/rival-cities/material/AllianceCard'
 
 export const BasicActionCardHelp: FC<MaterialHelpProps> = ({ item }) => {
   const { t } = useTranslation()
   const rules = useRules<RivalCitiesRules>()
   if (!rules) return <></>
-  const action = new BasicActionCardHelper(rules.game).basicActionCardActions[item.id as BasicActionCard]
+  const action = new BasicActionCardHelper(rules.game).getCardAction(item.id as BasicActionCard)
   const isMultiChoiceCard = action.type === ActionType.Choice
 
   return (

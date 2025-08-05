@@ -16,172 +16,189 @@ export class BasicActionCardHelper extends MaterialRulesPart {
     super(game)
   }
 
-  basicActionCardActions: Record<BasicActionCard, Action> = {
-    [BasicActionCard.BasicAction1]: {
-      type: this.computeActionIfPlayerHasGdanskAlliance(),
-      actions: [
-        {
-          type: ActionType.Production,
-          productType: Product.Beer,
-          quantity: 2,
-          canGetMore: true
-        },
-        {
+  getCardAction(card: BasicActionCard): Action {
+    switch (card) {
+      case BasicActionCard.BasicAction1:
+        return {
+          type: this.computeActionIfPlayerHasGdanskAlliance(),
+          actions: [
+            {
+              type: ActionType.Production,
+              productType: Product.Beer,
+              quantity: 2,
+              canGetMore: true
+            },
+            {
+              type: ActionType.Production,
+              productType: Product.Cloth,
+              quantity: 1,
+              canGetMore: true
+            }
+          ]
+        }
+      case BasicActionCard.BasicAction2:
+        return {
+          type: ActionType.DrawSpecialActionCard,
+          nbCardsToDraw: 1,
+          playerCanUseAllianceKjjobenhavn: this.checkPlayerHaveKjjobenhavnAllianceCard
+        }
+      case BasicActionCard.BasicAction3:
+        return {
+          type: ActionType.FormAlliance
+        }
+      case BasicActionCard.BasicAction4:
+        return {
+          type: ActionType.BuildFactory,
+          price: 2
+        }
+      case BasicActionCard.BasicAction5:
+        return {
+          type: this.computeActionIfPlayerHasGdanskAlliance(),
+          actions: [
+            {
+              type: ActionType.Production,
+              productType: Product.Furniture,
+              quantity: 1,
+              canGetMore: true
+            },
+            {
+              type: ActionType.GainLetter,
+              nbLettersToTake: 1
+            }
+          ]
+        }
+      case BasicActionCard.BasicAction6:
+        return {
           type: ActionType.Production,
           productType: Product.Cloth,
           quantity: 1,
           canGetMore: true
         }
-      ]
-    },
-    [BasicActionCard.BasicAction2]: {
-      type: ActionType.DrawSpecialActionCard,
-      nbCardsToDraw: 1,
-      playerCanUseAllianceKjjobenhavn: this.checkPlayerHaveKjjobenhavnAllianceCard
-    },
-    [BasicActionCard.BasicAction3]: {
-      type: ActionType.FormAlliance
-    },
-    [BasicActionCard.BasicAction4]: {
-      type: ActionType.BuildFactory,
-      price: 2
-    },
-    [BasicActionCard.BasicAction5]: {
-      type: this.computeActionIfPlayerHasGdanskAlliance(),
-      actions: [
-        {
-          type: ActionType.Production,
-          productType: Product.Furniture,
-          quantity: 1,
-          canGetMore: true
-        },
-        {
-          type: ActionType.GainLetter,
-          nbLettersToTake: 1
+      case BasicActionCard.BasicAction7:
+        return {
+          type: this.computeActionIfPlayerHasGdanskAlliance(),
+          actions: [
+            {
+              type: ActionType.PurchaseShip,
+              playerHasShip19: this.checkPlayerHaveShip19
+            },
+            {
+              type: ActionType.AdvanceLawsuit,
+              nbTimeAlreadyAdvanced: 0,
+              playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
+            }
+          ]
         }
-      ]
-    },
-    [BasicActionCard.BasicAction6]: {
-      type: ActionType.Production,
-      productType: Product.Cloth,
-      quantity: 1,
-      canGetMore: true
-    },
-    [BasicActionCard.BasicAction7]: {
-      type: this.computeActionIfPlayerHasGdanskAlliance(),
-      actions: [
-        {
-          type: ActionType.PurchaseShip,
-          playerHasShip19: this.checkPlayerHaveShip19
-        },
-        {
-          type: ActionType.AdvanceLawsuit,
-          nbTimeAlreadyAdvanced: 0,
-          playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
+      case BasicActionCard.BasicAction8:
+        return {
+          type: ActionType.Computed,
+          actions: [
+            {
+              type: ActionType.ProductSwap,
+              nbPossibleSwaps: 2
+            },
+            {
+              type: ActionType.Donation,
+              productType: undefined,
+              nbProduct: 2,
+              nbTimes: 1,
+              nbStars: 1
+            }
+          ]
         }
-      ]
-    },
-    [BasicActionCard.BasicAction8]: {
-      type: ActionType.Computed,
-      actions: [
-        {
-          type: ActionType.ProductSwap,
-          nbPossibleSwaps: 2
-        },
-        {
-          type: ActionType.Donation,
-          productType: undefined,
-          nbProduct: 2,
-          nbTimes: 1,
-          nbStars: 1
+      case BasicActionCard.BasicAction9:
+        return {
+          type: this.computeActionIfPlayerHasGdanskAlliance(),
+          actions: [
+            {
+              type: ActionType.AdvanceLawsuit,
+              nbTimeAlreadyAdvanced: 0,
+              playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
+            },
+            {
+              type: ActionType.Production,
+              productType: Product.Leather,
+              quantity: 1,
+              canGetMore: true
+            }
+          ]
         }
-      ]
-    },
-    [BasicActionCard.BasicAction9]: {
-      type: this.computeActionIfPlayerHasGdanskAlliance(),
-      actions: [
-        {
-          type: ActionType.AdvanceLawsuit,
-          nbTimeAlreadyAdvanced: 0,
-          playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
-        },
-        {
+      case BasicActionCard.BasicAction10:
+        return {
+          type: this.computeActionIfPlayerHasGdanskAlliance(),
+          actions: [
+            {
+              type: ActionType.EarnPrestige,
+              playerWhoEarnedPrestige: this.player,
+              playerCanUseAllianceBruxelles: this.checkPlayerHaveBruxellesCard,
+              playerCanUseShip16: this.checkPlayerHaveShip16
+            },
+            {
+              type: ActionType.FormAlliance
+            }
+          ]
+        }
+      case BasicActionCard.BasicAction11:
+        return {
           type: ActionType.Production,
           productType: Product.Leather,
           quantity: 1,
           canGetMore: true
         }
-      ]
-    },
-    [BasicActionCard.BasicAction10]: {
-      type: this.computeActionIfPlayerHasGdanskAlliance(),
-      actions: [
-        {
-          type: ActionType.EarnPrestige,
-          playerWhoEarnedPrestige: this.player,
-          playerCanUseAllianceBruxelles: this.checkPlayerHaveBruxellesCard,
-          playerCanUseShip16: this.checkPlayerHaveShip16
-        },
-        {
-          type: ActionType.FormAlliance
+      case BasicActionCard.BasicAction12:
+        return {
+          type: this.computeActionIfPlayerHasGdanskAlliance(),
+          actions: [
+            {
+              type: ActionType.Gift,
+              nbProductToTake: 1,
+              productType: undefined,
+              canUseAlliance: true
+            },
+            {
+              type: ActionType.AdvanceLawsuit,
+              nbTimeAlreadyAdvanced: 0,
+              playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
+            }
+          ]
         }
-      ]
-    },
-    [BasicActionCard.BasicAction11]: {
-      type: ActionType.Production,
-      productType: Product.Leather,
-      quantity: 1,
-      canGetMore: true
-    },
-    [BasicActionCard.BasicAction12]: {
-      type: this.computeActionIfPlayerHasGdanskAlliance(),
-      actions: [
-        {
-          type: ActionType.Gift,
-          nbProductToTake: 1,
-          productType: undefined,
-          canUseAlliance: true
-        },
-        {
+      case BasicActionCard.BasicAction13:
+        return {
+          type: this.computeActionIfPlayerHasGdanskAlliance(),
+          actions: [
+            {
+              type: ActionType.CourtRuling
+            },
+            {
+              type: ActionType.PurchaseShip,
+              playerHasShip19: this.checkPlayerHaveShip19
+            }
+          ]
+        }
+      case BasicActionCard.BasicAction14:
+        return {
+          type: this.computeActionIfPlayerHasGdanskAlliance(),
+          actions: [
+            {
+              type: ActionType.EarnPrestige,
+              playerWhoEarnedPrestige: this.player,
+              playerCanUseAllianceBruxelles: this.checkPlayerHaveBruxellesCard,
+              playerCanUseShip16: this.checkPlayerHaveShip16
+            },
+            {
+              type: ActionType.Production,
+              productType: Product.Beer,
+              quantity: 2,
+              canGetMore: true
+            }
+          ]
+        }
+      case BasicActionCard.BasicAction15:
+        return {
           type: ActionType.AdvanceLawsuit,
           nbTimeAlreadyAdvanced: 0,
           playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
         }
-      ]
-    },
-    [BasicActionCard.BasicAction13]: {
-      type: this.computeActionIfPlayerHasGdanskAlliance(),
-      actions: [
-        {
-          type: ActionType.CourtRuling
-        },
-        {
-          type: ActionType.PurchaseShip,
-          playerHasShip19: this.checkPlayerHaveShip19
-        }
-      ]
-    },
-    [BasicActionCard.BasicAction14]: {
-      type: this.computeActionIfPlayerHasGdanskAlliance(),
-      actions: [
-        {
-          type: ActionType.EarnPrestige,
-          playerWhoEarnedPrestige: this.player,
-          playerCanUseAllianceBruxelles: this.checkPlayerHaveBruxellesCard,
-          playerCanUseShip16: this.checkPlayerHaveShip16
-        },
-        {
-          type: ActionType.Production,
-          productType: Product.Beer,
-          quantity: 2,
-          canGetMore: true
-        }
-      ]
-    },
-    [BasicActionCard.BasicAction15]: {
-      type: ActionType.AdvanceLawsuit,
-      nbTimeAlreadyAdvanced: 0,
-      playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
     }
   }
 

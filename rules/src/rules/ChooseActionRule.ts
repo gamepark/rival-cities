@@ -84,7 +84,7 @@ export class ChooseActionRule extends PlayerTurnRule {
       return new SpecialActionCardHelper(this.game).getComputedAction(cardId)
     }
     const cardId = this.basicActioncardInInkjarPlace.getItem()?.id as BasicActionCard
-    return new BasicActionCardHelper(this.game).basicActionCardActions[cardId]
+    return new BasicActionCardHelper(this.game).getCardAction(cardId)
   }
 
   get playerCanUseLetter() {

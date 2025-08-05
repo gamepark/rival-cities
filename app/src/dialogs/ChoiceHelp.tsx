@@ -24,7 +24,7 @@ export const ChoiceHelp = () => {
 
   if (!basicCardInInkjarLocation) return <></>
 
-  const action = new BasicActionCardHelper(rules.game).basicActionCardActions[basicCardInInkjarLocation as BasicActionCard]
+  const action = new BasicActionCardHelper(rules.game).getCardAction(basicCardInInkjarLocation as BasicActionCard)
 
   const isMultiChoiceCard = action.type === ActionType.Choice
 
