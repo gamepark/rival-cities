@@ -16,7 +16,7 @@ export class DrawSpecialActionCardActionRule extends ActionRule<DrawSpecialActio
     if (this.checkAnotherActionInProgress(this.action.type)) return []
     if (isMoveItemType(MaterialType.SpecialActionCard)(move)) {
       this.memorize(MemoryType.BasicActionChosen, this.action.type)
-      this.memorize<number>(MemoryType.Counter, (old) => old + 1)
+      this.memorize<number>(MemoryType.Count, (old) => old + 1)
       if (this.material(MaterialType.SpecialActionCard).location(LocationType.SpecialActionCardsDeck).length < 1) {
         const moves: MaterialMove[] = []
         moves.push(this.material(MaterialType.SpecialActionCard).location(LocationType.SpecialActionCardsDiscard).shuffle())
@@ -34,9 +34,9 @@ export class DrawSpecialActionCardActionRule extends ActionRule<DrawSpecialActio
   afterItemMove(move: ItemMove): MaterialMove[] {
     if (this.checkAnotherActionInProgress(this.action.type)) return []
     if (isMoveItemType(MaterialType.SpecialActionCard)(move)) {
-      if (this.remind(MemoryType.Counter) === this.action.nbCardsToDraw) {
+      if (this.remind(MemoryType.Count) === this.action.nbCardsToDraw) {
         this.removeAction()
-        this.memorize(MemoryType.Counter, 0)
+        this.memorize(MemoryType.Count, 0)
         if (this.action.playerCanUseAllianceKjjobenhavn && this.playerBeers.getQuantity() > 0) {
           this.addActionBonus({
             type: ActionType.PayToPerformActionAgain,

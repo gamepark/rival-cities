@@ -113,8 +113,7 @@ export class RivalCitiesSetup extends MaterialGameSetup<City, MaterialType, Loca
   }
 
   private initializeMemory() {
-    this.memorize(MemoryType.PayForAdvance, { nbProduct: 0, nbCase: 0 })
-    this.memorize(MemoryType.Counter, 0)
+    this.memorize(MemoryType.Count, 0)
     this.memorize(MemoryType.CounterActions, 0)
     this.memorize(MemoryType.IsBuildInProgress, false)
     this.memorize(MemoryType.IsProductReturn, false)

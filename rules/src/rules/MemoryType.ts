@@ -1,6 +1,5 @@
 export enum MemoryType {
-  PayForAdvance = 1,
-  Counter,
+  Count = 1,
   CounterActions,
   OffSeasonStep,
   ProductChosen,

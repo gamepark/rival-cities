@@ -48,7 +48,7 @@ import { OffSeasonPlayerWithMostShipCardsEarnPrestigeRule } from './rules/OffSea
 import { OffSeasonReactivateFactoriesRule } from './rules/OffSeason/OffSeasonReactivateFactoriesRule'
 import { OffSeasonReturnBellRule } from './rules/OffSeason/OffSeasonReturnBellRule'
 import { OffSeasonTakeBellRule } from './rules/OffSeason/OffSeasonTakeBellRule'
-import { PayProductForAdvanceRule } from './rules/PayProductForAdvanceRule'
+import { PayInkJarMovementCostRule } from './rules/PayInkJarMovementCostRule'
 import { PayToPerformActionAgainRule } from './rules/PayToPerformActionAgainRule'
 import { RuleId } from './rules/RuleId'
 
@@ -64,7 +64,7 @@ export class RivalCitiesRules
   rules = {
     [RuleId.ChooseFirstProduct]: ChooseFirstProductRule,
     [RuleId.AdvanceInkJar]: AdvanceInkJarRule,
-    [RuleId.PayProductForAdvance]: PayProductForAdvanceRule,
+    [RuleId.PayInkJarMovementCost]: PayInkJarMovementCostRule,
     [RuleId.ChooseAction]: ChooseActionRule,
     [RuleId.ChooseSplitAction]: ChooseSplitActionRule,
     [RuleId.PerformMultipleActions]: PerformMultipleActionsRule,

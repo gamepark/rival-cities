@@ -8,10 +8,10 @@ import { ActionRule } from './ActionRule'
 
 export class BuildFactoryActionRule extends ActionRule<BuildFactoryAction> {
   isBuildInProgress = this.remind(MemoryType.IsBuildInProgress)
-  nbProductsGiven = this.remind<number>(MemoryType.Counter) ?? 0
+  nbProductsGiven = this.remind<number>(MemoryType.Count) ?? 0
 
   onRuleStart(): MaterialMove[] {
-    this.memorize(MemoryType.Counter, 0)
+    this.memorize(MemoryType.Count, 0)
     if (this.action.price === 0) {
       return this.factories.moveItems({ type: LocationType.PlayerFactories, player: this.player }, 1)
     }
@@ -42,7 +42,7 @@ export class BuildFactoryActionRule extends ActionRule<BuildFactoryAction> {
       this.memorize(MemoryType.BasicActionChosen, this.action.type)
       this.memorize(MemoryType.IsBuildInProgress, true)
     } else if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.ProductPiles && this.isBuildInProgress) {
-      this.memorize(MemoryType.Counter, this.nbProductsGiven + 1)
+      this.memorize(MemoryType.Count, this.nbProductsGiven + 1)
     }
     return moves
   }
@@ -52,8 +52,8 @@ export class BuildFactoryActionRule extends ActionRule<BuildFactoryAction> {
     const moves: MaterialMove[] = []
     if (this.remind(MemoryType.BasicActionChosen) !== this.action.type) return moves
     if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.ProductPiles) {
-      if (this.remind(MemoryType.Counter) === this.action.price) {
-        this.memorize(MemoryType.Counter, 0)
+      if (this.remind(MemoryType.Count) === this.action.price) {
+        this.memorize(MemoryType.Count, 0)
         return this.removeActionAndMove()
       }
     }

@@ -7,7 +7,7 @@ import { MemoryType } from '../MemoryType'
 import { ActionRule } from './ActionRule'
 
 export class ProductSwapActionRule extends ActionRule<ProductSwapAction> {
-  nbSwaps: number = this.remind(MemoryType.Counter) ?? 0
+  nbSwaps: number = this.remind(MemoryType.Count) ?? 0
   isProductReturn = this.remind(MemoryType.IsProductReturn)
 
   getPlayerMoves(): MaterialMove[] {
@@ -39,9 +39,9 @@ export class ProductSwapActionRule extends ActionRule<ProductSwapAction> {
       } else if (move.location.type === LocationType.PlayerProducts) {
         this.forget(MemoryType.BasicActionChosen)
         this.memorize(MemoryType.IsProductReturn, false)
-        this.memorize(MemoryType.Counter, this.nbSwaps + 1)
-        if (this.remind(MemoryType.Counter) === this.action.nbPossibleSwaps) {
-          this.memorize(MemoryType.Counter, 0)
+        this.memorize(MemoryType.Count, this.nbSwaps + 1)
+        if (this.remind(MemoryType.Count) === this.action.nbPossibleSwaps) {
+          this.memorize(MemoryType.Count, 0)
           return this.next()
         }
       }

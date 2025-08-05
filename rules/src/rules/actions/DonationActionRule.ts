@@ -10,7 +10,7 @@ import { MemoryType } from '../MemoryType'
 import { ActionRule } from './ActionRule'
 
 export class DonationActionRule extends ActionRule<DonationAction> {
-  nbProductsDonated: number = this.remind(MemoryType.Counter) ?? 0
+  nbProductsDonated: number = this.remind(MemoryType.Count) ?? 0
   isDonationInProgress = this.remind(MemoryType.IsDonationInProgress)
 
   onRuleStart(): MaterialMove[] {
@@ -65,7 +65,7 @@ export class DonationActionRule extends ActionRule<DonationAction> {
         this.memorize(MemoryType.IsDonationInProgress, true)
       }
     } else if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.ProductPiles && this.isDonationInProgress) {
-      this.memorize(MemoryType.Counter, this.nbProductsDonated + 1)
+      this.memorize(MemoryType.Count, this.nbProductsDonated + 1)
     }
     return moves
   }
@@ -79,8 +79,8 @@ export class DonationActionRule extends ActionRule<DonationAction> {
         if (this.remind(MemoryType.CounterActions) === this.action.nbTimes) {
           return this.removeActionAndMove()
         }
-      } else if (this.remind(MemoryType.Counter) === this.nbProduct) {
-        this.memorize(MemoryType.Counter, 0)
+      } else if (this.remind(MemoryType.Count) === this.nbProduct) {
+        this.memorize(MemoryType.Count, 0)
         this.memorize(MemoryType.IsDonationInProgress, false)
         this.memorize<number>(MemoryType.CounterActions, (old) => old + 1)
         if (this.remind(MemoryType.CounterActions) === this.action.nbTimes) {
@@ -90,7 +90,7 @@ export class DonationActionRule extends ActionRule<DonationAction> {
     }
     if (isMoveItemType(MaterialType.StarToken)(move) && move.location.type === LocationType.PlayerStarTokens) {
       if (this.action.nbProduct === 0) {
-        this.memorize(MemoryType.Counter, 0)
+        this.memorize(MemoryType.Count, 0)
         this.memorize(MemoryType.IsDonationInProgress, false)
         this.memorize<number>(MemoryType.CounterActions, 0)
         return this.removeActionAndMove()

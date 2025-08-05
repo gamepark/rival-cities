@@ -32,7 +32,7 @@ import { ResolveLawsuitHeader } from './ResolveLawsuitHeader'
 export const Headers: Partial<Record<RuleId, ComponentType>> = {
   [RuleId.ChooseFirstProduct]: ChooseFirstProductHeader,
   [RuleId.AdvanceInkJar]: AdvanceInkJarHeader,
-  [RuleId.PayProductForAdvance]: PayProductForAdvanceHeader,
+  [RuleId.PayInkJarMovementCost]: PayProductForAdvanceHeader,
   [RuleId.ChooseAction]: ChooseActionHeader,
   [RuleId.ChooseSplitAction]: ChooseSplitActionHeader,
   [RuleId.PerformMultipleActions]: PerformMultipleActionsHeader,

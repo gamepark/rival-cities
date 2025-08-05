@@ -21,15 +21,15 @@ export class PiracyActionRule extends ActionRule<PiracyAction> {
     if (this.checkAnotherActionInProgress(this.action.type)) return []
     if (isMoveItemType(MaterialType.Product)(move)) {
       this.memorize(MemoryType.BasicActionChosen, this.action.type)
-      this.memorize<number>(MemoryType.Counter, (old) => old + 1)
+      this.memorize<number>(MemoryType.Count, (old) => old + 1)
     }
     return []
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {
     if (this.checkAnotherActionInProgress(this.action.type)) return []
-    if (isMoveItemType(MaterialType.Product)(move) && this.remind(MemoryType.Counter) === this.action.nbProductsToSteal) {
-      this.memorize(MemoryType.Counter, 0)
+    if (isMoveItemType(MaterialType.Product)(move) && this.remind(MemoryType.Count) === this.action.nbProductsToSteal) {
+      this.memorize(MemoryType.Count, 0)
       return this.removeActionAndMove()
     }
     return []

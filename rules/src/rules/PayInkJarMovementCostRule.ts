@@ -4,21 +4,15 @@ import { MaterialType } from '../material/MaterialType'
 import { MemoryType } from './MemoryType'
 import { RuleId } from './RuleId'
 
-export class PayProductForAdvanceRule extends PlayerTurnRule {
-  onRuleStart(): MaterialMove[] {
-    this.memorize(MemoryType.Counter, 0)
-    return []
-  }
-
+export class PayInkJarMovementCostRule extends PlayerTurnRule {
   getPlayerMoves(): MaterialMove[] {
     return this.playerProducts.moveItems((item) => ({ type: LocationType.ProductPiles, id: item.id }))
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {
     if (!isMoveItemType(MaterialType.Product)(move)) return []
-    this.memorize<number>(MemoryType.Counter, (oldValue: number) => oldValue + 1)
-    if (this.remind(MemoryType.Counter) === this.remind<{ nbProduct: number; nbCase: number }>(MemoryType.PayForAdvance).nbProduct) {
-      this.memorize(MemoryType.Counter, 0)
+    const countLeft = this.memorize<number>(MemoryType.Count, (count) => count - 1)
+    if (!countLeft) {
       return [this.startRule(this.remind<RuleId | undefined>(MemoryType.OffSeasonStep) ?? RuleId.ChooseAction)]
     }
     return []

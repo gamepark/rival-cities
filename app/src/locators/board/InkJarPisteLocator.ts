@@ -22,7 +22,7 @@ class InkJarPisteLocator extends Locator {
   getLocations(context: MaterialContext): Partial<Location>[] {
     if (context.rules.game.rule?.player !== context.player) return []
     if (context.rules.game.rule?.id !== RuleId.AdvanceInkJar) return []
-    return new InkJarPisteHelper(context.rules.game).possibleInkjarLocation()
+    return new InkJarPisteHelper(context.rules.game).possibleInkJarLocation()
   }
 
   locationDescription = new InkjarPisteDescription()

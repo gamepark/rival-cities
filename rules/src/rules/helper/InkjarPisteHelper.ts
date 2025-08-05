@@ -1,64 +1,30 @@
-import { Location, MaterialGame, MaterialRulesPart } from '@gamepark/rules-api'
+import { Location, PlayerTurnRule } from '@gamepark/rules-api'
+import { range, sumBy } from 'lodash'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { ShipCard } from '../../material/ShipCard'
 
-export class InkJarPisteHelper extends MaterialRulesPart {
-  constructor(
-    game: MaterialGame,
-    readonly player: number | undefined = game.rule?.player
-  ) {
-    super(game)
+export const INK_SPACES = 20
+
+export class InkJarPisteHelper extends PlayerTurnRule {
+  possibleInkJarLocation(): Location[] {
+    const currentPosition = this.material(MaterialType.InkJar).getItem()!.location.id as number
+    return range(1, this.maximumDistance + 1).map((distance) => ({ type: LocationType.InkJarPiste, id: (currentPosition + distance) % INK_SPACES }))
   }
 
-  possibleInkjarLocation(): Location[] {
-    const locations: Location[] = []
-    for (let i = 1; i <= this.possiblesNbCaseToAdvance(); i++) {
-      const inkjarLocation = this.inkjar.getItem()?.location
-      if (inkjarLocation) {
-        let targetId = (inkjarLocation.id as number) + i
-        targetId = targetId > 19 ? targetId - 20 : targetId
-        locations.push({ ...inkjarLocation, id: targetId })
-      }
-    }
-    return locations
+  get maximumDistance() {
+    const products = this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(this.player).getQuantity()
+    const productsDiscount = this.hasShip17 ? products + 1 : products
+    return productsDiscount < 2 ? 2 + productsDiscount : 3 + Math.floor(productsDiscount / 2)
   }
 
-  possiblesNbCaseToAdvance() {
-    const nbFreeCases = this.playerShip17.length ? 3 : 2
-    let nbMovesForProducts = 0
-    for (let i = nbFreeCases - 1; i <= this.playerProducts.getQuantity(); i++) {
-      if (i < nbFreeCases + 1) {
-        nbMovesForProducts += 1
-      } else {
-        nbMovesForProducts += 0.5
-      }
-    }
-    return nbFreeCases + Math.floor(nbMovesForProducts)
+  getMovementCost(distance: number) {
+    const freeSpaces = this.hasShip17 ? 3 : 2
+    if (distance <= freeSpaces) return 0
+    return sumBy(range(freeSpaces + 1, distance + 1), (distance) => (distance > 4 ? 2 : 1))
   }
 
-  determineNbProductToPay(nbCaseAdvanced: number) {
-    const nbFreeCases = this.playerShip17.length ? 3 : 2
-    let nbProducts = 0
-    for (let i = nbFreeCases + 1; i <= nbCaseAdvanced; i++) {
-      if (i <= 4) {
-        nbProducts += 1
-      } else {
-        nbProducts += 2
-      }
-    }
-    return nbProducts
-  }
-
-  get inkjar() {
-    return this.material(MaterialType.InkJar).location(LocationType.InkJarPiste)
-  }
-
-  get playerProducts() {
-    return this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(this.player)
-  }
-
-  get playerShip17() {
-    return this.material(MaterialType.ShipCard).location(LocationType.PlayerShipCards).player(this.player).id(ShipCard.Ship17)
+  get hasShip17() {
+    return this.material(MaterialType.ShipCard).id(ShipCard.Ship17).getItem()?.location.player === this.player
   }
 }

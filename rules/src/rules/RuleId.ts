@@ -1,7 +1,7 @@
 export enum RuleId {
   ChooseFirstProduct = 1,
   AdvanceInkJar,
-  PayProductForAdvance,
+  PayInkJarMovementCost,
   ChooseAction,
   ChooseSplitAction,
   PerformMultipleActions,
