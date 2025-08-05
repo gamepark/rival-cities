@@ -10,7 +10,7 @@ export class OffSeasonReactivateFactoriesRule extends PlayerTurnRule {
     if (this.factories.length === 0) {
       return this.endOfGameHelper.checkOffSeasonEndOfGame(this.startPlayerTurn(RuleId.OffSeasonReturnBell, this.playerWithBell))
     }
-    return [...this.factories.rotateItems(undefined)]
+    return this.factories.rotateItems(undefined)
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {

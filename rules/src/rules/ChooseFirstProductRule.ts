@@ -5,7 +5,7 @@ import { RuleId } from './RuleId'
 
 export class ChooseFirstProductRule extends SimultaneousRule {
   getActivePlayerLegalMoves(player: number): MaterialMove[] {
-    return [...this.availableProducts.moveItems((item) => ({ type: LocationType.PlayerProducts, player, id: item.id }))]
+    return this.availableProducts.moveItems((item) => ({ type: LocationType.PlayerProducts, player, id: item.id }))
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {

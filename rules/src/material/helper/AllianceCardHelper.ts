@@ -19,15 +19,15 @@ export class AllianceCardHelper extends MaterialRulesPart {
   }
 
   getOsloProducts(moveProduct: Product): MaterialMove[] {
-    return [...this.getProductsFromAllianceCard(moveProduct, Product.Furniture, Alliance.Oslo)]
+    return this.getProductsFromAllianceCard(moveProduct, Product.Furniture, Alliance.Oslo)
   }
 
   getNovgorodProducts(moveProduct: Product): MaterialMove[] {
-    return [...this.getProductsFromAllianceCard(moveProduct, Product.Leather, Alliance.Novgorod)]
+    return this.getProductsFromAllianceCard(moveProduct, Product.Leather, Alliance.Novgorod)
   }
 
   getLondonProducts(moveProduct: Product): MaterialMove[] {
-    return [...this.getProductsFromAllianceCard(moveProduct, Product.Cloth, Alliance.London)]
+    return this.getProductsFromAllianceCard(moveProduct, Product.Cloth, Alliance.London)
   }
 
   private getProductsFromAllianceCard(product: Product, allianceProduct: Product, allianceCard: Alliance): MaterialMove[] {

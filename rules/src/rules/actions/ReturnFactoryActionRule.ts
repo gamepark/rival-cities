@@ -7,7 +7,7 @@ import { ActionRule } from './ActionRule'
 export class ReturnFactoryActionRule extends ActionRule<ReturnFactoryAction> {
   onRuleStart(): MaterialMove[] {
     if (this.playerFactories.length === 0) return this.removeActionAndMove()
-    return [...this.playerFactories.limit(this.nbFactoryCanReturn).rotateItems(undefined)]
+    return this.playerFactories.limit(this.nbFactoryCanReturn).rotateItems(undefined)
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {
