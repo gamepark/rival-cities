@@ -11,8 +11,7 @@ export const PayProductForAdvanceHeader = () => {
   const activePlayer = rules.game.rule?.player
   const itsMe = player && activePlayer === player
   const name = usePlayerName(activePlayer)
-  const nbProducts = rules.game.memory[MemoryType.PayForAdvance].nbProduct
-  const nbCases = rules.game.memory[MemoryType.PayForAdvance].nbCase
+  const { nbProducts, nbCases } = rules.remind<{ nbProducts: number; nbCases: number }>(MemoryType.PayForAdvance)
 
   if (itsMe) {
     return <Trans defaults="header.pay.product.you" values={{ nbProducts, nbCases }} />

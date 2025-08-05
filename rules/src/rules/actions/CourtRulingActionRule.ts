@@ -36,7 +36,7 @@ export class CourtRulingActionRule extends ActionRule<CourtRullingAction> {
     if (this.checkAnotherActionInProgress(this.action?.type)) return []
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.LawsuitPiece)(move)) {
-      this.memorize(MemoryType.BasicActionChoosen, this.action?.type)
+      this.memorize(MemoryType.BasicActionChosen, this.action?.type)
       moves.push(...this.removeActionAndMove())
     }
     return moves

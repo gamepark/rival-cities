@@ -3,7 +3,6 @@ import { CustomMoveType } from './CustomMoveType'
 import { RuleId } from './RuleId'
 
 export class ConfirmEndTurnRule extends PlayerTurnRule {
-
   getPlayerMoves(): MaterialMove[] {
     return [this.customMove(CustomMoveType.ConfirmEndTurn)]
   }

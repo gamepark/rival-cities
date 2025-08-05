@@ -1,6 +1,6 @@
 import { CustomMove, isCustomMoveType, isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
 import { City } from '../../City'
-import { AdvanceLawsuitAction } from '../../material/Actions/Actions'
+import { Action, AdvanceLawsuitAction } from '../../material/Actions/Actions'
 import { ActionType } from '../../material/Actions/ActionType'
 import { LawsuitCard, lawsuitCardData } from '../../material/LawsuitCard'
 import { LocationType } from '../../material/LocationType'
@@ -45,8 +45,8 @@ export class AdvanceLawsuitActionRule extends ActionRule<AdvanceLawsuitAction> {
           }
         })
       }
-      if (!this.remind(MemoryType.BasicActionChoosen)) {
-        this.memorize(MemoryType.BasicActionChoosen, this.action?.type)
+      if (!this.remind(MemoryType.BasicActionChosen)) {
+        this.memorize(MemoryType.BasicActionChosen, this.action?.type)
       }
     }
     return moves
@@ -98,7 +98,7 @@ export class AdvanceLawsuitActionRule extends ActionRule<AdvanceLawsuitAction> {
 
   onCustomMove(move: CustomMove): MaterialMove[] {
     if (this.checkAnotherActionInProgress(this.action?.type)) return []
-    if (isCustomMoveType(CustomMoveType.Pass)(move) && this.isSameAction(move.data)) {
+    if (isCustomMoveType(CustomMoveType.Pass)(move) && this.isSameAction(move.data as Action)) {
       return this.removeActionAndMove()
     }
     if (isCustomMoveType(CustomMoveType.TakeLetterToSwapProduct)(move)) {

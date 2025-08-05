@@ -1,5 +1,5 @@
 import { CustomMove, isCustomMoveType, isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
-import { ProductionAction } from '../../material/Actions/Actions'
+import { Action, ProductionAction } from '../../material/Actions/Actions'
 import { AllianceCardHelper } from '../../material/helper/AllianceCardHelper'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
@@ -11,10 +11,10 @@ import { ActionRule } from './ActionRule'
 
 export class ProductionActionRule extends ActionRule<ProductionAction> {
   allianceCardHelper = new AllianceCardHelper(this.game)
-  productChoosen = this.remind(MemoryType.ProductChoosen)
+  productChoosen = this.remind(MemoryType.ProductChosen)
 
   onRuleStart(): MaterialMove[] {
-    this.forget(MemoryType.ProductChoosen)
+    this.forget(MemoryType.ProductChosen)
     return this.products.moveItems((item) => ({ type: LocationType.PlayerProducts, player: this.player, id: item.id }), this.action?.quantity)
   }
 
@@ -36,13 +36,13 @@ export class ProductionActionRule extends ActionRule<ProductionAction> {
   beforeItemMove(move: ItemMove): MaterialMove[] {
     if (this.checkAnotherActionInProgress(this.action?.type)) return []
     if (isMoveItemType(MaterialType.Product)(move) && (!this.action?.productType || this.action.productType === move.location.id)) {
-      if (!this.remind(MemoryType.BasicActionChoosen)) {
-        this.memorize(MemoryType.BasicActionChoosen, this.action?.type)
+      if (!this.remind(MemoryType.BasicActionChosen)) {
+        this.memorize(MemoryType.BasicActionChosen, this.action?.type)
       }
     }
     if (isMoveItemType(MaterialType.Factory)(move)) {
       if (!this.action?.productType) {
-        this.forget(MemoryType.ProductChoosen)
+        this.forget(MemoryType.ProductChosen)
       }
       if (this.productChoosen === this.action?.productType) {
         return [this.products.moveItem({ type: LocationType.PlayerProducts, id: this.productChoosen, player: this.player })]
@@ -56,7 +56,7 @@ export class ProductionActionRule extends ActionRule<ProductionAction> {
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.Product)(move) && (!this.action?.productType || this.action.productType === move.location.id)) {
       if (!this.productChoosen) {
-        this.memorize(MemoryType.ProductChoosen, move.location.id)
+        this.memorize(MemoryType.ProductChosen, move.location.id)
         if (this.action?.canGetMore) {
           if (this.playerShipCards.length > 0) {
             for (const shipCard of this.playerShipCards) {
@@ -72,7 +72,7 @@ export class ProductionActionRule extends ActionRule<ProductionAction> {
           this.action.canGetMore = false
         }
       } else if (this.playerFactories.length === 0) {
-        this.forget(MemoryType.ProductChoosen)
+        this.forget(MemoryType.ProductChosen)
         moves.push(...this.removeActionAndMove())
       }
     }
@@ -80,8 +80,8 @@ export class ProductionActionRule extends ActionRule<ProductionAction> {
   }
 
   onCustomMove(move: CustomMove): MaterialMove[] {
-    if (isCustomMoveType(CustomMoveType.Pass)(move) && this.isSameAction(move.data)) {
-      this.forget(MemoryType.ProductChoosen)
+    if (isCustomMoveType(CustomMoveType.Pass)(move) && this.isSameAction(move.data as Action)) {
+      this.forget(MemoryType.ProductChosen)
       return this.removeActionAndMove()
     }
     return []

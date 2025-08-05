@@ -62,7 +62,7 @@ export class OffSeasonGetPrestigeBonusesRule extends PlayerTurnRule {
   }
 
   get prestigeMarkerLocation() {
-    return this.material(MaterialType.PrestigeMarker).location(LocationType.PrestigeMarkerPiste).getItem()?.location.x!
+    return this.material(MaterialType.PrestigeMarker).location(LocationType.PrestigeMarkerPiste).getItem()!.location.x!
   }
 
   getProducts(productType: Product) {

@@ -15,7 +15,7 @@ export class DrawSpecialActionCardActionRule extends ActionRule<DrawSpecialActio
   beforeItemMove(move: ItemMove): MaterialMove[] {
     if (this.checkAnotherActionInProgress(this.action?.type)) return []
     if (isMoveItemType(MaterialType.SpecialActionCard)(move)) {
-      this.memorize(MemoryType.BasicActionChoosen, this.action?.type)
+      this.memorize(MemoryType.BasicActionChosen, this.action?.type)
       this.memorize<number>(MemoryType.Counter, (old) => old + 1)
       if (this.material(MaterialType.SpecialActionCard).location(LocationType.SpecialActionCardsDeck).length < 1) {
         const moves: MaterialMove[] = []

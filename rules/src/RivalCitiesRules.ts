@@ -61,7 +61,7 @@ export class RivalCitiesRules
   implements TimeLimit<MaterialGame, MaterialMove, City>, CompetitiveRank<MaterialGame, MaterialMove, City>
 {
   endOfGameHelper = new EndOfGameHelper(this.game)
-  rules: Record<RuleId, any> = {
+  rules = {
     [RuleId.ChooseFirstProduct]: ChooseFirstProductRule,
     [RuleId.AdvanceInkJar]: AdvanceInkJarRule,
     [RuleId.PayProductForAdvance]: PayProductForAdvanceRule,

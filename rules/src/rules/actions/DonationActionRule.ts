@@ -58,7 +58,7 @@ export class DonationActionRule extends ActionRule<DonationAction> {
     if (this.checkAnotherActionInProgress(this.action?.type)) return []
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.StarToken)(move) && move.location.type === LocationType.PlayerStarTokens) {
-      this.memorize(MemoryType.BasicActionChoosen, this.action?.type)
+      this.memorize(MemoryType.BasicActionChosen, this.action?.type)
       if (this.action?.productType) {
         moves.push(...this.playerProducts.moveItems((item) => ({ type: LocationType.ProductPiles, id: item.id }), this.action.nbProduct))
       } else {
@@ -89,7 +89,7 @@ export class DonationActionRule extends ActionRule<DonationAction> {
       }
     }
     if (isMoveItemType(MaterialType.StarToken)(move) && move.location.type === LocationType.PlayerStarTokens) {
-      if(this.action?.nbProduct === 0) {
+      if (this.action?.nbProduct === 0) {
         this.memorize(MemoryType.Counter, 0)
         this.memorize(MemoryType.IsDonationInProgress, false)
         this.memorize<number>(MemoryType.CounterActions, 0)

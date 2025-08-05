@@ -14,7 +14,7 @@ export const LetterHelp: FC<MaterialHelpProps> = ({ item, closeDialog }) => {
   const activePlayer = rules.game.rule?.player
   const itsMe = player && activePlayer === player
   const isPlayerLetter = item.location?.player === player
-  const takeLetterToSwapProduct = useLegalMove((move) => isCustomMoveType(CustomMoveType.TakeLetterToSwapProduct)(move))
+  const takeLetterToSwapProduct = useLegalMove(isCustomMoveType(CustomMoveType.TakeLetterToSwapProduct))
 
   return (
     <>

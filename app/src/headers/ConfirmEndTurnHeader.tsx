@@ -11,7 +11,7 @@ export const ConfirmEndTurnHeader = () => {
   const activePlayer = rules.game.rule?.player
   const itsMe = player && activePlayer === player
   const name = usePlayerName(activePlayer)
-  const confirmEndTurn = useLegalMove((move) => isCustomMoveType(CustomMoveType.ConfirmEndTurn)(move))
+  const confirmEndTurn = useLegalMove(isCustomMoveType(CustomMoveType.ConfirmEndTurn))
 
   if (itsMe) {
     return (

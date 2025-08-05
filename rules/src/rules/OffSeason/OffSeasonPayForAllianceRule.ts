@@ -1,4 +1,5 @@
 import { CustomMove, isCustomMoveType, isMoveItemType, ItemMove, Location, MaterialMove, SimultaneousRule } from '@gamepark/rules-api'
+import { City } from '../../City'
 import { AllianceCard, AllianceData, allianceDatas } from '../../material/AllianceCard'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
@@ -7,7 +8,7 @@ import { CustomMoveType } from '../CustomMoveType'
 import { MemoryType } from '../MemoryType'
 import { RuleId } from '../RuleId'
 
-type AlliancePay = {
+export type AlliancePay = {
   id: AllianceCard
   cost: {
     product?: Product | 'Letter'
@@ -30,13 +31,13 @@ export class OffSeasonPayForAllianceRule extends SimultaneousRule {
 
   getActivePlayerLegalMoves(player: number): MaterialMove[] {
     const moves: MaterialMove[] = []
-    const allianceToPay = this.remind(MemoryType.AlliancePay, player).find((it: AlliancePay) => it.alreadyPay < it.cost.amount)
+    const allianceToPay = this.remind<AlliancePay[]>(MemoryType.AlliancePay, player).find((it: AlliancePay) => it.alreadyPay < it.cost.amount)
     if (allianceToPay) {
       return this.getPlayerProduct(player).moveItems((it) => ({ type: LocationType.ProductPiles, id: it.id }))
     }
     this.getPlayerAlliances(player).forEach((it) => {
       const allianceData = allianceDatas[it.id as AllianceCard]
-      if (this.checkIfPlayerHasEnougthProducts(player, allianceData) && !this.getPlayerAlrdeadyPayedAlliance(player).find((pay) => pay.id === it.id)) {
+      if (this.checkIfPlayerHasEnougthProducts(player, allianceData) && !this.getPlayerAlreadyPayedAlliance(player).find((pay) => pay.id === it.id)) {
         const alliancePay: AlliancePay = {
           id: it.id,
           cost: allianceData.cost,
@@ -44,14 +45,9 @@ export class OffSeasonPayForAllianceRule extends SimultaneousRule {
         }
         moves.push(this.customMove(CustomMoveType.PayForAlliance, { pay: alliancePay, player }))
       }
-      if(!this.getPlayerAlrdeadyPayedAlliance(player).find((pay) => pay.id === it.id)) {
+      if (!this.getPlayerAlreadyPayedAlliance(player).find((pay) => pay.id === it.id)) {
         this.possiblePlaces().forEach((loc) => {
-          moves.push(
-            this.material(MaterialType.AllianceCard)
-              .location(LocationType.PlayerAllianceCards)
-              .id(it.id)
-              .moveItem(loc)
-          )
+          moves.push(this.material(MaterialType.AllianceCard).location(LocationType.PlayerAllianceCards).id(it.id).moveItem(loc))
         })
       }
     })
@@ -69,43 +65,38 @@ export class OffSeasonPayForAllianceRule extends SimultaneousRule {
         alliancePay.alreadyPay += move.quantity ?? 1
         this.memorize(MemoryType.AlliancePay, alliancePays, player)
       }
-      if (this.getPlayerAlrdeadyPayedAlliance(player!).length === this.getPlayerAlliances(player!).length) {
+      if (this.getPlayerAlreadyPayedAlliance(player!).length === this.getPlayerAlliances(player!).length) {
         return [this.endPlayerTurn(player!)]
       }
     }
     if (isMoveItemType(MaterialType.AllianceCard)(move)) {
       const player = this.material(MaterialType.AllianceCard).index(move.itemIndex).getItem()?.location.player
-      if (this.getPlayerAlliances(player!).length - 1 === this.getPlayerAlrdeadyPayedAlliance(player!).length) {
+      if (this.getPlayerAlliances(player!).length - 1 === this.getPlayerAlreadyPayedAlliance(player!).length) {
         return [this.endPlayerTurn(player!)]
       }
-    }
-    return []
-  }
-
-  afterItemMove(move: ItemMove): MaterialMove[] {
-    if (isMoveItemType(MaterialType.Product)(move) || isMoveItemType(MaterialType.Letter)(move)) {
     }
     return []
   }
 
   onCustomMove(move: CustomMove): MaterialMove[] {
     if (isCustomMoveType(CustomMoveType.PayForAlliance)(move)) {
-      this.memorize<AlliancePay[]>(MemoryType.AlliancePay, (alliancePays) => [...alliancePays, move.data.pay], move.data.player)
+      const payment = move.data as { pay: AlliancePay; player: City }
+      this.memorize<AlliancePay[]>(MemoryType.AlliancePay, (alliancePays) => [...alliancePays, payment.pay], payment.player)
 
-      if (move.data.pay.cost.product === 'Letter') {
-        return this.getPlayerLetters(move.data.player).moveItems({ type: LocationType.LetterDeck })
+      if (payment.pay.cost.product === 'Letter') {
+        return this.getPlayerLetters(payment.player).moveItems({ type: LocationType.LetterDeck })
       }
-      if (move.data.pay.cost.product) {
-        return this.getPlayerProduct(move.data.player)
-          .id(move.data.pay.cost.product)
-          .moveItems((it) => ({ type: LocationType.ProductPiles, id: it.id }), move.data.pay.cost.amount)
+      if (payment.pay.cost.product) {
+        return this.getPlayerProduct(payment.player)
+          .id(payment.pay.cost.product)
+          .moveItems((it) => ({ type: LocationType.ProductPiles, id: it.id }), payment.pay.cost.amount)
       }
     }
     return []
   }
 
   getMovesAfterPlayersDone(): MaterialMove[] {
-    const playerWhoHaveBell = this.material(MaterialType.BellToken).getItem()?.location.player!
+    const playerWhoHaveBell = this.material(MaterialType.BellToken).getItem()!.location.player!
     return [this.startPlayerTurn(RuleId.OffSeasonPlayerWithMostShipCardsEarnPrestige, playerWhoHaveBell)]
   }
 
@@ -141,7 +132,7 @@ export class OffSeasonPayForAllianceRule extends SimultaneousRule {
     return this.material(MaterialType.AllianceCard).location(LocationType.PlayerAllianceCards).player(player).getItems()
   }
 
-  getPlayerAlrdeadyPayedAlliance(player: number): AlliancePay[] {
+  getPlayerAlreadyPayedAlliance(player: number): AlliancePay[] {
     return this.remind<AlliancePay[]>(MemoryType.AlliancePay, player)?.filter((it: AlliancePay) => it.alreadyPay >= it.cost.amount) ?? []
   }
 }

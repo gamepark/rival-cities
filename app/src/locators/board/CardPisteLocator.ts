@@ -7,12 +7,13 @@ class CardPisteLocator extends Locator {
   parentItemType = MaterialType.GameBoard
 
   getRotateZ(location: Location): number {
-    return rotateZFromId[location.id]
+    return rotateZFromId[location.id as number]
   }
 
   getCoordinates(location: Location): Partial<Coordinates> {
     const base = gameBoardLocator.coordinates
-    return { x: base.x + coordinatesFromId[location.id].x, y: base.y + coordinatesFromId[location.id].y }
+    const coordinates = coordinatesFromId[location.id as number]
+    return { x: base.x + coordinates.x, y: base.y + coordinates.y }
   }
 
   getHoverTransform(item: MaterialItem): string[] {

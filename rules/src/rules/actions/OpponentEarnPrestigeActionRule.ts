@@ -19,7 +19,9 @@ export class OpponentEarnPrestigeActionRule extends ActionRule<OpponentEarnPrest
   }
 
   get nextPlayerHaveAllianceBruxelles() {
-    return this.material(MaterialType.AllianceCard).location(LocationType.PlayerAllianceCards).player(this.nextPlayer).id(AllianceCard.AllianceBruxelles).length > 0
+    return (
+      this.material(MaterialType.AllianceCard).location(LocationType.PlayerAllianceCards).player(this.nextPlayer).id(AllianceCard.AllianceBruxelles).length > 0
+    )
   }
 
   get nextPlayerHaveShip16() {

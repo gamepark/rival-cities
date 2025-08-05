@@ -7,7 +7,6 @@ import { MemoryType } from '../MemoryType'
 import { ActionRule } from './ActionRule'
 
 export class PiracyActionRule extends ActionRule<PiracyAction> {
-
   getPlayerMoves(): MaterialMove[] {
     if (this.checkAnotherActionInProgress(this.action?.type)) return []
     const moves: MaterialMove[] = []
@@ -21,7 +20,7 @@ export class PiracyActionRule extends ActionRule<PiracyAction> {
   beforeItemMove(move: ItemMove): MaterialMove[] {
     if (this.checkAnotherActionInProgress(this.action?.type)) return []
     if (isMoveItemType(MaterialType.Product)(move)) {
-      this.memorize(MemoryType.BasicActionChoosen, this.action?.type)
+      this.memorize(MemoryType.BasicActionChosen, this.action?.type)
       this.memorize<number>(MemoryType.Counter, (old) => old + 1)
     }
     return []

@@ -6,8 +6,10 @@ import { AllianceCard } from '@gamepark/rival-cities/material/AllianceCard'
 import { LocationType } from '@gamepark/rival-cities/material/LocationType'
 import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
 import { CustomMoveType } from '@gamepark/rival-cities/rules/CustomMoveType'
+import { AlliancePay } from '@gamepark/rival-cities/rules/OffSeason/OffSeasonPayForAllianceRule'
 import { isCustomMoveType, isMoveItemType, MaterialItem, MaterialMove } from '@gamepark/rules-api'
 import { Trans } from 'react-i18next'
+import AllianceBack from '../images/cards/alliance/AllianceBack.jpg'
 import AllianceAmsterdam from '../images/cards/alliance/en/AllianceAmsterdam.jpg'
 import AllianceBruxelles from '../images/cards/alliance/en/AllianceBruxelles.jpg'
 import AllianceGdansk from '../images/cards/alliance/en/AllianceGdansk.jpg'
@@ -16,7 +18,6 @@ import AllianceLeHavre from '../images/cards/alliance/en/AllianceLeHavre.jpg'
 import AllianceLondon from '../images/cards/alliance/en/AllianceLondon.jpg'
 import AllianceNovgorod from '../images/cards/alliance/en/AllianceNovgorod.jpg'
 import AllianceOslo from '../images/cards/alliance/en/AllianceOslo.jpg'
-import AllianceBack from '../images/cards/alliance/AllianceBack.jpg'
 import { AllianceCardHelp } from './help/AllianceCardHelp'
 
 export class AllianceCardDescription extends CardDescription {
@@ -43,7 +44,7 @@ export class AllianceCardDescription extends CardDescription {
   }
 
   getItemMenu(item: MaterialItem, context: ItemContext, legalMoves: MaterialMove[]) {
-    const pay = legalMoves.find((move) => isCustomMoveType(CustomMoveType.PayForAlliance)(move) && move.data.pay.id === item.id)
+    const pay = legalMoves.find((move) => isCustomMoveType(CustomMoveType.PayForAlliance)(move) && (move.data as { pay: AlliancePay }).pay.id === item.id)
     const discard = legalMoves.find(
       (move) => isMoveItemType(MaterialType.AllianceCard)(move) && move.location.type === LocationType.AllianceCardsLayout && move.itemIndex === context.index
     )

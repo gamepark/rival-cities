@@ -12,9 +12,9 @@ export const ProductionHeader = () => {
   const activePlayer = rules.game.rule?.player
   const itsMe = player && activePlayer === player
   const name = usePlayerName(activePlayer)
-  const pass = useLegalMove((move) => isCustomMoveType(CustomMoveType.Pass)(move))
+  const pass = useLegalMove(isCustomMoveType(CustomMoveType.Pass))
 
-  const productChoosen = rules.remind(MemoryType.ProductChoosen)
+  const productChoosen = rules.remind(MemoryType.ProductChosen)
 
   if (itsMe) {
     if (productChoosen) {

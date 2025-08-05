@@ -9,7 +9,7 @@ export class MemoryHelper extends MaterialRulesPart {
     this.memorize(MemoryType.IsBuildInProgress, false)
     this.memorize(MemoryType.CounterActions, 0)
     this.memorize(MemoryType.IsDonationInProgress, false)
-    this.forget(MemoryType.ProductChoosen)
-    this.forget(MemoryType.BasicActionChoosen)
+    this.forget(MemoryType.ProductChosen)
+    this.forget(MemoryType.BasicActionChosen)
   }
 }

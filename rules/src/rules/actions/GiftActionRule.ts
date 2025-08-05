@@ -45,7 +45,7 @@ export class GiftActionRule extends ActionRule<GiftAction> {
       return []
     }
     if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.PlayerProducts) {
-      this.memorize(MemoryType.BasicActionChoosen, this.action?.type)
+      this.memorize(MemoryType.BasicActionChosen, this.action?.type)
       this.memorize<number>(MemoryType.Counter, (old) => old + (move.quantity ?? 1))
     }
     return []
@@ -57,12 +57,12 @@ export class GiftActionRule extends ActionRule<GiftAction> {
     }
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.PlayerProducts) {
-      if(this.action?.canUseAlliance) {
+      if (this.action?.canUseAlliance) {
         moves.push(...this.allianceCardHelper.getOsloProducts(move.location.id as Product))
         moves.push(...this.allianceCardHelper.getNovgorodProducts(move.location.id as Product))
         moves.push(...this.allianceCardHelper.getLondonProducts(move.location.id as Product))
       }
-      if(this.remind(MemoryType.Counter) === this.action?.nbProductToTake) {
+      if (this.remind(MemoryType.Counter) === this.action?.nbProductToTake) {
         moves.push(...this.movesAfterProductsGiven())
       }
     }

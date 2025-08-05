@@ -24,7 +24,7 @@ export class FormAllianceActionRule extends ActionRule<FormAllianceAction> {
   beforeItemMove(move: ItemMove): MaterialMove[] {
     if (this.checkAnotherActionInProgress(this.action?.type)) return []
     if (isMoveItemType(MaterialType.AllianceCard)(move)) {
-      this.memorize(MemoryType.BasicActionChoosen, this.action?.type)
+      this.memorize(MemoryType.BasicActionChosen, this.action?.type)
       const oldLocationType = this.material(MaterialType.AllianceCard).index(move.itemIndex).getItem()?.location.type
       if (oldLocationType === LocationType.PlayerAllianceCards) {
         return [this.playerLetters.moveItem(() => ({ type: LocationType.LetterDeck }))]
@@ -43,8 +43,8 @@ export class FormAllianceActionRule extends ActionRule<FormAllianceAction> {
   }
 
   onCustomMove(move: CustomMove): MaterialMove[] {
-    if (isCustomMoveType(CustomMoveType.Pass)(move) && this.isSameAction(move.data)) {
-      this.forget(MemoryType.ProductChoosen)
+    if (isCustomMoveType(CustomMoveType.Pass)(move) && this.isSameAction(move.data as Action)) {
+      this.forget(MemoryType.ProductChosen)
       return this.removeActionAndMove()
     }
     return []

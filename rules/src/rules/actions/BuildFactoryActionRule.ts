@@ -1,5 +1,5 @@
 import { CustomMove, isCustomMoveType, isMoveItemType, ItemMove, MaterialMove, PlayMoveContext } from '@gamepark/rules-api'
-import { BuildFactoryAction } from '../../material/Actions/Actions'
+import { Action, BuildFactoryAction } from '../../material/Actions/Actions'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { CustomMoveType } from '../CustomMoveType'
@@ -8,11 +8,11 @@ import { ActionRule } from './ActionRule'
 
 export class BuildFactoryActionRule extends ActionRule<BuildFactoryAction> {
   isBuildInProgress = this.remind(MemoryType.IsBuildInProgress)
-  nbProductsGiven = this.remind(MemoryType.Counter) ?? 0
+  nbProductsGiven = this.remind<number>(MemoryType.Counter) ?? 0
 
   onRuleStart(): MaterialMove[] {
     this.memorize(MemoryType.Counter, 0)
-    if(this.action?.price === 0) {
+    if (this.action?.price === 0) {
       return this.factories.moveItems({ type: LocationType.PlayerFactories, player: this.player }, 1)
     }
     if (this.playerProducts.getQuantity() < (this.action?.price ?? 0)) {
@@ -39,7 +39,7 @@ export class BuildFactoryActionRule extends ActionRule<BuildFactoryAction> {
     if (this.checkAnotherActionInProgress(this.action?.type)) return []
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.Factory)(move) && move.location.type === LocationType.PlayerFactories) {
-      this.memorize(MemoryType.BasicActionChoosen, this.action?.type)
+      this.memorize(MemoryType.BasicActionChosen, this.action?.type)
       this.memorize(MemoryType.IsBuildInProgress, true)
     } else if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.ProductPiles && this.isBuildInProgress) {
       this.memorize(MemoryType.Counter, this.nbProductsGiven + 1)
@@ -50,7 +50,7 @@ export class BuildFactoryActionRule extends ActionRule<BuildFactoryAction> {
   afterItemMove(move: ItemMove): MaterialMove[] {
     if (this.checkAnotherActionInProgress(this.action?.type)) return []
     const moves: MaterialMove[] = []
-    if (this.remind(MemoryType.BasicActionChoosen) !== this.action?.type) return moves
+    if (this.remind(MemoryType.BasicActionChosen) !== this.action?.type) return moves
     if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.ProductPiles) {
       if (this.remind(MemoryType.Counter) === this.action?.price) {
         this.memorize(MemoryType.Counter, 0)
@@ -66,7 +66,7 @@ export class BuildFactoryActionRule extends ActionRule<BuildFactoryAction> {
   }
 
   onCustomMove(move: CustomMove, _context?: PlayMoveContext): MaterialMove[] {
-    if (isCustomMoveType(CustomMoveType.Pass)(move) && this.isSameAction(move.data)) {
+    if (isCustomMoveType(CustomMoveType.Pass)(move) && this.isSameAction(move.data as Action)) {
       return this.removeActionAndMove()
     }
     return []

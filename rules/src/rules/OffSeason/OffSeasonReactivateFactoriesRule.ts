@@ -1,8 +1,8 @@
 import { isMoveItemType, ItemMove, MaterialMove, PlayerTurnRule } from '@gamepark/rules-api'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
-import { RuleId } from '../RuleId'
 import { EndOfGameHelper } from '../helper/EndOfGameHelper'
+import { RuleId } from '../RuleId'
 
 export class OffSeasonReactivateFactoriesRule extends PlayerTurnRule {
   endOfGameHelper = new EndOfGameHelper(this.game)
@@ -25,6 +25,6 @@ export class OffSeasonReactivateFactoriesRule extends PlayerTurnRule {
   }
 
   get playerWithBell() {
-    return this.material(MaterialType.BellToken).getItem()?.location.player!
+    return this.material(MaterialType.BellToken).getItem()!.location.player!
   }
 }

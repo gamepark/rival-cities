@@ -1,9 +1,9 @@
 import { MaterialMove, PlayerTurnRule } from '@gamepark/rules-api'
-import { MaterialType } from '../../material/MaterialType'
-import { LocationType } from '../../material/LocationType'
 import { City } from '../../City'
 import { AllianceCard, allianceDatas } from '../../material/AllianceCard'
 import { LawsuitCard, lawsuitCardData } from '../../material/LawsuitCard'
+import { LocationType } from '../../material/LocationType'
+import { MaterialType } from '../../material/MaterialType'
 import { ShipCard, shipCardsData } from '../../material/ShipCard'
 
 export class EndOfGameHelper extends PlayerTurnRule {
@@ -142,10 +142,6 @@ export class EndOfGameHelper extends PlayerTurnRule {
       this.material(MaterialType.ShipCard).location(LocationType.ShipCardsDeck).length === 0 &&
       this.material(MaterialType.ShipCard).location(LocationType.ShipCardsRiver).length === 0
     )
-  }
-
-  get playerWithBell() {
-    return this.material(MaterialType.BellToken).getItem()?.location.player!
   }
 
   get prestigeMarkerStars() {

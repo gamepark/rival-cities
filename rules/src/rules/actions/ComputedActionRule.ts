@@ -10,7 +10,7 @@ import { ActionRule } from './ActionRule'
 export class ComputedActionRule extends ActionRule<ComputedAction> {
   actionRules = this.action?.actions?.map((it) => getActionRule(this.game, it)) ?? []
   onRuleStart(_move: RuleMove, _previousRule?: RuleStep, _context?: PlayMoveContext): MaterialMove[] {
-    this.forget(MemoryType.ProductChoosen)
+    this.forget(MemoryType.ProductChosen)
     const moves: MaterialMove[] = []
     this.action?.actions?.forEach((a) => {
       if (a.type === ActionType.OpponentEarnPrestige || a.type === ActionType.ReturnFactory || a.type === ActionType.DrawSpecialActionCard) {
@@ -34,7 +34,7 @@ export class ComputedActionRule extends ActionRule<ComputedAction> {
 
   onCustomMove(move: CustomMove, context?: PlayMoveContext): MaterialMove[] {
     const actionsMoves = this.actionRules.flatMap((rule) => rule.onCustomMove(move, context))
-    if(actionsMoves.length > 0) {
+    if (actionsMoves.length > 0) {
       return actionsMoves
     }
     return this.onPassMove(move)

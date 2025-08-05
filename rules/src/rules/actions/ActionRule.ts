@@ -18,7 +18,7 @@ export abstract class ActionRule<E extends Action = Action> extends PlayerTurnRu
   }
 
   removeAction() {
-    this.forget(MemoryType.BasicActionChoosen)
+    this.forget(MemoryType.BasicActionChosen)
     const firstAction = this.actions[0]
     if (firstAction?.type === ActionType.Computed && this.action?.type !== ActionType.Computed) {
       firstAction.actions = firstAction.actions?.filter((it) => !this.isSameAction(it as E)) ?? []
@@ -66,17 +66,14 @@ export abstract class ActionRule<E extends Action = Action> extends PlayerTurnRu
   }
 
   checkAnotherActionInProgress(actionType?: ActionType) {
-    return this.remind(MemoryType.BasicActionChoosen) && this.remind(MemoryType.BasicActionChoosen) !== actionType
+    const chosenAction = this.remind<ActionType | undefined>(MemoryType.BasicActionChosen)
+    return chosenAction !== undefined && chosenAction !== actionType
   }
 
-  isSameAction(action: E) {
+  isSameAction(action: Action) {
     switch (action.type) {
       case ActionType.Production:
-        return (
-          this.action?.type === ActionType.Production &&
-          this.action.productType === action.productType &&
-          this.action.quantity === action.quantity
-        )
+        return this.action?.type === ActionType.Production && this.action.productType === action.productType && this.action.quantity === action.quantity
       case ActionType.AdvanceLawsuit:
         return (
           this.action?.type === ActionType.AdvanceLawsuit &&

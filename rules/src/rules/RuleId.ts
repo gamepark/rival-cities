@@ -31,5 +31,5 @@ export enum RuleId {
   OffSeasonReturnBell,
   OffSeasonPlayerWithMostShipCardsEarnPrestige,
   PayToPerformActionAgain,
-  ConfirmEndTurn,
+  ConfirmEndTurn
 }

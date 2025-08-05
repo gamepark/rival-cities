@@ -1,3 +1,4 @@
+import { css } from '@emotion/react'
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { ItemContext, ItemMenuButton, pointerCursorCss, TokenDescription } from '@gamepark/react-game'
@@ -5,10 +6,8 @@ import { City } from '@gamepark/rival-cities/City'
 import { LocationType } from '@gamepark/rival-cities/material/LocationType'
 import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
 import { isMoveItemType, MaterialItem, MaterialMove } from '@gamepark/rules-api'
-import React from 'react'
 import { Trans } from 'react-i18next'
 import PrestigeMarker from '../images/tokens/PrestigeMarker.png'
-import { css, Interpolation, Theme } from '@emotion/react'
 
 export class PrestigeMarkerDescription extends TokenDescription {
   width = 2.1
@@ -18,17 +17,17 @@ export class PrestigeMarkerDescription extends TokenDescription {
 
   image = PrestigeMarker
 
-  canShortClick(move: MaterialMove, context: ItemContext): boolean {
+  canShortClick(move: MaterialMove, context: ItemContext) {
     return isMoveItemType(MaterialType.PrestigeMarker)(move) && move.itemIndex === context.index
   }
 
-  getFrontExtraCss(_itemId: any): Interpolation<Theme> {
+  getFrontExtraCss() {
     return css`
       clip-path: polygon(23% 0%, 40% 0%, 53% 16%, 69% 1%, 85% 1%, 95% 10%, 100% 23%, 100% 40%, 46% 100%, 0% 48%, 0% 24%);
     `
   }
 
-  getItemMenu(_item: MaterialItem, context: ItemContext, legalMoves: MaterialMove[]): React.ReactNode {
+  getItemMenu(_item: MaterialItem, context: ItemContext, legalMoves: MaterialMove[]) {
     const advance = legalMoves.find(
       (move) => isMoveItemType(MaterialType.PrestigeMarker)(move) && move.location.type === LocationType.PrestigeMarkerPiste && move.itemIndex === context.index
     )

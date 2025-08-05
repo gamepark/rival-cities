@@ -26,7 +26,7 @@ export class ProductSwapActionRule extends ActionRule<ProductSwapAction> {
     if (this.checkAnotherActionInProgress(this.action?.type)) return []
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.ProductPiles) {
-      this.memorize(MemoryType.BasicActionChoosen, this.action?.type)
+      this.memorize(MemoryType.BasicActionChosen, this.action?.type)
     }
     return moves
   }
@@ -37,7 +37,7 @@ export class ProductSwapActionRule extends ActionRule<ProductSwapAction> {
       if (move.location.type === LocationType.ProductPiles) {
         this.memorize(MemoryType.IsProductReturn, true)
       } else if (move.location.type === LocationType.PlayerProducts) {
-        this.forget(MemoryType.BasicActionChoosen)
+        this.forget(MemoryType.BasicActionChosen)
         this.memorize(MemoryType.IsProductReturn, false)
         this.memorize(MemoryType.Counter, this.nbSwaps + 1)
         if (this.remind(MemoryType.Counter) === this.action?.nbPossibleSwaps) {

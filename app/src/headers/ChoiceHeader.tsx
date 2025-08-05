@@ -12,9 +12,9 @@ export const ChoiceHeader = () => {
   const activePlayer = rules.game.rule?.player
   const itsMe = player && activePlayer === player
   const name = usePlayerName(activePlayer)
-  const pass = useLegalMove((move) => isCustomMoveType(CustomMoveType.Pass)(move))
+  const pass = useLegalMove(isCustomMoveType(CustomMoveType.Pass))
 
-  const productChoosen = rules.remind(MemoryType.ProductChoosen)
+  const productChosen = rules.remind(MemoryType.ProductChosen)
   const isDonationInProgress = rules.remind(MemoryType.IsDonationInProgress)
 
   if (itsMe) {
@@ -29,11 +29,11 @@ export const ChoiceHeader = () => {
       )
     }
 
-    if (productChoosen) {
+    if (productChosen) {
       return (
         <Trans
           defaults="header.production.factory.you"
-          values={{ product: productChoosen }}
+          values={{ product: productChosen }}
           components={{
             pass: <PlayMoveButton move={pass} />
           }}

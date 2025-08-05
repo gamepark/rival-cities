@@ -12,7 +12,7 @@ export const FormAllianceHeader = () => {
   const activePlayer = rules.game.rule?.player
   const itsMe = player && activePlayer === player
   const name = usePlayerName(activePlayer)
-  const pass = useLegalMove((move) => isCustomMoveType(CustomMoveType.Pass)(move))
+  const pass = useLegalMove(isCustomMoveType(CustomMoveType.Pass))
 
   if (itsMe) {
     return (

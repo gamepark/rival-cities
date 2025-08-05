@@ -2,15 +2,16 @@
 
 import { MoveComponentProps, PlayMoveButton, usePlayerName } from '@gamepark/react-game'
 import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
-import { MaterialMoveBuilder } from '@gamepark/rules-api'
+import { MaterialGame, MaterialMoveBuilder, MoveItem } from '@gamepark/rules-api'
 import { Trans } from 'react-i18next'
 import displayMaterialHelp = MaterialMoveBuilder.displayMaterialHelp
 
-export const GetShipHistory = (props: MoveComponentProps) => {
+export const GetShipHistory = (props: MoveComponentProps<MoveItem>) => {
   const { context, move } = props
+  const game: MaterialGame = context.game
   const actionPlayer = context.action.playerId
   const name = usePlayerName(actionPlayer)
-  const shipCard = context.game.items[MaterialType.ShipCard][move.itemIndex]
+  const shipCard = game.items[MaterialType.ShipCard]![move.itemIndex]
 
   return (
     <Trans

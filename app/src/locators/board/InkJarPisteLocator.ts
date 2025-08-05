@@ -2,10 +2,10 @@
 import { DropAreaDescription, Locator, MaterialContext } from '@gamepark/react-game'
 import { LocationType } from '@gamepark/rival-cities/material/LocationType'
 import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
-import { Coordinates, isMoveItemType, Location, MaterialMove } from '@gamepark/rules-api'
-import { cardPisteLocator } from './CardPisteLocator'
 import { InkJarPisteHelper } from '@gamepark/rival-cities/rules/helper/InkjarPisteHelper'
 import { RuleId } from '@gamepark/rival-cities/rules/RuleId'
+import { Coordinates, isMoveItemType, Location, MaterialMove } from '@gamepark/rules-api'
+import { cardPisteLocator } from './CardPisteLocator'
 
 class InkJarPisteLocator extends Locator {
   parentItemType = MaterialType.GameBoard
@@ -15,7 +15,8 @@ class InkJarPisteLocator extends Locator {
 
   getCoordinates(location: Location): Partial<Coordinates> {
     const base = cardPisteLocator.getCoordinates(location)
-    return { x: base.x! + coordinatesFromId[location.id].x, y: base.y! + coordinatesFromId[location.id].y }
+    const coordinates = coordinatesFromId[location.id as number]
+    return { x: base.x! + coordinates.x, y: base.y! + coordinates.y }
   }
 
   getLocations(context: MaterialContext): Partial<Location>[] {

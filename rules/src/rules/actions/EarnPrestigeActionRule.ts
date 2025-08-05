@@ -25,7 +25,7 @@ export class EarnPrestigeActionRule extends ActionRule<EarnPrestigeAction> {
     if (this.checkAnotherActionInProgress(this.action?.type)) return []
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.PrestigeMarker)(move)) {
-      this.memorize(MemoryType.BasicActionChoosen, this.action?.type)
+      this.memorize(MemoryType.BasicActionChosen, this.action?.type)
     }
     return moves
   }

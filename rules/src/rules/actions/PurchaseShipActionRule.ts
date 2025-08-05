@@ -25,7 +25,7 @@ export class PurchaseShipActionRule extends ActionRule<PurchaseShipAction> {
     if (this.checkAnotherActionInProgress(this.action?.type)) return []
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.ShipCard)(move) && move.location.type === LocationType.PlayerShipCards) {
-      this.memorize(MemoryType.BasicActionChoosen, this.action?.type)
+      this.memorize(MemoryType.BasicActionChosen, this.action?.type)
       moves.push(
         this.material(MaterialType.ShipCard)
           .location(LocationType.ShipCardsDeck)
