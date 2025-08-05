@@ -84,8 +84,7 @@ export class BasicActionCardHelper extends MaterialRulesPart {
             },
             {
               type: ActionType.AdvanceLawsuit,
-              nbTimeAlreadyAdvanced: 0,
-              playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
+              nbTimeAlreadyAdvanced: 0
             }
           ]
         }
@@ -112,8 +111,7 @@ export class BasicActionCardHelper extends MaterialRulesPart {
           actions: [
             {
               type: ActionType.AdvanceLawsuit,
-              nbTimeAlreadyAdvanced: 0,
-              playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
+              nbTimeAlreadyAdvanced: 0
             },
             {
               type: ActionType.Production,
@@ -157,8 +155,7 @@ export class BasicActionCardHelper extends MaterialRulesPart {
             },
             {
               type: ActionType.AdvanceLawsuit,
-              nbTimeAlreadyAdvanced: 0,
-              playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
+              nbTimeAlreadyAdvanced: 0
             }
           ]
         }
@@ -196,8 +193,7 @@ export class BasicActionCardHelper extends MaterialRulesPart {
       case BasicActionCard.BasicAction15:
         return {
           type: ActionType.AdvanceLawsuit,
-          nbTimeAlreadyAdvanced: 0,
-          playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
+          nbTimeAlreadyAdvanced: 0
         }
     }
   }
@@ -208,10 +204,6 @@ export class BasicActionCardHelper extends MaterialRulesPart {
 
   get checkPlayerHaveGdanskAllianceCard(): boolean {
     return this.material(MaterialType.AllianceCard).location(LocationType.PlayerAlliances).player(this.player).id(Alliance.Gdansk).length > 0
-  }
-
-  get checkPlayerHaveLeHavreAllianceCard(): boolean {
-    return this.material(MaterialType.AllianceCard).location(LocationType.PlayerAlliances).player(this.player).id(Alliance.LeHavre).length > 0
   }
 
   get checkPlayerHaveKjjobenhavnAllianceCard(): boolean {

@@ -79,7 +79,7 @@ export abstract class ActionRule<E extends Action = Action> extends PlayerTurnRu
           this.action?.type === ActionType.AdvanceLawsuit &&
           this.action.lawsuitAdvancedLocation === action.lawsuitAdvancedLocation &&
           this.action.nbTimeAlreadyAdvanced === action.nbTimeAlreadyAdvanced &&
-          this.action.playerCanUseAllianceLeHavre === action.playerCanUseAllianceLeHavre
+          this.action.isLeHavreBonus === action.isLeHavreBonus
         )
       case ActionType.BuildFactory:
         return this.action?.type === ActionType.BuildFactory && this.action.price === action.price

@@ -36,13 +36,11 @@ export class ShipCardHelper extends MaterialRulesPart {
     return [
       {
         type: ActionType.AdvanceLawsuit,
-        nbTimeAlreadyAdvanced: 0,
-        playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
+        nbTimeAlreadyAdvanced: 0
       },
       {
         type: ActionType.AdvanceLawsuit,
-        nbTimeAlreadyAdvanced: 0,
-        playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
+        nbTimeAlreadyAdvanced: 0
       }
     ]
   }
@@ -134,10 +132,6 @@ export class ShipCardHelper extends MaterialRulesPart {
       .location(LocationType.ProductPiles)
       .id(product)
       .moveItems({ type: LocationType.PlayerProducts, player: this.player, id: product }, quantity)
-  }
-
-  get checkPlayerHaveLeHavreAllianceCard(): boolean {
-    return this.material(MaterialType.AllianceCard).location(LocationType.PlayerAlliances).player(this.player).id(Alliance.LeHavre).length > 0
   }
 
   get checkPlayerHaveKjjobenhavnAllianceCard(): boolean {

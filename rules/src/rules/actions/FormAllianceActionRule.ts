@@ -1,5 +1,5 @@
 import { CustomMove, isCustomMoveType, isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
-import { Action, AdvanceLawsuitAction, DrawSpecialActionCardAction, EarnPrestigeAction, FormAllianceAction } from '../../material/Actions/Actions'
+import { Action, DrawSpecialActionCardAction, EarnPrestigeAction, FormAllianceAction } from '../../material/Actions/Actions'
 import { ActionType } from '../../material/Actions/ActionType'
 import { Alliance } from '../../material/Alliance'
 import { LocationType } from '../../material/LocationType'
@@ -69,14 +69,6 @@ export class FormAllianceActionRule extends ActionRule<FormAllianceAction> {
         const prestigeAction: EarnPrestigeAction | undefined = action.actions?.find((a) => a.type === ActionType.EarnPrestige) as EarnPrestigeAction
         if (prestigeAction) {
           prestigeAction.playerCanUseAllianceBruxelles = true
-        }
-      }
-    }
-    if (alliance === Alliance.LeHavre) {
-      if (action.type === ActionType.Computed) {
-        const lawsuitAction: AdvanceLawsuitAction | undefined = action.actions?.find((a) => a.type === ActionType.AdvanceLawsuit) as AdvanceLawsuitAction
-        if (lawsuitAction) {
-          lawsuitAction.playerCanUseAllianceLeHavre = true
         }
       }
     }

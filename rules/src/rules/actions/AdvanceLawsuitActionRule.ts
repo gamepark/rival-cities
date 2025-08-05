@@ -59,8 +59,11 @@ export class AdvanceLawsuitActionRule extends ActionRule<AdvanceLawsuitAction> {
       this.removeAction()
       const marker = this.material(MaterialType.LawsuitMarker).getItem(move.itemIndex)
       const card = this.lawsuitCards.parent(marker.location.parent).getItem()
+      const lawsuitX = this.material(MaterialType.LawsuitPiece).getItem(marker.location.parent!).location.x!
       if (card) {
-        if (this.action?.playerCanUseAllianceLeHavre && this.playerProducts.length && this.possibleCardsToGet().length > 0) {
+        const timeAlreadyAdvanced = this.action?.nbTimeAlreadyAdvanced ?? 0
+
+        if (!this.action?.isLeHavreBonus && timeAlreadyAdvanced === 0 && this.playerProducts.length && this.possibleCardsToGet().length > 0) {
           this.addActionBonus({
             type: ActionType.PayToPerformActionAgain,
             productType: undefined,
@@ -68,26 +71,26 @@ export class AdvanceLawsuitActionRule extends ActionRule<AdvanceLawsuitAction> {
             actionToPerformAgain: {
               type: ActionType.AdvanceLawsuit,
               nbTimeAlreadyAdvanced: 0,
-              playerCanUseAllianceLeHavre: false
+              isLeHavreBonus: true
             }
           })
         }
-        if (move.location.id === 1 && this.nbTimeAlreadyAdvanced < 1 && this.advanceLawsuitHelper.checkMarkerIsNotAtMaxX(marker)) {
+        if (lawsuitX === 1 && timeAlreadyAdvanced < 1 && this.advanceLawsuitHelper.checkMarkerIsNotAtMaxX(marker)) {
           this.addActionBonus({
             type: ActionType.AdvanceLawsuit,
             lawsuitAdvancedLocation: marker.location.parent,
-            nbTimeAlreadyAdvanced: this.nbTimeAlreadyAdvanced + 1,
-            playerCanUseAllianceLeHavre: false
+            nbTimeAlreadyAdvanced: timeAlreadyAdvanced + 1,
+            isLeHavreBonus: this.action?.isLeHavreBonus
           })
-        } else if (move.location.id === 2 && this.nbTimeAlreadyAdvanced < 2 && this.advanceLawsuitHelper.checkMarkerIsNotAtMaxX(marker)) {
+        } else if (lawsuitX === 2 && timeAlreadyAdvanced < 2 && this.advanceLawsuitHelper.checkMarkerIsNotAtMaxX(marker)) {
           this.addActionBonus({
             type: ActionType.AdvanceLawsuit,
             lawsuitAdvancedLocation: marker.location.parent,
-            nbTimeAlreadyAdvanced: this.nbTimeAlreadyAdvanced + 1,
-            playerCanUseAllianceLeHavre: false
+            nbTimeAlreadyAdvanced: timeAlreadyAdvanced + 1,
+            isLeHavreBonus: this.action?.isLeHavreBonus
           })
         }
-        if (this.nbTimeAlreadyAdvanced === 0) {
+        if (timeAlreadyAdvanced === 0) {
           lawsuitCardData[card.id as LawsuitCard].actionInAdvance(this.game, this.player).forEach((action) => this.addActionBonus(action))
         }
         moves.push(...this.moveToNextAction())
@@ -127,9 +130,5 @@ export class AdvanceLawsuitActionRule extends ActionRule<AdvanceLawsuitAction> {
       return this.material(MaterialType.LawsuitCard).location(LocationType.LawsuitSpace)
     }
     return this.material(MaterialType.LawsuitCard).location(LocationType.LawsuitSpace).parent(this.action.lawsuitAdvancedLocation)
-  }
-
-  get nbTimeAlreadyAdvanced() {
-    return this.action?.nbTimeAlreadyAdvanced ?? 0
   }
 }

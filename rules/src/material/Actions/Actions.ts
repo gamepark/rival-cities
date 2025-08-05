@@ -24,7 +24,7 @@ export type AdvanceLawsuitAction = {
   type: ActionType.AdvanceLawsuit
   lawsuitAdvancedLocation?: number
   nbTimeAlreadyAdvanced: number
-  playerCanUseAllianceLeHavre: boolean
+  isLeHavreBonus?: boolean
 }
 
 export type BuildFactoryAction = {

@@ -34,8 +34,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
         return [
           {
             type: ActionType.AdvanceLawsuit,
-            nbTimeAlreadyAdvanced: 0,
-            playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
+            nbTimeAlreadyAdvanced: 0
           },
           {
             type: ActionType.GainLetter,
@@ -46,8 +45,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
         return [
           {
             type: ActionType.AdvanceLawsuit,
-            nbTimeAlreadyAdvanced: 0,
-            playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
+            nbTimeAlreadyAdvanced: 0
           },
           {
             type: ActionType.Gift,
@@ -60,8 +58,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
         return [
           {
             type: ActionType.AdvanceLawsuit,
-            nbTimeAlreadyAdvanced: 0,
-            playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
+            nbTimeAlreadyAdvanced: 0
           },
           {
             type: ActionType.PurchaseShip,
@@ -78,8 +75,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
         return [
           {
             type: ActionType.AdvanceLawsuit,
-            nbTimeAlreadyAdvanced: 0,
-            playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
+            nbTimeAlreadyAdvanced: 0
           },
           {
             type: ActionType.DrawSpecialActionCard,
@@ -108,8 +104,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
         return [
           {
             type: ActionType.AdvanceLawsuit,
-            nbTimeAlreadyAdvanced: 0,
-            playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
+            nbTimeAlreadyAdvanced: 0
           },
           {
             type: ActionType.Gift,
@@ -125,8 +120,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
         return [
           {
             type: ActionType.AdvanceLawsuit,
-            nbTimeAlreadyAdvanced: 0,
-            playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
+            nbTimeAlreadyAdvanced: 0
           },
           {
             type: ActionType.EarnPrestige,
@@ -143,8 +137,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
         return [
           {
             type: ActionType.AdvanceLawsuit,
-            nbTimeAlreadyAdvanced: 0,
-            playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
+            nbTimeAlreadyAdvanced: 0
           },
           {
             type: ActionType.EarnPrestige,
@@ -163,8 +156,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
         return [
           {
             type: ActionType.AdvanceLawsuit,
-            nbTimeAlreadyAdvanced: 0,
-            playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
+            nbTimeAlreadyAdvanced: 0
           },
           {
             type: ActionType.Gift,
@@ -193,8 +185,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
         return [
           {
             type: ActionType.AdvanceLawsuit,
-            nbTimeAlreadyAdvanced: 0,
-            playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
+            nbTimeAlreadyAdvanced: 0
           },
           {
             type: ActionType.PurchaseShip,
@@ -211,8 +202,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
         return [
           {
             type: ActionType.AdvanceLawsuit,
-            nbTimeAlreadyAdvanced: 0,
-            playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
+            nbTimeAlreadyAdvanced: 0
           },
           {
             type: ActionType.Gift,
@@ -232,8 +222,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
         return [
           {
             type: ActionType.AdvanceLawsuit,
-            nbTimeAlreadyAdvanced: 0,
-            playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
+            nbTimeAlreadyAdvanced: 0
           },
           {
             type: ActionType.BuildFactory,
@@ -244,8 +233,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
         return [
           {
             type: ActionType.AdvanceLawsuit,
-            nbTimeAlreadyAdvanced: 0,
-            playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
+            nbTimeAlreadyAdvanced: 0
           },
           {
             type: ActionType.BuildFactory,
@@ -265,8 +253,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
         return [
           {
             type: ActionType.AdvanceLawsuit,
-            nbTimeAlreadyAdvanced: 0,
-            playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
+            nbTimeAlreadyAdvanced: 0
           },
           {
             type: ActionType.EarnPrestige,
@@ -285,8 +272,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
         return [
           {
             type: ActionType.AdvanceLawsuit,
-            nbTimeAlreadyAdvanced: 0,
-            playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
+            nbTimeAlreadyAdvanced: 0
           },
           {
             type: ActionType.PurchaseShip,
@@ -301,8 +287,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
         return [
           {
             type: ActionType.AdvanceLawsuit,
-            nbTimeAlreadyAdvanced: 0,
-            playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
+            nbTimeAlreadyAdvanced: 0
           },
           {
             type: ActionType.ReturnFactory,
@@ -313,8 +298,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
         return [
           {
             type: ActionType.AdvanceLawsuit,
-            nbTimeAlreadyAdvanced: 0,
-            playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
+            nbTimeAlreadyAdvanced: 0
           },
           {
             type: ActionType.Gift,
@@ -330,8 +314,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
         return [
           {
             type: ActionType.AdvanceLawsuit,
-            nbTimeAlreadyAdvanced: 0,
-            playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
+            nbTimeAlreadyAdvanced: 0
           },
           {
             type: ActionType.GainLetter,
@@ -342,8 +325,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
         return [
           {
             type: ActionType.AdvanceLawsuit,
-            nbTimeAlreadyAdvanced: 0,
-            playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
+            nbTimeAlreadyAdvanced: 0
           },
           {
             type: ActionType.CourtRuling
@@ -353,8 +335,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
         return [
           {
             type: ActionType.AdvanceLawsuit,
-            nbTimeAlreadyAdvanced: 0,
-            playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
+            nbTimeAlreadyAdvanced: 0
           },
           {
             type: ActionType.Gift,
@@ -387,10 +368,6 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
           }
         ]
     }
-  }
-
-  get checkPlayerHaveLeHavreAllianceCard(): boolean {
-    return this.material(MaterialType.AllianceCard).location(LocationType.PlayerAlliances).player(this.player).id(Alliance.LeHavre).length > 0
   }
 
   get checkPlayerHaveKjjobenhavnAllianceCard(): boolean {
