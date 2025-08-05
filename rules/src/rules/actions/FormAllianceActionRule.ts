@@ -11,7 +11,7 @@ import { ActionRule } from './ActionRule'
 
 export class FormAllianceActionRule extends ActionRule<FormAllianceAction> {
   getPlayerMoves(): MaterialMove[] {
-    if (this.checkAnotherActionInProgress(this.action?.type)) return []
+    if (this.checkAnotherActionInProgress(this.action.type)) return []
     const moves: MaterialMove[] = []
     moves.push(...this.allianceCards.moveItems({ type: LocationType.PlayerAlliances, player: this.player }))
     if (this.playerLetters.length) {
@@ -22,9 +22,9 @@ export class FormAllianceActionRule extends ActionRule<FormAllianceAction> {
   }
 
   beforeItemMove(move: ItemMove): MaterialMove[] {
-    if (this.checkAnotherActionInProgress(this.action?.type)) return []
+    if (this.checkAnotherActionInProgress(this.action.type)) return []
     if (isMoveItemType(MaterialType.AllianceCard)(move)) {
-      this.memorize(MemoryType.BasicActionChosen, this.action?.type)
+      this.memorize(MemoryType.BasicActionChosen, this.action.type)
       const oldLocationType = this.material(MaterialType.AllianceCard).index(move.itemIndex).getItem()?.location.type
       if (oldLocationType === LocationType.PlayerAlliances) {
         return [this.playerLetters.moveItem(() => ({ type: LocationType.LetterDeck }))]
@@ -34,7 +34,7 @@ export class FormAllianceActionRule extends ActionRule<FormAllianceAction> {
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {
-    if (this.checkAnotherActionInProgress(this.action?.type)) return []
+    if (this.checkAnotherActionInProgress(this.action.type)) return []
     if (isMoveItemType(MaterialType.AllianceCard)(move)) {
       this.updateAction(this.material(MaterialType.AllianceCard).index(move.itemIndex).getItem()?.id as Alliance)
       return new EndOfGameHelper(this.game).checkInstantEndOfGame(this.removeActionAndMove())
@@ -66,7 +66,7 @@ export class FormAllianceActionRule extends ActionRule<FormAllianceAction> {
     const action = this.remind<Action[]>(MemoryType.Actions)[0]
     if (alliance === Alliance.Bruxelles) {
       if (action.type === ActionType.Computed) {
-        const prestigeAction: EarnPrestigeAction | undefined = action.actions?.find((a) => a.type === ActionType.EarnPrestige) as EarnPrestigeAction
+        const prestigeAction: EarnPrestigeAction | undefined = action.actions.find((a) => a.type === ActionType.EarnPrestige) as EarnPrestigeAction
         if (prestigeAction) {
           prestigeAction.playerCanUseAllianceBruxelles = true
         }
@@ -74,7 +74,7 @@ export class FormAllianceActionRule extends ActionRule<FormAllianceAction> {
     }
     if (alliance === Alliance.Kjjobenhavn) {
       if (action.type === ActionType.Computed) {
-        const drawSpecialActionCardAction: DrawSpecialActionCardAction | undefined = action.actions?.find(
+        const drawSpecialActionCardAction: DrawSpecialActionCardAction | undefined = action.actions.find(
           (a) => a.type === ActionType.DrawSpecialActionCard
         ) as DrawSpecialActionCardAction
         if (drawSpecialActionCardAction) {

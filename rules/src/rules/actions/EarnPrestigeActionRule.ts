@@ -11,27 +11,27 @@ import { ActionRule } from './ActionRule'
 
 export class EarnPrestigeActionRule extends ActionRule<EarnPrestigeAction> {
   onRuleStart(): MaterialMove[] {
-    const move = this.action?.playerWhoEarnedPrestige === City.Altona ? -1 : 1
+    const move = this.action.playerWhoEarnedPrestige === City.Altona ? -1 : 1
     return [this.prestigeMarker.moveItem(({ location }) => ({ ...location, x: location.x! + move }))]
   }
 
   getPlayerMoves(): MaterialMove[] {
-    if (this.checkAnotherActionInProgress(this.action?.type)) return []
-    const move = this.action?.playerWhoEarnedPrestige === City.Altona ? -1 : 1
+    if (this.checkAnotherActionInProgress(this.action.type)) return []
+    const move = this.action.playerWhoEarnedPrestige === City.Altona ? -1 : 1
     return [this.prestigeMarker.moveItem(({ location }) => ({ ...location, x: location.x! + move }))]
   }
 
   beforeItemMove(move: ItemMove): MaterialMove[] {
-    if (this.checkAnotherActionInProgress(this.action?.type)) return []
+    if (this.checkAnotherActionInProgress(this.action.type)) return []
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.PrestigeMarker)(move)) {
-      this.memorize(MemoryType.BasicActionChosen, this.action?.type)
+      this.memorize(MemoryType.BasicActionChosen, this.action.type)
     }
     return moves
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {
-    if (this.checkAnotherActionInProgress(this.action?.type)) return []
+    if (this.checkAnotherActionInProgress(this.action.type)) return []
     if (isMoveItemType(MaterialType.PrestigeMarker)(move)) {
       return new EndOfGameHelper(this.game).checkInstantEndOfGame(this.movesOnPrestigeMarkerMoved())
     }
@@ -40,7 +40,7 @@ export class EarnPrestigeActionRule extends ActionRule<EarnPrestigeAction> {
 
   movesOnPrestigeMarkerMoved(): MaterialMove[] {
     this.removeAction()
-    if (this.action?.playerCanUseShip16 && this.playerBeers.length >= 2) {
+    if (this.action.playerCanUseShip16 && this.playerBeers.length >= 2) {
       this.addActionBonus({
         type: ActionType.PayToPerformActionAgain,
         productType: Product.Beer,
@@ -53,7 +53,7 @@ export class EarnPrestigeActionRule extends ActionRule<EarnPrestigeAction> {
         }
       })
     }
-    if (this.action?.playerCanUseAllianceBruxelles && this.playerFurnitures.getQuantity() > 0) {
+    if (this.action.playerCanUseAllianceBruxelles && this.playerFurnitures.getQuantity() > 0) {
       this.addActionBonus({
         type: ActionType.PayToPerformActionAgain,
         productType: Product.Furniture,
@@ -74,10 +74,10 @@ export class EarnPrestigeActionRule extends ActionRule<EarnPrestigeAction> {
   }
 
   get playerBeers() {
-    return this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(this.action?.playerWhoEarnedPrestige).id(Product.Beer)
+    return this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(this.action.playerWhoEarnedPrestige).id(Product.Beer)
   }
 
   get playerFurnitures() {
-    return this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(this.action?.playerWhoEarnedPrestige).id(Product.Furniture)
+    return this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(this.action.playerWhoEarnedPrestige).id(Product.Furniture)
   }
 }

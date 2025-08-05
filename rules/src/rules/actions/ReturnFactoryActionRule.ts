@@ -23,6 +23,6 @@ export class ReturnFactoryActionRule extends ActionRule<ReturnFactoryAction> {
   }
 
   get nbFactoryCanReturn() {
-    return this.action?.nbFactoryCanReturn ?? 0
+    return this.action.nbFactoryCanReturn ?? 0
   }
 }

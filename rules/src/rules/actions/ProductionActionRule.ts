@@ -15,36 +15,36 @@ export class ProductionActionRule extends ActionRule<ProductionAction> {
 
   onRuleStart(): MaterialMove[] {
     this.forget(MemoryType.ProductChosen)
-    return this.products.moveItems((item) => ({ type: LocationType.PlayerProducts, player: this.player, id: item.id }), this.action?.quantity)
+    return this.products.moveItems((item) => ({ type: LocationType.PlayerProducts, player: this.player, id: item.id }), this.action.quantity)
   }
 
   getPlayerMoves(): MaterialMove[] {
-    if (this.checkAnotherActionInProgress(this.action?.type)) return []
+    if (this.checkAnotherActionInProgress(this.action.type)) return []
     if (!this.productChoosen) {
-      const productsToMove = this.action?.productType ? this.products : this.allProducts
+      const productsToMove = this.action.productType ? this.products : this.allProducts
       return [
-        ...productsToMove.moveItems((item) => ({ type: LocationType.PlayerProducts, player: this.player, id: item.id }), this.action?.quantity),
+        ...productsToMove.moveItems((item) => ({ type: LocationType.PlayerProducts, player: this.player, id: item.id }), this.action.quantity),
         this.customMove(CustomMoveType.Pass, this.action)
       ]
     }
-    if (this.playerFactories.length && (!this.action?.productType || this.action.productType === this.productChoosen)) {
+    if (this.playerFactories.length && (!this.action.productType || this.action.productType === this.productChoosen)) {
       return [...this.playerFactories.rotateItems(true), this.customMove(CustomMoveType.Pass, this.action)]
     }
     return [this.customMove(CustomMoveType.Pass, this.action)]
   }
 
   beforeItemMove(move: ItemMove): MaterialMove[] {
-    if (this.checkAnotherActionInProgress(this.action?.type)) return []
-    if (isMoveItemType(MaterialType.Product)(move) && (!this.action?.productType || this.action.productType === move.location.id)) {
+    if (this.checkAnotherActionInProgress(this.action.type)) return []
+    if (isMoveItemType(MaterialType.Product)(move) && (!this.action.productType || this.action.productType === move.location.id)) {
       if (!this.remind(MemoryType.BasicActionChosen)) {
-        this.memorize(MemoryType.BasicActionChosen, this.action?.type)
+        this.memorize(MemoryType.BasicActionChosen, this.action.type)
       }
     }
     if (isMoveItemType(MaterialType.Factory)(move)) {
-      if (!this.action?.productType) {
+      if (!this.action.productType) {
         this.forget(MemoryType.ProductChosen)
       }
-      if (this.productChoosen === this.action?.productType) {
+      if (this.productChoosen === this.action.productType) {
         return [this.products.moveItem({ type: LocationType.PlayerProducts, id: this.productChoosen, player: this.player })]
       }
     }
@@ -52,12 +52,12 @@ export class ProductionActionRule extends ActionRule<ProductionAction> {
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {
-    if (this.checkAnotherActionInProgress(this.action?.type)) return []
+    if (this.checkAnotherActionInProgress(this.action.type)) return []
     const moves: MaterialMove[] = []
-    if (isMoveItemType(MaterialType.Product)(move) && (!this.action?.productType || this.action.productType === move.location.id)) {
+    if (isMoveItemType(MaterialType.Product)(move) && (!this.action.productType || this.action.productType === move.location.id)) {
       if (!this.productChoosen) {
         this.memorize(MemoryType.ProductChosen, move.location.id)
-        if (this.action?.canGetMore) {
+        if (this.action.canGetMore) {
           if (this.playerShipCards.length > 0) {
             for (const shipCard of this.playerShipCards) {
               const shipCardData = shipCardsData[shipCard.id as ShipCard]
@@ -92,12 +92,12 @@ export class ProductionActionRule extends ActionRule<ProductionAction> {
   }
 
   get products() {
-    const resourcesInReserve = this.material(MaterialType.Product).location(LocationType.ProductPiles).id(this.action?.productType)
+    const resourcesInReserve = this.material(MaterialType.Product).location(LocationType.ProductPiles).id(this.action.productType)
 
     if (resourcesInReserve.length > 0) return resourcesInReserve
 
-    const opponentResource = this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(this.nextPlayer).id(this.action?.productType)
-    const playerResource = this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(this.player).id(this.action?.productType)
+    const opponentResource = this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(this.nextPlayer).id(this.action.productType)
+    const playerResource = this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(this.player).id(this.action.productType)
 
     if (opponentResource.length > playerResource.length) return opponentResource
 

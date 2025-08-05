@@ -15,10 +15,10 @@ export class DonationActionRule extends ActionRule<DonationAction> {
 
   onRuleStart(): MaterialMove[] {
     const moves: MaterialMove[] = []
-    if (this.checkAnotherActionInProgress(this.action?.type)) {
+    if (this.checkAnotherActionInProgress(this.action.type)) {
       return moves
     }
-    if (this.action?.nbProduct === 0) {
+    if (this.action.nbProduct === 0) {
       const playerHaveAllianceAmsterdam = new AllianceCardHelper(this.game).checkPlayerAllianceCardById(Alliance.Amsterdam)
       moves.push(
         ...this.starTokens.moveItems(
@@ -31,7 +31,7 @@ export class DonationActionRule extends ActionRule<DonationAction> {
   }
 
   getPlayerMoves(): MaterialMove[] {
-    if (this.checkAnotherActionInProgress(this.action?.type)) return []
+    if (this.checkAnotherActionInProgress(this.action.type)) return []
     const moves: MaterialMove[] = []
     if (this.playerProducts.getQuantity() < this.nbProduct) return [this.customMove(CustomMoveType.Pass, this.action)]
     if (this.isDonationInProgress) {
@@ -55,11 +55,11 @@ export class DonationActionRule extends ActionRule<DonationAction> {
   }
 
   beforeItemMove(move: ItemMove): MaterialMove[] {
-    if (this.checkAnotherActionInProgress(this.action?.type)) return []
+    if (this.checkAnotherActionInProgress(this.action.type)) return []
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.StarToken)(move) && move.location.type === LocationType.PlayerStarTokens) {
-      this.memorize(MemoryType.BasicActionChosen, this.action?.type)
-      if (this.action?.productType) {
+      this.memorize(MemoryType.BasicActionChosen, this.action.type)
+      if (this.action.productType) {
         moves.push(...this.playerProducts.moveItems((item) => ({ type: LocationType.ProductPiles, id: item.id }), this.action.nbProduct))
       } else {
         this.memorize(MemoryType.IsDonationInProgress, true)
@@ -71,10 +71,10 @@ export class DonationActionRule extends ActionRule<DonationAction> {
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {
-    if (this.checkAnotherActionInProgress(this.action?.type)) return []
+    if (this.checkAnotherActionInProgress(this.action.type)) return []
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.ProductPiles) {
-      if (this.action?.productType) {
+      if (this.action.productType) {
         this.memorize<number>(MemoryType.CounterActions, (old) => old + 1)
         if (this.remind(MemoryType.CounterActions) === this.action.nbTimes) {
           return this.removeActionAndMove()
@@ -83,13 +83,13 @@ export class DonationActionRule extends ActionRule<DonationAction> {
         this.memorize(MemoryType.Counter, 0)
         this.memorize(MemoryType.IsDonationInProgress, false)
         this.memorize<number>(MemoryType.CounterActions, (old) => old + 1)
-        if (this.remind(MemoryType.CounterActions) === this.action?.nbTimes) {
+        if (this.remind(MemoryType.CounterActions) === this.action.nbTimes) {
           return this.removeActionAndMove()
         }
       }
     }
     if (isMoveItemType(MaterialType.StarToken)(move) && move.location.type === LocationType.PlayerStarTokens) {
-      if (this.action?.nbProduct === 0) {
+      if (this.action.nbProduct === 0) {
         this.memorize(MemoryType.Counter, 0)
         this.memorize(MemoryType.IsDonationInProgress, false)
         this.memorize<number>(MemoryType.CounterActions, 0)
@@ -110,7 +110,7 @@ export class DonationActionRule extends ActionRule<DonationAction> {
   }
 
   get playerProducts() {
-    if (!this.action?.productType) {
+    if (!this.action.productType) {
       return this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(this.player)
     }
     return this.material(MaterialType.Product).id(this.action.productType).location(LocationType.PlayerProducts).player(this.player)
@@ -125,10 +125,10 @@ export class DonationActionRule extends ActionRule<DonationAction> {
   }
 
   get nbStars() {
-    return this.action?.nbStars ?? 0
+    return this.action.nbStars ?? 0
   }
 
   get nbProduct() {
-    return this.action?.nbProduct ?? 0
+    return this.action.nbProduct ?? 0
   }
 }

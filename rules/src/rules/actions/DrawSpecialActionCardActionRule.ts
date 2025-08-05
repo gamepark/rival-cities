@@ -13,9 +13,9 @@ export class DrawSpecialActionCardActionRule extends ActionRule<DrawSpecialActio
   }
 
   beforeItemMove(move: ItemMove): MaterialMove[] {
-    if (this.checkAnotherActionInProgress(this.action?.type)) return []
+    if (this.checkAnotherActionInProgress(this.action.type)) return []
     if (isMoveItemType(MaterialType.SpecialActionCard)(move)) {
-      this.memorize(MemoryType.BasicActionChosen, this.action?.type)
+      this.memorize(MemoryType.BasicActionChosen, this.action.type)
       this.memorize<number>(MemoryType.Counter, (old) => old + 1)
       if (this.material(MaterialType.SpecialActionCard).location(LocationType.SpecialActionCardsDeck).length < 1) {
         const moves: MaterialMove[] = []
@@ -32,12 +32,12 @@ export class DrawSpecialActionCardActionRule extends ActionRule<DrawSpecialActio
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {
-    if (this.checkAnotherActionInProgress(this.action?.type)) return []
+    if (this.checkAnotherActionInProgress(this.action.type)) return []
     if (isMoveItemType(MaterialType.SpecialActionCard)(move)) {
-      if (this.remind(MemoryType.Counter) === this.action?.nbCardsToDraw) {
+      if (this.remind(MemoryType.Counter) === this.action.nbCardsToDraw) {
         this.removeAction()
         this.memorize(MemoryType.Counter, 0)
-        if (this.action?.playerCanUseAllianceKjjobenhavn && this.playerBeers.getQuantity() > 0) {
+        if (this.action.playerCanUseAllianceKjjobenhavn && this.playerBeers.getQuantity() > 0) {
           this.addActionBonus({
             type: ActionType.PayToPerformActionAgain,
             productType: Product.Beer,

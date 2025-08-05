@@ -12,7 +12,7 @@ import { ActionRule } from './ActionRule'
 export class PurchaseShipActionRule extends ActionRule<PurchaseShipAction> {
   getPlayerMoves(): MaterialMove[] {
     const moves: MaterialMove[] = []
-    if (this.checkAnotherActionInProgress(this.action?.type)) return []
+    if (this.checkAnotherActionInProgress(this.action.type)) return []
     moves.push(...this.possibleCardsToGet().moveItems({ type: LocationType.PlayerShipCards, player: this.player }))
     if (this.playerProducts.length && this.playerLetters.length) {
       moves.push(this.customMove(CustomMoveType.TakeLetterToSwapProduct))
@@ -22,10 +22,10 @@ export class PurchaseShipActionRule extends ActionRule<PurchaseShipAction> {
   }
 
   beforeItemMove(move: ItemMove): MaterialMove[] {
-    if (this.checkAnotherActionInProgress(this.action?.type)) return []
+    if (this.checkAnotherActionInProgress(this.action.type)) return []
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.ShipCard)(move) && move.location.type === LocationType.PlayerShipCards) {
-      this.memorize(MemoryType.BasicActionChosen, this.action?.type)
+      this.memorize(MemoryType.BasicActionChosen, this.action.type)
       moves.push(
         this.material(MaterialType.ShipCard)
           .location(LocationType.ShipCardsDeck)
@@ -37,7 +37,7 @@ export class PurchaseShipActionRule extends ActionRule<PurchaseShipAction> {
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {
-    if (this.checkAnotherActionInProgress(this.action?.type)) return []
+    if (this.checkAnotherActionInProgress(this.action.type)) return []
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.ShipCard)(move) && move.location.type === LocationType.PlayerShipCards) {
       return new EndOfGameHelper(this.game).checkInstantEndOfGame(this.movesOnPushasedShip(move))
@@ -61,7 +61,7 @@ export class PurchaseShipActionRule extends ActionRule<PurchaseShipAction> {
     const shipId: ShipCard = this.material(MaterialType.ShipCard).index(move.itemIndex).getItem()?.id
     this.updateAction(shipId)
     const shipData = shipCardsData[shipId]
-    const costQuantity = this.action?.playerHasShip19 ? shipData.cost.quantity - 1 : shipData.cost.quantity
+    const costQuantity = this.action.playerHasShip19 ? shipData.cost.quantity - 1 : shipData.cost.quantity
     moves.push(...this.playerProducts.id(shipData.cost.type).moveItems({ type: LocationType.ProductPiles, id: shipData.cost.type }, costQuantity))
     this.removeAction()
     if (shipData.effect.type === ShipEffectType.Instant) {
@@ -76,7 +76,7 @@ export class PurchaseShipActionRule extends ActionRule<PurchaseShipAction> {
   possibleCardsToGet() {
     return this.shipCards.filter((item) => {
       const shipData = shipCardsData[item.id as ShipCard]
-      const costQuantity = this.action?.playerHasShip19 ? shipData.cost.quantity - 1 : shipData.cost.quantity
+      const costQuantity = this.action.playerHasShip19 ? shipData.cost.quantity - 1 : shipData.cost.quantity
       return this.playerProducts.id(shipData.cost.type).getQuantity() >= costQuantity
     })
   }
@@ -97,7 +97,7 @@ export class PurchaseShipActionRule extends ActionRule<PurchaseShipAction> {
     const action = this.remind<Action[]>(MemoryType.Actions)[0]
     if (ship === ShipCard.Ship16) {
       if (action.type === ActionType.Computed) {
-        const prestigeAction: EarnPrestigeAction | undefined = action.actions?.find((a) => a.type === ActionType.EarnPrestige) as EarnPrestigeAction
+        const prestigeAction: EarnPrestigeAction | undefined = action.actions.find((a) => a.type === ActionType.EarnPrestige) as EarnPrestigeAction
         if (prestigeAction) {
           prestigeAction.playerCanUseShip16 = true
         }

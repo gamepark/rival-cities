@@ -7,30 +7,28 @@ import { MemoryType } from '../MemoryType'
 import { ActionRule } from './ActionRule'
 
 export class ChoiceActionRule extends ActionRule<ChoiceAction> {
-  actionRules = this.action?.actions?.map((it) => getActionRule(this.game, it)) ?? []
-
   onRuleStart(): MaterialMove[] {
     this.forget(MemoryType.ProductChosen)
     return []
   }
 
   getPlayerMoves(): MaterialMove[] {
-    return [...this.actionRules.flatMap((rule) => rule.getPlayerMoves())]
+    return this.action.actions.flatMap((action) => getActionRule(this.game, action).getPlayerMoves())
   }
 
   beforeItemMove(move: ItemMove, context?: PlayMoveContext): MaterialMove[] {
-    return [...this.actionRules.flatMap((rule) => rule.beforeItemMove(move, context))]
+    return this.action.actions.flatMap((action) => getActionRule(this.game, action).beforeItemMove(move, context))
   }
 
   afterItemMove(move: ItemMove, context?: PlayMoveContext): MaterialMove[] {
-    return [...this.actionRules.flatMap((rule) => rule.afterItemMove(move, context))]
+    return this.action.actions.flatMap((action) => getActionRule(this.game, action).afterItemMove(move, context))
   }
 
   onCustomMove(move: CustomMove, context?: PlayMoveContext): MaterialMove[] {
     if (isCustomMoveType(CustomMoveType.Pass)(move)) {
       return this.removeActionAndMove()
     }
-    return [...this.actionRules.flatMap((rule) => rule.onCustomMove(move, context))]
+    return this.action.actions.flatMap((action) => getActionRule(this.game, action).onCustomMove(move, context))
   }
 
   onRuleEnd(): MaterialMove[] {

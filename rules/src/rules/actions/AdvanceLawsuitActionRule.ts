@@ -14,7 +14,7 @@ export class AdvanceLawsuitActionRule extends ActionRule<AdvanceLawsuitAction> {
   advanceLawsuitHelper = new AdvanceLawsuitHelper(this.game)
 
   getPlayerMoves(): MaterialMove[] {
-    if (this.checkAnotherActionInProgress(this.action?.type)) return []
+    if (this.checkAnotherActionInProgress(this.action.type)) return []
     const moveX = this.player === City.Altona ? -1 : 1
     const moves: MaterialMove[] = []
     this.possibleCardsToGet().forEach((card) => {
@@ -32,7 +32,7 @@ export class AdvanceLawsuitActionRule extends ActionRule<AdvanceLawsuitAction> {
   }
 
   beforeItemMove(move: ItemMove): MaterialMove[] {
-    if (this.checkAnotherActionInProgress(this.action?.type)) return []
+    if (this.checkAnotherActionInProgress(this.action.type)) return []
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.LawsuitMarker)(move)) {
       const card = this.lawsuitCards.parent(move.location.parent).getItem()
@@ -46,14 +46,14 @@ export class AdvanceLawsuitActionRule extends ActionRule<AdvanceLawsuitAction> {
         })
       }
       if (!this.remind(MemoryType.BasicActionChosen)) {
-        this.memorize(MemoryType.BasicActionChosen, this.action?.type)
+        this.memorize(MemoryType.BasicActionChosen, this.action.type)
       }
     }
     return moves
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {
-    if (this.checkAnotherActionInProgress(this.action?.type)) return []
+    if (this.checkAnotherActionInProgress(this.action.type)) return []
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.LawsuitMarker)(move)) {
       this.removeAction()
@@ -61,9 +61,9 @@ export class AdvanceLawsuitActionRule extends ActionRule<AdvanceLawsuitAction> {
       const card = this.lawsuitCards.parent(marker.location.parent).getItem()
       const lawsuitX = this.material(MaterialType.LawsuitPiece).getItem(marker.location.parent!).location.x!
       if (card) {
-        const timeAlreadyAdvanced = this.action?.nbTimeAlreadyAdvanced ?? 0
+        const timeAlreadyAdvanced = this.action.nbTimeAlreadyAdvanced ?? 0
 
-        if (!this.action?.isLeHavreBonus && timeAlreadyAdvanced === 0 && this.playerProducts.length && this.possibleCardsToGet().length > 0) {
+        if (!this.action.isLeHavreBonus && timeAlreadyAdvanced === 0 && this.playerProducts.length && this.possibleCardsToGet().length > 0) {
           this.addActionBonus({
             type: ActionType.PayToPerformActionAgain,
             productType: undefined,
@@ -80,14 +80,14 @@ export class AdvanceLawsuitActionRule extends ActionRule<AdvanceLawsuitAction> {
             type: ActionType.AdvanceLawsuit,
             lawsuitAdvancedLocation: marker.location.parent,
             nbTimeAlreadyAdvanced: timeAlreadyAdvanced + 1,
-            isLeHavreBonus: this.action?.isLeHavreBonus
+            isLeHavreBonus: this.action.isLeHavreBonus
           })
         } else if (lawsuitX === 2 && timeAlreadyAdvanced < 2 && this.advanceLawsuitHelper.checkMarkerIsNotAtMaxX(marker)) {
           this.addActionBonus({
             type: ActionType.AdvanceLawsuit,
             lawsuitAdvancedLocation: marker.location.parent,
             nbTimeAlreadyAdvanced: timeAlreadyAdvanced + 1,
-            isLeHavreBonus: this.action?.isLeHavreBonus
+            isLeHavreBonus: this.action.isLeHavreBonus
           })
         }
         if (timeAlreadyAdvanced === 0) {
@@ -100,7 +100,7 @@ export class AdvanceLawsuitActionRule extends ActionRule<AdvanceLawsuitAction> {
   }
 
   onCustomMove(move: CustomMove): MaterialMove[] {
-    if (this.checkAnotherActionInProgress(this.action?.type)) return []
+    if (this.checkAnotherActionInProgress(this.action.type)) return []
     if (isCustomMoveType(CustomMoveType.Pass)(move) && this.isSameAction(move.data as Action)) {
       return this.removeActionAndMove()
     }
@@ -126,7 +126,7 @@ export class AdvanceLawsuitActionRule extends ActionRule<AdvanceLawsuitAction> {
   }
 
   get lawsuitCards() {
-    if (this.action?.lawsuitAdvancedLocation === undefined) {
+    if (this.action.lawsuitAdvancedLocation === undefined) {
       return this.material(MaterialType.LawsuitCard).location(LocationType.LawsuitSpace)
     }
     return this.material(MaterialType.LawsuitCard).location(LocationType.LawsuitSpace).parent(this.action.lawsuitAdvancedLocation)

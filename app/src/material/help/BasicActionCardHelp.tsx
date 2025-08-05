@@ -36,12 +36,12 @@ export const BasicActionCardHelp: FC<MaterialHelpProps> = ({ item }) => {
       <h3>{t(`help.actions`)}</h3>
       {action.type === ActionType.Computed || action.type === ActionType.Choice ? (
         <>
-          {action.actions?.map((a, index) => (
+          {action.actions.map((a, index) => (
             <div key={index}>
               <p>
                 <Trans defaults={`help.action.descr.${a.type}`} values={a} components={components} />
               </p>
-              {isMultiChoiceCard && index < action.actions?.length - 1 && (
+              {isMultiChoiceCard && index < action.actions.length - 1 && (
                 <p>
                   <b>{t(`help.action.descr.or`)}</b>
                 </p>

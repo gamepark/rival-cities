@@ -11,7 +11,7 @@ export class ProductSwapActionRule extends ActionRule<ProductSwapAction> {
   isProductReturn = this.remind(MemoryType.IsProductReturn)
 
   getPlayerMoves(): MaterialMove[] {
-    if (this.checkAnotherActionInProgress(this.action?.type)) return []
+    if (this.checkAnotherActionInProgress(this.action.type)) return []
     const moves: MaterialMove[] = []
     if (this.isProductReturn) {
       moves.push(...this.products.moveItems((item) => ({ type: LocationType.PlayerProducts, player: this.player, id: item.id }), 1))
@@ -23,16 +23,16 @@ export class ProductSwapActionRule extends ActionRule<ProductSwapAction> {
   }
 
   beforeItemMove(move: ItemMove): MaterialMove[] {
-    if (this.checkAnotherActionInProgress(this.action?.type)) return []
+    if (this.checkAnotherActionInProgress(this.action.type)) return []
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.ProductPiles) {
-      this.memorize(MemoryType.BasicActionChosen, this.action?.type)
+      this.memorize(MemoryType.BasicActionChosen, this.action.type)
     }
     return moves
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {
-    if (this.checkAnotherActionInProgress(this.action?.type)) return []
+    if (this.checkAnotherActionInProgress(this.action.type)) return []
     if (isMoveItemType(MaterialType.Product)(move)) {
       if (move.location.type === LocationType.ProductPiles) {
         this.memorize(MemoryType.IsProductReturn, true)
@@ -40,7 +40,7 @@ export class ProductSwapActionRule extends ActionRule<ProductSwapAction> {
         this.forget(MemoryType.BasicActionChosen)
         this.memorize(MemoryType.IsProductReturn, false)
         this.memorize(MemoryType.Counter, this.nbSwaps + 1)
-        if (this.remind(MemoryType.Counter) === this.action?.nbPossibleSwaps) {
+        if (this.remind(MemoryType.Counter) === this.action.nbPossibleSwaps) {
           this.memorize(MemoryType.Counter, 0)
           return this.next()
         }
@@ -62,6 +62,6 @@ export class ProductSwapActionRule extends ActionRule<ProductSwapAction> {
   }
 
   get nbPossibleSwaps() {
-    return this.action?.nbPossibleSwaps ?? 0
+    return this.action.nbPossibleSwaps ?? 0
   }
 }

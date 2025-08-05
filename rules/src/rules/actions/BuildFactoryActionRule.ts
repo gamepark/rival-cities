@@ -12,17 +12,17 @@ export class BuildFactoryActionRule extends ActionRule<BuildFactoryAction> {
 
   onRuleStart(): MaterialMove[] {
     this.memorize(MemoryType.Counter, 0)
-    if (this.action?.price === 0) {
+    if (this.action.price === 0) {
       return this.factories.moveItems({ type: LocationType.PlayerFactories, player: this.player }, 1)
     }
-    if (this.playerProducts.getQuantity() < (this.action?.price ?? 0)) {
+    if (this.playerProducts.getQuantity() < (this.action.price ?? 0)) {
       return this.removeActionAndMove()
     }
     return []
   }
 
   getPlayerMoves(): MaterialMove[] {
-    if (this.checkAnotherActionInProgress(this.action?.type)) return []
+    if (this.checkAnotherActionInProgress(this.action.type)) return []
     const moves: MaterialMove[] = []
     if (this.isBuildInProgress) {
       moves.push(...this.playerProducts.moveItems((item) => ({ type: LocationType.ProductPiles, id: item.id })))
@@ -36,10 +36,10 @@ export class BuildFactoryActionRule extends ActionRule<BuildFactoryAction> {
   }
 
   beforeItemMove(move: ItemMove): MaterialMove[] {
-    if (this.checkAnotherActionInProgress(this.action?.type)) return []
+    if (this.checkAnotherActionInProgress(this.action.type)) return []
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.Factory)(move) && move.location.type === LocationType.PlayerFactories) {
-      this.memorize(MemoryType.BasicActionChosen, this.action?.type)
+      this.memorize(MemoryType.BasicActionChosen, this.action.type)
       this.memorize(MemoryType.IsBuildInProgress, true)
     } else if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.ProductPiles && this.isBuildInProgress) {
       this.memorize(MemoryType.Counter, this.nbProductsGiven + 1)
@@ -48,17 +48,17 @@ export class BuildFactoryActionRule extends ActionRule<BuildFactoryAction> {
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {
-    if (this.checkAnotherActionInProgress(this.action?.type)) return []
+    if (this.checkAnotherActionInProgress(this.action.type)) return []
     const moves: MaterialMove[] = []
-    if (this.remind(MemoryType.BasicActionChosen) !== this.action?.type) return moves
+    if (this.remind(MemoryType.BasicActionChosen) !== this.action.type) return moves
     if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.ProductPiles) {
-      if (this.remind(MemoryType.Counter) === this.action?.price) {
+      if (this.remind(MemoryType.Counter) === this.action.price) {
         this.memorize(MemoryType.Counter, 0)
         return this.removeActionAndMove()
       }
     }
     if (isMoveItemType(MaterialType.Factory)(move) && move.location.type === LocationType.PlayerFactories) {
-      if (this.action?.price === 0) {
+      if (this.action.price === 0) {
         return this.removeActionAndMove()
       }
     }
