@@ -198,8 +198,8 @@ export class BasicActionCardHelper extends MaterialRulesPart {
     }
   }
 
-  computeActionIfPlayerHasGdanskAlliance(): ActionType.Choice | ActionType.Multiple {
-    return this.checkPlayerHaveGdanskAllianceCard ? ActionType.Multiple : ActionType.Choice
+  computeActionIfPlayerHasGdanskAlliance(): ActionType.Split | ActionType.Multiple {
+    return this.checkPlayerHaveGdanskAllianceCard ? ActionType.Multiple : ActionType.Split
   }
 
   get checkPlayerHaveGdanskAllianceCard(): boolean {

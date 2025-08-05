@@ -4,10 +4,10 @@ import { ComponentType } from 'react'
 import { AdvanceInkJarHeader } from './AdvanceInkJarHeader'
 import { AdvanceLawsuitHeader } from './AdvanceLawsuitHeader'
 import { BuildFactoryHeader } from './BuildFactoryHeader'
-import { ChoiceHeader } from './ChoiceHeader'
 import { ChooseActionHeader } from './ChooseActionHeader'
 import { ChooseFirstProductHeader } from './ChooseFirstProductHeader'
 import { ChooseSpecialActionHeader } from './ChooseSpecialActionHeader'
+import { ChooseSplitActionHeader } from './ChooseSplitActionHeader'
 import { ConfirmEndTurnHeader } from './ConfirmEndTurnHeader'
 import { DrawSpecialActionCardHeader } from './DrawSpecialActionCardHeader'
 import { EarnPrestigeHeader } from './EarnPrestigeHeader'
@@ -34,7 +34,7 @@ export const Headers: Partial<Record<RuleId, ComponentType>> = {
   [RuleId.AdvanceInkJar]: AdvanceInkJarHeader,
   [RuleId.PayProductForAdvance]: PayProductForAdvanceHeader,
   [RuleId.ChooseAction]: ChooseActionHeader,
-  [RuleId.Choice]: ChoiceHeader,
+  [RuleId.ChooseSplitAction]: ChooseSplitActionHeader,
   [RuleId.PerformMultipleActions]: PerformMultipleActionsHeader,
   [RuleId.ResolveLawsuit]: ResolveLawsuitHeader,
   [RuleId.AdvanceLawsuit]: AdvanceLawsuitHeader,

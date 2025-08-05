@@ -3,7 +3,7 @@ export enum RuleId {
   AdvanceInkJar,
   PayProductForAdvance,
   ChooseAction,
-  Choice,
+  ChooseSplitAction,
   PerformMultipleActions,
   ResolveLawsuit,
   AdvanceLawsuit,

@@ -3,7 +3,7 @@ import { Product } from '../Product'
 import { ActionType } from './ActionType'
 
 export type ChoiceAction = {
-  type: ActionType.Choice
+  type: ActionType.Split
   actions: Action[]
 }
 

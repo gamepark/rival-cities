@@ -14,7 +14,7 @@ export enum ActionType {
   CourtRuling,
   ReturnFactory,
   Piracy,
-  Choice,
+  Split,
   Multiple,
   ResolveLawsuit,
   ChooseSpecialActionCard,

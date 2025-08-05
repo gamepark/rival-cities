@@ -16,7 +16,7 @@ import { LocationType } from './material/LocationType'
 import { MaterialType } from './material/MaterialType'
 import { AdvanceLawsuitActionRule } from './rules/actions/AdvanceLawsuitActionRule'
 import { BuildFactoryActionRule } from './rules/actions/BuildFactoryActionRule'
-import { ChoiceActionRule } from './rules/actions/ChoiceActionRule'
+import { ChooseSplitActionRule } from './rules/actions/ChooseSplitActionRule'
 import { CourtRulingActionRule } from './rules/actions/CourtRulingActionRule'
 import { DonationActionRule } from './rules/actions/DonationActionRule'
 import { DrawSpecialActionCardActionRule } from './rules/actions/DrawSpecialActionCardActionRule'
@@ -66,7 +66,7 @@ export class RivalCitiesRules
     [RuleId.AdvanceInkJar]: AdvanceInkJarRule,
     [RuleId.PayProductForAdvance]: PayProductForAdvanceRule,
     [RuleId.ChooseAction]: ChooseActionRule,
-    [RuleId.Choice]: ChoiceActionRule,
+    [RuleId.ChooseSplitAction]: ChooseSplitActionRule,
     [RuleId.PerformMultipleActions]: PerformMultipleActionsRule,
     [RuleId.ResolveLawsuit]: ResolveLawsuitActionRule,
     [RuleId.AdvanceLawsuit]: AdvanceLawsuitActionRule,

@@ -17,7 +17,7 @@ export const ActionRuleIds: Record<ActionType, RuleId> = {
   [ActionType.CourtRuling]: RuleId.CourtRuling,
   [ActionType.ReturnFactory]: RuleId.ReturnFactory,
   [ActionType.Piracy]: RuleId.Piracy,
-  [ActionType.Choice]: RuleId.Choice,
+  [ActionType.Split]: RuleId.ChooseSplitAction,
   [ActionType.Multiple]: RuleId.PerformMultipleActions,
   [ActionType.ResolveLawsuit]: RuleId.ResolveLawsuit,
   [ActionType.ChooseSpecialActionCard]: RuleId.ChooseSpecialAction,

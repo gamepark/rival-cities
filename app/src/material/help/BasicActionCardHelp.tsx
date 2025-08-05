@@ -14,7 +14,7 @@ export const BasicActionCardHelp: FC<MaterialHelpProps> = ({ item }) => {
   const rules = useRules<RivalCitiesRules>()
   if (!rules) return <></>
   const action = new BasicActionCardHelper(rules.game).getCardAction(item.id as BasicActionCard)
-  const isMultiChoiceCard = action.type === ActionType.Choice
+  const isMultiChoiceCard = action.type === ActionType.Split
 
   return (
     <>
@@ -34,7 +34,7 @@ export const BasicActionCardHelp: FC<MaterialHelpProps> = ({ item }) => {
         </li>
       </ul>
       <h3>{t(`help.actions`)}</h3>
-      {action.type === ActionType.Multiple || action.type === ActionType.Choice ? (
+      {action.type === ActionType.Multiple || action.type === ActionType.Split ? (
         <>
           {action.actions.map((a, index) => (
             <div key={index}>

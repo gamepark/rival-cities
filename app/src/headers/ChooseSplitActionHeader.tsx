@@ -6,7 +6,7 @@ import { MemoryType } from '@gamepark/rival-cities/rules/MemoryType'
 import { isCustomMoveType } from '@gamepark/rules-api'
 import { Trans } from 'react-i18next'
 
-export const ChoiceHeader = () => {
+export const ChooseSplitActionHeader = () => {
   const player = usePlayerId()
   const rules = useRules<RivalCitiesRules>()!
   const activePlayer = rules.game.rule?.player

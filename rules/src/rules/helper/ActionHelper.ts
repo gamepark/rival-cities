@@ -4,7 +4,7 @@ import { ActionType } from '../../material/Actions/ActionType'
 import { ActionRule } from '../actions/ActionRule'
 import { AdvanceLawsuitActionRule } from '../actions/AdvanceLawsuitActionRule'
 import { BuildFactoryActionRule } from '../actions/BuildFactoryActionRule'
-import { ChoiceActionRule } from '../actions/ChoiceActionRule'
+import { ChooseSplitActionRule } from '../actions/ChooseSplitActionRule'
 import { CourtRulingActionRule } from '../actions/CourtRulingActionRule'
 import { DonationActionRule } from '../actions/DonationActionRule'
 import { DrawSpecialActionCardActionRule } from '../actions/DrawSpecialActionCardActionRule'
@@ -55,8 +55,8 @@ export const getActionRule = (game: MaterialGame, action: Action): ActionRule =>
       return new ReturnFactoryActionRule(game, action)
     case ActionType.Piracy:
       return new PiracyActionRule(game, action)
-    case ActionType.Choice:
-      return new ChoiceActionRule(game, action)
+    case ActionType.Split:
+      return new ChooseSplitActionRule(game, action)
     case ActionType.Multiple:
       return new PerformMultipleActionsRule(game, action)
     case ActionType.ResolveLawsuit:

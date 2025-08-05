@@ -6,7 +6,7 @@ import { MemoryHelper } from '../helper/MemoryHelper'
 import { MemoryType } from '../MemoryType'
 import { ActionRule } from './ActionRule'
 
-export class ChoiceActionRule extends ActionRule<ChoiceAction> {
+export class ChooseSplitActionRule extends ActionRule<ChoiceAction> {
   onRuleStart(): MaterialMove[] {
     this.forget(MemoryType.ProductChosen)
     return []

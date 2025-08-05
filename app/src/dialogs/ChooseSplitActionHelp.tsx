@@ -12,7 +12,7 @@ const components = {
   underline: <u />
 }
 
-export const ChoiceHelp = () => {
+export const ChooseSplitActionHelp = () => {
   const { t } = useTranslation()
   const rules = useRules<RivalCitiesRules>()
   const inkjarLocation = rules?.material(MaterialType.InkJar).getItem()?.location.id
@@ -26,12 +26,12 @@ export const ChoiceHelp = () => {
 
   const action = new BasicActionCardHelper(rules.game).getCardAction(basicCardInInkjarLocation as BasicActionCard)
 
-  const isMultiChoiceCard = action.type === ActionType.Choice
+  const isMultiChoiceCard = action.type === ActionType.Split
 
   return (
     <>
       <h2>{t(`help.rule.actions`)}</h2>
-      {action.type === ActionType.Multiple || action.type === ActionType.Choice ? (
+      {action.type === ActionType.Multiple || action.type === ActionType.Split ? (
         <>
           {action.actions.map((a, index) => (
             <div key={index}>
