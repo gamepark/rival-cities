@@ -1,5 +1,5 @@
 import { MaterialGame, MaterialRulesPart } from '@gamepark/rules-api'
-import { ComputedAction } from '../Actions/Actions'
+import { Action, ComputedAction } from '../Actions/Actions'
 import { ActionType } from '../Actions/ActionType'
 import { AllianceCard } from '../AllianceCard'
 import { LocationType } from '../LocationType'
@@ -16,411 +16,376 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
     super(game)
   }
 
-  specialActionCardActions: Record<SpecialActionCard, ComputedAction> = {
-    [SpecialActionCard.SpecialAction1]: {
+  getComputedAction(card: SpecialActionCard): ComputedAction {
+    const action: ComputedAction = {
       type: ActionType.Computed,
-      actions: [
-        {
-          type: ActionType.AdvanceLawsuit,
-          nbTimeAlreadyAdvanced: 0,
-          playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
-        },
-        {
-          type: ActionType.GainLetter,
-          nbLettersToTake: 2
-        }
-      ]
-    },
-    [SpecialActionCard.SpecialAction2]: {
-      type: ActionType.Computed,
-      actions: [
-        {
-          type: ActionType.AdvanceLawsuit,
-          nbTimeAlreadyAdvanced: 0,
-          playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
-        },
-        {
-          type: ActionType.Gift,
-          productType: undefined,
-          nbProductToTake: 2,
-          canUseAlliance: true
-        }
-      ]
-    },
-    [SpecialActionCard.SpecialAction3]: {
-      type: ActionType.Computed,
-      actions: [
-        {
-          type: ActionType.AdvanceLawsuit,
-          nbTimeAlreadyAdvanced: 0,
-          playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
-        },
-        {
-          type: ActionType.PurchaseShip,
-          playerHasShip19: this.checkPlayerHaveShip19
-        },
-        {
-          type: ActionType.Gift,
-          productType: undefined,
-          nbProductToTake: 1,
-          canUseAlliance: true
-        }
-      ]
-    },
-    [SpecialActionCard.SpecialAction4]: {
-      type: ActionType.Computed,
-      actions: [
-        {
-          type: ActionType.AdvanceLawsuit,
-          nbTimeAlreadyAdvanced: 0,
-          playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
-        },
-        {
-          type: ActionType.DrawSpecialActionCard,
-          nbCardsToDraw: 2,
-          playerCanUseAllianceKjjobenhavn: this.checkPlayerHaveKjjobenhavnAllianceCard
-        }
-      ]
-    },
-    [SpecialActionCard.SpecialAction5]: {
-      type: ActionType.Computed,
-      actions: [
-        {
-          type: ActionType.Piracy,
-          nbProductsToSteal: 1
-        }
-      ]
-    },
-    [SpecialActionCard.SpecialAction6]: {
-      type: ActionType.Computed,
-      actions: [
-        {
-          type: ActionType.OpponentEarnPrestige
-        },
-        {
-          type: ActionType.Piracy,
-          nbProductsToSteal: 3
-        }
-      ],
-      player: this.player
-    },
-    [SpecialActionCard.SpecialAction7]: {
-      type: ActionType.Computed,
-      actions: [
-        {
-          type: ActionType.AdvanceLawsuit,
-          nbTimeAlreadyAdvanced: 0,
-          playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
-        },
-        {
-          type: ActionType.Gift,
-          productType: Product.Cloth,
-          nbProductToTake: 1,
-          canUseAlliance: true
-        },
-        {
-          type: ActionType.FormAlliance
-        }
-      ]
-    },
-    [SpecialActionCard.SpecialAction8]: {
-      type: ActionType.Computed,
-      actions: [
-        {
-          type: ActionType.AdvanceLawsuit,
-          nbTimeAlreadyAdvanced: 0,
-          playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
-        },
-        {
-          type: ActionType.EarnPrestige,
-          playerWhoEarnedPrestige: this.player,
-          playerCanUseAllianceBruxelles: this.checkPlayerHaveBruxellesCard,
-          playerCanUseShip16: this.checkPlayerHaveShip16
-        },
-        {
-          type: ActionType.GainLetter,
-          nbLettersToTake: 1
-        }
-      ]
-    },
-    [SpecialActionCard.SpecialAction9]: {
-      type: ActionType.Computed,
-      actions: [
-        {
-          type: ActionType.AdvanceLawsuit,
-          nbTimeAlreadyAdvanced: 0,
-          playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
-        },
-        {
-          type: ActionType.EarnPrestige,
-          playerWhoEarnedPrestige: this.player,
-          playerCanUseAllianceBruxelles: this.checkPlayerHaveBruxellesCard,
-          playerCanUseShip16: this.checkPlayerHaveShip16
-        },
-        {
-          type: ActionType.Gift,
-          productType: Product.Cloth,
-          nbProductToTake: 1,
-          canUseAlliance: true
-        }
-      ]
-    },
-    [SpecialActionCard.SpecialAction10]: {
-      type: ActionType.Computed,
-      actions: [
-        {
-          type: ActionType.AdvanceLawsuit,
-          nbTimeAlreadyAdvanced: 0,
-          playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
-        },
-        {
-          type: ActionType.Gift,
-          productType: Product.Beer,
-          nbProductToTake: 1,
-          canUseAlliance: true
-        },
-        {
-          type: ActionType.Donation,
-          productType: Product.Furniture,
-          nbProduct: 2,
-          nbStars: 3,
-          nbTimes: 1
-        }
-      ]
-    },
-    [SpecialActionCard.SpecialAction11]: {
-      type: ActionType.Computed,
-      actions: [
-        {
-          type: ActionType.Production,
-          productType: undefined,
-          quantity: 1,
-          canGetMore: true
-        }
-      ]
-    },
-    [SpecialActionCard.SpecialAction12]: {
-      type: ActionType.Computed,
-      actions: [
-        {
-          type: ActionType.AdvanceLawsuit,
-          nbTimeAlreadyAdvanced: 0,
-          playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
-        },
-        {
-          type: ActionType.PurchaseShip,
-          playerHasShip19: this.checkPlayerHaveShip19
-        },
-        {
-          type: ActionType.Gift,
-          productType: Product.Beer,
-          nbProductToTake: 2,
-          canUseAlliance: true
-        }
-      ]
-    },
-    [SpecialActionCard.SpecialAction13]: {
-      type: ActionType.Computed,
-      actions: [
-        {
-          type: ActionType.AdvanceLawsuit,
-          nbTimeAlreadyAdvanced: 0,
-          playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
-        },
-        {
-          type: ActionType.Gift,
-          productType: Product.Beer,
-          nbProductToTake: 1,
-          canUseAlliance: true
-        },
-        {
-          type: ActionType.Donation,
-          productType: Product.Cloth,
-          nbProduct: 1,
-          nbStars: 1,
-          nbTimes: 1
-        }
-      ]
-    },
-    [SpecialActionCard.SpecialAction14]: {
-      type: ActionType.Computed,
-      actions: [
-        {
-          type: ActionType.AdvanceLawsuit,
-          nbTimeAlreadyAdvanced: 0,
-          playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
-        },
-        {
-          type: ActionType.BuildFactory,
-          price: 0
-        }
-      ]
-    },
-    [SpecialActionCard.SpecialAction15]: {
-      type: ActionType.Computed,
-      actions: [
-        {
-          type: ActionType.AdvanceLawsuit,
-          nbTimeAlreadyAdvanced: 0,
-          playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
-        },
-        {
-          type: ActionType.BuildFactory,
-          price: 0
-        }
-      ]
-    },
-    [SpecialActionCard.SpecialAction16]: {
-      type: ActionType.Computed,
-      actions: [
-        {
-          type: ActionType.Production,
-          productType: Product.Furniture,
-          quantity: 1,
-          canGetMore: true
-        }
-      ]
-    },
-    [SpecialActionCard.SpecialAction17]: {
-      type: ActionType.Computed,
-      actions: [
-        {
-          type: ActionType.AdvanceLawsuit,
-          nbTimeAlreadyAdvanced: 0,
-          playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
-        },
-        {
-          type: ActionType.EarnPrestige,
-          playerWhoEarnedPrestige: this.player,
-          playerCanUseAllianceBruxelles: this.checkPlayerHaveBruxellesCard,
-          playerCanUseShip16: this.checkPlayerHaveShip16
-        },
-        {
-          type: ActionType.Gift,
-          productType: Product.Furniture,
-          nbProductToTake: 1,
-          canUseAlliance: true
-        }
-      ]
-    },
-    [SpecialActionCard.SpecialAction18]: {
-      type: ActionType.Computed,
-      actions: [
-        {
-          type: ActionType.AdvanceLawsuit,
-          nbTimeAlreadyAdvanced: 0,
-          playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
-        },
-        {
-          type: ActionType.PurchaseShip,
-          playerHasShip19: this.checkPlayerHaveShip19
-        },
-        {
-          type: ActionType.GainLetter,
-          nbLettersToTake: 1
-        }
-      ]
-    },
-    [SpecialActionCard.SpecialAction19]: {
-      type: ActionType.Computed,
-      actions: [
-        {
-          type: ActionType.AdvanceLawsuit,
-          nbTimeAlreadyAdvanced: 0,
-          playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
-        },
-        {
-          type: ActionType.ReturnFactory,
-          nbFactoryCanReturn: 3
-        }
-      ]
-    },
-    [SpecialActionCard.SpecialAction20]: {
-      type: ActionType.Computed,
-      actions: [
-        {
-          type: ActionType.AdvanceLawsuit,
-          nbTimeAlreadyAdvanced: 0,
-          playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
-        },
-        {
-          type: ActionType.Gift,
-          productType: Product.Furniture,
-          nbProductToTake: 1,
-          canUseAlliance: true
-        },
-        {
-          type: ActionType.FormAlliance
-        }
-      ]
-    },
-    [SpecialActionCard.SpecialAction21]: {
-      type: ActionType.Computed,
-      actions: [
-        {
-          type: ActionType.AdvanceLawsuit,
-          nbTimeAlreadyAdvanced: 0,
-          playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
-        },
-        {
-          type: ActionType.GainLetter,
-          nbLettersToTake: 2
-        }
-      ]
-    },
-    [SpecialActionCard.SpecialAction22]: {
-      type: ActionType.Computed,
-      actions: [
-        {
-          type: ActionType.AdvanceLawsuit,
-          nbTimeAlreadyAdvanced: 0,
-          playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
-        },
-        {
-          type: ActionType.CourtRuling
-        }
-      ]
-    },
-    [SpecialActionCard.SpecialAction23]: {
-      type: ActionType.Computed,
-      actions: [
-        {
-          type: ActionType.AdvanceLawsuit,
-          nbTimeAlreadyAdvanced: 0,
-          playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
-        },
-        {
-          type: ActionType.Gift,
-          productType: undefined,
-          nbProductToTake: 1,
-          canUseAlliance: true
-        },
-        {
-          type: ActionType.Donation,
-          productType: Product.Leather,
-          nbProduct: 1,
-          nbStars: 1,
-          nbTimes: 2
-        }
-      ]
-    },
-    [SpecialActionCard.SpecialAction24]: {
-      type: ActionType.Computed,
-      actions: [
-        {
-          type: ActionType.Gift,
-          productType: undefined,
-          nbProductToTake: 2,
-          canUseAlliance: true
-        },
-        {
-          type: ActionType.Donation,
-          productType: Product.Beer,
-          nbProduct: 3,
-          nbStars: 1,
-          nbTimes: 2
-        }
-      ]
+      actions: new SpecialActionCardHelper(this.game).getCardActions(card)
+    }
+    if (card === SpecialActionCard.SpecialAction6) {
+      // TODO: handle rival prestige gain a better way?
+      action.player = this.player
+    }
+    return action
+  }
+
+  getCardActions(card: SpecialActionCard): Action[] {
+    switch (card) {
+      case SpecialActionCard.SpecialAction1:
+        return [
+          {
+            type: ActionType.AdvanceLawsuit,
+            nbTimeAlreadyAdvanced: 0,
+            playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
+          },
+          {
+            type: ActionType.GainLetter,
+            nbLettersToTake: 2
+          }
+        ]
+      case SpecialActionCard.SpecialAction2:
+        return [
+          {
+            type: ActionType.AdvanceLawsuit,
+            nbTimeAlreadyAdvanced: 0,
+            playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
+          },
+          {
+            type: ActionType.Gift,
+            productType: undefined,
+            nbProductToTake: 2,
+            canUseAlliance: true
+          }
+        ]
+      case SpecialActionCard.SpecialAction3:
+        return [
+          {
+            type: ActionType.AdvanceLawsuit,
+            nbTimeAlreadyAdvanced: 0,
+            playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
+          },
+          {
+            type: ActionType.PurchaseShip,
+            playerHasShip19: this.checkPlayerHaveShip19
+          },
+          {
+            type: ActionType.Gift,
+            productType: undefined,
+            nbProductToTake: 1,
+            canUseAlliance: true
+          }
+        ]
+      case SpecialActionCard.SpecialAction4:
+        return [
+          {
+            type: ActionType.AdvanceLawsuit,
+            nbTimeAlreadyAdvanced: 0,
+            playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
+          },
+          {
+            type: ActionType.DrawSpecialActionCard,
+            nbCardsToDraw: 2,
+            playerCanUseAllianceKjjobenhavn: this.checkPlayerHaveKjjobenhavnAllianceCard
+          }
+        ]
+      case SpecialActionCard.SpecialAction5:
+        return [
+          {
+            type: ActionType.Piracy,
+            nbProductsToSteal: 1
+          }
+        ]
+      case SpecialActionCard.SpecialAction6:
+        return [
+          {
+            type: ActionType.OpponentEarnPrestige
+          },
+          {
+            type: ActionType.Piracy,
+            nbProductsToSteal: 3
+          }
+        ]
+      case SpecialActionCard.SpecialAction7:
+        return [
+          {
+            type: ActionType.AdvanceLawsuit,
+            nbTimeAlreadyAdvanced: 0,
+            playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
+          },
+          {
+            type: ActionType.Gift,
+            productType: Product.Cloth,
+            nbProductToTake: 1,
+            canUseAlliance: true
+          },
+          {
+            type: ActionType.FormAlliance
+          }
+        ]
+      case SpecialActionCard.SpecialAction8:
+        return [
+          {
+            type: ActionType.AdvanceLawsuit,
+            nbTimeAlreadyAdvanced: 0,
+            playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
+          },
+          {
+            type: ActionType.EarnPrestige,
+            playerWhoEarnedPrestige: this.player,
+            playerCanUseAllianceBruxelles: this.checkPlayerHaveBruxellesCard,
+            playerCanUseShip16: this.checkPlayerHaveShip16
+          },
+          {
+            type: ActionType.GainLetter,
+            nbLettersToTake: 1
+          }
+        ]
+      case SpecialActionCard.SpecialAction9:
+        return [
+          {
+            type: ActionType.AdvanceLawsuit,
+            nbTimeAlreadyAdvanced: 0,
+            playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
+          },
+          {
+            type: ActionType.EarnPrestige,
+            playerWhoEarnedPrestige: this.player,
+            playerCanUseAllianceBruxelles: this.checkPlayerHaveBruxellesCard,
+            playerCanUseShip16: this.checkPlayerHaveShip16
+          },
+          {
+            type: ActionType.Gift,
+            productType: Product.Cloth,
+            nbProductToTake: 1,
+            canUseAlliance: true
+          }
+        ]
+      case SpecialActionCard.SpecialAction10:
+        return [
+          {
+            type: ActionType.AdvanceLawsuit,
+            nbTimeAlreadyAdvanced: 0,
+            playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
+          },
+          {
+            type: ActionType.Gift,
+            productType: Product.Beer,
+            nbProductToTake: 1,
+            canUseAlliance: true
+          },
+          {
+            type: ActionType.Donation,
+            productType: Product.Furniture,
+            nbProduct: 2,
+            nbStars: 3,
+            nbTimes: 1
+          }
+        ]
+      case SpecialActionCard.SpecialAction11:
+        return [
+          {
+            type: ActionType.Production,
+            productType: undefined,
+            quantity: 1,
+            canGetMore: true
+          }
+        ]
+      case SpecialActionCard.SpecialAction12:
+        return [
+          {
+            type: ActionType.AdvanceLawsuit,
+            nbTimeAlreadyAdvanced: 0,
+            playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
+          },
+          {
+            type: ActionType.PurchaseShip,
+            playerHasShip19: this.checkPlayerHaveShip19
+          },
+          {
+            type: ActionType.Gift,
+            productType: Product.Beer,
+            nbProductToTake: 2,
+            canUseAlliance: true
+          }
+        ]
+      case SpecialActionCard.SpecialAction13:
+        return [
+          {
+            type: ActionType.AdvanceLawsuit,
+            nbTimeAlreadyAdvanced: 0,
+            playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
+          },
+          {
+            type: ActionType.Gift,
+            productType: Product.Beer,
+            nbProductToTake: 1,
+            canUseAlliance: true
+          },
+          {
+            type: ActionType.Donation,
+            productType: Product.Cloth,
+            nbProduct: 1,
+            nbStars: 1,
+            nbTimes: 1
+          }
+        ]
+      case SpecialActionCard.SpecialAction14:
+        return [
+          {
+            type: ActionType.AdvanceLawsuit,
+            nbTimeAlreadyAdvanced: 0,
+            playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
+          },
+          {
+            type: ActionType.BuildFactory,
+            price: 0
+          }
+        ]
+      case SpecialActionCard.SpecialAction15:
+        return [
+          {
+            type: ActionType.AdvanceLawsuit,
+            nbTimeAlreadyAdvanced: 0,
+            playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
+          },
+          {
+            type: ActionType.BuildFactory,
+            price: 0
+          }
+        ]
+      case SpecialActionCard.SpecialAction16:
+        return [
+          {
+            type: ActionType.Production,
+            productType: Product.Furniture,
+            quantity: 1,
+            canGetMore: true
+          }
+        ]
+      case SpecialActionCard.SpecialAction17:
+        return [
+          {
+            type: ActionType.AdvanceLawsuit,
+            nbTimeAlreadyAdvanced: 0,
+            playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
+          },
+          {
+            type: ActionType.EarnPrestige,
+            playerWhoEarnedPrestige: this.player,
+            playerCanUseAllianceBruxelles: this.checkPlayerHaveBruxellesCard,
+            playerCanUseShip16: this.checkPlayerHaveShip16
+          },
+          {
+            type: ActionType.Gift,
+            productType: Product.Furniture,
+            nbProductToTake: 1,
+            canUseAlliance: true
+          }
+        ]
+      case SpecialActionCard.SpecialAction18:
+        return [
+          {
+            type: ActionType.AdvanceLawsuit,
+            nbTimeAlreadyAdvanced: 0,
+            playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
+          },
+          {
+            type: ActionType.PurchaseShip,
+            playerHasShip19: this.checkPlayerHaveShip19
+          },
+          {
+            type: ActionType.GainLetter,
+            nbLettersToTake: 1
+          }
+        ]
+      case SpecialActionCard.SpecialAction19:
+        return [
+          {
+            type: ActionType.AdvanceLawsuit,
+            nbTimeAlreadyAdvanced: 0,
+            playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
+          },
+          {
+            type: ActionType.ReturnFactory,
+            nbFactoryCanReturn: 3
+          }
+        ]
+      case SpecialActionCard.SpecialAction20:
+        return [
+          {
+            type: ActionType.AdvanceLawsuit,
+            nbTimeAlreadyAdvanced: 0,
+            playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
+          },
+          {
+            type: ActionType.Gift,
+            productType: Product.Furniture,
+            nbProductToTake: 1,
+            canUseAlliance: true
+          },
+          {
+            type: ActionType.FormAlliance
+          }
+        ]
+      case SpecialActionCard.SpecialAction21:
+        return [
+          {
+            type: ActionType.AdvanceLawsuit,
+            nbTimeAlreadyAdvanced: 0,
+            playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
+          },
+          {
+            type: ActionType.GainLetter,
+            nbLettersToTake: 2
+          }
+        ]
+      case SpecialActionCard.SpecialAction22:
+        return [
+          {
+            type: ActionType.AdvanceLawsuit,
+            nbTimeAlreadyAdvanced: 0,
+            playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
+          },
+          {
+            type: ActionType.CourtRuling
+          }
+        ]
+      case SpecialActionCard.SpecialAction23:
+        return [
+          {
+            type: ActionType.AdvanceLawsuit,
+            nbTimeAlreadyAdvanced: 0,
+            playerCanUseAllianceLeHavre: this.checkPlayerHaveLeHavreAllianceCard
+          },
+          {
+            type: ActionType.Gift,
+            productType: undefined,
+            nbProductToTake: 1,
+            canUseAlliance: true
+          },
+          {
+            type: ActionType.Donation,
+            productType: Product.Leather,
+            nbProduct: 1,
+            nbStars: 1,
+            nbTimes: 2
+          }
+        ]
+      case SpecialActionCard.SpecialAction24:
+        return [
+          {
+            type: ActionType.Gift,
+            productType: undefined,
+            nbProductToTake: 2,
+            canUseAlliance: true
+          },
+          {
+            type: ActionType.Donation,
+            productType: Product.Beer,
+            nbProduct: 3,
+            nbStars: 1,
+            nbTimes: 2
+          }
+        ]
     }
   }
 

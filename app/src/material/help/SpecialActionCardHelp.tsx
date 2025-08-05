@@ -1,12 +1,12 @@
 /** @jsxImportSource @emotion/react */
 import { MaterialHelpProps, useRules } from '@gamepark/react-game'
 import { SpecialActionCardHelper } from '@gamepark/rival-cities/material/helper/SpecialActionCardHelper'
+import { ShipCard } from '@gamepark/rival-cities/material/ShipCard'
+import { SpecialActionCard } from '@gamepark/rival-cities/material/SpecialActionCard'
 import { RivalCitiesRules } from '@gamepark/rival-cities/RivalCitiesRules'
 import { FC } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
-import { SpecialActionCard } from '@gamepark/rival-cities/material/SpecialActionCard'
 import { components, note, shipBtn } from './utils'
-import { ShipCard } from '@gamepark/rival-cities/material/ShipCard'
 
 export const SpecialActionCardHelp: FC<MaterialHelpProps> = ({ item }) => {
   const { t } = useTranslation()
@@ -14,7 +14,7 @@ export const SpecialActionCardHelp: FC<MaterialHelpProps> = ({ item }) => {
 
   if (!rules) return <></>
 
-  const action = new SpecialActionCardHelper(rules.game).specialActionCardActions[item.id as SpecialActionCard]
+  const actions = new SpecialActionCardHelper(rules.game).getCardActions(item.id as SpecialActionCard)
 
   return (
     <>
@@ -25,7 +25,7 @@ export const SpecialActionCardHelp: FC<MaterialHelpProps> = ({ item }) => {
       {item.id && (
         <>
           <h3>{t(`help.actions`)}</h3>
-          {action.actions?.map((a, index) => (
+          {actions.map((a, index) => (
             <p key={index}>
               <Trans defaults={`help.action.descr.${a.type}`} values={a} components={components} />
             </p>

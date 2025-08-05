@@ -52,7 +52,7 @@ export class ChooseActionRule extends PlayerTurnRule {
     if (isMoveItemType(MaterialType.SpecialActionCard)(move) && move.location.type === LocationType.SpecialActionCardsDiscard) {
       const actions: Action[] = []
       const cardId = this.material(MaterialType.SpecialActionCard).index(move.itemIndex).getItem()?.id as SpecialActionCard
-      actions.push(new SpecialActionCardHelper(this.game).specialActionCardActions[cardId])
+      actions.push(new SpecialActionCardHelper(this.game).getComputedAction(cardId))
       if (this.remind(MemoryType.IsUseLetter) || this.playerHaveShip18) {
         actions.push(this.inkjarCardAction)
       }
@@ -81,7 +81,7 @@ export class ChooseActionRule extends PlayerTurnRule {
     if (this.inkjarLocationId === 0) return { type: ActionType.Gift, nbProductToTake: 1, productType: undefined, canUseAlliance: true }
     if (specialActionCardPlaces.includes(this.inkjarLocationId)) {
       const cardId = this.specialActioncardInInkjarPlace.getItem()?.id as SpecialActionCard
-      return new SpecialActionCardHelper(this.game).specialActionCardActions[cardId]
+      return new SpecialActionCardHelper(this.game).getComputedAction(cardId)
     }
     const cardId = this.basicActioncardInInkjarPlace.getItem()?.id as BasicActionCard
     return new BasicActionCardHelper(this.game).basicActionCardActions[cardId]
