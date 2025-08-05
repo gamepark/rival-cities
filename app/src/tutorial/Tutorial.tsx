@@ -208,6 +208,12 @@ export class Tutorial extends MaterialTutorial<number, MaterialType, LocationTyp
       })
     },
     {
+      move: {
+        auto: true,
+        filter: (move: MaterialMove) => isCustomMoveType(CustomMoveType.ConfirmEndTurn)(move)
+      }
+    },
+    {
       popup: {
         text: () => <Trans defaults="tuto.step.12" components={BaseComponents} />
       }
@@ -262,6 +268,13 @@ export class Tutorial extends MaterialTutorial<number, MaterialType, LocationTyp
       }
     },
     {
+      move: {
+        player: opponent,
+        auto: true,
+        filter: (move: MaterialMove) => isCustomMoveType(CustomMoveType.ConfirmEndTurn)(move)
+      }
+    },
+    {
       popup: {
         text: () => <Trans defaults="tuto.step.17" components={BaseComponents} />
       },
@@ -289,6 +302,12 @@ export class Tutorial extends MaterialTutorial<number, MaterialType, LocationTyp
       }
     },
     {
+      move: {
+        auto: true,
+        filter: (move: MaterialMove) => isCustomMoveType(CustomMoveType.ConfirmEndTurn)(move)
+      }
+    },
+    {
       popup: {
         text: () => <Trans defaults="tuto.step.19" components={BaseComponents} />
       }
@@ -312,6 +331,13 @@ export class Tutorial extends MaterialTutorial<number, MaterialType, LocationTyp
         player: opponent,
         auto: true,
         filter: (move: MaterialMove) => isMoveItemType(MaterialType.Factory)(move)
+      }
+    },
+    {
+      move: {
+        player: opponent,
+        auto: true,
+        filter: (move: MaterialMove) => isCustomMoveType(CustomMoveType.ConfirmEndTurn)(move)
       }
     },
     {
@@ -342,6 +368,11 @@ export class Tutorial extends MaterialTutorial<number, MaterialType, LocationTyp
         text: () => <Trans defaults="tuto.step.23" components={BaseComponents} />
       },
       move: {}
+    },
+    {
+      move: {
+        filter: (move: MaterialMove) => isMoveItemType(MaterialType.SpecialActionCard)(move) && move.location.type === LocationType.PlayerSpecialActionCardsHand,
+      }
     },
     {
       popup: {
@@ -403,6 +434,13 @@ export class Tutorial extends MaterialTutorial<number, MaterialType, LocationTyp
     {
       popup: {
         text: () => <Trans defaults="tuto.step.31" components={BaseComponents} />
+      }
+    },
+    {
+      move: {
+        player: opponent,
+        auto: true,
+        filter: (move: MaterialMove) => isCustomMoveType(CustomMoveType.ConfirmEndTurn)(move)
       }
     },
     {
