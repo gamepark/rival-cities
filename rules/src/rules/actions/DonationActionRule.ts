@@ -77,14 +77,14 @@ export class DonationActionRule extends ActionRule<DonationAction> {
       if (this.action.productType) {
         this.memorize<number>(MemoryType.CounterActions, (old) => old + 1)
         if (this.remind(MemoryType.CounterActions) === this.action.nbTimes) {
-          return this.removeActionAndMove()
+          return [this.endAction()]
         }
       } else if (this.remind(MemoryType.Count) === this.nbProduct) {
         this.memorize(MemoryType.Count, 0)
         this.memorize(MemoryType.IsDonationInProgress, false)
         this.memorize<number>(MemoryType.CounterActions, (old) => old + 1)
         if (this.remind(MemoryType.CounterActions) === this.action.nbTimes) {
-          return this.removeActionAndMove()
+          return [this.endAction()]
         }
       }
     }
@@ -93,7 +93,7 @@ export class DonationActionRule extends ActionRule<DonationAction> {
         this.memorize(MemoryType.Count, 0)
         this.memorize(MemoryType.IsDonationInProgress, false)
         this.memorize<number>(MemoryType.CounterActions, 0)
-        return this.removeActionAndMove()
+        return [this.endAction()]
       }
     }
     return moves
@@ -101,12 +101,9 @@ export class DonationActionRule extends ActionRule<DonationAction> {
 
   onCustomMove(move: CustomMove): MaterialMove[] {
     if (isCustomMoveType(CustomMoveType.TakeLetterToSwapProduct)(move)) {
-      return [
-        this.playerLetters.moveItem({ type: LocationType.LetterDeck }),
-        ...this.addActionBonusAndMove({ type: ActionType.ProductSwap, nbPossibleSwaps: 1 })
-      ]
+      return [this.playerLetters.moveItem({ type: LocationType.LetterDeck }), ...this.startAction({ type: ActionType.ProductSwap, nbPossibleSwaps: 1 })]
     }
-    return []
+    return super.onCustomMove(move)
   }
 
   get playerProducts() {

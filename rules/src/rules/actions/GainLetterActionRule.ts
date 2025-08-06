@@ -32,7 +32,7 @@ export class GainLetterActionRule extends ActionRule<GainLetterAction> {
     if (this.checkAnotherActionInProgress(this.action.type)) return []
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.Letter)(move)) {
-      moves.push(...this.removeActionAndMove())
+      moves.push(this.endAction())
     }
     return moves
   }

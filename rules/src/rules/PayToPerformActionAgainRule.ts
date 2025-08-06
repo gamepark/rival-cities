@@ -35,8 +35,8 @@ export class PayToPerformActionAgainRule extends ActionRule<PayToPerformActionAg
         this.memorize(MemoryType.Count, 0)
         if (this.action.actionToPerformAgain) {
           const actionToPerformAgain = this.action.actionToPerformAgain
-          this.removeAction()
-          return this.addActionBonusAndMove(actionToPerformAgain)
+          this.addActionBonus(actionToPerformAgain)
+          return [this.endAction()]
         }
       }
     }
@@ -45,15 +45,12 @@ export class PayToPerformActionAgainRule extends ActionRule<PayToPerformActionAg
 
   onCustomMove(move: CustomMove): MaterialMove[] {
     if (isCustomMoveType(CustomMoveType.Pass)(move)) {
-      return this.removeActionAndMove()
+      return [this.endAction()]
     }
     if (isCustomMoveType(CustomMoveType.TakeLetterToSwapProduct)(move)) {
-      return [
-        this.playerLetters.moveItem({ type: LocationType.LetterDeck }),
-        ...this.addActionBonusAndMove({ type: ActionType.ProductSwap, nbPossibleSwaps: 1 })
-      ]
+      return [this.playerLetters.moveItem({ type: LocationType.LetterDeck }), ...this.startAction({ type: ActionType.ProductSwap, nbPossibleSwaps: 1 })]
     }
-    return []
+    return super.onCustomMove(move)
   }
 
   get playerProducts() {

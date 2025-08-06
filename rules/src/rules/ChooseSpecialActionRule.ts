@@ -30,9 +30,9 @@ export class ChooseSpecialActionRule extends ActionRule<ChooseSpecialActionCardA
 
   onCustomMove(move: CustomMove): MaterialMove[] {
     if (isCustomMoveType(CustomMoveType.Pass)(move)) {
-      return this.removeActionAndMove()
+      return [this.endAction()]
     }
-    return []
+    return super.onCustomMove(move)
   }
 
   get playerSpecialActionCards() {

@@ -6,6 +6,9 @@ import {
   isCustomMoveType,
   MaterialGame,
   MaterialMove,
+  MaterialMoveRandomized,
+  MaterialMoveView,
+  PlayMoveContext,
   PositiveSequenceStrategy,
   SecretMaterialRules,
   StackingStrategy,
@@ -135,6 +138,13 @@ export class RivalCitiesRules
     [MaterialType.LawsuitCard]: {
       [LocationType.LawsuitDeck]: hideItemId
     }
+  }
+
+  play(move: MaterialMoveRandomized | MaterialMoveView, context?: PlayMoveContext): MaterialMove[] {
+    if (this.game.rule?.id === RuleId.PerformMultipleActions) {
+      new PerformMultipleActionsRule(this.game).play(move)
+    }
+    return super.play(move, context)
   }
 
   onCustomMove(move: CustomMove): MaterialMove[] {

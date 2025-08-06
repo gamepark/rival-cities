@@ -37,7 +37,7 @@ export class FormAllianceActionRule extends ActionRule<FormAllianceAction> {
     if (this.checkAnotherActionInProgress(this.action.type)) return []
     if (isMoveItemType(MaterialType.AllianceCard)(move)) {
       this.updateAction(this.material(MaterialType.AllianceCard).index(move.itemIndex).getItem()?.id as Alliance)
-      return new EndOfGameHelper(this.game).checkInstantEndOfGame(this.removeActionAndMove())
+      return new EndOfGameHelper(this.game).checkInstantEndOfGame([this.endAction()])
     }
     return []
   }
@@ -45,9 +45,9 @@ export class FormAllianceActionRule extends ActionRule<FormAllianceAction> {
   onCustomMove(move: CustomMove): MaterialMove[] {
     if (isCustomMoveType(CustomMoveType.Pass)(move) && this.isSameAction(move.data as Action)) {
       this.forget(MemoryType.ProductChosen)
-      return this.removeActionAndMove()
+      return [this.endAction()]
     }
-    return []
+    return super.onCustomMove(move)
   }
 
   get playerLetters() {

@@ -2,6 +2,7 @@ import { CustomMove, isCustomMoveType, isMoveItemType, ItemMove, MaterialMove } 
 import { City } from '../../City'
 import { Action, AdvanceLawsuitAction } from '../../material/Actions/Actions'
 import { ActionType } from '../../material/Actions/ActionType'
+import { Alliance } from '../../material/Alliance'
 import { LawsuitCard, lawsuitCardData } from '../../material/LawsuitCard'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
@@ -56,14 +57,19 @@ export class AdvanceLawsuitActionRule extends ActionRule<AdvanceLawsuitAction> {
     if (this.checkAnotherActionInProgress(this.action.type)) return []
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.LawsuitMarker)(move)) {
-      this.removeAction()
       const marker = this.material(MaterialType.LawsuitMarker).getItem(move.itemIndex)
       const card = this.lawsuitCards.parent(marker.location.parent).getItem()
       const lawsuitX = this.material(MaterialType.LawsuitPiece).getItem(marker.location.parent!).location.x!
       if (card) {
         const timeAlreadyAdvanced = this.action.nbTimeAlreadyAdvanced ?? 0
 
-        if (!this.action.isLeHavreBonus && timeAlreadyAdvanced === 0 && this.playerProducts.length && this.possibleCardsToGet().length > 0) {
+        if (
+          this.hasLeHavreAlliance &&
+          !this.action.isLeHavreBonus &&
+          timeAlreadyAdvanced === 0 &&
+          this.playerProducts.length &&
+          this.possibleCardsToGet().length > 0
+        ) {
           this.addActionBonus({
             type: ActionType.PayToPerformActionAgain,
             productType: undefined,
@@ -93,7 +99,7 @@ export class AdvanceLawsuitActionRule extends ActionRule<AdvanceLawsuitAction> {
         if (timeAlreadyAdvanced === 0) {
           lawsuitCardData[card.id as LawsuitCard].actionInAdvance(this.game, this.player).forEach((action) => this.addActionBonus(action))
         }
-        moves.push(...this.moveToNextAction())
+        moves.push(this.endAction())
       }
     }
     return moves
@@ -102,15 +108,12 @@ export class AdvanceLawsuitActionRule extends ActionRule<AdvanceLawsuitAction> {
   onCustomMove(move: CustomMove): MaterialMove[] {
     if (this.checkAnotherActionInProgress(this.action.type)) return []
     if (isCustomMoveType(CustomMoveType.Pass)(move) && this.isSameAction(move.data as Action)) {
-      return this.removeActionAndMove()
+      return [this.endAction()]
     }
     if (isCustomMoveType(CustomMoveType.TakeLetterToSwapProduct)(move)) {
-      return [
-        this.playerLetters.moveItem({ type: LocationType.LetterDeck }),
-        ...this.addActionBonusAndMove({ type: ActionType.ProductSwap, nbPossibleSwaps: 1 })
-      ]
+      return [this.playerLetters.moveItem({ type: LocationType.LetterDeck }), ...this.startAction({ type: ActionType.ProductSwap, nbPossibleSwaps: 1 })]
     }
-    return []
+    return super.onCustomMove(move)
   }
 
   possibleCardsToGet() {
@@ -130,5 +133,9 @@ export class AdvanceLawsuitActionRule extends ActionRule<AdvanceLawsuitAction> {
       return this.material(MaterialType.LawsuitCard).location(LocationType.LawsuitSpace)
     }
     return this.material(MaterialType.LawsuitCard).location(LocationType.LawsuitSpace).parent(this.action.lawsuitAdvancedLocation)
+  }
+
+  get hasLeHavreAlliance() {
+    return this.material(MaterialType.AllianceCard).id(Alliance.LeHavre).getItem()?.location.player === this.player
   }
 }

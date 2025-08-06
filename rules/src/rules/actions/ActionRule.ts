@@ -1,6 +1,7 @@
-import { MaterialGame, PlayerTurnRule } from '@gamepark/rules-api'
+import { CustomMove, MaterialGame, MaterialMove, PlayerTurnRule } from '@gamepark/rules-api'
 import { Action } from '../../material/Actions/Actions'
 import { ActionType } from '../../material/Actions/ActionType'
+import { CustomMoveType } from '../CustomMoveType'
 import { ActionRuleIds } from '../helper/ActionRuleIds'
 import { MemoryType } from '../MemoryType'
 import { RuleId } from '../RuleId'
@@ -17,19 +18,20 @@ export abstract class ActionRule<E extends Action = Action> extends PlayerTurnRu
     return this.remind<Action[]>(MemoryType.Actions)
   }
 
+  endAction() {
+    return this.customMove(CustomMoveType.EndAction, this.action)
+  }
+
+  onCustomMove(move: CustomMove): MaterialMove[] {
+    if (move.type === CustomMoveType.EndAction) {
+      return this.removeActionAndMove()
+    }
+    return []
+  }
+
   removeAction() {
     this.forget(MemoryType.BasicActionChosen)
-    const firstAction = this.actions[0]
-    if (firstAction?.type === ActionType.Multiple && this.action.type !== ActionType.Multiple) {
-      firstAction.actions = firstAction.actions?.filter((it) => !this.isSameAction(it as E)) ?? []
-      if (firstAction.actions.length === 0) {
-        this.memorize<Action[]>(MemoryType.Actions, (old) => old.splice(1))
-      } else {
-        this.memorize<Action[]>(MemoryType.Actions, (old) => [firstAction, ...old.splice(1)])
-      }
-    } else {
-      this.memorize<Action[]>(MemoryType.Actions, (old) => old.splice(1))
-    }
+    this.memorize<Action[]>(MemoryType.Actions, (old) => old.splice(1))
   }
 
   removeActionAndMove() {
@@ -37,13 +39,13 @@ export abstract class ActionRule<E extends Action = Action> extends PlayerTurnRu
     return this.moveToNextAction()
   }
 
-  addActionBonusAndMove(actionToAdd: Action) {
-    this.addActionBonus(actionToAdd)
+  startAction(action: Action) {
+    this.actions.unshift(action)
     return this.moveToNextAction()
   }
 
-  addActionBonus(actionToAdd: Action) {
-    this.memorize<Action[]>(MemoryType.Actions, (old) => [actionToAdd, ...old])
+  addActionBonus(action: Action) {
+    this.actions.splice(1, 0, action)
   }
 
   moveToNextAction() {

@@ -35,7 +35,6 @@ export class DrawSpecialActionCardActionRule extends ActionRule<DrawSpecialActio
     if (this.checkAnotherActionInProgress(this.action.type)) return []
     if (isMoveItemType(MaterialType.SpecialActionCard)(move)) {
       if (this.remind(MemoryType.Count) === this.action.nbCardsToDraw) {
-        this.removeAction()
         this.memorize(MemoryType.Count, 0)
         if (this.action.playerCanUseAllianceKjjobenhavn && this.playerBeers.getQuantity() > 0) {
           this.addActionBonus({
@@ -49,7 +48,7 @@ export class DrawSpecialActionCardActionRule extends ActionRule<DrawSpecialActio
             }
           })
         }
-        return this.moveToNextAction()
+        return [this.endAction()]
       }
     }
     return [this.specialActionCard.moveItem({ type: LocationType.PlayerSpecialActionCardsHand, player: this.player })]

@@ -68,10 +68,10 @@ export class ResolveLawsuitActionRule extends ActionRule<ResolveLawsuitAction> {
       if (move.location.type === LocationType.PlayerLawsuitCards) {
         return new EndOfGameHelper(this.game).checkInstantEndOfGame(this.getMoveOnLawsuitWin(move))
       } else if (move.location.type === LocationType.LawsuitSpace) {
-        return this.removeActionAndMove()
+        return [this.endAction()]
       }
     } else if (isDeleteItemType(MaterialType.LawsuitPiece)(move)) {
-      return this.removeActionAndMove()
+      return [this.endAction()]
     }
     return []
   }

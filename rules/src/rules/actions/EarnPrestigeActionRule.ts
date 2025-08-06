@@ -39,7 +39,6 @@ export class EarnPrestigeActionRule extends ActionRule<EarnPrestigeAction> {
   }
 
   movesOnPrestigeMarkerMoved(): MaterialMove[] {
-    this.removeAction()
     if (this.action.playerCanUseShip16 && this.playerBeers.length >= 2) {
       this.addActionBonus({
         type: ActionType.PayToPerformActionAgain,
@@ -66,7 +65,7 @@ export class EarnPrestigeActionRule extends ActionRule<EarnPrestigeAction> {
         }
       })
     }
-    return this.moveToNextAction()
+    return [this.endAction()]
   }
 
   get prestigeMarker() {

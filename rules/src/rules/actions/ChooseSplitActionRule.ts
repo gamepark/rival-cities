@@ -26,7 +26,9 @@ export class ChooseSplitActionRule extends ActionRule<ChoiceAction> {
 
   onCustomMove(move: CustomMove): MaterialMove[] {
     if (isCustomMoveType(CustomMoveType.Pass)(move)) {
-      return this.removeActionAndMove()
+      return [this.endAction()]
+    } else if (move.type === CustomMoveType.EndAction) {
+      return super.onCustomMove(move)
     }
     return this.action.actions.flatMap((action) => getActionRule(this.game, action).onCustomMove(move))
   }

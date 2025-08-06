@@ -73,7 +73,7 @@ export class ProductionActionRule extends ActionRule<ProductionAction> {
         }
       } else if (this.playerFactories.length === 0) {
         this.forget(MemoryType.ProductChosen)
-        moves.push(...this.removeActionAndMove())
+        moves.push(this.endAction())
       }
     }
     return moves
@@ -82,9 +82,9 @@ export class ProductionActionRule extends ActionRule<ProductionAction> {
   onCustomMove(move: CustomMove): MaterialMove[] {
     if (isCustomMoveType(CustomMoveType.Pass)(move) && this.isSameAction(move.data as Action)) {
       this.forget(MemoryType.ProductChosen)
-      return this.removeActionAndMove()
+      return [this.endAction()]
     }
-    return []
+    return super.onCustomMove(move)
   }
 
   get playerFactories() {

@@ -37,7 +37,7 @@ export class CourtRulingActionRule extends ActionRule<CourtRullingAction> {
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.LawsuitPiece)(move)) {
       this.memorize(MemoryType.BasicActionChosen, this.action.type)
-      moves.push(...this.removeActionAndMove())
+      moves.push(this.endAction())
     }
     return moves
   }
@@ -45,9 +45,9 @@ export class CourtRulingActionRule extends ActionRule<CourtRullingAction> {
   onCustomMove(move: CustomMove): MaterialMove[] {
     if (this.checkAnotherActionInProgress(this.action.type)) return []
     if (isCustomMoveType(CustomMoveType.ResolveLawsuit)(move)) {
-      return this.addActionBonusAndMove({ type: ActionType.ResolveLawsuit })
+      return this.startAction({ type: ActionType.ResolveLawsuit })
     }
-    return []
+    return super.onCustomMove(move)
   }
 
   get lawsuitMarkerToResolve() {

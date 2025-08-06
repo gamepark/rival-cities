@@ -1,8 +1,10 @@
-import { CustomMove, isCustomMoveType, ItemMove, MaterialMove, PlayMoveContext, RuleMove, RuleStep } from '@gamepark/rules-api'
+import { CustomMove, MaterialMove, PlayMoveContext, RuleMove, RuleStep } from '@gamepark/rules-api'
+import { isEqual } from 'lodash'
 import { MultipleAction } from '../../material/Actions/Actions'
 import { ActionType } from '../../material/Actions/ActionType'
 import { CustomMoveType } from '../CustomMoveType'
 import { getActionRule } from '../helper/ActionHelper'
+import { ActionRuleIds } from '../helper/ActionRuleIds'
 import { MemoryHelper } from '../helper/MemoryHelper'
 import { MemoryType } from '../MemoryType'
 import { ActionRule } from './ActionRule'
@@ -23,25 +25,29 @@ export class PerformMultipleActionsRule extends ActionRule<MultipleAction> {
     return this.action.actions.flatMap((action) => getActionRule(this.game, action).getPlayerMoves())
   }
 
-  beforeItemMove(move: ItemMove): MaterialMove[] {
-    return this.action.actions.flatMap((action) => getActionRule(this.game, action).beforeItemMove(move))
-  }
-
-  afterItemMove(move: ItemMove): MaterialMove[] {
-    return this.action.actions.flatMap((action) => getActionRule(this.game, action).afterItemMove(move))
-  }
-
-  onCustomMove(move: CustomMove): MaterialMove[] {
-    const actionsMoves = this.action.actions.flatMap((action) => getActionRule(this.game, action).onCustomMove(move))
-    if (actionsMoves.length > 0) {
-      return actionsMoves
+  play(move: MaterialMove) {
+    for (let index = 0; index < this.action.actions.length; index++) {
+      const action = this.action.actions[index]
+      const legalMoves = getActionRule(this.game, action).getPlayerMoves()
+      if (legalMoves.some((legalMove) => isEqual(legalMove, move))) {
+        this.action.actions.splice(index, 1)
+        // TODO: this instead of shift
+        /*if (this.action.actions.length === 1) {
+          this.actions[0] = this.action.actions[0]
+        }*/
+        if (this.action.actions.length === 0) {
+          this.actions.shift()
+        }
+        this.actions.unshift(action)
+        this.game.rule!.id = ActionRuleIds[action.type]
+      }
     }
-    return this.onPassMove(move)
+    return []
   }
 
-  onPassMove(move: CustomMove): MaterialMove[] {
-    if (isCustomMoveType(CustomMoveType.Pass)(move)) {
-      return this.removeActionAndMove()
+  onCustomMove(move: CustomMove) {
+    if (move.type === CustomMoveType.Pass) {
+      return [this.endAction()]
     }
     return []
   }

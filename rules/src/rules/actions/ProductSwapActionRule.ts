@@ -42,15 +42,11 @@ export class ProductSwapActionRule extends ActionRule<ProductSwapAction> {
         this.memorize(MemoryType.Count, this.nbSwaps + 1)
         if (this.remind(MemoryType.Count) === this.action.nbPossibleSwaps) {
           this.memorize(MemoryType.Count, 0)
-          return this.next()
+          return [this.endAction()]
         }
       }
     }
     return []
-  }
-
-  next() {
-    return this.removeActionAndMove()
   }
 
   get playerProducts() {

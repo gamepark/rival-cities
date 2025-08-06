@@ -47,12 +47,9 @@ export class PurchaseShipActionRule extends ActionRule<PurchaseShipAction> {
 
   onCustomMove(move: CustomMove): MaterialMove[] {
     if (isCustomMoveType(CustomMoveType.TakeLetterToSwapProduct)(move)) {
-      return [
-        this.playerLetters.moveItem({ type: LocationType.LetterDeck }),
-        ...this.addActionBonusAndMove({ type: ActionType.ProductSwap, nbPossibleSwaps: 1 })
-      ]
+      return [this.playerLetters.moveItem({ type: LocationType.LetterDeck }), ...this.startAction({ type: ActionType.ProductSwap, nbPossibleSwaps: 1 })]
     }
-    return []
+    return super.onCustomMove(move)
   }
 
   movesOnPushasedShip(move: MaterialMove): MaterialMove[] {
@@ -63,13 +60,12 @@ export class PurchaseShipActionRule extends ActionRule<PurchaseShipAction> {
     const shipData = shipCardsData[shipId]
     const costQuantity = this.action.playerHasShip19 ? shipData.cost.quantity - 1 : shipData.cost.quantity
     moves.push(...this.playerProducts.id(shipData.cost.type).moveItems({ type: LocationType.ProductPiles, id: shipData.cost.type }, costQuantity))
-    this.removeAction()
     if (shipData.effect.type === ShipEffectType.Instant) {
       if (shipData.effect.action) {
         shipData.effect.action(this.game, this.player).forEach((it) => this.addActionBonus(it))
       }
     }
-    moves.push(...this.moveToNextAction())
+    moves.push(this.endAction())
     return moves
   }
 

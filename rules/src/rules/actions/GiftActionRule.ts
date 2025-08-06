@@ -71,7 +71,7 @@ export class GiftActionRule extends ActionRule<GiftAction> {
 
   movesAfterProductsGiven(): MaterialMove[] {
     this.memorize(MemoryType.Count, 0)
-    return this.removeActionAndMove()
+    return [this.endAction()]
   }
 
   get products() {

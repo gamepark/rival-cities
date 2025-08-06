@@ -6,14 +6,14 @@ import { ActionRule } from './ActionRule'
 
 export class ReturnFactoryActionRule extends ActionRule<ReturnFactoryAction> {
   onRuleStart(): MaterialMove[] {
-    if (this.playerFactories.length === 0) return this.removeActionAndMove()
+    if (this.playerFactories.length === 0) return [this.endAction()]
     return this.playerFactories.limit(this.nbFactoryCanReturn).rotateItems(undefined)
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.Factory)(move)) {
-      return this.removeActionAndMove()
+      return [this.endAction()]
     }
     return moves
   }

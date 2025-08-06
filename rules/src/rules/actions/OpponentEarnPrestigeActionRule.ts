@@ -9,13 +9,13 @@ import { ActionRule } from './ActionRule'
 
 export class OpponentEarnPrestigeActionRule extends ActionRule<OpponentEarnPrestigeAction> {
   onRuleStart(): MaterialMove[] {
-    this.removeAction()
-    return this.addActionBonusAndMove({
+    this.addActionBonus({
       type: ActionType.EarnPrestige,
       playerWhoEarnedPrestige: this.nextPlayer,
       playerCanUseAllianceBruxelles: this.nextPlayerHaveAllianceBruxelles,
       playerCanUseShip16: this.nextPlayerHaveShip16
     })
+    return [this.endAction()]
   }
 
   get nextPlayerHaveAllianceBruxelles() {

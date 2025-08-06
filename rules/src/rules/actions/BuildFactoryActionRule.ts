@@ -1,4 +1,4 @@
-import { CustomMove, isCustomMoveType, isMoveItemType, ItemMove, MaterialMove, PlayMoveContext } from '@gamepark/rules-api'
+import { CustomMove, isCustomMoveType, isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
 import { Action, BuildFactoryAction } from '../../material/Actions/Actions'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
@@ -16,7 +16,7 @@ export class BuildFactoryActionRule extends ActionRule<BuildFactoryAction> {
       return this.factories.moveItems({ type: LocationType.PlayerFactories, player: this.player }, 1)
     }
     if (this.playerProducts.getQuantity() < (this.action.price ?? 0)) {
-      return this.removeActionAndMove()
+      return [this.endAction()]
     }
     return []
   }
@@ -54,22 +54,22 @@ export class BuildFactoryActionRule extends ActionRule<BuildFactoryAction> {
     if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.ProductPiles) {
       if (this.remind(MemoryType.Count) === this.action.price) {
         this.memorize(MemoryType.Count, 0)
-        return this.removeActionAndMove()
+        return [this.endAction()]
       }
     }
     if (isMoveItemType(MaterialType.Factory)(move) && move.location.type === LocationType.PlayerFactories) {
       if (this.action.price === 0) {
-        return this.removeActionAndMove()
+        return [this.endAction()]
       }
     }
     return moves
   }
 
-  onCustomMove(move: CustomMove, _context?: PlayMoveContext): MaterialMove[] {
+  onCustomMove(move: CustomMove): MaterialMove[] {
     if (isCustomMoveType(CustomMoveType.Pass)(move) && this.isSameAction(move.data as Action)) {
-      return this.removeActionAndMove()
+      return [this.endAction()]
     }
-    return []
+    return super.onCustomMove(move)
   }
 
   get playerProducts() {
