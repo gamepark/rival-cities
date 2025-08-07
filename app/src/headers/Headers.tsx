@@ -9,6 +9,7 @@ import { ChooseFirstProductHeader } from './ChooseFirstProductHeader'
 import { ChooseSpecialActionHeader } from './ChooseSpecialActionHeader'
 import { ChooseSplitActionHeader } from './ChooseSplitActionHeader'
 import { ConfirmEndTurnHeader } from './ConfirmEndTurnHeader'
+import { DonationHeader } from './DonationHeader'
 import { DrawSpecialActionCardHeader } from './DrawSpecialActionCardHeader'
 import { EarnPrestigeHeader } from './EarnPrestigeHeader'
 import { FormAllianceHeader } from './FormAllianceHeader'
@@ -52,6 +53,7 @@ export const Headers: Partial<Record<RuleId, ComponentType>> = {
   [RuleId.OffSeasonPlayerWithMostShipCardsEarnPrestige]: OffSeasonPlayerWithMostShipCardsEarnPrestigeHeader,
   [RuleId.FormAlliance]: FormAllianceHeader,
   [RuleId.BuildFactory]: BuildFactoryHeader,
+  [RuleId.Donation]: DonationHeader,
   [RuleId.Production]: ProductionHeader,
   [RuleId.Gift]: GiftHeader,
   [RuleId.ProductSwap]: ProductSwapHeader,

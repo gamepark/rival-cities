@@ -31,12 +31,8 @@ export class PerformMultipleActionsRule extends ActionRule<MultipleAction> {
       const legalMoves = getActionRule(this.game, action).getPlayerMoves()
       if (legalMoves.some((legalMove) => isEqual(legalMove, move))) {
         this.action.actions.splice(index, 1)
-        // TODO: this instead of shift
-        /*if (this.action.actions.length === 1) {
+        if (this.action.actions.length === 1) {
           this.actions[0] = this.action.actions[0]
-        }*/
-        if (this.action.actions.length === 0) {
-          this.actions.shift()
         }
         this.actions.unshift(action)
         this.game.rule!.id = ActionRuleIds[action.type]
