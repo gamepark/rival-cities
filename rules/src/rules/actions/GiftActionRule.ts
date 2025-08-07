@@ -13,9 +13,6 @@ export class GiftActionRule extends ActionRule<GiftAction> {
 
   onRuleStart(): MaterialMove[] {
     const moves: MaterialMove[] = []
-    if (this.checkAnotherActionInProgress(this.action.type)) {
-      return moves
-    }
     if (this.action.productType) {
       for (let i = 0; i < this.action.nbProductToTake; i++) {
         moves.push(this.products.moveItem({ type: LocationType.PlayerProducts, player: this.player, id: this.action.productType }))
@@ -26,9 +23,6 @@ export class GiftActionRule extends ActionRule<GiftAction> {
 
   getPlayerMoves(): MaterialMove[] {
     const moves: MaterialMove[] = []
-    if (this.checkAnotherActionInProgress(this.action.type)) {
-      return moves
-    }
     if (this.action.productType) {
       moves.push(
         ...this.products.moveItems({ type: LocationType.PlayerProducts, player: this.player, id: this.action.productType }, this.action.nbProductToTake)
@@ -41,20 +35,13 @@ export class GiftActionRule extends ActionRule<GiftAction> {
   }
 
   beforeItemMove(move: ItemMove): MaterialMove[] {
-    if (this.checkAnotherActionInProgress(this.action.type)) {
-      return []
-    }
     if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.PlayerProducts) {
-      this.memorize(MemoryType.BasicActionChosen, this.action.type)
       this.memorize<number>(MemoryType.Count, (old) => old + (move.quantity ?? 1))
     }
     return []
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {
-    if (this.checkAnotherActionInProgress(this.action.type)) {
-      return []
-    }
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.PlayerProducts) {
       if (this.action.canUseAlliance) {

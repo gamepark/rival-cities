@@ -13,9 +13,7 @@ export class DrawSpecialActionCardActionRule extends ActionRule<DrawSpecialActio
   }
 
   beforeItemMove(move: ItemMove): MaterialMove[] {
-    if (this.checkAnotherActionInProgress(this.action.type)) return []
     if (isMoveItemType(MaterialType.SpecialActionCard)(move)) {
-      this.memorize(MemoryType.BasicActionChosen, this.action.type)
       this.memorize<number>(MemoryType.Count, (old) => old + 1)
       if (this.material(MaterialType.SpecialActionCard).location(LocationType.SpecialActionCardsDeck).length < 1) {
         const moves: MaterialMove[] = []
@@ -32,7 +30,6 @@ export class DrawSpecialActionCardActionRule extends ActionRule<DrawSpecialActio
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {
-    if (this.checkAnotherActionInProgress(this.action.type)) return []
     if (isMoveItemType(MaterialType.SpecialActionCard)(move)) {
       if (this.remind(MemoryType.Count) === this.action.nbCardsToDraw) {
         this.memorize(MemoryType.Count, 0)

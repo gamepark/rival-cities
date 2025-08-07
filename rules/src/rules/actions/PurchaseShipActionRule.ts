@@ -12,7 +12,6 @@ import { ActionRule } from './ActionRule'
 export class PurchaseShipActionRule extends ActionRule<PurchaseShipAction> {
   getPlayerMoves(): MaterialMove[] {
     const moves: MaterialMove[] = []
-    if (this.checkAnotherActionInProgress(this.action.type)) return []
     moves.push(...this.possibleCardsToGet().moveItems({ type: LocationType.PlayerShipCards, player: this.player }))
     if (this.playerProducts.length && this.playerLetters.length) {
       moves.push(this.customMove(CustomMoveType.TakeLetterToSwapProduct))
@@ -22,10 +21,8 @@ export class PurchaseShipActionRule extends ActionRule<PurchaseShipAction> {
   }
 
   beforeItemMove(move: ItemMove): MaterialMove[] {
-    if (this.checkAnotherActionInProgress(this.action.type)) return []
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.ShipCard)(move) && move.location.type === LocationType.PlayerShipCards) {
-      this.memorize(MemoryType.BasicActionChosen, this.action.type)
       moves.push(
         this.material(MaterialType.ShipCard)
           .location(LocationType.ShipCardsDeck)
@@ -37,7 +34,6 @@ export class PurchaseShipActionRule extends ActionRule<PurchaseShipAction> {
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {
-    if (this.checkAnotherActionInProgress(this.action.type)) return []
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.ShipCard)(move) && move.location.type === LocationType.PlayerShipCards) {
       return new EndOfGameHelper(this.game).checkInstantEndOfGame(this.movesOnPushasedShip(move))

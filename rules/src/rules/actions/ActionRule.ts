@@ -29,13 +29,8 @@ export abstract class ActionRule<E extends Action = Action> extends PlayerTurnRu
     return []
   }
 
-  removeAction() {
-    this.forget(MemoryType.BasicActionChosen)
-    this.memorize<Action[]>(MemoryType.Actions, (old) => old.splice(1))
-  }
-
   removeActionAndMove() {
-    this.removeAction()
+    this.actions.shift()
     return this.moveToNextAction()
   }
 
@@ -65,11 +60,6 @@ export abstract class ActionRule<E extends Action = Action> extends PlayerTurnRu
     }
 
     return [this.startRule(ActionRuleIds[this.actions[0].type])]
-  }
-
-  checkAnotherActionInProgress(actionType?: ActionType) {
-    const chosenAction = this.remind<ActionType | undefined>(MemoryType.BasicActionChosen)
-    return chosenAction !== undefined && chosenAction !== actionType
   }
 
   isSameAction(action: Action) {

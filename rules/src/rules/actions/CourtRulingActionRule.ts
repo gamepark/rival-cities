@@ -5,12 +5,10 @@ import { ActionType } from '../../material/Actions/ActionType'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { CustomMoveType } from '../CustomMoveType'
-import { MemoryType } from '../MemoryType'
 import { ActionRule } from './ActionRule'
 
 export class CourtRulingActionRule extends ActionRule<CourtRullingAction> {
   getPlayerMoves(): MaterialMove[] {
-    if (this.checkAnotherActionInProgress(this.action.type)) return []
     const moves: MaterialMove[] = []
 
     const firstLawsuit = this.material(MaterialType.LawsuitPiece).location((l) => l.x === 0)
@@ -33,17 +31,14 @@ export class CourtRulingActionRule extends ActionRule<CourtRullingAction> {
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {
-    if (this.checkAnotherActionInProgress(this.action.type)) return []
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.LawsuitPiece)(move)) {
-      this.memorize(MemoryType.BasicActionChosen, this.action.type)
       moves.push(this.endAction())
     }
     return moves
   }
 
   onCustomMove(move: CustomMove): MaterialMove[] {
-    if (this.checkAnotherActionInProgress(this.action.type)) return []
     if (isCustomMoveType(CustomMoveType.ResolveLawsuit)(move)) {
       return this.startAction({ type: ActionType.ResolveLawsuit })
     }

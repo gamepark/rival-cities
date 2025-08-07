@@ -19,7 +19,6 @@ export class ProductionActionRule extends ActionRule<ProductionAction> {
   }
 
   getPlayerMoves(): MaterialMove[] {
-    if (this.checkAnotherActionInProgress(this.action.type)) return []
     if (!this.productChoosen) {
       const productsToMove = this.action.productType ? this.products : this.allProducts
       return [
@@ -34,12 +33,6 @@ export class ProductionActionRule extends ActionRule<ProductionAction> {
   }
 
   beforeItemMove(move: ItemMove): MaterialMove[] {
-    if (this.checkAnotherActionInProgress(this.action.type)) return []
-    if (isMoveItemType(MaterialType.Product)(move) && (!this.action.productType || this.action.productType === move.location.id)) {
-      if (!this.remind(MemoryType.BasicActionChosen)) {
-        this.memorize(MemoryType.BasicActionChosen, this.action.type)
-      }
-    }
     if (isMoveItemType(MaterialType.Factory)(move)) {
       if (!this.action.productType) {
         this.forget(MemoryType.ProductChosen)
@@ -52,7 +45,6 @@ export class ProductionActionRule extends ActionRule<ProductionAction> {
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {
-    if (this.checkAnotherActionInProgress(this.action.type)) return []
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.Product)(move) && (!this.action.productType || this.action.productType === move.location.id)) {
       if (!this.productChoosen) {

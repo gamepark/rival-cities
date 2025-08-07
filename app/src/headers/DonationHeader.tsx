@@ -17,7 +17,7 @@ export const DonationHeader = () => {
   const itsMe = player && activePlayer === player
   const name = usePlayerName(activePlayer)
   const pass = useLegalMove(isCustomMoveType(CustomMoveType.Pass))
-  const donate = useLegalMove(isMoveItemType(MaterialType.Product))
+  const donate = useLegalMove(isMoveItemType(MaterialType.StarToken))
   const action = new DonationActionRule(rules.game).action
   const cost = action.nbProduct
   const gain = action.nbStars

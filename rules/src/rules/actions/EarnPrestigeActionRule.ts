@@ -6,7 +6,6 @@ import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { Product } from '../../material/Product'
 import { EndOfGameHelper } from '../helper/EndOfGameHelper'
-import { MemoryType } from '../MemoryType'
 import { ActionRule } from './ActionRule'
 
 export class EarnPrestigeActionRule extends ActionRule<EarnPrestigeAction> {
@@ -16,22 +15,11 @@ export class EarnPrestigeActionRule extends ActionRule<EarnPrestigeAction> {
   }
 
   getPlayerMoves(): MaterialMove[] {
-    if (this.checkAnotherActionInProgress(this.action.type)) return []
     const move = this.action.playerWhoEarnedPrestige === City.Altona ? -1 : 1
     return [this.prestigeMarker.moveItem(({ location }) => ({ ...location, x: location.x! + move }))]
   }
 
-  beforeItemMove(move: ItemMove): MaterialMove[] {
-    if (this.checkAnotherActionInProgress(this.action.type)) return []
-    const moves: MaterialMove[] = []
-    if (isMoveItemType(MaterialType.PrestigeMarker)(move)) {
-      this.memorize(MemoryType.BasicActionChosen, this.action.type)
-    }
-    return moves
-  }
-
   afterItemMove(move: ItemMove): MaterialMove[] {
-    if (this.checkAnotherActionInProgress(this.action.type)) return []
     if (isMoveItemType(MaterialType.PrestigeMarker)(move)) {
       return new EndOfGameHelper(this.game).checkInstantEndOfGame(this.movesOnPrestigeMarkerMoved())
     }

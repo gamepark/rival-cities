@@ -5,7 +5,6 @@ export enum MemoryType {
   ProductChosen,
   IsProductReturn,
   IsDonationInProgress,
-  BasicActionChosen,
   IsBuildInProgress,
   Actions,
   AlliancePay,

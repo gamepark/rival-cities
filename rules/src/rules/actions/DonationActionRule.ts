@@ -15,9 +15,6 @@ export class DonationActionRule extends ActionRule<DonationAction> {
 
   onRuleStart(): MaterialMove[] {
     const moves: MaterialMove[] = []
-    if (this.checkAnotherActionInProgress(this.action.type)) {
-      return moves
-    }
     if (this.action.nbProduct === 0) {
       const playerHaveAllianceAmsterdam = new AllianceCardHelper(this.game).checkPlayerAllianceCardById(Alliance.Amsterdam)
       moves.push(
@@ -31,7 +28,6 @@ export class DonationActionRule extends ActionRule<DonationAction> {
   }
 
   getPlayerMoves(): MaterialMove[] {
-    if (this.checkAnotherActionInProgress(this.action.type)) return []
     const moves: MaterialMove[] = []
     if (this.playerProducts.getQuantity() < this.nbProduct) return [this.customMove(CustomMoveType.Pass, this.action)]
     if (this.isDonationInProgress) {
@@ -55,10 +51,8 @@ export class DonationActionRule extends ActionRule<DonationAction> {
   }
 
   beforeItemMove(move: ItemMove): MaterialMove[] {
-    if (this.checkAnotherActionInProgress(this.action.type)) return []
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.StarToken)(move) && move.location.type === LocationType.PlayerStarTokens) {
-      this.memorize(MemoryType.BasicActionChosen, this.action.type)
       if (this.action.productType) {
         moves.push(...this.playerProducts.moveItems((item) => ({ type: LocationType.ProductPiles, id: item.id }), this.action.nbProduct))
       } else {
@@ -71,7 +65,6 @@ export class DonationActionRule extends ActionRule<DonationAction> {
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {
-    if (this.checkAnotherActionInProgress(this.action.type)) return []
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.ProductPiles) {
       if (this.action.productType) {
@@ -102,6 +95,8 @@ export class DonationActionRule extends ActionRule<DonationAction> {
   onCustomMove(move: CustomMove): MaterialMove[] {
     if (isCustomMoveType(CustomMoveType.TakeLetterToSwapProduct)(move)) {
       return [this.playerLetters.moveItem({ type: LocationType.LetterDeck }), ...this.startAction({ type: ActionType.ProductSwap, nbPossibleSwaps: 1 })]
+    } else if (move.type === CustomMoveType.Pass) {
+      return this.removeActionAndMove()
     }
     return super.onCustomMove(move)
   }

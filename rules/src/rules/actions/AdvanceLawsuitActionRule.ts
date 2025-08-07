@@ -8,14 +8,12 @@ import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { CustomMoveType } from '../CustomMoveType'
 import { AdvanceLawsuitHelper } from '../helper/AdvanceLawsuitHelper'
-import { MemoryType } from '../MemoryType'
 import { ActionRule } from './ActionRule'
 
 export class AdvanceLawsuitActionRule extends ActionRule<AdvanceLawsuitAction> {
   advanceLawsuitHelper = new AdvanceLawsuitHelper(this.game)
 
   getPlayerMoves(): MaterialMove[] {
-    if (this.checkAnotherActionInProgress(this.action.type)) return []
     const moveX = this.player === City.Altona ? -1 : 1
     const moves: MaterialMove[] = []
     this.possibleCardsToGet().forEach((card) => {
@@ -33,7 +31,6 @@ export class AdvanceLawsuitActionRule extends ActionRule<AdvanceLawsuitAction> {
   }
 
   beforeItemMove(move: ItemMove): MaterialMove[] {
-    if (this.checkAnotherActionInProgress(this.action.type)) return []
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.LawsuitMarker)(move)) {
       const card = this.lawsuitCards.parent(move.location.parent).getItem()
@@ -46,15 +43,11 @@ export class AdvanceLawsuitActionRule extends ActionRule<AdvanceLawsuitAction> {
           }
         })
       }
-      if (!this.remind(MemoryType.BasicActionChosen)) {
-        this.memorize(MemoryType.BasicActionChosen, this.action.type)
-      }
     }
     return moves
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {
-    if (this.checkAnotherActionInProgress(this.action.type)) return []
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.LawsuitMarker)(move)) {
       const marker = this.material(MaterialType.LawsuitMarker).getItem(move.itemIndex)
@@ -106,7 +99,6 @@ export class AdvanceLawsuitActionRule extends ActionRule<AdvanceLawsuitAction> {
   }
 
   onCustomMove(move: CustomMove): MaterialMove[] {
-    if (this.checkAnotherActionInProgress(this.action.type)) return []
     if (isCustomMoveType(CustomMoveType.Pass)(move) && this.isSameAction(move.data as Action)) {
       return [this.endAction()]
     }
