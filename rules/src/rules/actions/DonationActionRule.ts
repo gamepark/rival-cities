@@ -10,10 +10,8 @@ import { MemoryType } from '../MemoryType'
 import { ActionRule } from './ActionRule'
 
 export class DonationActionRule extends ActionRule<DonationAction> {
-  nbProductsDonated: number = this.remind(MemoryType.Count) ?? 0
-  isDonationInProgress = this.remind(MemoryType.IsDonationInProgress)
-
   onRuleStart(): MaterialMove[] {
+    // TODO: do not use donation for lawsuit star gains
     const moves: MaterialMove[] = []
     if (this.action.nbProduct === 0) {
       const playerHaveAllianceAmsterdam = new AllianceCardHelper(this.game).checkPlayerAllianceCardById(Alliance.Amsterdam)
@@ -28,84 +26,52 @@ export class DonationActionRule extends ActionRule<DonationAction> {
   }
 
   getPlayerMoves(): MaterialMove[] {
-    const moves: MaterialMove[] = []
-    if (this.playerProducts.getQuantity() < this.nbProduct) return [this.customMove(CustomMoveType.Pass, this.action)]
-    if (this.isDonationInProgress) {
-      moves.push(...this.playerProducts.moveItems((item) => ({ type: LocationType.ProductPiles, id: item.id })))
-    } else {
-      if (this.nbProductsDonated < this.nbProduct && this.starTokens.length > 0) {
-        const playerHaveAllianceAmsterdam = new AllianceCardHelper(this.game).checkPlayerAllianceCardById(Alliance.Amsterdam)
-        moves.push(
-          ...this.starTokens.moveItems(
-            { type: LocationType.PlayerStarTokens, player: this.player },
-            playerHaveAllianceAmsterdam ? this.nbStars + 1 : this.nbStars
-          )
-        )
-      }
-      moves.push(this.customMove(CustomMoveType.Pass, this.action))
-      if (this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(this.player).length && this.playerLetters.length) {
-        moves.push(this.customMove(CustomMoveType.TakeLetterToSwapProduct))
-      }
+    const playerProducts = this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(this.player)
+    const productsToPay = this.remind<number | undefined>(MemoryType.Count)
+    if (productsToPay) {
+      return playerProducts.moveItems((item) => ({ type: LocationType.ProductPiles, id: item.id }))
+    }
+    const moves: MaterialMove[] = [this.customMove(CustomMoveType.Pass, this.action)]
+    const starTokensStock = this.material(MaterialType.StarToken).location(LocationType.StarTokenDeck)
+    const products = this.action.productType ? playerProducts.id(this.action.productType) : playerProducts
+    if (products.getQuantity() >= this.action.nbProduct && starTokensStock.getQuantity() > 0) {
+      const stars = this.hasAmsterdamAlliance ? this.action.nbStars + 1 : this.action.nbStars
+      moves.push(starTokensStock.moveItem({ type: LocationType.PlayerStarTokens, player: this.player }, stars))
+    }
+    if (this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(this.player).length && this.playerLetters.length) {
+      moves.push(this.customMove(CustomMoveType.TakeLetterToSwapProduct))
     }
     return moves
   }
 
-  beforeItemMove(move: ItemMove): MaterialMove[] {
-    const moves: MaterialMove[] = []
-    if (isMoveItemType(MaterialType.StarToken)(move) && move.location.type === LocationType.PlayerStarTokens) {
-      if (this.action.productType) {
-        moves.push(...this.playerProducts.moveItems((item) => ({ type: LocationType.ProductPiles, id: item.id }), this.action.nbProduct))
-      } else {
-        this.memorize(MemoryType.IsDonationInProgress, true)
-      }
-    } else if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.ProductPiles && this.isDonationInProgress) {
-      this.memorize(MemoryType.Count, this.nbProductsDonated + 1)
-    }
-    return moves
+  get hasAmsterdamAlliance() {
+    return this.material(MaterialType.AllianceCard).id(Alliance.Amsterdam).getItem()?.location.player === this.player
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {
-    const moves: MaterialMove[] = []
-    if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.ProductPiles) {
-      if (this.action.productType) {
-        this.memorize<number>(MemoryType.CounterActions, (old) => old + 1)
-        if (this.remind(MemoryType.CounterActions) === this.action.nbTimes) {
-          return [this.endAction()]
-        }
-      } else if (this.remind(MemoryType.Count) === this.nbProduct) {
-        this.memorize(MemoryType.Count, 0)
-        this.memorize(MemoryType.IsDonationInProgress, false)
-        this.memorize<number>(MemoryType.CounterActions, (old) => old + 1)
-        if (this.remind(MemoryType.CounterActions) === this.action.nbTimes) {
-          return [this.endAction()]
-        }
-      }
-    }
     if (isMoveItemType(MaterialType.StarToken)(move) && move.location.type === LocationType.PlayerStarTokens) {
-      if (this.action.nbProduct === 0) {
-        this.memorize(MemoryType.Count, 0)
-        this.memorize(MemoryType.IsDonationInProgress, false)
-        this.memorize<number>(MemoryType.CounterActions, 0)
+      if (this.action.productType) {
+        const products = this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(this.player).id(this.action.productType)
+        return [products.moveItem({ type: LocationType.ProductPiles, id: this.action.productType }, this.action.nbProduct), this.endAction()]
+      } else {
+        this.memorize(MemoryType.Count, this.action.nbProduct)
+      }
+    } else if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.ProductPiles && !this.action.productType) {
+      const count = this.memorize<number>(MemoryType.Count, (count) => count - 1)
+      if (count === 0) {
         return [this.endAction()]
       }
     }
-    return moves
+    return []
   }
 
   onCustomMove(move: CustomMove): MaterialMove[] {
     if (isCustomMoveType(CustomMoveType.TakeLetterToSwapProduct)(move)) {
       return [this.playerLetters.moveItem({ type: LocationType.LetterDeck }), ...this.startAction({ type: ActionType.ProductSwap, nbPossibleSwaps: 1 })]
     } else if (move.type === CustomMoveType.Pass) {
-      return this.removeActionAndMove()
+      return [this.endAction()]
     }
     return super.onCustomMove(move)
-  }
-
-  get playerProducts() {
-    if (!this.action.productType) {
-      return this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(this.player)
-    }
-    return this.material(MaterialType.Product).id(this.action.productType).location(LocationType.PlayerProducts).player(this.player)
   }
 
   get starTokens() {
@@ -118,9 +84,5 @@ export class DonationActionRule extends ActionRule<DonationAction> {
 
   get nbStars() {
     return this.action.nbStars ?? 0
-  }
-
-  get nbProduct() {
-    return this.action.nbProduct ?? 0
   }
 }
