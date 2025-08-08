@@ -77,11 +77,8 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
             type: ActionType.AdvanceLawsuit,
             nbTimeAlreadyAdvanced: 0
           },
-          {
-            type: ActionType.DrawSpecialActionCard,
-            nbCardsToDraw: 2,
-            playerCanUseAllianceKjjobenhavn: this.checkPlayerHaveKjjobenhavnAllianceCard
-          }
+          { type: ActionType.DrawSpecialActionCard },
+          { type: ActionType.DrawSpecialActionCard }
         ]
       case SpecialActionCard.SpecialAction5:
         return [

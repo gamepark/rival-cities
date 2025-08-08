@@ -4,6 +4,8 @@ import {
   hideItemId,
   hideItemIdToOthers,
   isCustomMoveType,
+  isMoveItem,
+  ItemMove,
   MaterialGame,
   MaterialMove,
   MaterialMoveRandomized,
@@ -159,6 +161,18 @@ export class RivalCitiesRules
       legalMoves.push(this.customMove(CustomMoveType.SpendLetterToSwapProduct, player))
     }
     return legalMoves
+  }
+
+  protected afterItemMove(move: ItemMove<City, MaterialType, LocationType>, context?: PlayMoveContext) {
+    const consequences = super.afterItemMove(move, context)
+    if (isMoveItem(move) && move.itemType === MaterialType.SpecialActionCard) {
+      if (!this.material(MaterialType.SpecialActionCard).location(LocationType.SpecialActionCardsDeck).length) {
+        const discard = this.material(MaterialType.SpecialActionCard).location(LocationType.SpecialActionCardsDiscard)
+        consequences.push(discard.moveItemsAtOnce({ type: LocationType.SpecialActionCardsDeck }))
+        consequences.push(discard.shuffle())
+      }
+    }
+    return consequences
   }
 
   onCustomMove(move: CustomMove): MaterialMove[] {

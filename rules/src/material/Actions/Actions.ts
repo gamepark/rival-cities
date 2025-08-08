@@ -42,8 +42,7 @@ export type DonationAction = {
 
 export type DrawSpecialActionCardAction = {
   type: ActionType.DrawSpecialActionCard
-  nbCardsToDraw: number
-  playerCanUseAllianceKjjobenhavn: boolean
+  isKjjobenhavnBonus?: boolean
 }
 
 export type EarnPrestigeAction = {

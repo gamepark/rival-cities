@@ -46,13 +46,7 @@ export class ShipCardHelper extends MaterialRulesPart {
   }
 
   shipCard3(): Action[] {
-    return [
-      {
-        type: ActionType.DrawSpecialActionCard,
-        nbCardsToDraw: 2,
-        playerCanUseAllianceKjjobenhavn: this.checkPlayerHaveKjjobenhavnAllianceCard
-      }
-    ]
+    return [{ type: ActionType.DrawSpecialActionCard }]
   }
 
   shipCard4(): Action[] {

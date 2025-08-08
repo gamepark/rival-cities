@@ -1,5 +1,5 @@
 import { isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
-import { Action, DrawSpecialActionCardAction, EarnPrestigeAction, FormAllianceAction } from '../../material/Actions/Actions'
+import { Action, EarnPrestigeAction, FormAllianceAction } from '../../material/Actions/Actions'
 import { ActionType } from '../../material/Actions/ActionType'
 import { Alliance } from '../../material/Alliance'
 import { LocationType } from '../../material/LocationType'
@@ -57,16 +57,6 @@ export class FormAllianceActionRule extends ActionRule<FormAllianceAction> {
         const prestigeAction: EarnPrestigeAction | undefined = action.actions.find((a) => a.type === ActionType.EarnPrestige) as EarnPrestigeAction
         if (prestigeAction) {
           prestigeAction.playerCanUseAllianceBruxelles = true
-        }
-      }
-    }
-    if (alliance === Alliance.Kjjobenhavn) {
-      if (action.type === ActionType.Multiple) {
-        const drawSpecialActionCardAction: DrawSpecialActionCardAction | undefined = action.actions.find(
-          (a) => a.type === ActionType.DrawSpecialActionCard
-        ) as DrawSpecialActionCardAction
-        if (drawSpecialActionCardAction) {
-          drawSpecialActionCardAction.playerCanUseAllianceKjjobenhavn = true
         }
       }
     }

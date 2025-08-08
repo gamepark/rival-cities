@@ -37,11 +37,7 @@ export class BasicActionCardHelper extends MaterialRulesPart {
           ]
         }
       case BasicActionCard.BasicAction2:
-        return {
-          type: ActionType.DrawSpecialActionCard,
-          nbCardsToDraw: 1,
-          playerCanUseAllianceKjjobenhavn: this.checkPlayerHaveKjjobenhavnAllianceCard
-        }
+        return { type: ActionType.DrawSpecialActionCard }
       case BasicActionCard.BasicAction3:
         return {
           type: ActionType.FormAlliance
@@ -204,10 +200,6 @@ export class BasicActionCardHelper extends MaterialRulesPart {
 
   get checkPlayerHaveGdanskAllianceCard(): boolean {
     return this.material(MaterialType.AllianceCard).location(LocationType.PlayerAlliances).player(this.player).id(Alliance.Gdansk).length > 0
-  }
-
-  get checkPlayerHaveKjjobenhavnAllianceCard(): boolean {
-    return this.material(MaterialType.AllianceCard).location(LocationType.PlayerAlliances).player(this.player).id(Alliance.Kjjobenhavn).length > 0
   }
 
   get checkPlayerHaveBruxellesCard(): boolean {

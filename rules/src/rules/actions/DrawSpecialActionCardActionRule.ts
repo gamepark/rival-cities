@@ -1,63 +1,45 @@
 import { isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
 import { DrawSpecialActionCardAction } from '../../material/Actions/Actions'
 import { ActionType } from '../../material/Actions/ActionType'
+import { Alliance } from '../../material/Alliance'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { Product } from '../../material/Product'
-import { MemoryType } from '../MemoryType'
 import { ActionRule } from './ActionRule'
 
 export class DrawSpecialActionCardActionRule extends ActionRule<DrawSpecialActionCardAction> {
   onRuleStart(): MaterialMove[] {
-    return [this.specialActionCard.moveItem({ type: LocationType.PlayerSpecialActionCardsHand, player: this.player })]
-  }
-
-  beforeItemMove(move: ItemMove): MaterialMove[] {
-    if (isMoveItemType(MaterialType.SpecialActionCard)(move)) {
-      this.memorize<number>(MemoryType.Count, (old) => old + 1)
-      if (this.material(MaterialType.SpecialActionCard).location(LocationType.SpecialActionCardsDeck).length < 1) {
-        const moves: MaterialMove[] = []
-        moves.push(this.material(MaterialType.SpecialActionCard).location(LocationType.SpecialActionCardsDiscard).shuffle())
-        moves.push(
-          this.material(MaterialType.SpecialActionCard)
-            .location(LocationType.SpecialActionCardsDiscard)
-            .moveItemsAtOnce({ type: LocationType.SpecialActionCardsDeck })
-        )
-        return moves
-      }
-    }
-    return []
+    return [
+      this.material(MaterialType.SpecialActionCard)
+        .location(LocationType.SpecialActionCardsDeck)
+        .deck()
+        .dealOne({ type: LocationType.PlayerSpecialActionCardsHand, player: this.player })
+    ]
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {
     if (isMoveItemType(MaterialType.SpecialActionCard)(move)) {
-      if (this.remind(MemoryType.Count) === this.action.nbCardsToDraw) {
-        this.memorize(MemoryType.Count, 0)
-        if (this.action.playerCanUseAllianceKjjobenhavn && this.playerBeers.getQuantity() > 0) {
-          this.addActionBonus({
-            type: ActionType.PayToPerformActionAgain,
-            productType: Product.Beer,
-            price: 1,
-            actionToPerformAgain: {
-              type: ActionType.DrawSpecialActionCard,
-              nbCardsToDraw: 1,
-              playerCanUseAllianceKjjobenhavn: false
-            }
-          })
-        }
-        return [this.endAction()]
+      if (this.hasKjjobenhavnAlliance && !this.action.isKjjobenhavnBonus && this.hasBeer) {
+        this.addActionBonus({
+          type: ActionType.PayToPerformActionAgain,
+          productType: Product.Beer,
+          price: 1,
+          actionToPerformAgain: {
+            type: ActionType.DrawSpecialActionCard,
+            isKjjobenhavnBonus: true
+          }
+        })
       }
+      return this.removeActionAndMove()
     }
-    return [this.specialActionCard.moveItem({ type: LocationType.PlayerSpecialActionCardsHand, player: this.player })]
+    return []
   }
 
-  get specialActionCard() {
-    return this.material(MaterialType.SpecialActionCard)
-      .location(LocationType.SpecialActionCardsDeck)
-      .maxBy((it) => it.location.x!)
+  get hasKjjobenhavnAlliance() {
+    return this.material(MaterialType.AllianceCard).id(Alliance.Kjjobenhavn).getItem()?.location.player === this.player
   }
 
-  get playerBeers() {
-    return this.material(MaterialType.Product).id(Product.Beer).location(LocationType.PlayerProducts).player(this.player)
+  get hasBeer() {
+    return this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(this.player).id(Product.Beer).getQuantity() > 0
   }
 }
