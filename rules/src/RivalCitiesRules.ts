@@ -4,7 +4,7 @@ import {
   hideItemId,
   hideItemIdToOthers,
   isCustomMoveType,
-  isMoveItem,
+  isMoveItemType,
   ItemMove,
   MaterialGame,
   MaterialMove,
@@ -163,15 +163,18 @@ export class RivalCitiesRules
     return legalMoves
   }
 
-  protected afterItemMove(move: ItemMove<City, MaterialType, LocationType>, context?: PlayMoveContext) {
-    const consequences = super.afterItemMove(move, context)
-    if (isMoveItem(move) && move.itemType === MaterialType.SpecialActionCard) {
+  protected afterItemMove(move: ItemMove) {
+    const consequences: MaterialMove[] = []
+    if (isMoveItemType(MaterialType.SpecialActionCard)(move)) {
       if (!this.material(MaterialType.SpecialActionCard).location(LocationType.SpecialActionCardsDeck).length) {
         const discard = this.material(MaterialType.SpecialActionCard).location(LocationType.SpecialActionCardsDiscard)
-        consequences.push(discard.moveItemsAtOnce({ type: LocationType.SpecialActionCardsDeck }))
-        consequences.push(discard.shuffle())
+        if (discard.length) {
+          consequences.push(discard.moveItemsAtOnce({ type: LocationType.SpecialActionCardsDeck }))
+          consequences.push(discard.shuffle())
+        }
       }
     }
+    consequences.push(...super.afterItemMove(move))
     return consequences
   }
 
@@ -188,7 +191,7 @@ export class RivalCitiesRules
       return [letters.moveItem({ type: LocationType.LetterDeck }), this.startRule(RuleId.ProductSwap)]
     }
 
-    return []
+    return super.onCustomMove(move)
   }
 
   itemsCanMerge(type: MaterialType) {

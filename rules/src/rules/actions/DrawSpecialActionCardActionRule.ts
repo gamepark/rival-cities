@@ -8,13 +8,13 @@ import { Product } from '../../material/Product'
 import { ActionRule } from './ActionRule'
 
 export class DrawSpecialActionCardActionRule extends ActionRule<DrawSpecialActionCardAction> {
-  onRuleStart(): MaterialMove[] {
-    return [
-      this.material(MaterialType.SpecialActionCard)
-        .location(LocationType.SpecialActionCardsDeck)
-        .deck()
-        .dealOne({ type: LocationType.PlayerSpecialActionCardsHand, player: this.player })
-    ]
+  onRuleStart() {
+    const deck = this.material(MaterialType.SpecialActionCard).location(LocationType.SpecialActionCardsDeck).deck()
+    if (deck.length) {
+      return [deck.dealOne({ type: LocationType.PlayerSpecialActionCardsHand, player: this.player })]
+    } else {
+      return this.removeActionAndMove()
+    }
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {
