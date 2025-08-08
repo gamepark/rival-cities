@@ -72,10 +72,6 @@ export class DonationActionRule extends ActionRule<DonationAction> {
     return this.material(MaterialType.StarToken).location(LocationType.StarTokenDeck)
   }
 
-  get playerLetters() {
-    return this.material(MaterialType.Letter).location(LocationType.PlayerLetterDeck).player(this.player)
-  }
-
   get nbStars() {
     return this.action.nbStars ?? 0
   }

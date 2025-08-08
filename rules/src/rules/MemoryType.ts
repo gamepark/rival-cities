@@ -4,7 +4,6 @@ export enum MemoryType {
   PendingRule,
   ProductChosen,
   IsProductReturn,
-  IsDonationInProgress,
   IsBuildInProgress,
   Actions,
   AlliancePay,

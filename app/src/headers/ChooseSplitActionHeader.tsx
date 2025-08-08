@@ -15,20 +15,8 @@ export const ChooseSplitActionHeader = () => {
   const pass = useLegalMove(isCustomMoveType(CustomMoveType.Pass))
 
   const productChosen = rules.remind(MemoryType.ProductChosen)
-  const isDonationInProgress = rules.remind(MemoryType.IsDonationInProgress)
 
   if (itsMe) {
-    if (isDonationInProgress) {
-      return (
-        <Trans
-          defaults="header.donation.in.progress.you"
-          components={{
-            pass: <PlayMoveButton move={pass} />
-          }}
-        />
-      )
-    }
-
     if (productChosen) {
       return (
         <Trans
