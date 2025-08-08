@@ -12,10 +12,10 @@ import { RuleId } from '@gamepark/rival-cities/rules/RuleId'
 import { isMoveItemType, MaterialItem, MaterialMove } from '@gamepark/rules-api'
 import React from 'react'
 import { Trans } from 'react-i18next'
-import Beer from '../images/tokens/resources/Beer.png'
-import Cloth from '../images/tokens/resources/Cloth.png'
-import Furniture from '../images/tokens/resources/Furniture.png'
-import Leather from '../images/tokens/resources/Leather.png'
+import Beer from '../images/tokens/products/Beer.png'
+import Cloth from '../images/tokens/products/Cloth.png'
+import Furniture from '../images/tokens/products/Furniture.png'
+import Leather from '../images/tokens/products/Leather.png'
 
 export class ProductDescription extends TokenDescription {
   borderRadius = 0.3
