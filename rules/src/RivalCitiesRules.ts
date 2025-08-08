@@ -15,6 +15,8 @@ import {
   TimeLimit
 } from '@gamepark/rules-api'
 import { City } from './City'
+import { Action } from './material/Actions/Actions'
+import { ActionType } from './material/Actions/ActionType'
 import { LocationType } from './material/LocationType'
 import { MaterialType } from './material/MaterialType'
 import { AdvanceLawsuitActionRule } from './rules/actions/AdvanceLawsuitActionRule'
@@ -43,6 +45,7 @@ import { ConfirmEndTurnRule } from './rules/ConfirmEndTurnRule'
 import { CustomMoveType } from './rules/CustomMoveType'
 import { EndOfGameHelper } from './rules/helper/EndOfGameHelper'
 import { MemoryHelper } from './rules/helper/MemoryHelper'
+import { MemoryType } from './rules/MemoryType'
 import { OffSeasonChangeSpecialCardsRule } from './rules/OffSeason/OffSeasonChangeSpecialCardsRule'
 import { OffSeasonGetPrestigeBonusesRule } from './rules/OffSeason/OffSeasonGetPrestigeBonusesRule'
 import { OffSeasonGetShipsBonusesRule } from './rules/OffSeason/OffSeasonGetShipsBonusesRule'
@@ -147,14 +150,29 @@ export class RivalCitiesRules
     return super.play(move, context)
   }
 
-  onCustomMove(move: CustomMove): MaterialMove[] {
-    const moves: MaterialMove[] = []
+  getLegalMoves(player: City) {
+    const legalMoves = super.getLegalMoves(player)
+    const letters = this.material(MaterialType.Letter).player(player)
+    if (this.isTurnToPlay(player) && letters.getQuantity() > 0) {
+      legalMoves.push(this.customMove(CustomMoveType.SpendLetterToSwapProduct, player))
+    }
+    return legalMoves
+  }
 
+  onCustomMove(move: CustomMove): MaterialMove[] {
     if (isCustomMoveType(CustomMoveType.Pass)(move)) {
       new MemoryHelper(this.game).clearMemory()
     }
+    if (move.type === CustomMoveType.SpendLetterToSwapProduct) {
+      const letters = this.material(MaterialType.Letter).player(move.data as City)
+      const actions = this.memorize<Action[]>(MemoryType.Actions, (actions) => [{ type: ActionType.ProductSwap, nbPossibleSwaps: 1 }, ...actions])
+      if (actions.length === 1) {
+        this.memorize(MemoryType.PendingRule, this.game.rule?.id)
+      }
+      return [letters.moveItem({ type: LocationType.LetterDeck }), this.startRule(RuleId.ProductSwap)]
+    }
 
-    return moves
+    return []
   }
 
   itemsCanMerge(type: MaterialType) {

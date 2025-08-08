@@ -1,7 +1,7 @@
 export enum MemoryType {
   Count = 1,
   CounterActions,
-  OffSeasonStep,
+  PendingRule,
   ProductChosen,
   IsProductReturn,
   IsDonationInProgress,

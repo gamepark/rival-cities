@@ -45,8 +45,10 @@ export abstract class ActionRule<E extends Action = Action> extends PlayerTurnRu
 
   moveToNextAction() {
     if (this.actions.length === 0) {
-      if (this.remind(MemoryType.OffSeasonStep)) {
-        return [this.startRule(this.remind(MemoryType.OffSeasonStep))]
+      const pendingRule = this.remind(MemoryType.PendingRule)
+      if (pendingRule) {
+        this.forget(MemoryType.PendingRule)
+        return [this.startRule(pendingRule)]
       }
       return [this.startRule(RuleId.ConfirmEndTurn)]
     }

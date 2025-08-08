@@ -1,6 +1,5 @@
-import { CustomMove, isCustomMoveType, isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
+import { CustomMove, isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
 import { DonationAction } from '../../material/Actions/Actions'
-import { ActionType } from '../../material/Actions/ActionType'
 import { Alliance } from '../../material/Alliance'
 import { AllianceCardHelper } from '../../material/helper/AllianceCardHelper'
 import { LocationType } from '../../material/LocationType'
@@ -38,9 +37,6 @@ export class DonationActionRule extends ActionRule<DonationAction> {
       const stars = this.hasAmsterdamAlliance ? this.action.nbStars + 1 : this.action.nbStars
       moves.push(starTokensStock.moveItem({ type: LocationType.PlayerStarTokens, player: this.player }, stars))
     }
-    if (this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(this.player).length && this.playerLetters.length) {
-      moves.push(this.customMove(CustomMoveType.TakeLetterToSwapProduct))
-    }
     return moves
   }
 
@@ -66,9 +62,7 @@ export class DonationActionRule extends ActionRule<DonationAction> {
   }
 
   onCustomMove(move: CustomMove): MaterialMove[] {
-    if (isCustomMoveType(CustomMoveType.TakeLetterToSwapProduct)(move)) {
-      return [this.playerLetters.moveItem({ type: LocationType.LetterDeck }), ...this.startAction({ type: ActionType.ProductSwap, nbPossibleSwaps: 1 })]
-    } else if (move.type === CustomMoveType.Pass) {
+    if (move.type === CustomMoveType.Pass) {
       return [this.endAction()]
     }
     return super.onCustomMove(move)

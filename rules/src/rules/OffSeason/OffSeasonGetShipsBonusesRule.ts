@@ -16,7 +16,7 @@ export class OffSeasonGetShipsBonusesRule extends PlayerTurnRule {
       if (shipCardData.effect.action) {
         this.memorize<ShipCard[]>(MemoryType.ShipsIdsAlreadyProcessed, (old) => [...old, shipToProcess.id as ShipCard])
         this.memorize(
-          MemoryType.OffSeasonStep,
+          MemoryType.PendingRule,
           this.remind<ShipCard[]>(MemoryType.ShipsIdsAlreadyProcessed).length === this.shipsOffSeason.length
             ? RuleId.OffSeasonGetPrestigeBonuses
             : RuleId.OffSeasonGetShipsBonuses

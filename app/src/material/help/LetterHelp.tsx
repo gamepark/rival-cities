@@ -14,26 +14,26 @@ export const LetterHelp: FC<MaterialHelpProps> = ({ item, closeDialog }) => {
   const activePlayer = rules.game.rule?.player
   const itsMe = player && activePlayer === player
   const isPlayerLetter = item.location?.player === player
-  const takeLetterToSwapProduct = useLegalMove(isCustomMoveType(CustomMoveType.TakeLetterToSwapProduct))
+  const spendLetterToSwapProduct = useLegalMove(isCustomMoveType(CustomMoveType.SpendLetterToSwapProduct))
 
   return (
     <>
       <h2>{t(`help.letter`)}</h2>
       <p>
-        <Trans defaults={`help.Letter.descr`} components={components} />
+        <Trans defaults={`help.letter.descr`} components={components} />
       </p>
       <ul>
-        <li>{t(`help.Letter.use.2`)}</li>
-        <li>{t(`help.Letter.use.3`)}</li>
-        <li>{t(`help.Letter.use.1`)}</li>
+        <li>{t(`help.letter.use.2`)}</li>
+        <li>{t(`help.letter.use.3`)}</li>
+        <li>{t(`help.letter.use.1`)}</li>
       </ul>
-      {takeLetterToSwapProduct && isPlayerLetter && itsMe && (
+      {spendLetterToSwapProduct && isPlayerLetter && itsMe && (
         <p>
           <Trans
-            defaults={`help.Letter.takeLetterToSwapProduct`}
+            defaults={`help.letter.spendLetterToSwapProduct`}
             components={{
               ...components,
-              takeLetterToSwapProduct: <PlayMoveButton move={takeLetterToSwapProduct} onPlay={closeDialog} />
+              spendLetterToSwapProduct: <PlayMoveButton move={spendLetterToSwapProduct} onPlay={closeDialog} />
             }}
           />
         </p>

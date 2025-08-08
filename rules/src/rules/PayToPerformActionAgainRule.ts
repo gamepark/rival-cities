@@ -1,6 +1,5 @@
 import { CustomMove, isCustomMoveType, isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
 import { PayToPerformActionAgainAction } from '../material/Actions/Actions'
-import { ActionType } from '../material/Actions/ActionType'
 import { LocationType } from '../material/LocationType'
 import { MaterialType } from '../material/MaterialType'
 import { ActionRule } from './actions/ActionRule'
@@ -14,9 +13,6 @@ export class PayToPerformActionAgainRule extends ActionRule<PayToPerformActionAg
       moves.push(...this.playerProducts.id(this.action.productType).moveItems((it) => ({ type: LocationType.ProductPiles, id: it.id })))
     } else {
       moves.push(...this.playerProducts.moveItems((it) => ({ type: LocationType.ProductPiles, id: it.id })))
-    }
-    if (this.playerProducts.length && this.playerLetters.length) {
-      moves.push(this.customMove(CustomMoveType.TakeLetterToSwapProduct))
     }
     moves.push(this.customMove(CustomMoveType.Pass, this.action))
     return moves
@@ -47,17 +43,10 @@ export class PayToPerformActionAgainRule extends ActionRule<PayToPerformActionAg
     if (isCustomMoveType(CustomMoveType.Pass)(move)) {
       return [this.endAction()]
     }
-    if (isCustomMoveType(CustomMoveType.TakeLetterToSwapProduct)(move)) {
-      return [this.playerLetters.moveItem({ type: LocationType.LetterDeck }), ...this.startAction({ type: ActionType.ProductSwap, nbPossibleSwaps: 1 })]
-    }
     return super.onCustomMove(move)
   }
 
   get playerProducts() {
     return this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(this.player)
-  }
-
-  get playerLetters() {
-    return this.material(MaterialType.Letter).location(LocationType.PlayerLetterDeck).player(this.player)
   }
 }

@@ -6,7 +6,7 @@ import { RuleId } from '../RuleId'
 
 export class OffSeasonReturnBellRule extends PlayerTurnRule {
   onRuleStart(): MaterialMove[] {
-    this.forget(MemoryType.OffSeasonStep)
+    this.forget(MemoryType.PendingRule)
     return [this.material(MaterialType.BellToken).moveItem({ type: LocationType.BellTokenIdle })]
   }
 

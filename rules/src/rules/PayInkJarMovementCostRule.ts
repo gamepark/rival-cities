@@ -13,7 +13,7 @@ export class PayInkJarMovementCostRule extends PlayerTurnRule {
     if (!isMoveItemType(MaterialType.Product)(move)) return []
     const countLeft = this.memorize<number>(MemoryType.Count, (count) => count - 1)
     if (!countLeft) {
-      return [this.startRule(this.remind<RuleId | undefined>(MemoryType.OffSeasonStep) ?? RuleId.ChooseAction)]
+      return [this.startRule(this.remind<RuleId | undefined>(MemoryType.PendingRule) ?? RuleId.ChooseAction)]
     }
     return []
   }

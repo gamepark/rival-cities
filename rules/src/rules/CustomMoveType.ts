@@ -3,7 +3,7 @@ export enum CustomMoveType {
   EndAction,
   PlaysInkjarCard,
   ResolveLawsuit,
-  TakeLetterToSwapProduct,
+  SpendLetterToSwapProduct,
   PayForAlliance,
   ConfirmEndTurn
 }

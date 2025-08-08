@@ -92,7 +92,7 @@ export class OffSeasonGetPrestigeBonusesRule extends PlayerTurnRule {
   }
 
   startResolveLawsuit() {
-    this.memorize(MemoryType.OffSeasonStep, RuleId.OffSeasonChangeSpecialCards)
+    this.memorize(MemoryType.PendingRule, RuleId.OffSeasonChangeSpecialCards)
     this.memorize(MemoryType.Actions, [{ type: ActionType.ResolveLawsuit }])
     return this.startRule(RuleId.ResolveLawsuit)
   }

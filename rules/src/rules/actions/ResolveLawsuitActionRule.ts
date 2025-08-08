@@ -78,8 +78,8 @@ export class ResolveLawsuitActionRule extends ActionRule<ResolveLawsuitAction> {
 
   getMoveOnLawsuitWin(move: MaterialMove) {
     if (!isMoveItemType(MaterialType.LawsuitCard)(move)) return []
-    if (this.remind(MemoryType.OffSeasonStep)) {
-      this.memorize(MemoryType.OffSeasonStep, RuleId.OffSeasonChangeSpecialCards)
+    if (this.remind(MemoryType.PendingRule)) {
+      this.memorize(MemoryType.PendingRule, RuleId.OffSeasonChangeSpecialCards)
     }
     const cardId = this.material(MaterialType.LawsuitCard).getItem(move.itemIndex).id as LawsuitCard
     const lawsuitData = lawsuitCardData[cardId]
