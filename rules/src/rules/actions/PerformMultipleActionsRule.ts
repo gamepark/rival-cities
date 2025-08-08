@@ -5,7 +5,6 @@ import { ActionType } from '../../material/Actions/ActionType'
 import { CustomMoveType } from '../CustomMoveType'
 import { getActionRule } from '../helper/ActionHelper'
 import { ActionRuleIds } from '../helper/ActionRuleIds'
-import { MemoryHelper } from '../helper/MemoryHelper'
 import { MemoryType } from '../MemoryType'
 import { ActionRule } from './ActionRule'
 
@@ -45,11 +44,6 @@ export class PerformMultipleActionsRule extends ActionRule<MultipleAction> {
     if (move.type === CustomMoveType.Pass) {
       return [this.endAction()]
     }
-    return []
-  }
-
-  onRuleEnd(): MaterialMove[] {
-    new MemoryHelper(this.game).clearMemory()
     return []
   }
 }

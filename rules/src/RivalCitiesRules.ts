@@ -146,6 +146,8 @@ export class RivalCitiesRules
   play(move: MaterialMoveRandomized | MaterialMoveView, context?: PlayMoveContext): MaterialMove[] {
     if (this.game.rule?.id === RuleId.PerformMultipleActions) {
       new PerformMultipleActionsRule(this.game).play(move)
+    } else if (this.game.rule?.id === RuleId.ChooseSplitAction) {
+      new ChooseSplitActionRule(this.game).play(move)
     }
     return super.play(move, context)
   }

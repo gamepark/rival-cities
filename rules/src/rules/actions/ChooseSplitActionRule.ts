@@ -1,8 +1,9 @@
-import { CustomMove, isCustomMoveType, ItemMove, MaterialMove } from '@gamepark/rules-api'
+import { CustomMove, isCustomMoveType, MaterialMove } from '@gamepark/rules-api'
+import { isEqual } from 'lodash'
 import { ChoiceAction } from '../../material/Actions/Actions'
 import { CustomMoveType } from '../CustomMoveType'
 import { getActionRule } from '../helper/ActionHelper'
-import { MemoryHelper } from '../helper/MemoryHelper'
+import { ActionRuleIds } from '../helper/ActionRuleIds'
 import { MemoryType } from '../MemoryType'
 import { ActionRule } from './ActionRule'
 
@@ -16,25 +17,21 @@ export class ChooseSplitActionRule extends ActionRule<ChoiceAction> {
     return this.action.actions.flatMap((action) => getActionRule(this.game, action).getPlayerMoves())
   }
 
-  beforeItemMove(move: ItemMove): MaterialMove[] {
-    return this.action.actions.flatMap((action) => getActionRule(this.game, action).beforeItemMove(move))
-  }
-
-  afterItemMove(move: ItemMove): MaterialMove[] {
-    return this.action.actions.flatMap((action) => getActionRule(this.game, action).afterItemMove(move))
+  play(move: MaterialMove) {
+    for (const action of this.action.actions) {
+      const legalMoves = getActionRule(this.game, action).getPlayerMoves()
+      if (legalMoves.some((legalMove) => isEqual(legalMove, move))) {
+        this.actions[0] = action
+        this.game.rule!.id = ActionRuleIds[action.type]
+      }
+    }
+    return []
   }
 
   onCustomMove(move: CustomMove): MaterialMove[] {
     if (isCustomMoveType(CustomMoveType.Pass)(move)) {
       return [this.endAction()]
-    } else if (move.type === CustomMoveType.EndAction) {
-      return super.onCustomMove(move)
     }
-    return this.action.actions.flatMap((action) => getActionRule(this.game, action).onCustomMove(move))
-  }
-
-  onRuleEnd(): MaterialMove[] {
-    new MemoryHelper(this.game).clearMemory()
     return []
   }
 }
