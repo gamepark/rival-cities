@@ -1,7 +1,6 @@
-import { CustomMove, isCustomMoveType, MaterialMove } from '@gamepark/rules-api'
+import { MaterialMove } from '@gamepark/rules-api'
 import { isEqual } from 'lodash'
 import { ChoiceAction } from '../../material/Actions/Actions'
-import { CustomMoveType } from '../CustomMoveType'
 import { getActionRule } from '../helper/ActionHelper'
 import { ActionRuleIds } from '../helper/ActionRuleIds'
 import { MemoryType } from '../MemoryType'
@@ -24,13 +23,6 @@ export class ChooseSplitActionRule extends ActionRule<ChoiceAction> {
         this.actions[0] = action
         this.game.rule!.id = ActionRuleIds[action.type]
       }
-    }
-    return []
-  }
-
-  onCustomMove(move: CustomMove): MaterialMove[] {
-    if (isCustomMoveType(CustomMoveType.Pass)(move)) {
-      return [this.endAction()]
     }
     return []
   }

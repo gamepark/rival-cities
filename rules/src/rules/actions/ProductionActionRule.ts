@@ -1,5 +1,5 @@
-import { CustomMove, isCustomMoveType, isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
-import { Action, ProductionAction } from '../../material/Actions/Actions'
+import { isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
+import { ProductionAction } from '../../material/Actions/Actions'
 import { AllianceCardHelper } from '../../material/helper/AllianceCardHelper'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
@@ -71,14 +71,6 @@ export class ProductionActionRule extends ActionRule<ProductionAction> {
     return moves
   }
 
-  onCustomMove(move: CustomMove): MaterialMove[] {
-    if (isCustomMoveType(CustomMoveType.Pass)(move) && this.isSameAction(move.data as Action)) {
-      this.forget(MemoryType.ProductChosen)
-      return [this.endAction()]
-    }
-    return super.onCustomMove(move)
-  }
-
   get playerFactories() {
     return this.material(MaterialType.Factory).location(LocationType.PlayerFactories).player(this.player).rotation(undefined)
   }
@@ -115,5 +107,10 @@ export class ProductionActionRule extends ActionRule<ProductionAction> {
       .player(this.player)
       .filter((it) => shipCardsData[it.id as ShipCard].effect.type === ShipEffectType.OnProduction)
       .getItems()
+  }
+
+  onRuleEnd() {
+    this.forget(MemoryType.ProductChosen)
+    return []
   }
 }

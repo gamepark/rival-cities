@@ -1,4 +1,4 @@
-import { CustomMove, isCustomMoveType, isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
+import { isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
 import { Action, ChooseSpecialActionCardAction } from '../material/Actions/Actions'
 import { SpecialActionCardHelper } from '../material/helper/SpecialActionCardHelper'
 import { LocationType } from '../material/LocationType'
@@ -26,13 +26,6 @@ export class ChooseSpecialActionRule extends ActionRule<ChooseSpecialActionCardA
       return [this.startRule(ActionRuleIds[actions[0].type])]
     }
     return []
-  }
-
-  onCustomMove(move: CustomMove): MaterialMove[] {
-    if (isCustomMoveType(CustomMoveType.Pass)(move)) {
-      return [this.endAction()]
-    }
-    return super.onCustomMove(move)
   }
 
   get playerSpecialActionCards() {

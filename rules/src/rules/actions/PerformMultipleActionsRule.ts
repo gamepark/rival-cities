@@ -1,8 +1,7 @@
-import { CustomMove, MaterialMove, PlayMoveContext, RuleMove, RuleStep } from '@gamepark/rules-api'
+import { MaterialMove, PlayMoveContext, RuleMove, RuleStep } from '@gamepark/rules-api'
 import { isEqual } from 'lodash'
 import { MultipleAction } from '../../material/Actions/Actions'
 import { ActionType } from '../../material/Actions/ActionType'
-import { CustomMoveType } from '../CustomMoveType'
 import { getActionRule } from '../helper/ActionHelper'
 import { ActionRuleIds } from '../helper/ActionRuleIds'
 import { MemoryType } from '../MemoryType'
@@ -36,13 +35,6 @@ export class PerformMultipleActionsRule extends ActionRule<MultipleAction> {
         this.actions.unshift(action)
         this.game.rule!.id = ActionRuleIds[action.type]
       }
-    }
-    return []
-  }
-
-  onCustomMove(move: CustomMove) {
-    if (move.type === CustomMoveType.Pass) {
-      return [this.endAction()]
     }
     return []
   }

@@ -1,4 +1,4 @@
-import { CustomMove, isCustomMoveType, isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
+import { isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
 import { PayToPerformActionAgainAction } from '../material/Actions/Actions'
 import { LocationType } from '../material/LocationType'
 import { MaterialType } from '../material/MaterialType'
@@ -37,13 +37,6 @@ export class PayToPerformActionAgainRule extends ActionRule<PayToPerformActionAg
       }
     }
     return []
-  }
-
-  onCustomMove(move: CustomMove): MaterialMove[] {
-    if (isCustomMoveType(CustomMoveType.Pass)(move)) {
-      return [this.endAction()]
-    }
-    return super.onCustomMove(move)
   }
 
   get playerProducts() {

@@ -1,4 +1,4 @@
-import { CustomMove, isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
+import { isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
 import { DonationAction } from '../../material/Actions/Actions'
 import { Alliance } from '../../material/Alliance'
 import { AllianceCardHelper } from '../../material/helper/AllianceCardHelper'
@@ -59,13 +59,6 @@ export class DonationActionRule extends ActionRule<DonationAction> {
       }
     }
     return []
-  }
-
-  onCustomMove(move: CustomMove): MaterialMove[] {
-    if (move.type === CustomMoveType.Pass) {
-      return [this.endAction()]
-    }
-    return super.onCustomMove(move)
   }
 
   get starTokens() {

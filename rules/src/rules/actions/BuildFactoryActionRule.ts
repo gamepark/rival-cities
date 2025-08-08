@@ -1,5 +1,5 @@
-import { CustomMove, isCustomMoveType, isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
-import { Action, BuildFactoryAction } from '../../material/Actions/Actions'
+import { isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
+import { BuildFactoryAction } from '../../material/Actions/Actions'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { CustomMoveType } from '../CustomMoveType'
@@ -58,13 +58,6 @@ export class BuildFactoryActionRule extends ActionRule<BuildFactoryAction> {
       }
     }
     return moves
-  }
-
-  onCustomMove(move: CustomMove): MaterialMove[] {
-    if (isCustomMoveType(CustomMoveType.Pass)(move) && this.isSameAction(move.data as Action)) {
-      return [this.endAction()]
-    }
-    return super.onCustomMove(move)
   }
 
   get playerProducts() {

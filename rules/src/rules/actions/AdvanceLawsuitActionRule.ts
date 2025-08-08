@@ -1,6 +1,6 @@
-import { CustomMove, isCustomMoveType, isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
+import { isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
 import { City } from '../../City'
-import { Action, AdvanceLawsuitAction } from '../../material/Actions/Actions'
+import { AdvanceLawsuitAction } from '../../material/Actions/Actions'
 import { ActionType } from '../../material/Actions/ActionType'
 import { Alliance } from '../../material/Alliance'
 import { LawsuitCard, lawsuitCardData } from '../../material/LawsuitCard'
@@ -92,13 +92,6 @@ export class AdvanceLawsuitActionRule extends ActionRule<AdvanceLawsuitAction> {
       }
     }
     return moves
-  }
-
-  onCustomMove(move: CustomMove): MaterialMove[] {
-    if (isCustomMoveType(CustomMoveType.Pass)(move) && this.isSameAction(move.data as Action)) {
-      return [this.endAction()]
-    }
-    return super.onCustomMove(move)
   }
 
   possibleCardsToGet() {

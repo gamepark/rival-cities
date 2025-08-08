@@ -23,7 +23,7 @@ export abstract class ActionRule<E extends Action = Action> extends PlayerTurnRu
   }
 
   onCustomMove(move: CustomMove): MaterialMove[] {
-    if (move.type === CustomMoveType.EndAction) {
+    if (move.type === CustomMoveType.Pass || move.type === CustomMoveType.EndAction) {
       return this.removeActionAndMove()
     }
     return []

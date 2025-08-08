@@ -1,4 +1,4 @@
-import { CustomMove, isCustomMoveType, isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
+import { isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
 import { Action, DrawSpecialActionCardAction, EarnPrestigeAction, FormAllianceAction } from '../../material/Actions/Actions'
 import { ActionType } from '../../material/Actions/ActionType'
 import { Alliance } from '../../material/Alliance'
@@ -36,14 +36,6 @@ export class FormAllianceActionRule extends ActionRule<FormAllianceAction> {
       return new EndOfGameHelper(this.game).checkInstantEndOfGame([this.endAction()])
     }
     return []
-  }
-
-  onCustomMove(move: CustomMove): MaterialMove[] {
-    if (isCustomMoveType(CustomMoveType.Pass)(move) && this.isSameAction(move.data as Action)) {
-      this.forget(MemoryType.ProductChosen)
-      return [this.endAction()]
-    }
-    return super.onCustomMove(move)
   }
 
   get playerLetters() {
