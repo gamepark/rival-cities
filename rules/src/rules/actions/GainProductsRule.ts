@@ -1,6 +1,6 @@
-import { isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
+import { CustomMove, getEnumValues, isCustomMoveType, isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
 import { getRival } from '../../City'
-import { GainProducts, Production } from '../../material/Action'
+import { ActionType, GainProducts, Production } from '../../material/Action'
 import { Alliance } from '../../material/Alliance'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
@@ -9,6 +9,32 @@ import { CustomMoveType } from '../CustomMoveType'
 import { ActionRule } from './ActionRule'
 
 export abstract class GainProductsRule<E extends GainProducts | Production> extends ActionRule<E> {
+  onRuleStart(): MaterialMove[] {
+    const playerMoves = this.getPlayerMoves()
+    if (playerMoves.length === 1) {
+      return playerMoves
+    }
+    return []
+  }
+
+  getPlayerMoves(): MaterialMove[] {
+    const moves: MaterialMove[] = []
+    if (this.action.product) {
+      moves.push(this.gainProduct(this.action.product)[0])
+    } else {
+      for (const product of getEnumValues(Product)) {
+        const gain = this.gainProduct(product)[0]
+        if (!isCustomMoveType(CustomMoveType.ProductForgo)(gain)) {
+          moves.push(gain)
+        }
+      }
+    }
+    if (!moves.length || !this.action.quantity) {
+      moves.push(this.customMove(CustomMoveType.Pass))
+    }
+    return moves
+  }
+
   gainProduct(product: Product, quantity = 1) {
     const moves: MaterialMove[] = []
     const supply = this.material(MaterialType.Product).location(LocationType.ProductPiles).id(product)
@@ -31,29 +57,61 @@ export abstract class GainProductsRule<E extends GainProducts | Production> exte
     return moves
   }
 
-  afterItemMove(move: ItemMove) {
+  afterItemMove(move: ItemMove): MaterialMove[] {
     if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.PlayerProducts) {
       const product = this.material(MaterialType.Product).getItem<Product>(move.itemIndex).id
-      if (!this.action.productsGained?.includes(product)) {
-        this.action.productsGained ??= []
-        this.action.productsGained.push(product)
-        if (this.gainAdditionalProduct(product)) {
-          return this.gainProduct(product)
-        }
-      }
+      return this.onGainProduct(product, move.quantity)
     }
     return []
   }
 
-  gainAdditionalProduct(product: Product) {
+  onGainProduct(product: Product, quantity = 1) {
+    const moves: MaterialMove[] = this.triggerProductGainedEffects(product)
+    if (!this.action.productsGained?.includes(product)) {
+      this.action.productsGained ??= []
+      this.action.productsGained.push(product)
+    }
+    this.action.quantity -= quantity
+    if (!this.canGainMore) {
+      moves.push(this.endAction())
+    }
+    return moves
+  }
+
+  triggerProductGainedEffects(product: Product) {
+    const moves: MaterialMove[] = []
+    if (!this.action.productsGained?.includes(product) && (this.action.type === ActionType.Production || this.action.isGift)) {
+      const alliance = this.getBonusAlliance(product)
+      if (alliance && this.hasAlliance(alliance)) {
+        moves.push(this.customMove(CustomMoveType.TriggerAllianceEffect, alliance))
+      }
+    }
+    return moves
+  }
+
+  getBonusAlliance(product: Product) {
     switch (product) {
       case Product.Cloth:
-        return this.hasAlliance(Alliance.London)
+        return Alliance.London
       case Product.Leather:
-        return this.hasAlliance(Alliance.Novgorod)
+        return Alliance.Novgorod
       case Product.Furniture:
-        return this.hasAlliance(Alliance.Oslo)
+        return Alliance.Oslo
+      default:
+        return undefined
     }
-    return false
+  }
+
+  onCustomMove(move: CustomMove) {
+    if (move.type === CustomMoveType.TriggerAllianceEffect) {
+      this.action.quantity++
+      const product = getEnumValues(Product).find((product) => this.getBonusAlliance(product) === move.data)!
+      return this.gainProduct(product)
+    }
+    return super.onCustomMove(move)
+  }
+
+  get canGainMore() {
+    return this.action.quantity > 0
   }
 }

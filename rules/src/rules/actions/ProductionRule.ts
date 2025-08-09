@@ -1,4 +1,4 @@
-import { getEnumValues, isCustomMoveType, isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
+import { CustomMove, MaterialMove } from '@gamepark/rules-api'
 import { Production } from '../../material/Action'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
@@ -8,61 +8,38 @@ import { CustomMoveType } from '../CustomMoveType'
 import { GainProductsRule } from './GainProductsRule'
 
 export class ProductionRule extends GainProductsRule<Production> {
-  onRuleStart(): MaterialMove[] {
-    const playerMoves = this.getPlayerMoves()
-    if (playerMoves.length === 1) {
-      return playerMoves
+  onGainProduct(product: Product, quantity: number = 1): MaterialMove[] {
+    const moves: MaterialMove[] = []
+    if (!this.action.quantity) {
+      moves.push(this.availableFactories.rotateItem(true))
     }
-    return []
+    moves.push(...super.onGainProduct(product, quantity))
+    return moves
   }
 
-  getPlayerMoves(): MaterialMove[] {
-    const moves: MaterialMove[] = []
-    if (this.action.product) {
-      moves.push(this.gainProduct(this.action.product)[0])
-    } else {
-      for (const product of getEnumValues(Product)) {
-        const gain = this.gainProduct(product)[0]
-        if (!isCustomMoveType(CustomMoveType.ProductForgo)(gain)) {
-          moves.push(gain)
+  triggerProductGainedEffects(product: Product) {
+    const moves = super.triggerProductGainedEffects(product)
+    if (!this.action.productsGained) {
+      for (const ship of this.playerShips) {
+        if (shipCardsData[ship].effect.type === ShipEffectType.OnProduction) {
+          moves.push(this.customMove(CustomMoveType.TriggerShipEffect, ship))
         }
       }
-    }
-    if (!moves.length || !this.action.quantity) {
-      moves.push(this.customMove(CustomMoveType.Pass))
     }
     return moves
   }
 
-  afterItemMove(move: ItemMove): MaterialMove[] {
-    const moves: MaterialMove[] = []
-    if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.PlayerProducts) {
-      if (!this.action.productsGained) {
-        for (const ship of this.playerShips) {
-          const shipCardData = shipCardsData[ship]
-          if (shipCardData.effect.type === ShipEffectType.OnProduction) {
-            // TODO: better ship effect typing to remove ! cast
-            moves.push(...this.gainProduct(shipCardData.effect.product!))
-          }
-        }
-      }
-      if (this.action.quantity > 0) {
-        this.action.quantity -= move.quantity ?? 1
-      } else {
-        moves.push(this.availableFactories.rotateItem(true))
-      }
+  onCustomMove(move: CustomMove) {
+    if (move.type === CustomMoveType.TriggerShipEffect) {
+      this.action.quantity++
+      const product = shipCardsData[move.data as ShipCard].effect.product!
+      return this.gainProduct(product)
     }
-    moves.push(...super.afterItemMove(move))
-    for (const move of moves) {
-      if (isMoveItemType(MaterialType.Product)(move)) {
-        // We need to identify free products offered by alliances and ships so that it does not flip factories
-        this.action.quantity += move.quantity ?? 1
-      }
-    }
-    if (!this.action.quantity && !this.availableFactories.length) {
-      moves.push(this.endAction())
-    }
-    return moves
+    return super.onCustomMove(move)
+  }
+
+  get canGainMore() {
+    return this.action.quantity > 0 || this.availableFactories.length > 0
   }
 
   get availableFactories() {
