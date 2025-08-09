@@ -15,12 +15,15 @@ export type MultipleAction = {
   actions: Action[]
 } & ActionCommon
 
+export type GainProductAction = {
+  productsGained?: Product[]
+} & ActionCommon
+
 export type ProductionAction = {
   type: ActionType.Production
-  productType: Product | undefined
+  productType?: Product
   quantity: number
-  canGetMore: boolean
-} & ActionCommon
+} & GainProductAction
 
 export type AdvanceLawsuitAction = {
   type: ActionType.AdvanceLawsuit
@@ -68,7 +71,7 @@ export type GiftAction = {
   productType: Product | undefined
   nbProductToTake: number
   canUseAlliance: boolean
-} & ActionCommon
+} & GainProductAction
 
 export type ProductSwapAction = {
   type: ActionType.ProductSwap

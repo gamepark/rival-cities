@@ -1,6 +1,8 @@
 import { CustomMove, MaterialGame, MaterialMove, PlayerTurnRule } from '@gamepark/rules-api'
 import { getRival } from '../../City'
 import { Action } from '../../material/Actions/Actions'
+import { Alliance } from '../../material/Alliance'
+import { MaterialType } from '../../material/MaterialType'
 import { CustomMoveType } from '../CustomMoveType'
 import { ActionRuleIds } from '../helper/ActionRuleIds'
 import { MemoryType } from '../MemoryType'
@@ -62,5 +64,9 @@ export abstract class ActionRule<E extends Action = Action> extends PlayerTurnRu
       return RuleId.ConfirmEndTurn
     }
     return ActionRuleIds[this.actions[0].type]
+  }
+
+  hasAlliance(alliance: Alliance, player = this.player) {
+    return this.material(MaterialType.AllianceCard).id(alliance).getItem()?.location.player === player
   }
 }

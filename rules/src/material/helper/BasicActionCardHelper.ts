@@ -24,14 +24,12 @@ export class BasicActionCardHelper extends MaterialRulesPart {
             {
               type: ActionType.Production,
               productType: Product.Beer,
-              quantity: 2,
-              canGetMore: true
+              quantity: 2
             },
             {
               type: ActionType.Production,
               productType: Product.Cloth,
-              quantity: 1,
-              canGetMore: true
+              quantity: 1
             }
           ]
         }
@@ -53,8 +51,7 @@ export class BasicActionCardHelper extends MaterialRulesPart {
             {
               type: ActionType.Production,
               productType: Product.Furniture,
-              quantity: 1,
-              canGetMore: true
+              quantity: 1
             },
             {
               type: ActionType.GainLetter,
@@ -66,8 +63,7 @@ export class BasicActionCardHelper extends MaterialRulesPart {
         return {
           type: ActionType.Production,
           productType: Product.Cloth,
-          quantity: 1,
-          canGetMore: true
+          quantity: 1
         }
       case BasicActionCard.BasicAction7:
         return {
@@ -110,8 +106,7 @@ export class BasicActionCardHelper extends MaterialRulesPart {
             {
               type: ActionType.Production,
               productType: Product.Leather,
-              quantity: 1,
-              canGetMore: true
+              quantity: 1
             }
           ]
         }
@@ -131,8 +126,7 @@ export class BasicActionCardHelper extends MaterialRulesPart {
         return {
           type: ActionType.Production,
           productType: Product.Leather,
-          quantity: 1,
-          canGetMore: true
+          quantity: 1
         }
       case BasicActionCard.BasicAction12:
         return {
@@ -172,8 +166,7 @@ export class BasicActionCardHelper extends MaterialRulesPart {
             {
               type: ActionType.Production,
               productType: Product.Beer,
-              quantity: 2,
-              canGetMore: true
+              quantity: 2
             }
           ]
         }

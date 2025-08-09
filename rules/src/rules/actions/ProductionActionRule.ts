@@ -1,116 +1,79 @@
-import { isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
+import { getEnumValues, isCustomMoveType, isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
 import { ProductionAction } from '../../material/Actions/Actions'
-import { AllianceCardHelper } from '../../material/helper/AllianceCardHelper'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { Product } from '../../material/Product'
 import { ShipCard, shipCardsData, ShipEffectType } from '../../material/ShipCard'
 import { CustomMoveType } from '../CustomMoveType'
-import { MemoryType } from '../MemoryType'
-import { ActionRule } from './ActionRule'
+import { GainProductActionRule } from './GainProductActionRule'
 
-export class ProductionActionRule extends ActionRule<ProductionAction> {
-  allianceCardHelper = new AllianceCardHelper(this.game)
-  productChoosen = this.remind(MemoryType.ProductChosen)
-
+export class ProductionActionRule extends GainProductActionRule<ProductionAction> {
   onRuleStart(): MaterialMove[] {
-    this.forget(MemoryType.ProductChosen)
-    return this.products.moveItems((item) => ({ type: LocationType.PlayerProducts, player: this.player, id: item.id }), this.action.quantity)
-  }
-
-  getPlayerMoves(): MaterialMove[] {
-    if (!this.productChoosen) {
-      const productsToMove = this.action.productType ? this.products : this.allProducts
-      return [
-        ...productsToMove.moveItems((item) => ({ type: LocationType.PlayerProducts, player: this.player, id: item.id }), this.action.quantity),
-        this.customMove(CustomMoveType.Pass, this.action)
-      ]
-    }
-    if (this.playerFactories.length && (!this.action.productType || this.action.productType === this.productChoosen)) {
-      return [...this.playerFactories.rotateItems(true), this.customMove(CustomMoveType.Pass, this.action)]
-    }
-    return [this.customMove(CustomMoveType.Pass, this.action)]
-  }
-
-  beforeItemMove(move: ItemMove): MaterialMove[] {
-    if (isMoveItemType(MaterialType.Factory)(move)) {
-      if (!this.action.productType) {
-        this.forget(MemoryType.ProductChosen)
-      }
-      if (this.productChoosen === this.action.productType) {
-        return [this.products.moveItem({ type: LocationType.PlayerProducts, id: this.productChoosen, player: this.player })]
-      }
+    const playerMoves = this.getPlayerMoves()
+    if (playerMoves.length === 1) {
+      return playerMoves
     }
     return []
   }
 
-  afterItemMove(move: ItemMove): MaterialMove[] {
+  getPlayerMoves(): MaterialMove[] {
     const moves: MaterialMove[] = []
-    if (isMoveItemType(MaterialType.Product)(move) && (!this.action.productType || this.action.productType === move.location.id)) {
-      if (!this.productChoosen) {
-        this.memorize(MemoryType.ProductChosen, move.location.id)
-        if (this.action.canGetMore) {
-          if (this.playerShipCards.length > 0) {
-            for (const shipCard of this.playerShipCards) {
-              const shipCardData = shipCardsData[shipCard.id as ShipCard]
-              if (shipCardData.effect.move) {
-                moves.push(...shipCardData.effect.move(this.game, this.player))
-              }
-            }
-          }
-          moves.push(...this.allianceCardHelper.getOsloProducts(move.location.id as Product))
-          moves.push(...this.allianceCardHelper.getNovgorodProducts(move.location.id as Product))
-          moves.push(...this.allianceCardHelper.getLondonProducts(move.location.id as Product))
-          this.action.canGetMore = false
+    if (this.action.productType) {
+      moves.push(this.gainProduct(this.action.productType)[0])
+    } else {
+      for (const product of getEnumValues(Product)) {
+        const gain = this.gainProduct(product)[0]
+        if (!isCustomMoveType(CustomMoveType.ProductForgo)(gain)) {
+          moves.push(gain)
         }
-      } else if (this.playerFactories.length === 0) {
-        this.forget(MemoryType.ProductChosen)
-        moves.push(this.endAction())
       }
+    }
+    if (!moves.length || !this.action.quantity) {
+      moves.push(this.customMove(CustomMoveType.Pass))
     }
     return moves
   }
 
-  get playerFactories() {
+  afterItemMove(move: ItemMove): MaterialMove[] {
+    const moves: MaterialMove[] = []
+    if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.PlayerProducts) {
+      if (!this.action.productsGained) {
+        for (const ship of this.playerShips) {
+          const shipCardData = shipCardsData[ship]
+          if (shipCardData.effect.type === ShipEffectType.OnProduction) {
+            // TODO: better ship effect typing to remove ! cast
+            moves.push(...this.gainProduct(shipCardData.effect.product!))
+          }
+        }
+      }
+      if (this.action.quantity > 0) {
+        this.action.quantity -= move.quantity ?? 1
+      } else {
+        moves.push(this.availableFactories.rotateItem(true))
+      }
+    }
+    moves.push(...super.afterItemMove(move))
+    for (const move of moves) {
+      if (isMoveItemType(MaterialType.Product)(move)) {
+        // We need to identify free products offered by alliances and ships so that it does not flip factories
+        this.action.quantity += move.quantity ?? 1
+      }
+    }
+    if (!this.action.quantity && !this.availableFactories.length) {
+      moves.push(this.endAction())
+    }
+    return moves
+  }
+
+  get availableFactories() {
     return this.material(MaterialType.Factory).location(LocationType.PlayerFactories).player(this.player).rotation(undefined)
   }
 
-  get products() {
-    const productsInReserve = this.material(MaterialType.Product).location(LocationType.ProductPiles).id(this.action.productType)
-
-    if (productsInReserve.length > 0) return productsInReserve
-
-    const opponentProduct = this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(this.nextPlayer).id(this.action.productType)
-    const playerProduct = this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(this.player).id(this.action.productType)
-
-    if (opponentProduct.length > playerProduct.length) return opponentProduct
-
-    return productsInReserve
-  }
-
-  get allProducts() {
-    const productsInReserve = this.material(MaterialType.Product).location(LocationType.ProductPiles)
-
-    if (productsInReserve.length > 0) return productsInReserve
-
-    const opponentProduct = this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(this.nextPlayer)
-    const playerProduct = this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(this.player)
-
-    if (opponentProduct.length > playerProduct.length) return opponentProduct
-
-    return productsInReserve
-  }
-
-  get playerShipCards() {
+  get playerShips() {
     return this.material(MaterialType.ShipCard)
       .location(LocationType.PlayerShipCards)
       .player(this.player)
-      .filter((it) => shipCardsData[it.id as ShipCard].effect.type === ShipEffectType.OnProduction)
-      .getItems()
-  }
-
-  onRuleEnd() {
-    this.forget(MemoryType.ProductChosen)
-    return []
+      .getItems<ShipCard>()
+      .map((item) => item.id)
   }
 }

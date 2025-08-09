@@ -1,7 +1,6 @@
-import { getEnumValues, MaterialGame, MaterialMove } from '@gamepark/rules-api'
+import { getEnumValues, MaterialGame } from '@gamepark/rules-api'
 import { Action } from './Actions/Actions'
 import { ActionType } from './Actions/ActionType'
-import { ShipCardHelper } from './helper/ShipCardHelper'
 import { Product } from './Product'
 
 export enum ShipCard {
@@ -44,7 +43,7 @@ export type ShipCardData = {
   effect: {
     type: ShipEffectType
     getActions?: (game: MaterialGame, player: number) => Action[]
-    move?: (game: MaterialGame, player: number) => MaterialMove[]
+    product?: Product
   }
   getNbStars: (_nbShip: number) => number
 }
@@ -175,7 +174,7 @@ export const shipCardsData: Record<ShipCard, ShipCardData> = {
     cost: { type: Product.Cloth, quantity: 4 },
     effect: {
       type: ShipEffectType.OnProduction,
-      move: (game, player) => new ShipCardHelper(game, player).getProductMove(Product.Beer, 1)
+      product: Product.Beer
     },
     getNbStars: () => 1
   },
@@ -183,7 +182,7 @@ export const shipCardsData: Record<ShipCard, ShipCardData> = {
     cost: { type: Product.Beer, quantity: 6 },
     effect: {
       type: ShipEffectType.OnProduction,
-      move: (game, player) => new ShipCardHelper(game, player).getProductMove(Product.Leather, 1)
+      product: Product.Leather
     },
     getNbStars: () => 1
   },
@@ -191,7 +190,7 @@ export const shipCardsData: Record<ShipCard, ShipCardData> = {
     cost: { type: Product.Leather, quantity: 4 },
     effect: {
       type: ShipEffectType.OnProduction,
-      move: (game, player) => new ShipCardHelper(game, player).getProductMove(Product.Cloth, 1)
+      product: Product.Cloth
     },
     getNbStars: () => 1
   },
@@ -199,7 +198,7 @@ export const shipCardsData: Record<ShipCard, ShipCardData> = {
     cost: { type: Product.Cloth, quantity: 5 },
     effect: {
       type: ShipEffectType.OnProduction,
-      move: (game, player) => new ShipCardHelper(game, player).getProductMove(Product.Furniture, 1)
+      product: Product.Furniture
     },
     getNbStars: () => 1
   },

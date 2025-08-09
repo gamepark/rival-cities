@@ -160,9 +160,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
         return [
           {
             type: ActionType.Production,
-            productType: undefined,
-            quantity: 1,
-            canGetMore: true
+            quantity: 1
           }
         ]
       case SpecialActionCard.SpecialAction12:
@@ -228,8 +226,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
           {
             type: ActionType.Production,
             productType: Product.Furniture,
-            quantity: 1,
-            canGetMore: true
+            quantity: 1
           }
         ]
       case SpecialActionCard.SpecialAction17:

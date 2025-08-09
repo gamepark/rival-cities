@@ -1,42 +1,51 @@
 /** @jsxImportSource @emotion/react */
-import { PlayMoveButton, useLegalMove, usePlayerId, usePlayerName, useRules } from '@gamepark/react-game'
+import { Picture, PlayMoveButton, useLegalMove, usePlayerId, usePlayerName, useRules } from '@gamepark/react-game'
 import { RivalCitiesRules } from '@gamepark/rival-cities/RivalCitiesRules'
+import { ProductionActionRule } from '@gamepark/rival-cities/rules/actions/ProductionActionRule'
 import { CustomMoveType } from '@gamepark/rival-cities/rules/CustomMoveType'
-import { MemoryType } from '@gamepark/rival-cities/rules/MemoryType'
 import { isCustomMoveType } from '@gamepark/rules-api'
 import { Trans } from 'react-i18next'
+import { getProductIcon, iconCss } from './HeaderIconsCss'
 
 export const ProductionHeader = () => {
-  const player = usePlayerId()
+  const me = usePlayerId()
   const rules = useRules<RivalCitiesRules>()!
   const activePlayer = rules.game.rule?.player
-  const itsMe = player && activePlayer === player
-  const name = usePlayerName(activePlayer)
+  const player = usePlayerName(activePlayer)
   const pass = useLegalMove(isCustomMoveType(CustomMoveType.Pass))
 
-  const productChoosen = rules.remind(MemoryType.ProductChosen)
+  const { productType: product, quantity } = new ProductionActionRule(rules.game).action
 
-  if (itsMe) {
-    if (productChoosen) {
+  if (activePlayer === me) {
+    if (quantity) {
+      return (
+        <Trans
+          defaults={`header.production.you`}
+          components={{
+            product: <Picture src={getProductIcon(product)} css={iconCss} />
+          }}
+        />
+      )
+    } else {
       return (
         <Trans
           defaults="header.production.factory.you"
-          values={{ product: productChoosen }}
           components={{
+            product: <Picture src={getProductIcon(product)} css={iconCss} />,
             pass: <PlayMoveButton move={pass} />
           }}
         />
       )
     }
-    return (
-      <Trans
-        defaults={`header.production.you`}
-        components={{
-          pass: <PlayMoveButton move={pass} />
-        }}
-      />
-    )
   }
 
-  return <Trans defaults={`header.production.player`} values={{ player: name }} />
+  return (
+    <Trans
+      defaults={`header.production.player`}
+      values={{ player }}
+      components={{
+        product: <Picture src={getProductIcon(product)} css={iconCss} />
+      }}
+    />
+  )
 }

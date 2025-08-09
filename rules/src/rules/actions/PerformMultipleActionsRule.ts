@@ -3,16 +3,9 @@ import { isEqual, omit } from 'lodash'
 import { Action, MultipleAction } from '../../material/Actions/Actions'
 import { getActionRule } from '../helper/ActionHelper'
 import { ActionRuleIds } from '../helper/ActionRuleIds'
-import { MemoryType } from '../MemoryType'
 import { ActionRule } from './ActionRule'
 
 export class PerformMultipleActionsRule extends ActionRule<MultipleAction> {
-  onRuleStart() {
-    // TODO: fix that:
-    this.forget(MemoryType.ProductChosen)
-    return []
-  }
-
   getPlayerMoves(): MaterialMove[] {
     return this.action.actions.flatMap((action) => getActionRule(this.game, action).getPlayerMoves())
   }

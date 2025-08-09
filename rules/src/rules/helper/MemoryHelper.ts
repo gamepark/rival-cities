@@ -7,6 +7,5 @@ export class MemoryHelper extends MaterialRulesPart {
     this.memorize(MemoryType.IsProductReturn, false)
     this.memorize(MemoryType.IsBuildInProgress, false)
     this.memorize(MemoryType.CounterActions, 0)
-    this.forget(MemoryType.ProductChosen)
   }
 }

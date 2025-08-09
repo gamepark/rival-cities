@@ -7,4 +7,6 @@ export enum Product {
   Furniture
 }
 
+export const PRODUCTS_QUANTITY = 12
+
 export const products = getEnumValues(Product)
