@@ -52,9 +52,9 @@ export type GainProducts = {
 export type Donation = {
   type: ActionType.Donation
   product?: Product
-  nbProduct: number
-  nbStars: number
-  nbTimes: number
+  cost: number
+  stars: number
+  times: number
 } & ActionCommon
 
 export type ProductSwap = {

@@ -148,9 +148,9 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
           {
             type: ActionType.Donation,
             product: Product.Furniture,
-            nbProduct: 2,
-            nbStars: 3,
-            nbTimes: 1
+            cost: 2,
+            stars: 3,
+            times: 1
           }
         ]
       case SpecialActionCard.SpecialAction11:
@@ -191,9 +191,9 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
           {
             type: ActionType.Donation,
             product: Product.Cloth,
-            nbProduct: 1,
-            nbStars: 1,
-            nbTimes: 1
+            cost: 1,
+            stars: 1,
+            times: 1
           }
         ]
       case SpecialActionCard.SpecialAction14:
@@ -318,9 +318,9 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
           {
             type: ActionType.Donation,
             product: Product.Leather,
-            nbProduct: 1,
-            nbStars: 1,
-            nbTimes: 2
+            cost: 1,
+            stars: 1,
+            times: 2
           }
         ]
       case SpecialActionCard.SpecialAction24:
@@ -333,9 +333,9 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
           {
             type: ActionType.Donation,
             product: Product.Beer,
-            nbProduct: 3,
-            nbStars: 1,
-            nbTimes: 2
+            cost: 3,
+            stars: 1,
+            times: 2
           }
         ]
     }

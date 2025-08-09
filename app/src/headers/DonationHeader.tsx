@@ -12,19 +12,16 @@ import Star from '../images/icons/Star.png'
 import { getProductIcon, iconCss } from './HeaderIconsCss'
 
 export const DonationHeader = () => {
-  const player = usePlayerId()
+  const me = usePlayerId()
   const rules = useRules<RivalCitiesRules>()!
   const activePlayer = rules.game.rule?.player
-  const itsMe = player && activePlayer === player
-  const name = usePlayerName(activePlayer)
+  const player = usePlayerName(activePlayer)
   const pass = useLegalMove(isCustomMoveType(CustomMoveType.Pass))
   const donate = useLegalMove(isMoveItemType(MaterialType.StarToken))
-  const action = new DonationRule(rules.game).action
-  const cost = action.nbProduct
-  const gain = action.nbStars
+  const { cost, product, stars, times } = new DonationRule(rules.game).action
   const count = rules.remind<number>(MemoryType.Count)
 
-  if (itsMe) {
+  if (activePlayer === me) {
     if (count) {
       return (
         <Trans
@@ -39,10 +36,10 @@ export const DonationHeader = () => {
       return (
         <Trans
           defaults="header.donation.you"
-          values={{ cost, gain, count: action.nbTimes }}
+          values={{ cost, stars, times }}
           components={{
             donate: <PlayMoveButton move={donate} />,
-            item: <Picture src={getProductIcon(action.product)} css={iconCss} />,
+            item: <Picture src={getProductIcon(product)} css={iconCss} />,
             star: <Picture src={Star} css={iconCss} />,
             pass: <PlayMoveButton move={pass} />
           }}
@@ -64,9 +61,9 @@ export const DonationHeader = () => {
     return (
       <Trans
         defaults="header.donation.player"
-        values={{ player: name, cost, gain, count: action.nbTimes }}
+        values={{ player, cost, stars, times }}
         components={{
-          item: <Picture src={getProductIcon(action.product)} css={iconCss} />,
+          item: <Picture src={getProductIcon(product)} css={iconCss} />,
           star: <Picture src={Star} css={iconCss} />
         }}
       />

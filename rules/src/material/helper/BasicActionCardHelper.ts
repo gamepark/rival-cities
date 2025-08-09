@@ -87,9 +87,9 @@ export class BasicActionCardHelper extends MaterialRulesPart {
             },
             {
               type: ActionType.Donation,
-              nbProduct: 2,
-              nbTimes: 1,
-              nbStars: 1
+              cost: 2,
+              stars: 1,
+              times: 1
             }
           ]
         }
