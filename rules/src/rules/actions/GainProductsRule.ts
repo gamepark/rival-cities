@@ -10,7 +10,6 @@ import { ActionRule } from './ActionRule'
 
 export class GainProductsRule<A extends GainProducts | Production> extends ActionRule<A> {
   onRuleStart(): MaterialMove[] {
-    console.log(this.action)
     const playerMoves = this.getPlayerMoves()
     if (playerMoves.length === 1) {
       return playerMoves

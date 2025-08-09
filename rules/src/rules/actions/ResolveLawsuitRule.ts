@@ -5,8 +5,6 @@ import { Lawsuit, lawsuitData } from '../../material/Lawsuit'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { Ship } from '../../material/Ship'
-import { ActionRuleIds } from '../helper/ActionRuleIds'
-import { EndOfGameHelper } from '../helper/EndOfGameHelper'
 import { MemoryType } from '../MemoryType'
 import { RuleId } from '../RuleId'
 import { ActionRule } from './ActionRule'
@@ -66,24 +64,18 @@ export class ResolveLawsuitRule extends ActionRule<ResolveLawsuitAction> {
   afterItemMove(move: ItemMove): MaterialMove[] {
     if (isMoveItemType(MaterialType.LawsuitCard)(move)) {
       if (move.location.type === LocationType.PlayerLawsuitCards) {
-        return new EndOfGameHelper(this.game).checkInstantEndOfGame(this.getMoveOnLawsuitWin(move))
+        if (this.remind(MemoryType.PendingRule)) {
+          this.memorize(MemoryType.PendingRule, RuleId.OffSeasonChangeSpecialCards)
+        }
+        const lawsuit = this.material(MaterialType.LawsuitCard).getItem<Lawsuit>(move.itemIndex).id
+        const actions = lawsuitData[lawsuit].winBonus
+        this.addActions(...JSON.parse(JSON.stringify(actions)))
       } else if (move.location.type === LocationType.LawsuitSpace) {
-        return [this.endAction()]
+        return [this.startNextRule()]
       }
     } else if (isDeleteItemType(MaterialType.LawsuitPiece)(move)) {
-      return [this.endAction()]
+      return [this.startNextRule()]
     }
     return []
-  }
-
-  getMoveOnLawsuitWin(move: MaterialMove) {
-    if (!isMoveItemType(MaterialType.LawsuitCard)(move)) return []
-    if (this.remind(MemoryType.PendingRule)) {
-      this.memorize(MemoryType.PendingRule, RuleId.OffSeasonChangeSpecialCards)
-    }
-    const cardId = this.material(MaterialType.LawsuitCard).getItem(move.itemIndex).id as Lawsuit
-    const actions = lawsuitData[cardId].winBonus
-    this.addActions(...JSON.parse(JSON.stringify(actions)))
-    return [this.startRule(ActionRuleIds[actions[0].type])]
   }
 }

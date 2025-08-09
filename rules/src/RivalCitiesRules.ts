@@ -173,14 +173,18 @@ export class RivalCitiesRules
         }
       }
     }
-    if (isMoveItemType(MaterialType.PrestigeMarker)(move) && Math.abs(move.location.x!) >= 8) {
-      return [this.endGame()]
-    } else if (isMoveItemType(MaterialType.ShipCard)(move) && move.location.type === LocationType.PlayerShipCards) {
+    if (isMoveItemType(MaterialType.ShipCard)(move) && move.location.type === LocationType.PlayerShipCards) {
       const player = move.location.player!
       const ships = this.material(MaterialType.ShipCard).location(LocationType.PlayerShipCards)
       if (ships.player(player).length >= ships.player(getRival(player)).length + 3) {
         return [this.endGame()]
       }
+    } else if (isMoveItemType(MaterialType.LawsuitCard)(move) && move.location.type === LocationType.PlayerLawsuitCards) {
+      if (this.material(MaterialType.LawsuitCard).player(move.location.player).length === 3) {
+        return [this.endGame()]
+      }
+    } else if (isMoveItemType(MaterialType.PrestigeMarker)(move) && Math.abs(move.location.x!) >= 8) {
+      return [this.endGame()]
     }
     consequences.push(...super.afterItemMove(move))
     return consequences
