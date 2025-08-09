@@ -12,7 +12,6 @@ import { EarnPrestigeActionRule } from '../actions/EarnPrestigeActionRule'
 import { FormAllianceActionRule } from '../actions/FormAllianceActionRule'
 import { GainLetterActionRule } from '../actions/GainLetterActionRule'
 import { GiftActionRule } from '../actions/GiftActionRule'
-import { OpponentEarnPrestigeActionRule } from '../actions/OpponentEarnPrestigeActionRule'
 import { PerformMultipleActionsRule } from '../actions/PerformMultipleActionsRule'
 import { PiracyActionRule } from '../actions/PiracyActionRule'
 import { ProductionActionRule } from '../actions/ProductionActionRule'
@@ -37,8 +36,6 @@ export const getActionRule = (game: MaterialGame, action: Action): ActionRule =>
       return new DrawSpecialActionCardActionRule(game, action)
     case ActionType.EarnPrestige:
       return new EarnPrestigeActionRule(game, action)
-    case ActionType.OpponentEarnPrestige:
-      return new OpponentEarnPrestigeActionRule(game, action)
     case ActionType.FormAlliance:
       return new FormAllianceActionRule(game, action)
     case ActionType.GainLetter:

@@ -1,12 +1,10 @@
 import { isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
-import { Action, EarnPrestigeAction, PurchaseShipAction } from '../../material/Actions/Actions'
-import { ActionType } from '../../material/Actions/ActionType'
+import { PurchaseShipAction } from '../../material/Actions/Actions'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { ShipCard, shipCardsData, ShipEffectType } from '../../material/ShipCard'
 import { CustomMoveType } from '../CustomMoveType'
 import { EndOfGameHelper } from '../helper/EndOfGameHelper'
-import { MemoryType } from '../MemoryType'
 import { ActionRule } from './ActionRule'
 
 export class PurchaseShipActionRule extends ActionRule<PurchaseShipAction> {
@@ -42,7 +40,6 @@ export class PurchaseShipActionRule extends ActionRule<PurchaseShipAction> {
     if (!isMoveItemType(MaterialType.ShipCard)(move)) return []
     const moves: MaterialMove[] = []
     const shipId: ShipCard = this.material(MaterialType.ShipCard).index(move.itemIndex).getItem()?.id
-    this.updateAction(shipId)
     const shipData = shipCardsData[shipId]
     const costQuantity = this.action.playerHasShip19 ? shipData.cost.quantity - 1 : shipData.cost.quantity
     moves.push(...this.playerProducts.id(shipData.cost.type).moveItems({ type: LocationType.ProductPiles, id: shipData.cost.type }, costQuantity))
@@ -69,17 +66,5 @@ export class PurchaseShipActionRule extends ActionRule<PurchaseShipAction> {
 
   get shipCards() {
     return this.material(MaterialType.ShipCard).location(LocationType.ShipCardsRiver)
-  }
-
-  updateAction(ship: ShipCard): void {
-    const action = this.remind<Action[]>(MemoryType.Actions)[0]
-    if (ship === ShipCard.Ship16) {
-      if (action.type === ActionType.Multiple) {
-        const prestigeAction: EarnPrestigeAction | undefined = action.actions.find((a) => a.type === ActionType.EarnPrestige) as EarnPrestigeAction
-        if (prestigeAction) {
-          prestigeAction.playerCanUseShip16 = true
-        }
-      }
-    }
   }
 }

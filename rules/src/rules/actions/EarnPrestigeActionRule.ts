@@ -1,70 +1,78 @@
-import { isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
-import { City } from '../../City'
-import { EarnPrestigeAction } from '../../material/Actions/Actions'
+import { isMoveItemType, ItemMove } from '@gamepark/rules-api'
+import { City, getRival } from '../../City'
+import { EarnPrestigeAction, PayToPerformActionAgainAction } from '../../material/Actions/Actions'
 import { ActionType } from '../../material/Actions/ActionType'
+import { Alliance } from '../../material/Alliance'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { Product } from '../../material/Product'
-import { EndOfGameHelper } from '../helper/EndOfGameHelper'
+import { ShipCard } from '../../material/ShipCard'
 import { ActionRule } from './ActionRule'
 
 export class EarnPrestigeActionRule extends ActionRule<EarnPrestigeAction> {
-  onRuleStart(): MaterialMove[] {
-    const move = this.action.playerWhoEarnedPrestige === City.Altona ? -1 : 1
-    return [this.prestigeMarker.moveItem(({ location }) => ({ ...location, x: location.x! + move }))]
+  onRuleStart() {
+    return this.getPlayerMoves()
   }
 
-  getPlayerMoves(): MaterialMove[] {
-    const move = this.action.playerWhoEarnedPrestige === City.Altona ? -1 : 1
-    return [this.prestigeMarker.moveItem(({ location }) => ({ ...location, x: location.x! + move }))]
+  getPlayerMoves() {
+    const delta = this.playerEarningPrestige === City.Altona ? -1 : 1
+    return [this.material(MaterialType.PrestigeMarker).moveItem((item) => ({ type: LocationType.PrestigeMarkerPiste, x: item.location.x! + delta }))]
   }
 
-  afterItemMove(move: ItemMove): MaterialMove[] {
+  get playerEarningPrestige() {
+    return this.action.rival ? getRival(this.player) : this.player
+  }
+
+  afterItemMove(move: ItemMove) {
     if (isMoveItemType(MaterialType.PrestigeMarker)(move)) {
-      return new EndOfGameHelper(this.game).checkInstantEndOfGame(this.movesOnPrestigeMarkerMoved())
+      const performAgainActions: PayToPerformActionAgainAction[] = []
+      if (!this.action.isBruxellesBonus && this.hasBruxellesAlliance && this.hasFurniture) {
+        performAgainActions.push({
+          type: ActionType.PayToPerformActionAgain,
+          productType: Product.Furniture,
+          price: 1,
+          isRivalTurn: this.action.rival ?? this.action.isRivalTurn,
+          actionToPerformAgain: {
+            type: ActionType.EarnPrestige,
+            isBruxellesBonus: true,
+            isRivalTurn: this.action.rival ?? this.action.isRivalTurn
+          }
+        })
+      }
+      if (!this.action.isShip16Bonus && this.hasShip16 && this.beers >= 2) {
+        performAgainActions.push({
+          type: ActionType.PayToPerformActionAgain,
+          productType: Product.Beer,
+          price: 2,
+          isRivalTurn: this.action.rival ?? this.action.isRivalTurn,
+          actionToPerformAgain: {
+            type: ActionType.EarnPrestige,
+            isShip16Bonus: true,
+            isRivalTurn: this.action.rival ?? this.action.isRivalTurn
+          }
+        })
+      }
+      if (performAgainActions.length) {
+        this.addActionBonus(...performAgainActions)
+      }
+      return this.removeActionAndMove()
     }
     return []
   }
 
-  movesOnPrestigeMarkerMoved(): MaterialMove[] {
-    if (this.action.playerCanUseShip16 && this.playerBeers.length >= 2) {
-      this.addActionBonus({
-        type: ActionType.PayToPerformActionAgain,
-        productType: Product.Beer,
-        price: 2,
-        actionToPerformAgain: {
-          type: ActionType.EarnPrestige,
-          playerWhoEarnedPrestige: this.action.playerWhoEarnedPrestige,
-          playerCanUseAllianceBruxelles: false,
-          playerCanUseShip16: false
-        }
-      })
-    }
-    if (this.action.playerCanUseAllianceBruxelles && this.playerFurnitures.getQuantity() > 0) {
-      this.addActionBonus({
-        type: ActionType.PayToPerformActionAgain,
-        productType: Product.Furniture,
-        price: 1,
-        actionToPerformAgain: {
-          type: ActionType.EarnPrestige,
-          playerWhoEarnedPrestige: this.action.playerWhoEarnedPrestige,
-          playerCanUseAllianceBruxelles: false,
-          playerCanUseShip16: false
-        }
-      })
-    }
-    return [this.endAction()]
+  get hasBruxellesAlliance() {
+    return this.material(MaterialType.AllianceCard).id(Alliance.LeHavre).getItem()?.location.player === this.playerEarningPrestige
   }
 
-  get prestigeMarker() {
-    return this.material(MaterialType.PrestigeMarker).location(LocationType.PrestigeMarkerPiste)
+  get hasFurniture() {
+    return this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(this.playerEarningPrestige).id(Product.Furniture).getQuantity() > 0
   }
 
-  get playerBeers() {
-    return this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(this.action.playerWhoEarnedPrestige).id(Product.Beer)
+  get hasShip16() {
+    return this.material(MaterialType.ShipCard).id(ShipCard.Ship16).getItem()?.location.player === this.playerEarningPrestige
   }
 
-  get playerFurnitures() {
-    return this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(this.action.playerWhoEarnedPrestige).id(Product.Furniture)
+  get beers() {
+    return this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(this.playerEarningPrestige).id(Product.Beer).getQuantity()
   }
 }

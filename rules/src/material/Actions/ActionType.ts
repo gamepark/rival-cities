@@ -5,7 +5,6 @@ export enum ActionType {
   Donation,
   DrawSpecialActionCard,
   EarnPrestige,
-  OpponentEarnPrestige,
   FormAlliance,
   GainLetter,
   Gift,

@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { MaterialHelpProps, useRules } from '@gamepark/react-game'
+import { ActionType } from '@gamepark/rival-cities/material/Actions/ActionType'
 import { SpecialActionCardHelper } from '@gamepark/rival-cities/material/helper/SpecialActionCardHelper'
 import { ShipCard } from '@gamepark/rival-cities/material/ShipCard'
 import { SpecialActionCard } from '@gamepark/rival-cities/material/SpecialActionCard'
@@ -25,11 +26,14 @@ export const SpecialActionCardHelp: FC<MaterialHelpProps> = ({ item }) => {
       {item.id && (
         <>
           <h3>{t(`help.actions`)}</h3>
-          {actions.map((a, index) => (
-            <p key={index}>
-              <Trans defaults={`help.action.descr.${a.type}`} values={a} components={components} />
-            </p>
-          ))}
+          {actions.map((a, index) => {
+            const rival = a.type === ActionType.EarnPrestige && a.rival ? '.rival' : ''
+            return (
+              <p key={index}>
+                <Trans defaults={`help.action.descr.${a.type}${rival}`} values={a} components={components} />
+              </p>
+            )
+          })}
         </>
       )}
       <p css={note}>

@@ -122,10 +122,7 @@ export class BasicActionCardHelper extends MaterialRulesPart {
           type: this.computeActionIfPlayerHasGdanskAlliance(),
           actions: [
             {
-              type: ActionType.EarnPrestige,
-              playerWhoEarnedPrestige: this.player,
-              playerCanUseAllianceBruxelles: this.checkPlayerHaveBruxellesCard,
-              playerCanUseShip16: this.checkPlayerHaveShip16
+              type: ActionType.EarnPrestige
             },
             {
               type: ActionType.FormAlliance
@@ -173,10 +170,7 @@ export class BasicActionCardHelper extends MaterialRulesPart {
           type: this.computeActionIfPlayerHasGdanskAlliance(),
           actions: [
             {
-              type: ActionType.EarnPrestige,
-              playerWhoEarnedPrestige: this.player,
-              playerCanUseAllianceBruxelles: this.checkPlayerHaveBruxellesCard,
-              playerCanUseShip16: this.checkPlayerHaveShip16
+              type: ActionType.EarnPrestige
             },
             {
               type: ActionType.Production,
@@ -200,14 +194,6 @@ export class BasicActionCardHelper extends MaterialRulesPart {
 
   get checkPlayerHaveGdanskAllianceCard(): boolean {
     return this.material(MaterialType.AllianceCard).location(LocationType.PlayerAlliances).player(this.player).id(Alliance.Gdansk).length > 0
-  }
-
-  get checkPlayerHaveBruxellesCard(): boolean {
-    return this.material(MaterialType.AllianceCard).location(LocationType.PlayerAlliances).player(this.player).id(Alliance.Bruxelles).length > 0
-  }
-
-  get checkPlayerHaveShip16(): boolean {
-    return this.material(MaterialType.ShipCard).location(LocationType.PlayerShipCards).player(this.player).id(ShipCard.Ship16).length > 0
   }
 
   get checkPlayerHaveShip19() {

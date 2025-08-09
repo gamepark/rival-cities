@@ -1,12 +1,9 @@
 import { isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
-import { Action, EarnPrestigeAction, FormAllianceAction } from '../../material/Actions/Actions'
-import { ActionType } from '../../material/Actions/ActionType'
-import { Alliance } from '../../material/Alliance'
+import { FormAllianceAction } from '../../material/Actions/Actions'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { CustomMoveType } from '../CustomMoveType'
 import { EndOfGameHelper } from '../helper/EndOfGameHelper'
-import { MemoryType } from '../MemoryType'
 import { ActionRule } from './ActionRule'
 
 export class FormAllianceActionRule extends ActionRule<FormAllianceAction> {
@@ -32,7 +29,6 @@ export class FormAllianceActionRule extends ActionRule<FormAllianceAction> {
 
   afterItemMove(move: ItemMove): MaterialMove[] {
     if (isMoveItemType(MaterialType.AllianceCard)(move)) {
-      this.updateAction(this.material(MaterialType.AllianceCard).index(move.itemIndex).getItem()?.id as Alliance)
       return new EndOfGameHelper(this.game).checkInstantEndOfGame([this.endAction()])
     }
     return []
@@ -48,17 +44,5 @@ export class FormAllianceActionRule extends ActionRule<FormAllianceAction> {
 
   get opponentAllianceCards() {
     return this.material(MaterialType.AllianceCard).location(LocationType.PlayerAlliances).player(this.nextPlayer)
-  }
-
-  updateAction(alliance: Alliance): void {
-    const action = this.remind<Action[]>(MemoryType.Actions)[0]
-    if (alliance === Alliance.Bruxelles) {
-      if (action.type === ActionType.Multiple) {
-        const prestigeAction: EarnPrestigeAction | undefined = action.actions.find((a) => a.type === ActionType.EarnPrestige) as EarnPrestigeAction
-        if (prestigeAction) {
-          prestigeAction.playerCanUseAllianceBruxelles = true
-        }
-      }
-    }
   }
 }

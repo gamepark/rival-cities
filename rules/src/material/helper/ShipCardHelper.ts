@@ -1,11 +1,9 @@
 import { MaterialGame, MaterialMove, MaterialRulesPart } from '@gamepark/rules-api'
 import { Action } from '../Actions/Actions'
 import { ActionType } from '../Actions/ActionType'
-import { Alliance } from '../Alliance'
 import { LocationType } from '../LocationType'
 import { MaterialType } from '../MaterialType'
 import { Product } from '../Product'
-import { ShipCard } from '../ShipCard'
 
 export class ShipCardHelper extends MaterialRulesPart {
   player: number
@@ -16,20 +14,7 @@ export class ShipCardHelper extends MaterialRulesPart {
   }
 
   shipCard1(): Action[] {
-    return [
-      {
-        type: ActionType.EarnPrestige,
-        playerWhoEarnedPrestige: this.player,
-        playerCanUseAllianceBruxelles: this.checkPlayerHaveBruxellesCard,
-        playerCanUseShip16: this.checkPlayerHaveShip16
-      },
-      {
-        type: ActionType.EarnPrestige,
-        playerWhoEarnedPrestige: this.player,
-        playerCanUseAllianceBruxelles: this.checkPlayerHaveBruxellesCard,
-        playerCanUseShip16: this.checkPlayerHaveShip16
-      }
-    ]
+    return [{ type: ActionType.EarnPrestige }, { type: ActionType.EarnPrestige }]
   }
 
   shipCard2(): Action[] {
@@ -91,14 +76,7 @@ export class ShipCardHelper extends MaterialRulesPart {
   }
 
   shipCard8(): Action[] {
-    return [
-      {
-        type: ActionType.EarnPrestige,
-        playerWhoEarnedPrestige: this.player,
-        playerCanUseAllianceBruxelles: this.checkPlayerHaveBruxellesCard,
-        playerCanUseShip16: this.checkPlayerHaveShip16
-      }
-    ]
+    return [{ type: ActionType.EarnPrestige }]
   }
 
   shipCard9(): Action[] {
@@ -126,17 +104,5 @@ export class ShipCardHelper extends MaterialRulesPart {
       .location(LocationType.ProductPiles)
       .id(product)
       .moveItems({ type: LocationType.PlayerProducts, player: this.player, id: product }, quantity)
-  }
-
-  get checkPlayerHaveKjjobenhavnAllianceCard(): boolean {
-    return this.material(MaterialType.AllianceCard).location(LocationType.PlayerAlliances).player(this.player).id(Alliance.Kjjobenhavn).length > 0
-  }
-
-  get checkPlayerHaveBruxellesCard(): boolean {
-    return this.material(MaterialType.AllianceCard).location(LocationType.PlayerAlliances).player(this.player).id(Alliance.Bruxelles).length > 0
-  }
-
-  get checkPlayerHaveShip16(): boolean {
-    return this.material(MaterialType.ShipCard).location(LocationType.PlayerShipCards).player(this.player).id(ShipCard.Ship16).length > 0
   }
 }

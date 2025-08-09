@@ -31,7 +31,6 @@ import { EarnPrestigeActionRule } from './rules/actions/EarnPrestigeActionRule'
 import { FormAllianceActionRule } from './rules/actions/FormAllianceActionRule'
 import { GainLetterActionRule } from './rules/actions/GainLetterActionRule'
 import { GiftActionRule } from './rules/actions/GiftActionRule'
-import { OpponentEarnPrestigeActionRule } from './rules/actions/OpponentEarnPrestigeActionRule'
 import { PerformMultipleActionsRule } from './rules/actions/PerformMultipleActionsRule'
 import { PiracyActionRule } from './rules/actions/PiracyActionRule'
 import { ProductionActionRule } from './rules/actions/ProductionActionRule'
@@ -80,7 +79,6 @@ export class RivalCitiesRules
     [RuleId.AdvanceLawsuit]: AdvanceLawsuitActionRule,
     [RuleId.DrawSpecialActionCard]: DrawSpecialActionCardActionRule,
     [RuleId.EarnPrestige]: EarnPrestigeActionRule,
-    [RuleId.OpponentEarnPrestige]: OpponentEarnPrestigeActionRule,
     [RuleId.GainLetter]: GainLetterActionRule,
     [RuleId.OffSeasonTakeBell]: OffSeasonTakeBellRule,
     [RuleId.OffSeasonPayForAlliance]: OffSeasonPayForAllianceRule,
@@ -173,6 +171,9 @@ export class RivalCitiesRules
           consequences.push(discard.shuffle())
         }
       }
+    }
+    if (isMoveItemType(MaterialType.PrestigeMarker)(move) && Math.abs(move.location.x!) >= 8) {
+      return [this.endGame()]
     }
     consequences.push(...super.afterItemMove(move))
     return consequences

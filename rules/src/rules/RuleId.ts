@@ -9,7 +9,6 @@ export enum RuleId {
   AdvanceLawsuit,
   DrawSpecialActionCard,
   EarnPrestige,
-  OpponentEarnPrestige,
   GainLetter,
   ChooseSpecialAction,
   Production,

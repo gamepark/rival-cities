@@ -1,11 +1,7 @@
 import { MaterialGame, MaterialRulesPart } from '@gamepark/rules-api'
 import { Action } from '../Actions/Actions'
 import { ActionType } from '../Actions/ActionType'
-import { Alliance } from '../Alliance'
-import { LocationType } from '../LocationType'
-import { MaterialType } from '../MaterialType'
 import { Product } from '../Product'
-import { ShipCard } from '../ShipCard'
 
 export class LawsuitCardHelper extends MaterialRulesPart {
   player: number
@@ -35,10 +31,7 @@ export class LawsuitCardHelper extends MaterialRulesPart {
         canUseAlliance: false
       },
       {
-        type: ActionType.EarnPrestige,
-        playerWhoEarnedPrestige: this.player,
-        playerCanUseAllianceBruxelles: this.checkPlayerHaveBruxellesCard,
-        playerCanUseShip16: this.checkPlayerHaveShip16
+        type: ActionType.EarnPrestige
       }
     ]
   }
@@ -86,14 +79,7 @@ export class LawsuitCardHelper extends MaterialRulesPart {
   }
 
   lawersuitCard4ActionOnAdvance(): Action[] {
-    return [
-      {
-        type: ActionType.EarnPrestige,
-        playerWhoEarnedPrestige: this.player,
-        playerCanUseAllianceBruxelles: this.checkPlayerHaveBruxellesCard,
-        playerCanUseShip16: this.checkPlayerHaveShip16
-      }
-    ]
+    return [{ type: ActionType.EarnPrestige }]
   }
 
   lawersuitCard4ActionOnWin(): Action[] {
@@ -133,14 +119,7 @@ export class LawsuitCardHelper extends MaterialRulesPart {
   }
 
   lawersuitCard6ActionOnAdvance(): Action[] {
-    return [
-      {
-        type: ActionType.EarnPrestige,
-        playerWhoEarnedPrestige: this.player,
-        playerCanUseAllianceBruxelles: this.checkPlayerHaveBruxellesCard,
-        playerCanUseShip16: this.checkPlayerHaveShip16
-      }
-    ]
+    return [{ type: ActionType.EarnPrestige }]
   }
 
   lawersuitCard6ActionOnWin(): Action[] {
@@ -166,10 +145,7 @@ export class LawsuitCardHelper extends MaterialRulesPart {
   lawersuitCard7ActionOnWin(): Action[] {
     return [
       {
-        type: ActionType.EarnPrestige,
-        playerWhoEarnedPrestige: this.player,
-        playerCanUseAllianceBruxelles: this.checkPlayerHaveBruxellesCard,
-        playerCanUseShip16: this.checkPlayerHaveShip16
+        type: ActionType.EarnPrestige
       },
       {
         type: ActionType.Gift,
@@ -205,14 +181,7 @@ export class LawsuitCardHelper extends MaterialRulesPart {
   }
 
   lawersuitCard9ActionOnAdvance(): Action[] {
-    return [
-      {
-        type: ActionType.EarnPrestige,
-        playerWhoEarnedPrestige: this.player,
-        playerCanUseAllianceBruxelles: this.checkPlayerHaveBruxellesCard,
-        playerCanUseShip16: this.checkPlayerHaveShip16
-      }
-    ]
+    return [{ type: ActionType.EarnPrestige }]
   }
 
   lawersuitCard9ActionOnWin(): Action[] {
@@ -242,13 +211,5 @@ export class LawsuitCardHelper extends MaterialRulesPart {
         price: 0
       }
     ]
-  }
-
-  get checkPlayerHaveBruxellesCard(): boolean {
-    return this.material(MaterialType.AllianceCard).location(LocationType.PlayerAlliances).player(this.player).id(Alliance.Bruxelles).length > 0
-  }
-
-  get checkPlayerHaveShip16(): boolean {
-    return this.material(MaterialType.ShipCard).location(LocationType.PlayerShipCards).player(this.player).id(ShipCard.Ship16).length > 0
   }
 }

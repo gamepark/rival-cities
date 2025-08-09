@@ -1,7 +1,6 @@
 import { MaterialGame, MaterialRulesPart } from '@gamepark/rules-api'
 import { Action, MultipleAction } from '../Actions/Actions'
 import { ActionType } from '../Actions/ActionType'
-import { Alliance } from '../Alliance'
 import { LocationType } from '../LocationType'
 import { MaterialType } from '../MaterialType'
 import { Product } from '../Product'
@@ -90,7 +89,8 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
       case SpecialActionCard.SpecialAction6:
         return [
           {
-            type: ActionType.OpponentEarnPrestige
+            type: ActionType.EarnPrestige,
+            rival: true
           },
           {
             type: ActionType.Piracy,
@@ -120,10 +120,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
             nbTimeAlreadyAdvanced: 0
           },
           {
-            type: ActionType.EarnPrestige,
-            playerWhoEarnedPrestige: this.player,
-            playerCanUseAllianceBruxelles: this.checkPlayerHaveBruxellesCard,
-            playerCanUseShip16: this.checkPlayerHaveShip16
+            type: ActionType.EarnPrestige
           },
           {
             type: ActionType.GainLetter,
@@ -137,10 +134,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
             nbTimeAlreadyAdvanced: 0
           },
           {
-            type: ActionType.EarnPrestige,
-            playerWhoEarnedPrestige: this.player,
-            playerCanUseAllianceBruxelles: this.checkPlayerHaveBruxellesCard,
-            playerCanUseShip16: this.checkPlayerHaveShip16
+            type: ActionType.EarnPrestige
           },
           {
             type: ActionType.Gift,
@@ -253,10 +247,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
             nbTimeAlreadyAdvanced: 0
           },
           {
-            type: ActionType.EarnPrestige,
-            playerWhoEarnedPrestige: this.player,
-            playerCanUseAllianceBruxelles: this.checkPlayerHaveBruxellesCard,
-            playerCanUseShip16: this.checkPlayerHaveShip16
+            type: ActionType.EarnPrestige
           },
           {
             type: ActionType.Gift,
@@ -365,18 +356,6 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
           }
         ]
     }
-  }
-
-  get checkPlayerHaveKjjobenhavnAllianceCard(): boolean {
-    return this.material(MaterialType.AllianceCard).location(LocationType.PlayerAlliances).player(this.player).id(Alliance.Kjjobenhavn).length > 0
-  }
-
-  get checkPlayerHaveBruxellesCard(): boolean {
-    return this.material(MaterialType.AllianceCard).location(LocationType.PlayerAlliances).player(this.player).id(Alliance.Bruxelles).length > 0
-  }
-
-  get checkPlayerHaveShip16(): boolean {
-    return this.material(MaterialType.ShipCard).location(LocationType.PlayerShipCards).player(this.player).id(ShipCard.Ship16).length > 0
   }
 
   get checkPlayerHaveShip19() {

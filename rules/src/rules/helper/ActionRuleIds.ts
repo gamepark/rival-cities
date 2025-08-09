@@ -8,7 +8,6 @@ export const ActionRuleIds: Record<ActionType, RuleId> = {
   [ActionType.Donation]: RuleId.Donation,
   [ActionType.DrawSpecialActionCard]: RuleId.DrawSpecialActionCard,
   [ActionType.EarnPrestige]: RuleId.EarnPrestige,
-  [ActionType.OpponentEarnPrestige]: RuleId.OpponentEarnPrestige,
   [ActionType.FormAlliance]: RuleId.FormAlliance,
   [ActionType.GainLetter]: RuleId.GainLetter,
   [ActionType.Gift]: RuleId.Gift,
