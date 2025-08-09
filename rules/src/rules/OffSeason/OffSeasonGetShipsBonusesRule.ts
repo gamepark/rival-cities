@@ -22,7 +22,7 @@ export class OffSeasonGetShipsBonusesRule extends PlayerTurnRule {
             ? RuleId.OffSeasonGetPrestigeBonuses
             : RuleId.OffSeasonGetShipsBonuses
         )
-        this.memorize(MemoryType.Actions, JSON.parse(JSON.stringify(effect.actions)))
+        this.memorize(MemoryType.Actions, structuredClone(effect.actions))
         return [this.startRule(ActionRuleIds[this.remind<Action[]>(MemoryType.Actions)[0].type])]
       }
     }

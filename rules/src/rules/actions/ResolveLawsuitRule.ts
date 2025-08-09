@@ -69,7 +69,7 @@ export class ResolveLawsuitRule extends ActionRule<ResolveLawsuitAction> {
         }
         const lawsuit = this.material(MaterialType.LawsuitCard).getItem<Lawsuit>(move.itemIndex).id
         const actions = lawsuitData[lawsuit].winBonus
-        this.addActions(...JSON.parse(JSON.stringify(actions)))
+        this.addActions(...structuredClone(actions))
       } else if (move.location.type === LocationType.LawsuitSpace) {
         return [this.startNextRule()]
       }

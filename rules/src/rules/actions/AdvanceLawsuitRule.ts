@@ -85,7 +85,7 @@ export class AdvanceLawsuitRule extends ActionRule<AdvanceLawsuit> {
         }
         if (timeAlreadyAdvanced === 0) {
           for (const action of lawsuitData[card.id as Lawsuit].advanceBonus) {
-            this.addActions(JSON.parse(JSON.stringify(action)))
+            this.addActions(structuredClone(action))
           }
         }
         moves.push(this.endAction())
