@@ -26,6 +26,7 @@ import { OffSeasonTakeBellHeader } from './OffSeasonTakeBellHeader'
 import { PayProductForAdvanceHeader } from './PayProductForAdvanceHeader'
 import { PayToPerformActionAgainHeader } from './PayToPerformActionAgainHeader'
 import { PerformMultipleActionsHeader } from './PerformMultipleActionsHeader'
+import { PiracyHeader } from './PiracyHeader'
 import { ProductionHeader } from './ProductionHeader'
 import { ProductSwapHeader } from './ProductSwapHeader'
 import { ResolveLawsuitHeader } from './ResolveLawsuitHeader'
@@ -41,6 +42,7 @@ export const Headers: Partial<Record<RuleId, ComponentType>> = {
   [RuleId.AdvanceLawsuit]: AdvanceLawsuitHeader,
   [RuleId.DrawSpecialActionCard]: DrawSpecialActionCardHeader,
   [RuleId.EarnPrestige]: EarnPrestigeHeader,
+  [RuleId.Piracy]: PiracyHeader,
   [RuleId.GainLetter]: GainLetterHeader,
   [RuleId.OffSeasonTakeBell]: OffSeasonTakeBellHeader,
   [RuleId.OffSeasonPayForAlliance]: OffSeasonPayForAllianceHeader,

@@ -1,37 +1,33 @@
-import { isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
+import { isMoveItemType, ItemMove } from '@gamepark/rules-api'
+import { getRival } from '../../City'
 import { PiracyAction } from '../../material/Actions/Actions'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
-import { CustomMoveType } from '../CustomMoveType'
-import { MemoryType } from '../MemoryType'
 import { ActionRule } from './ActionRule'
 
 export class PiracyActionRule extends ActionRule<PiracyAction> {
-  getPlayerMoves(): MaterialMove[] {
-    const moves: MaterialMove[] = []
-    if (this.opponentProducts.length > 0) {
-      moves.push(...this.opponentProducts.moveItems((item) => ({ type: LocationType.PlayerProducts, player: this.player, id: item.id })))
+  onRuleStart() {
+    if (!this.rivalProducts.getQuantity()) {
+      return this.removeActionAndMove()
     }
-    moves.push(this.customMove(CustomMoveType.Pass, this.action))
-    return moves
+    return []
   }
 
-  beforeItemMove(move: ItemMove): MaterialMove[] {
+  getPlayerMoves() {
+    return this.rivalProducts.moveItems((item) => ({ type: LocationType.PlayerProducts, player: this.player, id: item.id }))
+  }
+
+  afterItemMove(move: ItemMove) {
     if (isMoveItemType(MaterialType.Product)(move)) {
-      this.memorize<number>(MemoryType.Count, (old) => old + 1)
+      this.action.nbProductsToSteal--
+      if (!this.action.nbProductsToSteal || !this.rivalProducts.getQuantity()) {
+        return this.removeActionAndMove()
+      }
     }
     return []
   }
 
-  afterItemMove(move: ItemMove): MaterialMove[] {
-    if (isMoveItemType(MaterialType.Product)(move) && this.remind(MemoryType.Count) === this.action.nbProductsToSteal) {
-      this.memorize(MemoryType.Count, 0)
-      return [this.endAction()]
-    }
-    return []
-  }
-
-  get opponentProducts() {
-    return this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(this.nextPlayer)
+  get rivalProducts() {
+    return this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(getRival(this.player))
   }
 }
