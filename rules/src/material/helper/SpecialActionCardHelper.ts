@@ -41,7 +41,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
           },
           {
             type: ActionType.Gift,
-            nbProductToTake: 2,
+            quantity: 2,
             canUseAlliance: true
           }
         ]
@@ -56,7 +56,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
           },
           {
             type: ActionType.Gift,
-            nbProductToTake: 1,
+            quantity: 1,
             canUseAlliance: true
           }
         ]
@@ -96,7 +96,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
           {
             type: ActionType.Gift,
             product: Product.Cloth,
-            nbProductToTake: 1,
+            quantity: 1,
             canUseAlliance: true
           },
           {
@@ -129,7 +129,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
           {
             type: ActionType.Gift,
             product: Product.Cloth,
-            nbProductToTake: 1,
+            quantity: 1,
             canUseAlliance: true
           }
         ]
@@ -142,7 +142,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
           {
             type: ActionType.Gift,
             product: Product.Beer,
-            nbProductToTake: 1,
+            quantity: 1,
             canUseAlliance: true
           },
           {
@@ -172,7 +172,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
           {
             type: ActionType.Gift,
             product: Product.Beer,
-            nbProductToTake: 2,
+            quantity: 2,
             canUseAlliance: true
           }
         ]
@@ -185,7 +185,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
           {
             type: ActionType.Gift,
             product: Product.Beer,
-            nbProductToTake: 1,
+            quantity: 1,
             canUseAlliance: true
           },
           {
@@ -238,7 +238,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
           {
             type: ActionType.Gift,
             product: Product.Furniture,
-            nbProductToTake: 1,
+            quantity: 1,
             canUseAlliance: true
           }
         ]
@@ -276,7 +276,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
           {
             type: ActionType.Gift,
             product: Product.Furniture,
-            nbProductToTake: 1,
+            quantity: 1,
             canUseAlliance: true
           },
           {
@@ -312,7 +312,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
           },
           {
             type: ActionType.Gift,
-            nbProductToTake: 1,
+            quantity: 1,
             canUseAlliance: true
           },
           {
@@ -327,7 +327,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
         return [
           {
             type: ActionType.Gift,
-            nbProductToTake: 2,
+            quantity: 2,
             canUseAlliance: true
           },
           {

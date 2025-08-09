@@ -132,7 +132,7 @@ export class BasicActionCardHelper extends MaterialRulesPart {
           actions: [
             {
               type: ActionType.Gift,
-              nbProductToTake: 1,
+              quantity: 1,
               canUseAlliance: true
             },
             {

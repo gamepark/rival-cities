@@ -49,7 +49,7 @@ export type Production = {
 export type Gift = {
   type: ActionType.Gift
   product?: Product
-  nbProductToTake: number
+  quantity: number
   canUseAlliance: boolean
 } & GainProducts
 

@@ -14,7 +14,7 @@ export class GiftRule extends ActionRule<Gift> {
   onRuleStart(): MaterialMove[] {
     const moves: MaterialMove[] = []
     if (this.action.product) {
-      for (let i = 0; i < this.action.nbProductToTake; i++) {
+      for (let i = 0; i < this.action.quantity; i++) {
         moves.push(this.products.moveItem({ type: LocationType.PlayerProducts, player: this.player, id: this.action.product }))
       }
     }
@@ -24,7 +24,7 @@ export class GiftRule extends ActionRule<Gift> {
   getPlayerMoves(): MaterialMove[] {
     const moves: MaterialMove[] = []
     if (this.action.product) {
-      moves.push(...this.products.moveItems({ type: LocationType.PlayerProducts, player: this.player, id: this.action.product }, this.action.nbProductToTake))
+      moves.push(...this.products.moveItems({ type: LocationType.PlayerProducts, player: this.player, id: this.action.product }, this.action.quantity))
     } else {
       moves.push(...this.allProducts.moveItems((item) => ({ type: LocationType.PlayerProducts, player: this.player, id: item.id }), 1))
     }
@@ -47,7 +47,7 @@ export class GiftRule extends ActionRule<Gift> {
         moves.push(...this.allianceCardHelper.getNovgorodProducts(move.location.id as Product))
         moves.push(...this.allianceCardHelper.getLondonProducts(move.location.id as Product))
       }
-      if (this.remind(MemoryType.Count) === this.action.nbProductToTake) {
+      if (this.remind(MemoryType.Count) === this.action.quantity) {
         moves.push(...this.movesAfterProductsGiven())
       }
     }
