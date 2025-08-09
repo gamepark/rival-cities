@@ -4,8 +4,7 @@ import { Product } from './Product'
 export enum ShipEffectType {
   Instant = 1,
   OffSeason,
-  OnProduction,
-  Always
+  OnProduction
 }
 
 export type ShipData = {
@@ -155,31 +154,26 @@ export function getShipData(ship: number): ShipData {
     case 15:
       return {
         cost: { type: Product.Cloth, quantity: 3 },
-        effect: { type: ShipEffectType.Always },
         getNbStars: () => 1
       }
     case 16:
       return {
         cost: { type: Product.Furniture, quantity: 3 },
-        effect: { type: ShipEffectType.Always },
         getNbStars: () => 2
       }
     case 17:
       return {
         cost: { type: Product.Leather, quantity: 3 },
-        effect: { type: ShipEffectType.Always },
         getNbStars: () => 1
       }
     case 18:
       return {
         cost: { type: Product.Furniture, quantity: 4 },
-        effect: { type: ShipEffectType.Always },
         getNbStars: () => 1
       }
     case 19:
       return {
         cost: { type: Product.Beer, quantity: 4 },
-        effect: { type: ShipEffectType.Always },
         getNbStars: () => 1
       }
     case 20:
