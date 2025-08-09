@@ -84,7 +84,7 @@ export class AdvanceLawsuitRule extends ActionRule<AdvanceLawsuit> {
           })
         }
         if (timeAlreadyAdvanced === 0) {
-          lawsuitCardData[card.id as LawsuitCard].actionInAdvance(this.game, this.player).forEach((action) => this.addActionBonus(action))
+          lawsuitCardData[card.id as LawsuitCard].getAdvanceBonus(this.game, this.player).forEach((action) => this.addActionBonus(action))
         }
         moves.push(this.endAction())
       }

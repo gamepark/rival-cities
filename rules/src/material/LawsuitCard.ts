@@ -1,6 +1,5 @@
 import { getEnumValues, MaterialGame } from '@gamepark/rules-api'
-import { Action } from './Action'
-import { LawsuitCardHelper } from './helper/LawsuitCardHelper'
+import { Action, ActionType } from './Action'
 import { Product } from './Product'
 
 export enum LawsuitCard {
@@ -21,8 +20,8 @@ export type LawsuitCardData = {
     type: Product | 'Letter'
     quantity: number
   }[]
-  actionInAdvance: (game: MaterialGame, player: number) => Action[]
-  actionInWin: (game: MaterialGame, player: number) => Action[]
+  getAdvanceBonus: (game: MaterialGame, player: number) => Action[]
+  getWinBonus: (game: MaterialGame, player: number) => Action[]
   nbStars: number
 }
 
@@ -31,44 +30,56 @@ export const lawsuitCards = getEnumValues(LawsuitCard)
 export const lawsuitCardData: Record<LawsuitCard, LawsuitCardData> = {
   [LawsuitCard.Lawsuit1]: {
     cost: [{ type: Product.Cloth, quantity: 1 }],
-    actionInAdvance: (game, player) => new LawsuitCardHelper(game, player).lawsuitCard1ActionOnAdvance(),
-    actionInWin: (game, player) => new LawsuitCardHelper(game, player).lawsuitCard1ActionOnWin(),
+    getAdvanceBonus: () => [{ type: ActionType.GainProducts, product: Product.Leather, quantity: 1 }],
+    getWinBonus: () => [{ type: ActionType.GainProducts, product: Product.Leather, quantity: 3 }, { type: ActionType.EarnPrestige }],
     nbStars: 1
   },
   [LawsuitCard.Lawsuit2]: {
     cost: [{ type: Product.Leather, quantity: 1 }],
-    actionInAdvance: (game, player) => new LawsuitCardHelper(game, player).lawsuitCard2ActionOnAdvance(),
-    actionInWin: (game, player) => new LawsuitCardHelper(game, player).lawsuitCard2ActionOnWin(),
+    getAdvanceBonus: () => [{ type: ActionType.GainProducts, product: Product.Furniture, quantity: 1 }],
+    getWinBonus: () => [{ type: ActionType.BuildFactory, price: 0 }],
     nbStars: 2
   },
   [LawsuitCard.Lawsuit3]: {
     cost: [{ type: Product.Furniture, quantity: 1 }],
-    actionInAdvance: (game, player) => new LawsuitCardHelper(game, player).lawsuitCard3ActionOnAdvance(),
-    actionInWin: (game, player) => new LawsuitCardHelper(game, player).lawsuitCard3ActionOnWin(),
+    getAdvanceBonus: () => [{ type: ActionType.GainProducts, product: Product.Cloth, quantity: 1 }],
+    getWinBonus: () => [{ type: ActionType.GainProducts, quantity: 2 }],
     nbStars: 3
   },
   [LawsuitCard.Lawsuit4]: {
     cost: [{ type: 'Letter', quantity: 1 }],
-    actionInAdvance: (game, player) => new LawsuitCardHelper(game, player).lawsuitCard4ActionOnAdvance(),
-    actionInWin: (game, player) => new LawsuitCardHelper(game, player).lawsuitCard4ActionOnWin(),
+    getAdvanceBonus: () => [{ type: ActionType.EarnPrestige }],
+    getWinBonus: () => [{ type: ActionType.BuildFactory, price: 0 }],
     nbStars: 4
   },
   [LawsuitCard.Lawsuit5]: {
     cost: [{ type: Product.Leather, quantity: 1 }],
-    actionInAdvance: (game, player) => new LawsuitCardHelper(game, player).lawsuitCard5ActionOnAdvance(),
-    actionInWin: (game, player) => new LawsuitCardHelper(game, player).lawsuitCard5ActionOnWin(),
+    getAdvanceBonus: () => [{ type: ActionType.ReactivateFactory, count: 2 }],
+    getWinBonus: () => [
+      {
+        type: ActionType.GainProducts,
+        product: Product.Beer,
+        quantity: 3
+      },
+      {
+        type: ActionType.Donation,
+        nbProduct: 0,
+        nbStars: 2,
+        nbTimes: 1
+      }
+    ],
     nbStars: 2
   },
   [LawsuitCard.Lawsuit6]: {
     cost: [{ type: Product.Furniture, quantity: 1 }],
-    actionInAdvance: (game, player) => new LawsuitCardHelper(game, player).lawsuitCard6ActionOnAdvance(),
-    actionInWin: (game, player) => new LawsuitCardHelper(game, player).lawsuitCard6ActionOnWin(),
+    getAdvanceBonus: () => [{ type: ActionType.EarnPrestige }],
+    getWinBonus: () => [{ type: ActionType.GainLetter, nbLettersToTake: 2 }],
     nbStars: 2
   },
   [LawsuitCard.Lawsuit7]: {
     cost: [{ type: Product.Cloth, quantity: 1 }],
-    actionInAdvance: (game, player) => new LawsuitCardHelper(game, player).lawsuitCard7ActionOnAdvance(),
-    actionInWin: (game, player) => new LawsuitCardHelper(game, player).lawsuitCard7ActionOnWin(),
+    getAdvanceBonus: () => [{ type: ActionType.GainProducts, product: Product.Beer, quantity: 1 }],
+    getWinBonus: () => [{ type: ActionType.EarnPrestige }, { type: ActionType.GainProducts, quantity: 1 }],
     nbStars: 2
   },
   [LawsuitCard.Lawsuit8]: {
@@ -76,20 +87,23 @@ export const lawsuitCardData: Record<LawsuitCard, LawsuitCardData> = {
       { type: Product.Cloth, quantity: 1 },
       { type: Product.Leather, quantity: 1 }
     ],
-    actionInAdvance: (game, player) => new LawsuitCardHelper(game, player).lawsuitCard8ActionOnAdvance(),
-    actionInWin: (game, player) => new LawsuitCardHelper(game, player).lawsuitCard8ActionOnWin(),
+    getAdvanceBonus: () => [
+      { type: ActionType.GainProducts, product: Product.Beer, quantity: 1 },
+      { type: ActionType.GainLetter, nbLettersToTake: 1 }
+    ],
+    getWinBonus: () => [{ type: ActionType.BuildFactory, price: 0 }],
     nbStars: 3
   },
   [LawsuitCard.Lawsuit9]: {
     cost: [{ type: Product.Leather, quantity: 1 }],
-    actionInAdvance: (game, player) => new LawsuitCardHelper(game, player).lawsuitCard9ActionOnAdvance(),
-    actionInWin: (game, player) => new LawsuitCardHelper(game, player).lawsuitCard9ActionOnWin(),
+    getAdvanceBonus: () => [{ type: ActionType.EarnPrestige }],
+    getWinBonus: () => [{ type: ActionType.GainLetter, nbLettersToTake: 1 }],
     nbStars: 2
   },
   [LawsuitCard.Lawsuit10]: {
     cost: [{ type: Product.Beer, quantity: 2 }],
-    actionInAdvance: (game, player) => new LawsuitCardHelper(game, player).lawsuitCard10ActionOnAdvance(),
-    actionInWin: (game, player) => new LawsuitCardHelper(game, player).lawsuitCard10ActionOnWin(),
+    getAdvanceBonus: () => [{ type: ActionType.GainProducts, product: Product.Cloth, quantity: 1 }],
+    getWinBonus: () => [{ type: ActionType.BuildFactory, price: 0 }],
     nbStars: 2
   }
 }
