@@ -14,7 +14,7 @@ export class LawsuitCardHelper extends MaterialRulesPart {
     return [
       {
         type: ActionType.Gift,
-        productType: Product.Leather,
+        product: Product.Leather,
         nbProductToTake: 1,
         canUseAlliance: false
       }
@@ -25,7 +25,7 @@ export class LawsuitCardHelper extends MaterialRulesPart {
     return [
       {
         type: ActionType.Gift,
-        productType: Product.Leather,
+        product: Product.Leather,
         nbProductToTake: 3,
         canUseAlliance: false
       },
@@ -39,7 +39,7 @@ export class LawsuitCardHelper extends MaterialRulesPart {
     return [
       {
         type: ActionType.Gift,
-        productType: Product.Furniture,
+        product: Product.Furniture,
         nbProductToTake: 1,
         canUseAlliance: false
       }
@@ -59,7 +59,7 @@ export class LawsuitCardHelper extends MaterialRulesPart {
     return [
       {
         type: ActionType.Gift,
-        productType: Product.Cloth,
+        product: Product.Cloth,
         nbProductToTake: 1,
         canUseAlliance: false
       }
@@ -102,7 +102,7 @@ export class LawsuitCardHelper extends MaterialRulesPart {
     return [
       {
         type: ActionType.Gift,
-        productType: Product.Beer,
+        product: Product.Beer,
         nbProductToTake: 3,
         canUseAlliance: false
       },
@@ -132,7 +132,7 @@ export class LawsuitCardHelper extends MaterialRulesPart {
     return [
       {
         type: ActionType.Gift,
-        productType: Product.Beer,
+        product: Product.Beer,
         nbProductToTake: 1,
         canUseAlliance: false
       }
@@ -156,7 +156,7 @@ export class LawsuitCardHelper extends MaterialRulesPart {
     return [
       {
         type: ActionType.Gift,
-        productType: Product.Beer,
+        product: Product.Beer,
         nbProductToTake: 1,
         canUseAlliance: false
       },
@@ -193,7 +193,7 @@ export class LawsuitCardHelper extends MaterialRulesPart {
     return [
       {
         type: ActionType.Gift,
-        productType: Product.Cloth,
+        product: Product.Cloth,
         nbProductToTake: 1,
         canUseAlliance: false
       }

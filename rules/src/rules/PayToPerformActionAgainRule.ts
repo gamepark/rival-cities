@@ -9,8 +9,8 @@ import { MemoryType } from './MemoryType'
 export class PayToPerformActionAgainRule extends ActionRule<PayToPerformActionAgainAction> {
   getPlayerMoves(): MaterialMove[] {
     const moves: MaterialMove[] = []
-    if (this.action.productType) {
-      moves.push(...this.playerProducts.id(this.action.productType).moveItems((it) => ({ type: LocationType.ProductPiles, id: it.id })))
+    if (this.action.product) {
+      moves.push(...this.playerProducts.id(this.action.product).moveItems((it) => ({ type: LocationType.ProductPiles, id: it.id })))
     } else {
       moves.push(...this.playerProducts.moveItems((it) => ({ type: LocationType.ProductPiles, id: it.id })))
     }

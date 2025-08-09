@@ -42,20 +42,20 @@ export type GainProducts = {
 
 export type Production = {
   type: ActionType.Production
-  productType?: Product
+  product?: Product
   quantity: number
 } & GainProducts
 
 export type Gift = {
   type: ActionType.Gift
-  productType?: Product
+  product?: Product
   nbProductToTake: number
   canUseAlliance: boolean
 } & GainProducts
 
 export type Donation = {
   type: ActionType.Donation
-  productType?: Product
+  product?: Product
   nbProduct: number
   nbStars: number
   nbTimes: number
@@ -127,7 +127,7 @@ export type ChooseSpecialActionCardAction = {
 
 export type PayToPerformActionAgainAction = {
   type: ActionType.PayToPerformActionAgain
-  productType?: Product
+  product?: Product
   price: number
   actionToPerformAgain: Action
 } & ActionCommon

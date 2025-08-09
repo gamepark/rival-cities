@@ -22,12 +22,12 @@ export class BasicActionCardHelper extends MaterialRulesPart {
           actions: [
             {
               type: ActionType.Production,
-              productType: Product.Beer,
+              product: Product.Beer,
               quantity: 2
             },
             {
               type: ActionType.Production,
-              productType: Product.Cloth,
+              product: Product.Cloth,
               quantity: 1
             }
           ]
@@ -49,7 +49,7 @@ export class BasicActionCardHelper extends MaterialRulesPart {
           actions: [
             {
               type: ActionType.Production,
-              productType: Product.Furniture,
+              product: Product.Furniture,
               quantity: 1
             },
             {
@@ -61,7 +61,7 @@ export class BasicActionCardHelper extends MaterialRulesPart {
       case BasicActionCard.BasicAction6:
         return {
           type: ActionType.Production,
-          productType: Product.Cloth,
+          product: Product.Cloth,
           quantity: 1
         }
       case BasicActionCard.BasicAction7:
@@ -103,7 +103,7 @@ export class BasicActionCardHelper extends MaterialRulesPart {
             },
             {
               type: ActionType.Production,
-              productType: Product.Leather,
+              product: Product.Leather,
               quantity: 1
             }
           ]
@@ -123,7 +123,7 @@ export class BasicActionCardHelper extends MaterialRulesPart {
       case BasicActionCard.BasicAction11:
         return {
           type: ActionType.Production,
-          productType: Product.Leather,
+          product: Product.Leather,
           quantity: 1
         }
       case BasicActionCard.BasicAction12:
@@ -162,7 +162,7 @@ export class BasicActionCardHelper extends MaterialRulesPart {
             },
             {
               type: ActionType.Production,
-              productType: Product.Beer,
+              product: Product.Beer,
               quantity: 2
             }
           ]

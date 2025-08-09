@@ -95,7 +95,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
           },
           {
             type: ActionType.Gift,
-            productType: Product.Cloth,
+            product: Product.Cloth,
             nbProductToTake: 1,
             canUseAlliance: true
           },
@@ -128,7 +128,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
           },
           {
             type: ActionType.Gift,
-            productType: Product.Cloth,
+            product: Product.Cloth,
             nbProductToTake: 1,
             canUseAlliance: true
           }
@@ -141,13 +141,13 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
           },
           {
             type: ActionType.Gift,
-            productType: Product.Beer,
+            product: Product.Beer,
             nbProductToTake: 1,
             canUseAlliance: true
           },
           {
             type: ActionType.Donation,
-            productType: Product.Furniture,
+            product: Product.Furniture,
             nbProduct: 2,
             nbStars: 3,
             nbTimes: 1
@@ -171,7 +171,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
           },
           {
             type: ActionType.Gift,
-            productType: Product.Beer,
+            product: Product.Beer,
             nbProductToTake: 2,
             canUseAlliance: true
           }
@@ -184,13 +184,13 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
           },
           {
             type: ActionType.Gift,
-            productType: Product.Beer,
+            product: Product.Beer,
             nbProductToTake: 1,
             canUseAlliance: true
           },
           {
             type: ActionType.Donation,
-            productType: Product.Cloth,
+            product: Product.Cloth,
             nbProduct: 1,
             nbStars: 1,
             nbTimes: 1
@@ -222,7 +222,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
         return [
           {
             type: ActionType.Production,
-            productType: Product.Furniture,
+            product: Product.Furniture,
             quantity: 1
           }
         ]
@@ -237,7 +237,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
           },
           {
             type: ActionType.Gift,
-            productType: Product.Furniture,
+            product: Product.Furniture,
             nbProductToTake: 1,
             canUseAlliance: true
           }
@@ -275,7 +275,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
           },
           {
             type: ActionType.Gift,
-            productType: Product.Furniture,
+            product: Product.Furniture,
             nbProductToTake: 1,
             canUseAlliance: true
           },
@@ -317,7 +317,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
           },
           {
             type: ActionType.Donation,
-            productType: Product.Leather,
+            product: Product.Leather,
             nbProduct: 1,
             nbStars: 1,
             nbTimes: 2
@@ -332,7 +332,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
           },
           {
             type: ActionType.Donation,
-            productType: Product.Beer,
+            product: Product.Beer,
             nbProduct: 3,
             nbStars: 1,
             nbTimes: 2

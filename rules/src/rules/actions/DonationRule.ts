@@ -32,7 +32,7 @@ export class DonationRule extends ActionRule<Donation> {
     }
     const moves: MaterialMove[] = [this.customMove(CustomMoveType.Pass, this.action)]
     const starTokensStock = this.material(MaterialType.StarToken).location(LocationType.StarTokenDeck)
-    const products = this.action.productType ? playerProducts.id(this.action.productType) : playerProducts
+    const products = this.action.product ? playerProducts.id(this.action.product) : playerProducts
     if (products.getQuantity() >= this.action.nbProduct && starTokensStock.getQuantity() > 0) {
       const stars = this.hasAmsterdamAlliance ? this.action.nbStars + 1 : this.action.nbStars
       moves.push(starTokensStock.moveItem({ type: LocationType.PlayerStarTokens, player: this.player }, stars))
@@ -46,13 +46,13 @@ export class DonationRule extends ActionRule<Donation> {
 
   afterItemMove(move: ItemMove): MaterialMove[] {
     if (isMoveItemType(MaterialType.StarToken)(move) && move.location.type === LocationType.PlayerStarTokens) {
-      if (this.action.productType) {
-        const products = this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(this.player).id(this.action.productType)
-        return [products.moveItem({ type: LocationType.ProductPiles, id: this.action.productType }, this.action.nbProduct), this.endAction()]
+      if (this.action.product) {
+        const products = this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(this.player).id(this.action.product)
+        return [products.moveItem({ type: LocationType.ProductPiles, id: this.action.product }, this.action.nbProduct), this.endAction()]
       } else {
         this.memorize(MemoryType.Count, this.action.nbProduct)
       }
-    } else if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.ProductPiles && !this.action.productType) {
+    } else if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.ProductPiles && !this.action.product) {
       const count = this.memorize<number>(MemoryType.Count, (count) => count - 1)
       if (count === 0) {
         return [this.endAction()]

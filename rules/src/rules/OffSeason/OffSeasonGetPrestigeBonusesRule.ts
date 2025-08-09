@@ -65,13 +65,13 @@ export class OffSeasonGetPrestigeBonusesRule extends PlayerTurnRule {
     return this.material(MaterialType.PrestigeMarker).location(LocationType.PrestigeMarkerPiste).getItem()!.location.x!
   }
 
-  getProducts(productType: Product) {
-    const productsInReserve = this.material(MaterialType.Product).location(LocationType.ProductPiles).id(productType)
+  getProducts(product: Product) {
+    const productsInReserve = this.material(MaterialType.Product).location(LocationType.ProductPiles).id(product)
 
     if (productsInReserve.length > 0) return productsInReserve
 
-    const opponentProduct = this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(this.nextPlayer).id(productType)
-    const playerProduct = this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(this.player).id(productType)
+    const opponentProduct = this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(this.nextPlayer).id(product)
+    const playerProduct = this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(this.player).id(product)
 
     if (opponentProduct.length > playerProduct.length) return opponentProduct
 

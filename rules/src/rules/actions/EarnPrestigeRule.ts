@@ -28,7 +28,7 @@ export class EarnPrestigeRule extends ActionRule<EarnPrestige> {
       if (!this.action.isBruxellesBonus && this.hasBruxellesAlliance && this.hasFurniture) {
         performAgainActions.push({
           type: ActionType.PayToPerformActionAgain,
-          productType: Product.Furniture,
+          product: Product.Furniture,
           price: 1,
           isRivalTurn: this.action.rival ?? this.action.isRivalTurn,
           actionToPerformAgain: {
@@ -41,7 +41,7 @@ export class EarnPrestigeRule extends ActionRule<EarnPrestige> {
       if (!this.action.isShip16Bonus && this.hasShip16 && this.beers >= 2) {
         performAgainActions.push({
           type: ActionType.PayToPerformActionAgain,
-          productType: Product.Beer,
+          product: Product.Beer,
           price: 2,
           isRivalTurn: this.action.rival ?? this.action.isRivalTurn,
           actionToPerformAgain: {

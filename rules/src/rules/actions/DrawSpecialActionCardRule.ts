@@ -25,7 +25,7 @@ export class DrawSpecialActionCardRule extends ActionRule<DrawSpecialActionCard>
       if (this.hasKjjobenhavnAlliance && !this.action.isKjjobenhavnBonus && this.hasBeer) {
         this.addActionBonus({
           type: ActionType.PayToPerformActionAgain,
-          productType: Product.Beer,
+          product: Product.Beer,
           price: 1,
           actionToPerformAgain: {
             type: ActionType.DrawSpecialActionCard,

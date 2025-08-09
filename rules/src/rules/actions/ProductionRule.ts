@@ -18,8 +18,8 @@ export class ProductionRule extends GainProductsRule<Production> {
 
   getPlayerMoves(): MaterialMove[] {
     const moves: MaterialMove[] = []
-    if (this.action.productType) {
-      moves.push(this.gainProduct(this.action.productType)[0])
+    if (this.action.product) {
+      moves.push(this.gainProduct(this.action.product)[0])
     } else {
       for (const product of getEnumValues(Product)) {
         const gain = this.gainProduct(product)[0]

@@ -13,9 +13,9 @@ export class GiftRule extends ActionRule<Gift> {
 
   onRuleStart(): MaterialMove[] {
     const moves: MaterialMove[] = []
-    if (this.action.productType) {
+    if (this.action.product) {
       for (let i = 0; i < this.action.nbProductToTake; i++) {
-        moves.push(this.products.moveItem({ type: LocationType.PlayerProducts, player: this.player, id: this.action.productType }))
+        moves.push(this.products.moveItem({ type: LocationType.PlayerProducts, player: this.player, id: this.action.product }))
       }
     }
     return moves
@@ -23,10 +23,8 @@ export class GiftRule extends ActionRule<Gift> {
 
   getPlayerMoves(): MaterialMove[] {
     const moves: MaterialMove[] = []
-    if (this.action.productType) {
-      moves.push(
-        ...this.products.moveItems({ type: LocationType.PlayerProducts, player: this.player, id: this.action.productType }, this.action.nbProductToTake)
-      )
+    if (this.action.product) {
+      moves.push(...this.products.moveItems({ type: LocationType.PlayerProducts, player: this.player, id: this.action.product }, this.action.nbProductToTake))
     } else {
       moves.push(...this.allProducts.moveItems((item) => ({ type: LocationType.PlayerProducts, player: this.player, id: item.id }), 1))
     }
@@ -62,12 +60,12 @@ export class GiftRule extends ActionRule<Gift> {
   }
 
   get products() {
-    const productsInReserve = this.material(MaterialType.Product).location(LocationType.ProductPiles).id(this.action.productType)
+    const productsInReserve = this.material(MaterialType.Product).location(LocationType.ProductPiles).id(this.action.product)
 
     if (productsInReserve.length > 0) return productsInReserve
 
-    const opponentProduct = this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(this.nextPlayer).id(this.action.productType)
-    const playerProduct = this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(this.player).id(this.action.productType)
+    const opponentProduct = this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(this.nextPlayer).id(this.action.product)
+    const playerProduct = this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(this.player).id(this.action.product)
 
     if (opponentProduct.length > playerProduct.length) return opponentProduct
 

@@ -14,7 +14,7 @@ export const ProductionHeader = () => {
   const player = usePlayerName(activePlayer)
   const pass = useLegalMove(isCustomMoveType(CustomMoveType.Pass))
 
-  const { productType: product, quantity } = new ProductionRule(rules.game).action
+  const { product: product, quantity } = new ProductionRule(rules.game).action
 
   if (activePlayer === me) {
     if (quantity) {

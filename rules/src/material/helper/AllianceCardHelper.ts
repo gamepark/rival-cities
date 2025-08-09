@@ -38,13 +38,13 @@ export class AllianceCardHelper extends MaterialRulesPart {
     return []
   }
 
-  getProducts(productType: Product) {
-    const productsInReserve = this.material(MaterialType.Product).location(LocationType.ProductPiles).id(productType)
+  getProducts(product: Product) {
+    const productsInReserve = this.material(MaterialType.Product).location(LocationType.ProductPiles).id(product)
 
     if (productsInReserve.length > 0) return productsInReserve
 
-    const opponentProduct = this.material(MaterialType.Product).location(LocationType.PlayerProducts).id(productType).player(this.nextPlayer)
-    const playerProduct = this.material(MaterialType.Product).location(LocationType.PlayerProducts).id(productType).player(this.player)
+    const opponentProduct = this.material(MaterialType.Product).location(LocationType.PlayerProducts).id(product).player(this.nextPlayer)
+    const playerProduct = this.material(MaterialType.Product).location(LocationType.PlayerProducts).id(product).player(this.player)
 
     if (opponentProduct.length > playerProduct.length) return opponentProduct
 

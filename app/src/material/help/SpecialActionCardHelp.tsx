@@ -17,6 +17,7 @@ export const SpecialActionCardHelp: FC<MaterialHelpProps> = ({ item }) => {
 
   const actions = new SpecialActionCardHelper(rules.game).getCardMultipleActions(item.id as SpecialActionCard)
 
+  // TODO fix and factorize actions help
   return (
     <>
       <h2>{t(`help.special.action.card`)}</h2>

@@ -125,7 +125,7 @@ export const shipCardsData: Record<ShipCard, ShipCardData> = {
       getActions: () => [
         {
           type: ActionType.Gift,
-          productType: Product.Furniture,
+          product: Product.Furniture,
           nbProductToTake: 2,
           canUseAlliance: false
         }
@@ -148,7 +148,7 @@ export const shipCardsData: Record<ShipCard, ShipCardData> = {
       getActions: () => [
         {
           type: ActionType.Gift,
-          productType: Product.Cloth,
+          product: Product.Cloth,
           nbProductToTake: 2,
           canUseAlliance: false
         }

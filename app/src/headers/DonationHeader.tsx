@@ -42,7 +42,7 @@ export const DonationHeader = () => {
           values={{ cost, gain, count: action.nbTimes }}
           components={{
             donate: <PlayMoveButton move={donate} />,
-            item: <Picture src={getProductIcon(action.productType)} css={iconCss} />,
+            item: <Picture src={getProductIcon(action.product)} css={iconCss} />,
             star: <Picture src={Star} css={iconCss} />,
             pass: <PlayMoveButton move={pass} />
           }}
@@ -66,7 +66,7 @@ export const DonationHeader = () => {
         defaults="header.donation.player"
         values={{ player: name, cost, gain, count: action.nbTimes }}
         components={{
-          item: <Picture src={getProductIcon(action.productType)} css={iconCss} />,
+          item: <Picture src={getProductIcon(action.product)} css={iconCss} />,
           star: <Picture src={Star} css={iconCss} />
         }}
       />
