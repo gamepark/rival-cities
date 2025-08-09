@@ -1,5 +1,5 @@
 import { isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
-import { GiftAction } from '../../material/Actions/Actions'
+import { Gift } from '../../material/Action'
 import { AllianceCardHelper } from '../../material/helper/AllianceCardHelper'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
@@ -8,7 +8,7 @@ import { CustomMoveType } from '../CustomMoveType'
 import { MemoryType } from '../MemoryType'
 import { ActionRule } from './ActionRule'
 
-export class GiftActionRule extends ActionRule<GiftAction> {
+export class GiftRule extends ActionRule<Gift> {
   allianceCardHelper = new AllianceCardHelper(this.game)
 
   onRuleStart(): MaterialMove[] {

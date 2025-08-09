@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { Picture, PlayMoveButton, useLegalMove, usePlayerId, usePlayerName, useRules } from '@gamepark/react-game'
 import { RivalCitiesRules } from '@gamepark/rival-cities/RivalCitiesRules'
-import { ProductionActionRule } from '@gamepark/rival-cities/rules/actions/ProductionActionRule'
+import { ProductionRule } from '@gamepark/rival-cities/rules/actions/ProductionRule'
 import { CustomMoveType } from '@gamepark/rival-cities/rules/CustomMoveType'
 import { isCustomMoveType } from '@gamepark/rules-api'
 import { Trans } from 'react-i18next'
@@ -14,7 +14,7 @@ export const ProductionHeader = () => {
   const player = usePlayerName(activePlayer)
   const pass = useLegalMove(isCustomMoveType(CustomMoveType.Pass))
 
-  const { productType: product, quantity } = new ProductionActionRule(rules.game).action
+  const { productType: product, quantity } = new ProductionRule(rules.game).action
 
   if (activePlayer === me) {
     if (quantity) {

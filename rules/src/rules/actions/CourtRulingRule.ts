@@ -1,13 +1,12 @@
 import { CustomMove, isCustomMoveType, isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
 import { City } from '../../City'
-import { CourtRullingAction } from '../../material/Actions/Actions'
-import { ActionType } from '../../material/Actions/ActionType'
+import { ActionType, CourtRuling } from '../../material/Action'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { CustomMoveType } from '../CustomMoveType'
 import { ActionRule } from './ActionRule'
 
-export class CourtRulingActionRule extends ActionRule<CourtRullingAction> {
+export class CourtRulingRule extends ActionRule<CourtRuling> {
   getPlayerMoves(): MaterialMove[] {
     const moves: MaterialMove[] = []
 

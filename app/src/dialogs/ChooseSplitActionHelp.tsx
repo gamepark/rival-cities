@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { useRules } from '@gamepark/react-game'
-import { ActionType } from '@gamepark/rival-cities/material/Actions/ActionType'
+import { ActionType } from '@gamepark/rival-cities/material/Action'
 import { BasicActionCard } from '@gamepark/rival-cities/material/BasicActionCard'
 import { BasicActionCardHelper } from '@gamepark/rival-cities/material/helper/BasicActionCardHelper'
 import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'

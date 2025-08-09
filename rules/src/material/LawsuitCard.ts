@@ -1,5 +1,5 @@
 import { getEnumValues, MaterialGame } from '@gamepark/rules-api'
-import { Action } from './Actions/Actions'
+import { Action } from './Action'
 import { LawsuitCardHelper } from './helper/LawsuitCardHelper'
 import { Product } from './Product'
 

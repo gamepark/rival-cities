@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { useRules } from '@gamepark/react-game'
-import { Action, MultipleAction } from '@gamepark/rival-cities/material/Actions/Actions'
+import { Action, MultipleActions } from '@gamepark/rival-cities/material/Action'
 import { RivalCitiesRules } from '@gamepark/rival-cities/RivalCitiesRules'
 import { MemoryType } from '@gamepark/rival-cities/rules/MemoryType'
 import { Trans, useTranslation } from 'react-i18next'
@@ -14,7 +14,7 @@ export const PerformMultipleActionsHelp = () => {
   const { t } = useTranslation()
   const rules = useRules<RivalCitiesRules>()
 
-  const action: MultipleAction = rules?.remind<Action[]>(MemoryType.Actions)[0] as MultipleAction
+  const action: MultipleActions = rules?.remind<Action[]>(MemoryType.Actions)[0] as MultipleActions
 
   return (
     <>

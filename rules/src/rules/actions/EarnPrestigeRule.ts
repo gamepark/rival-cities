@@ -1,7 +1,6 @@
 import { isMoveItemType, ItemMove } from '@gamepark/rules-api'
 import { City, getRival } from '../../City'
-import { EarnPrestigeAction, PayToPerformActionAgainAction } from '../../material/Actions/Actions'
-import { ActionType } from '../../material/Actions/ActionType'
+import { ActionType, EarnPrestige, PayToPerformActionAgainAction } from '../../material/Action'
 import { Alliance } from '../../material/Alliance'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
@@ -9,7 +8,7 @@ import { Product } from '../../material/Product'
 import { ShipCard } from '../../material/ShipCard'
 import { ActionRule } from './ActionRule'
 
-export class EarnPrestigeActionRule extends ActionRule<EarnPrestigeAction> {
+export class EarnPrestigeRule extends ActionRule<EarnPrestige> {
   onRuleStart() {
     return this.getPlayerMoves()
   }

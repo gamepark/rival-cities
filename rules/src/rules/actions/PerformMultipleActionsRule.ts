@@ -1,11 +1,11 @@
 import { isMoveItem, MaterialMove } from '@gamepark/rules-api'
 import { isEqual, omit } from 'lodash'
-import { Action, MultipleAction } from '../../material/Actions/Actions'
+import { Action, MultipleActions } from '../../material/Action'
 import { getActionRule } from '../helper/ActionHelper'
 import { ActionRuleIds } from '../helper/ActionRuleIds'
 import { ActionRule } from './ActionRule'
 
-export class PerformMultipleActionsRule extends ActionRule<MultipleAction> {
+export class PerformMultipleActionsRule extends ActionRule<MultipleActions> {
   getPlayerMoves(): MaterialMove[] {
     return this.action.actions.flatMap((action) => getActionRule(this.game, action).getPlayerMoves())
   }

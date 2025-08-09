@@ -1,7 +1,6 @@
 import { isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
 import { City } from '../../City'
-import { AdvanceLawsuitAction } from '../../material/Actions/Actions'
-import { ActionType } from '../../material/Actions/ActionType'
+import { ActionType, AdvanceLawsuit } from '../../material/Action'
 import { Alliance } from '../../material/Alliance'
 import { LawsuitCard, lawsuitCardData } from '../../material/LawsuitCard'
 import { LocationType } from '../../material/LocationType'
@@ -10,7 +9,7 @@ import { CustomMoveType } from '../CustomMoveType'
 import { AdvanceLawsuitHelper } from '../helper/AdvanceLawsuitHelper'
 import { ActionRule } from './ActionRule'
 
-export class AdvanceLawsuitActionRule extends ActionRule<AdvanceLawsuitAction> {
+export class AdvanceLawsuitRule extends ActionRule<AdvanceLawsuit> {
   advanceLawsuitHelper = new AdvanceLawsuitHelper(this.game)
 
   getPlayerMoves(): MaterialMove[] {

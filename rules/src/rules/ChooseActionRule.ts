@@ -1,7 +1,6 @@
 import { CustomMove, isCustomMoveType, isMoveItemType, ItemMove, MaterialMove, PlayerTurnRule } from '@gamepark/rules-api'
 import { specialActionCardPlaces } from '../constantes'
-import { Action } from '../material/Actions/Actions'
-import { ActionType } from '../material/Actions/ActionType'
+import { Action, ActionType } from '../material/Action'
 import { BasicActionCard } from '../material/BasicActionCard'
 import { BasicActionCardHelper } from '../material/helper/BasicActionCardHelper'
 import { SpecialActionCardHelper } from '../material/helper/SpecialActionCardHelper'

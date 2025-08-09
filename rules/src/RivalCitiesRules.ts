@@ -17,27 +17,26 @@ import {
   TimeLimit
 } from '@gamepark/rules-api'
 import { City, getRival } from './City'
-import { Action } from './material/Actions/Actions'
-import { ActionType } from './material/Actions/ActionType'
+import { Action, ActionType } from './material/Action'
 import { LocationType } from './material/LocationType'
 import { MaterialType } from './material/MaterialType'
-import { AdvanceLawsuitActionRule } from './rules/actions/AdvanceLawsuitActionRule'
-import { BuildFactoryActionRule } from './rules/actions/BuildFactoryActionRule'
+import { AdvanceLawsuitRule } from './rules/actions/AdvanceLawsuitRule'
+import { BuildFactoryRule } from './rules/actions/BuildFactoryRule'
 import { ChooseSplitActionRule } from './rules/actions/ChooseSplitActionRule'
-import { CourtRulingActionRule } from './rules/actions/CourtRulingActionRule'
-import { DonationActionRule } from './rules/actions/DonationActionRule'
-import { DrawSpecialActionCardActionRule } from './rules/actions/DrawSpecialActionCardActionRule'
-import { EarnPrestigeActionRule } from './rules/actions/EarnPrestigeActionRule'
-import { FormAllianceActionRule } from './rules/actions/FormAllianceActionRule'
-import { GainLetterActionRule } from './rules/actions/GainLetterActionRule'
-import { GiftActionRule } from './rules/actions/GiftActionRule'
+import { CourtRulingRule } from './rules/actions/CourtRulingRule'
+import { DonationRule } from './rules/actions/DonationRule'
+import { DrawSpecialActionCardRule } from './rules/actions/DrawSpecialActionCardRule'
+import { EarnPrestigeRule } from './rules/actions/EarnPrestigeRule'
+import { FormAllianceRule } from './rules/actions/FormAllianceRule'
+import { GainLetterRule } from './rules/actions/GainLetterRule'
+import { GiftRule } from './rules/actions/GiftRule'
 import { PerformMultipleActionsRule } from './rules/actions/PerformMultipleActionsRule'
-import { PiracyActionRule } from './rules/actions/PiracyActionRule'
-import { ProductionActionRule } from './rules/actions/ProductionActionRule'
-import { ProductSwapActionRule } from './rules/actions/ProductSwapActionRule'
-import { PurchaseShipActionRule } from './rules/actions/PurchaseShipActionRule'
-import { ReactivateFactoryActionRule } from './rules/actions/ReactivateFactoryActionRule'
-import { ResolveLawsuitActionRule } from './rules/actions/ResolveLawsuitActionRule'
+import { PiracyRule } from './rules/actions/PiracyRule'
+import { ProductionRule } from './rules/actions/ProductionRule'
+import { ProductSwapRule } from './rules/actions/ProductSwapRule'
+import { PurchaseShipRule } from './rules/actions/PurchaseShipRule'
+import { ReactivateFactoryRule } from './rules/actions/ReactivateFactoryRule'
+import { ResolveLawsuitRule } from './rules/actions/ResolveLawsuitRule'
 import { AdvanceInkJarRule } from './rules/AdvanceInkJarRule'
 import { ChooseActionRule } from './rules/ChooseActionRule'
 import { ChooseFirstProductRule } from './rules/ChooseFirstProductRule'
@@ -75,11 +74,11 @@ export class RivalCitiesRules
     [RuleId.ChooseAction]: ChooseActionRule,
     [RuleId.ChooseSplitAction]: ChooseSplitActionRule,
     [RuleId.PerformMultipleActions]: PerformMultipleActionsRule,
-    [RuleId.ResolveLawsuit]: ResolveLawsuitActionRule,
-    [RuleId.AdvanceLawsuit]: AdvanceLawsuitActionRule,
-    [RuleId.DrawSpecialActionCard]: DrawSpecialActionCardActionRule,
-    [RuleId.EarnPrestige]: EarnPrestigeActionRule,
-    [RuleId.GainLetter]: GainLetterActionRule,
+    [RuleId.ResolveLawsuit]: ResolveLawsuitRule,
+    [RuleId.AdvanceLawsuit]: AdvanceLawsuitRule,
+    [RuleId.DrawSpecialActionCard]: DrawSpecialActionCardRule,
+    [RuleId.EarnPrestige]: EarnPrestigeRule,
+    [RuleId.GainLetter]: GainLetterRule,
     [RuleId.OffSeasonTakeBell]: OffSeasonTakeBellRule,
     [RuleId.OffSeasonPayForAlliance]: OffSeasonPayForAllianceRule,
     [RuleId.OffSeasonGetShipsBonuses]: OffSeasonGetShipsBonusesRule,
@@ -89,16 +88,16 @@ export class RivalCitiesRules
     [RuleId.OffSeasonPlayerWithMostShipCardsEarnPrestige]: OffSeasonPlayerWithMostShipCardsEarnPrestigeRule,
     [RuleId.OffSeasonReturnBell]: OffSeasonReturnBellRule,
     [RuleId.ChooseSpecialAction]: ChooseSpecialActionRule,
-    [RuleId.Piracy]: PiracyActionRule,
-    [RuleId.PurchaseShip]: PurchaseShipActionRule,
-    [RuleId.BuildFactory]: BuildFactoryActionRule,
-    [RuleId.Donation]: DonationActionRule,
-    [RuleId.FormAlliance]: FormAllianceActionRule,
-    [RuleId.Gift]: GiftActionRule,
-    [RuleId.ProductSwap]: ProductSwapActionRule,
-    [RuleId.ReactivateFactory]: ReactivateFactoryActionRule,
-    [RuleId.CourtRuling]: CourtRulingActionRule,
-    [RuleId.Production]: ProductionActionRule,
+    [RuleId.Piracy]: PiracyRule,
+    [RuleId.PurchaseShip]: PurchaseShipRule,
+    [RuleId.BuildFactory]: BuildFactoryRule,
+    [RuleId.Donation]: DonationRule,
+    [RuleId.FormAlliance]: FormAllianceRule,
+    [RuleId.Gift]: GiftRule,
+    [RuleId.ProductSwap]: ProductSwapRule,
+    [RuleId.ReactivateFactory]: ReactivateFactoryRule,
+    [RuleId.CourtRuling]: CourtRulingRule,
+    [RuleId.Production]: ProductionRule,
     [RuleId.PayToPerformActionAgain]: PayToPerformActionAgainRule,
     [RuleId.ConfirmEndTurn]: ConfirmEndTurnRule
   }

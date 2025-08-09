@@ -1,5 +1,5 @@
 import { isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
-import { Action, ChooseSpecialActionCardAction } from '../material/Actions/Actions'
+import { Action, ChooseSpecialActionCardAction } from '../material/Action'
 import { SpecialActionCardHelper } from '../material/helper/SpecialActionCardHelper'
 import { LocationType } from '../material/LocationType'
 import { MaterialType } from '../material/MaterialType'

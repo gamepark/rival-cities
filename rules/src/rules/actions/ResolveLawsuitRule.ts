@@ -1,6 +1,6 @@
 import { isDeleteItemType, isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
 import { City } from '../../City'
-import { Action, ResolveLawsuitAction } from '../../material/Actions/Actions'
+import { Action, ResolveLawsuitAction } from '../../material/Action'
 import { LawsuitCard, lawsuitCardData } from '../../material/LawsuitCard'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
@@ -11,7 +11,7 @@ import { MemoryType } from '../MemoryType'
 import { RuleId } from '../RuleId'
 import { ActionRule } from './ActionRule'
 
-export class ResolveLawsuitActionRule extends ActionRule<ResolveLawsuitAction> {
+export class ResolveLawsuitRule extends ActionRule<ResolveLawsuitAction> {
   onRuleStart(): MaterialMove[] {
     const moves: MaterialMove[] = []
     const firstLawsuit = this.material(MaterialType.LawsuitPiece).location((l) => l.x === 0)

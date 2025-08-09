@@ -1,6 +1,5 @@
 import { MaterialGame, MaterialRulesPart } from '@gamepark/rules-api'
-import { Action } from '../Actions/Actions'
-import { ActionType } from '../Actions/ActionType'
+import { Action, ActionType } from '../Action'
 import { Product } from '../Product'
 
 export class LawsuitCardHelper extends MaterialRulesPart {

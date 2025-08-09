@@ -1,12 +1,12 @@
 import { isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
-import { PurchaseShipAction } from '../../material/Actions/Actions'
+import { PurchaseShip } from '../../material/Action'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { ShipCard, shipCardsData, ShipEffectType } from '../../material/ShipCard'
 import { CustomMoveType } from '../CustomMoveType'
 import { ActionRule } from './ActionRule'
 
-export class PurchaseShipActionRule extends ActionRule<PurchaseShipAction> {
+export class PurchaseShipRule extends ActionRule<PurchaseShip> {
   getPlayerMoves() {
     const discount = this.discount
     const products = this.products

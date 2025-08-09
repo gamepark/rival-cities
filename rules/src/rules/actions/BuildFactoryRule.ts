@@ -1,12 +1,12 @@
 import { isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
-import { BuildFactoryAction } from '../../material/Actions/Actions'
+import { BuildFactory } from '../../material/Action'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { CustomMoveType } from '../CustomMoveType'
 import { MemoryType } from '../MemoryType'
 import { ActionRule } from './ActionRule'
 
-export class BuildFactoryActionRule extends ActionRule<BuildFactoryAction> {
+export class BuildFactoryRule extends ActionRule<BuildFactory> {
   isBuildInProgress = this.remind(MemoryType.IsBuildInProgress)
   nbProductsGiven = this.remind<number>(MemoryType.Count) ?? 0
 

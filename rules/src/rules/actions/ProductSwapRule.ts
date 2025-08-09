@@ -1,12 +1,12 @@
 import { isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
-import { ProductSwapAction } from '../../material/Actions/Actions'
+import { ProductSwap } from '../../material/Action'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { CustomMoveType } from '../CustomMoveType'
 import { MemoryType } from '../MemoryType'
 import { ActionRule } from './ActionRule'
 
-export class ProductSwapActionRule extends ActionRule<ProductSwapAction> {
+export class ProductSwapRule extends ActionRule<ProductSwap> {
   nbSwaps: number = this.remind(MemoryType.Count) ?? 0
   isProductReturn = this.remind(MemoryType.IsProductReturn)
 

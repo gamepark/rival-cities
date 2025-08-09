@@ -1,5 +1,5 @@
 import { isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
-import { PayToPerformActionAgainAction } from '../material/Actions/Actions'
+import { PayToPerformActionAgainAction } from '../material/Action'
 import { LocationType } from '../material/LocationType'
 import { MaterialType } from '../material/MaterialType'
 import { ActionRule } from './actions/ActionRule'

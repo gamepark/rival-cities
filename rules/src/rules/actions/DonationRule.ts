@@ -1,5 +1,5 @@
 import { isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
-import { DonationAction } from '../../material/Actions/Actions'
+import { Donation } from '../../material/Action'
 import { Alliance } from '../../material/Alliance'
 import { AllianceCardHelper } from '../../material/helper/AllianceCardHelper'
 import { LocationType } from '../../material/LocationType'
@@ -8,7 +8,7 @@ import { CustomMoveType } from '../CustomMoveType'
 import { MemoryType } from '../MemoryType'
 import { ActionRule } from './ActionRule'
 
-export class DonationActionRule extends ActionRule<DonationAction> {
+export class DonationRule extends ActionRule<Donation> {
   onRuleStart(): MaterialMove[] {
     // TODO: do not use donation for lawsuit star gains
     const moves: MaterialMove[] = []

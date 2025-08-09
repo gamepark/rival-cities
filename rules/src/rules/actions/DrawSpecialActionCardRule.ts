@@ -1,13 +1,12 @@
 import { isMoveItemType, ItemMove } from '@gamepark/rules-api'
-import { DrawSpecialActionCardAction } from '../../material/Actions/Actions'
-import { ActionType } from '../../material/Actions/ActionType'
+import { ActionType, DrawSpecialActionCard } from '../../material/Action'
 import { Alliance } from '../../material/Alliance'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { Product } from '../../material/Product'
 import { ActionRule } from './ActionRule'
 
-export class DrawSpecialActionCardActionRule extends ActionRule<DrawSpecialActionCardAction> {
+export class DrawSpecialActionCardRule extends ActionRule<DrawSpecialActionCard> {
   onRuleStart() {
     return this.getPlayerMoves()
   }

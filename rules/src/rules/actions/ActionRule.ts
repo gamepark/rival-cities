@@ -1,6 +1,6 @@
 import { CustomMove, MaterialGame, MaterialMove, PlayerTurnRule } from '@gamepark/rules-api'
 import { getRival } from '../../City'
-import { Action } from '../../material/Actions/Actions'
+import { Action } from '../../material/Action'
 import { Alliance } from '../../material/Alliance'
 import { MaterialType } from '../../material/MaterialType'
 import { CustomMoveType } from '../CustomMoveType'

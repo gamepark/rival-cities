@@ -1,13 +1,13 @@
 import { getEnumValues, isCustomMoveType, isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
-import { ProductionAction } from '../../material/Actions/Actions'
+import { Production } from '../../material/Action'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { Product } from '../../material/Product'
 import { ShipCard, shipCardsData, ShipEffectType } from '../../material/ShipCard'
 import { CustomMoveType } from '../CustomMoveType'
-import { GainProductActionRule } from './GainProductActionRule'
+import { GainProductsRule } from './GainProductsRule'
 
-export class ProductionActionRule extends GainProductActionRule<ProductionAction> {
+export class ProductionRule extends GainProductsRule<Production> {
   onRuleStart(): MaterialMove[] {
     const playerMoves = this.getPlayerMoves()
     if (playerMoves.length === 1) {

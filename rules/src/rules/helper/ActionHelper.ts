@@ -1,63 +1,62 @@
 import { MaterialGame } from '@gamepark/rules-api'
-import { Action } from '../../material/Actions/Actions'
-import { ActionType } from '../../material/Actions/ActionType'
+import { Action, ActionType } from '../../material/Action'
 import { ActionRule } from '../actions/ActionRule'
-import { AdvanceLawsuitActionRule } from '../actions/AdvanceLawsuitActionRule'
-import { BuildFactoryActionRule } from '../actions/BuildFactoryActionRule'
+import { AdvanceLawsuitRule } from '../actions/AdvanceLawsuitRule'
+import { BuildFactoryRule } from '../actions/BuildFactoryRule'
 import { ChooseSplitActionRule } from '../actions/ChooseSplitActionRule'
-import { CourtRulingActionRule } from '../actions/CourtRulingActionRule'
-import { DonationActionRule } from '../actions/DonationActionRule'
-import { DrawSpecialActionCardActionRule } from '../actions/DrawSpecialActionCardActionRule'
-import { EarnPrestigeActionRule } from '../actions/EarnPrestigeActionRule'
-import { FormAllianceActionRule } from '../actions/FormAllianceActionRule'
-import { GainLetterActionRule } from '../actions/GainLetterActionRule'
-import { GiftActionRule } from '../actions/GiftActionRule'
+import { CourtRulingRule } from '../actions/CourtRulingRule'
+import { DonationRule } from '../actions/DonationRule'
+import { DrawSpecialActionCardRule } from '../actions/DrawSpecialActionCardRule'
+import { EarnPrestigeRule } from '../actions/EarnPrestigeRule'
+import { FormAllianceRule } from '../actions/FormAllianceRule'
+import { GainLetterRule } from '../actions/GainLetterRule'
+import { GiftRule } from '../actions/GiftRule'
 import { PerformMultipleActionsRule } from '../actions/PerformMultipleActionsRule'
-import { PiracyActionRule } from '../actions/PiracyActionRule'
-import { ProductionActionRule } from '../actions/ProductionActionRule'
-import { ProductSwapActionRule } from '../actions/ProductSwapActionRule'
-import { PurchaseShipActionRule } from '../actions/PurchaseShipActionRule'
-import { ReactivateFactoryActionRule } from '../actions/ReactivateFactoryActionRule'
-import { ResolveLawsuitActionRule } from '../actions/ResolveLawsuitActionRule'
+import { PiracyRule } from '../actions/PiracyRule'
+import { ProductionRule } from '../actions/ProductionRule'
+import { ProductSwapRule } from '../actions/ProductSwapRule'
+import { PurchaseShipRule } from '../actions/PurchaseShipRule'
+import { ReactivateFactoryRule } from '../actions/ReactivateFactoryRule'
+import { ResolveLawsuitRule } from '../actions/ResolveLawsuitRule'
 import { ChooseSpecialActionRule } from '../ChooseSpecialActionRule'
 import { PayToPerformActionAgainRule } from '../PayToPerformActionAgainRule'
 
 export const getActionRule = (game: MaterialGame, action: Action): ActionRule => {
   switch (action.type) {
     case ActionType.Production:
-      return new ProductionActionRule(game, action)
+      return new ProductionRule(game, action)
     case ActionType.AdvanceLawsuit:
-      return new AdvanceLawsuitActionRule(game, action)
+      return new AdvanceLawsuitRule(game, action)
     case ActionType.BuildFactory:
-      return new BuildFactoryActionRule(game, action)
+      return new BuildFactoryRule(game, action)
     case ActionType.Donation:
-      return new DonationActionRule(game, action)
+      return new DonationRule(game, action)
     case ActionType.DrawSpecialActionCard:
-      return new DrawSpecialActionCardActionRule(game, action)
+      return new DrawSpecialActionCardRule(game, action)
     case ActionType.EarnPrestige:
-      return new EarnPrestigeActionRule(game, action)
+      return new EarnPrestigeRule(game, action)
     case ActionType.FormAlliance:
-      return new FormAllianceActionRule(game, action)
+      return new FormAllianceRule(game, action)
     case ActionType.GainLetter:
-      return new GainLetterActionRule(game, action)
+      return new GainLetterRule(game, action)
     case ActionType.Gift:
-      return new GiftActionRule(game, action)
+      return new GiftRule(game, action)
     case ActionType.ProductSwap:
-      return new ProductSwapActionRule(game, action)
+      return new ProductSwapRule(game, action)
     case ActionType.PurchaseShip:
-      return new PurchaseShipActionRule(game, action)
+      return new PurchaseShipRule(game, action)
     case ActionType.CourtRuling:
-      return new CourtRulingActionRule(game, action)
+      return new CourtRulingRule(game, action)
     case ActionType.ReactivateFactory:
-      return new ReactivateFactoryActionRule(game, action)
+      return new ReactivateFactoryRule(game, action)
     case ActionType.Piracy:
-      return new PiracyActionRule(game, action)
+      return new PiracyRule(game, action)
     case ActionType.Split:
       return new ChooseSplitActionRule(game, action)
     case ActionType.Multiple:
       return new PerformMultipleActionsRule(game, action)
     case ActionType.ResolveLawsuit:
-      return new ResolveLawsuitActionRule(game, action)
+      return new ResolveLawsuitRule(game, action)
     case ActionType.ChooseSpecialActionCard:
       return new ChooseSpecialActionRule(game, action)
     case ActionType.PayToPerformActionAgain:

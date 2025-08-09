@@ -1,5 +1,5 @@
 import { MaterialMove, PlayerTurnRule } from '@gamepark/rules-api'
-import { Action } from '../../material/Actions/Actions'
+import { Action } from '../../material/Action'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { ShipCard, shipCardsData, ShipEffectType } from '../../material/ShipCard'

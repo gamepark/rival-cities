@@ -1,12 +1,12 @@
 import { isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
-import { FormAllianceAction } from '../../material/Actions/Actions'
+import { FormAlliance } from '../../material/Action'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { CustomMoveType } from '../CustomMoveType'
 import { EndOfGameHelper } from '../helper/EndOfGameHelper'
 import { ActionRule } from './ActionRule'
 
-export class FormAllianceActionRule extends ActionRule<FormAllianceAction> {
+export class FormAllianceRule extends ActionRule<FormAlliance> {
   getPlayerMoves(): MaterialMove[] {
     const moves: MaterialMove[] = []
     moves.push(...this.allianceCards.moveItems({ type: LocationType.PlayerAlliances, player: this.player }))

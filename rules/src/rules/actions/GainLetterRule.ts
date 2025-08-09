@@ -1,11 +1,11 @@
 import { isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
-import { GainLetterAction } from '../../material/Actions/Actions'
+import { GainLetter } from '../../material/Action'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { CustomMoveType } from '../CustomMoveType'
 import { ActionRule } from './ActionRule'
 
-export class GainLetterActionRule extends ActionRule<GainLetterAction> {
+export class GainLetterRule extends ActionRule<GainLetter> {
   onRuleStart(): MaterialMove[] {
     return this.letters.moveItems({ type: LocationType.PlayerLetterDeck, player: this.player }, this.action.nbLettersToTake)
   }

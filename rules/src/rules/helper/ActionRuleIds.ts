@@ -1,4 +1,4 @@
-import { ActionType } from '../../material/Actions/ActionType'
+import { ActionType } from '../../material/Action'
 import { RuleId } from '../RuleId'
 
 export const ActionRuleIds: Record<ActionType, RuleId> = {

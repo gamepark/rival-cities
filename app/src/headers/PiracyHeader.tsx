@@ -3,7 +3,7 @@
 import { usePlayerId, usePlayerName, useRules } from '@gamepark/react-game'
 import { getRival } from '@gamepark/rival-cities/City'
 import { RivalCitiesRules } from '@gamepark/rival-cities/RivalCitiesRules'
-import { PiracyActionRule } from '@gamepark/rival-cities/rules/actions/PiracyActionRule'
+import { PiracyRule } from '@gamepark/rival-cities/rules/actions/PiracyRule'
 import { Trans } from 'react-i18next'
 
 export const PiracyHeader = () => {
@@ -12,7 +12,7 @@ export const PiracyHeader = () => {
   const activePlayer = rules.game.rule!.player!
   const player = usePlayerName(activePlayer)
   const target = usePlayerName(getRival(activePlayer))
-  const count = new PiracyActionRule(rules.game).action.nbProductsToSteal
+  const count = new PiracyRule(rules.game).action.nbProductsToSteal
 
   if (activePlayer === me) {
     return <Trans defaults="header.piracy.you" values={{ count, target }} />

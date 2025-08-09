@@ -1,4 +1,4 @@
-import { Action } from '@gamepark/rival-cities/material/Actions/Actions'
+import { Action } from '@gamepark/rival-cities/material/Action'
 import { Trans } from 'react-i18next'
 import { components } from '../material/help/utils'
 

@@ -1,11 +1,11 @@
 import { isMoveItemType, ItemMove } from '@gamepark/rules-api'
 import { getRival } from '../../City'
-import { PiracyAction } from '../../material/Actions/Actions'
+import { Piracy } from '../../material/Action'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { ActionRule } from './ActionRule'
 
-export class PiracyActionRule extends ActionRule<PiracyAction> {
+export class PiracyRule extends ActionRule<Piracy> {
   onRuleStart() {
     if (!this.rivalProducts.getQuantity()) {
       return this.removeActionAndMove()
