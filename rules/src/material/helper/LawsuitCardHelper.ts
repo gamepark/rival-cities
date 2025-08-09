@@ -13,10 +13,9 @@ export class LawsuitCardHelper extends MaterialRulesPart {
   lawersuitCard1ActionOnAdvance(): Action[] {
     return [
       {
-        type: ActionType.Gift,
+        type: ActionType.GainProducts,
         product: Product.Leather,
-        quantity: 1,
-        canUseAlliance: false
+        quantity: 1
       }
     ]
   }
@@ -24,10 +23,9 @@ export class LawsuitCardHelper extends MaterialRulesPart {
   lawersuitCard1ActionOnWin(): Action[] {
     return [
       {
-        type: ActionType.Gift,
+        type: ActionType.GainProducts,
         product: Product.Leather,
-        quantity: 3,
-        canUseAlliance: false
+        quantity: 3
       },
       {
         type: ActionType.EarnPrestige
@@ -38,10 +36,9 @@ export class LawsuitCardHelper extends MaterialRulesPart {
   lawersuitCard2ActionOnAdvance(): Action[] {
     return [
       {
-        type: ActionType.Gift,
+        type: ActionType.GainProducts,
         product: Product.Furniture,
-        quantity: 1,
-        canUseAlliance: false
+        quantity: 1
       }
     ]
   }
@@ -58,10 +55,9 @@ export class LawsuitCardHelper extends MaterialRulesPart {
   lawersuitCard3ActionOnAdvance(): Action[] {
     return [
       {
-        type: ActionType.Gift,
+        type: ActionType.GainProducts,
         product: Product.Cloth,
-        quantity: 1,
-        canUseAlliance: false
+        quantity: 1
       }
     ]
   }
@@ -69,9 +65,8 @@ export class LawsuitCardHelper extends MaterialRulesPart {
   lawersuitCard3ActionOnWin(): Action[] {
     return [
       {
-        type: ActionType.Gift,
-        quantity: 2,
-        canUseAlliance: false
+        type: ActionType.GainProducts,
+        quantity: 2
       }
     ]
   }
@@ -101,10 +96,9 @@ export class LawsuitCardHelper extends MaterialRulesPart {
   lawersuitCard5ActionOnWin(): Action[] {
     return [
       {
-        type: ActionType.Gift,
+        type: ActionType.GainProducts,
         product: Product.Beer,
-        quantity: 3,
-        canUseAlliance: false
+        quantity: 3
       },
       {
         type: ActionType.Donation,
@@ -131,10 +125,9 @@ export class LawsuitCardHelper extends MaterialRulesPart {
   lawersuitCard7ActionOnAdvance(): Action[] {
     return [
       {
-        type: ActionType.Gift,
+        type: ActionType.GainProducts,
         product: Product.Beer,
-        quantity: 1,
-        canUseAlliance: false
+        quantity: 1
       }
     ]
   }
@@ -145,9 +138,8 @@ export class LawsuitCardHelper extends MaterialRulesPart {
         type: ActionType.EarnPrestige
       },
       {
-        type: ActionType.Gift,
-        quantity: 1,
-        canUseAlliance: false
+        type: ActionType.GainProducts,
+        quantity: 1
       }
     ]
   }
@@ -155,10 +147,9 @@ export class LawsuitCardHelper extends MaterialRulesPart {
   lawersuitCard8ActionOnAdvance(): Action[] {
     return [
       {
-        type: ActionType.Gift,
+        type: ActionType.GainProducts,
         product: Product.Beer,
-        quantity: 1,
-        canUseAlliance: false
+        quantity: 1
       },
       {
         type: ActionType.GainLetter,
@@ -192,10 +183,9 @@ export class LawsuitCardHelper extends MaterialRulesPart {
   lawersuitCard10ActionOnAdvance(): Action[] {
     return [
       {
-        type: ActionType.Gift,
+        type: ActionType.GainProducts,
         product: Product.Cloth,
-        quantity: 1,
-        canUseAlliance: false
+        quantity: 1
       }
     ]
   }

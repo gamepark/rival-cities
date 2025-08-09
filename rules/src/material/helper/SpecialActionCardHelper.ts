@@ -40,9 +40,9 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
             nbTimeAlreadyAdvanced: 0
           },
           {
-            type: ActionType.Gift,
+            type: ActionType.GainProducts,
             quantity: 2,
-            canUseAlliance: true
+            isGift: true
           }
         ]
       case SpecialActionCard.SpecialAction3:
@@ -55,9 +55,9 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
             type: ActionType.PurchaseShip
           },
           {
-            type: ActionType.Gift,
+            type: ActionType.GainProducts,
             quantity: 1,
-            canUseAlliance: true
+            isGift: true
           }
         ]
       case SpecialActionCard.SpecialAction4:
@@ -94,10 +94,10 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
             nbTimeAlreadyAdvanced: 0
           },
           {
-            type: ActionType.Gift,
+            type: ActionType.GainProducts,
             product: Product.Cloth,
             quantity: 1,
-            canUseAlliance: true
+            isGift: true
           },
           {
             type: ActionType.FormAlliance
@@ -127,10 +127,10 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
             type: ActionType.EarnPrestige
           },
           {
-            type: ActionType.Gift,
+            type: ActionType.GainProducts,
             product: Product.Cloth,
             quantity: 1,
-            canUseAlliance: true
+            isGift: true
           }
         ]
       case SpecialActionCard.SpecialAction10:
@@ -140,10 +140,10 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
             nbTimeAlreadyAdvanced: 0
           },
           {
-            type: ActionType.Gift,
+            type: ActionType.GainProducts,
             product: Product.Beer,
             quantity: 1,
-            canUseAlliance: true
+            isGift: true
           },
           {
             type: ActionType.Donation,
@@ -170,10 +170,10 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
             type: ActionType.PurchaseShip
           },
           {
-            type: ActionType.Gift,
+            type: ActionType.GainProducts,
             product: Product.Beer,
             quantity: 2,
-            canUseAlliance: true
+            isGift: true
           }
         ]
       case SpecialActionCard.SpecialAction13:
@@ -183,10 +183,10 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
             nbTimeAlreadyAdvanced: 0
           },
           {
-            type: ActionType.Gift,
+            type: ActionType.GainProducts,
             product: Product.Beer,
             quantity: 1,
-            canUseAlliance: true
+            isGift: true
           },
           {
             type: ActionType.Donation,
@@ -236,10 +236,10 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
             type: ActionType.EarnPrestige
           },
           {
-            type: ActionType.Gift,
+            type: ActionType.GainProducts,
             product: Product.Furniture,
             quantity: 1,
-            canUseAlliance: true
+            isGift: true
           }
         ]
       case SpecialActionCard.SpecialAction18:
@@ -274,10 +274,10 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
             nbTimeAlreadyAdvanced: 0
           },
           {
-            type: ActionType.Gift,
+            type: ActionType.GainProducts,
             product: Product.Furniture,
             quantity: 1,
-            canUseAlliance: true
+            isGift: true
           },
           {
             type: ActionType.FormAlliance
@@ -311,9 +311,9 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
             nbTimeAlreadyAdvanced: 0
           },
           {
-            type: ActionType.Gift,
+            type: ActionType.GainProducts,
             quantity: 1,
-            canUseAlliance: true
+            isGift: true
           },
           {
             type: ActionType.Donation,
@@ -326,9 +326,9 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
       case SpecialActionCard.SpecialAction24:
         return [
           {
-            type: ActionType.Gift,
+            type: ActionType.GainProducts,
             quantity: 2,
-            canUseAlliance: true
+            isGift: true
           },
           {
             type: ActionType.Donation,

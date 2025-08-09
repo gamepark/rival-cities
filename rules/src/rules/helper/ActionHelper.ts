@@ -39,7 +39,7 @@ export const getActionRule = (game: MaterialGame, action: Action): ActionRule =>
       return new FormAllianceRule(game, action)
     case ActionType.GainLetter:
       return new GainLetterRule(game, action)
-    case ActionType.Gift:
+    case ActionType.GainProducts:
       return new GiftRule(game, action)
     case ActionType.ProductSwap:
       return new ProductSwapRule(game, action)

@@ -131,9 +131,9 @@ export class BasicActionCardHelper extends MaterialRulesPart {
           type: this.computeActionIfPlayerHasGdanskAlliance(),
           actions: [
             {
-              type: ActionType.Gift,
+              type: ActionType.GainProducts,
               quantity: 1,
-              canUseAlliance: true
+              isGift: true
             },
             {
               type: ActionType.AdvanceLawsuit,

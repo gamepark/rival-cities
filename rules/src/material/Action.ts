@@ -4,7 +4,7 @@ export enum ActionType {
   Split = 1,
   Multiple,
   Production,
-  Gift,
+  GainProducts,
   Donation,
   ProductSwap,
   GainLetter,
@@ -36,22 +36,17 @@ export type MultipleActions = {
   actions: Action[]
 } & ActionCommon
 
+export type Production = Omit<GainProducts, 'type'> & {
+  type: ActionType.Production
+}
+
 export type GainProducts = {
+  type: ActionType.GainProducts
+  product?: Product
+  quantity: number
+  isGift?: boolean
   productsGained?: Product[]
 } & ActionCommon
-
-export type Production = {
-  type: ActionType.Production
-  product?: Product
-  quantity: number
-} & GainProducts
-
-export type Gift = {
-  type: ActionType.Gift
-  product?: Product
-  quantity: number
-  canUseAlliance: boolean
-} & GainProducts
 
 export type Donation = {
   type: ActionType.Donation
@@ -136,7 +131,7 @@ export type Action =
   | SplitAction
   | MultipleActions
   | Production
-  | Gift
+  | GainProducts
   | Donation
   | ProductSwap
   | GainLetter

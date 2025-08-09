@@ -1,5 +1,5 @@
 import { isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
-import { Gift } from '../../material/Action'
+import { GainProducts } from '../../material/Action'
 import { AllianceCardHelper } from '../../material/helper/AllianceCardHelper'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
@@ -8,7 +8,7 @@ import { CustomMoveType } from '../CustomMoveType'
 import { MemoryType } from '../MemoryType'
 import { ActionRule } from './ActionRule'
 
-export class GiftRule extends ActionRule<Gift> {
+export class GiftRule extends ActionRule<GainProducts> {
   allianceCardHelper = new AllianceCardHelper(this.game)
 
   onRuleStart(): MaterialMove[] {
@@ -42,7 +42,7 @@ export class GiftRule extends ActionRule<Gift> {
   afterItemMove(move: ItemMove): MaterialMove[] {
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.PlayerProducts) {
-      if (this.action.canUseAlliance) {
+      if (this.action.isGift) {
         moves.push(...this.allianceCardHelper.getOsloProducts(move.location.id as Product))
         moves.push(...this.allianceCardHelper.getNovgorodProducts(move.location.id as Product))
         moves.push(...this.allianceCardHelper.getLondonProducts(move.location.id as Product))

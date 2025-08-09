@@ -77,7 +77,7 @@ export class ChooseActionRule extends PlayerTurnRule {
   }
 
   get inkJarCardActions(): Action[] {
-    if (this.inkjarLocationId === 0) return [{ type: ActionType.Gift, quantity: 1, product: undefined, canUseAlliance: true }]
+    if (this.inkjarLocationId === 0) return [{ type: ActionType.GainProducts, quantity: 1, product: undefined, isGift: true }]
     if (specialActionCardPlaces.includes(this.inkjarLocationId)) {
       const cardId = this.specialActioncardInInkjarPlace.getItem()?.id as SpecialActionCard
       return new SpecialActionCardHelper(this.game).getCardActions(cardId)

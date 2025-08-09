@@ -124,10 +124,9 @@ export const shipCardsData: Record<ShipCard, ShipCardData> = {
       type: ShipEffectType.OffSeason,
       getActions: () => [
         {
-          type: ActionType.Gift,
+          type: ActionType.GainProducts,
           product: Product.Furniture,
-          quantity: 2,
-          canUseAlliance: false
+          quantity: 2
         }
       ]
     },
@@ -147,10 +146,9 @@ export const shipCardsData: Record<ShipCard, ShipCardData> = {
       type: ShipEffectType.OffSeason,
       getActions: () => [
         {
-          type: ActionType.Gift,
+          type: ActionType.GainProducts,
           product: Product.Cloth,
-          quantity: 2,
-          canUseAlliance: false
+          quantity: 2
         }
       ]
     },

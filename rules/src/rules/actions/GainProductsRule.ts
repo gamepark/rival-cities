@@ -1,6 +1,6 @@
 import { isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
 import { getRival } from '../../City'
-import { Gift, Production } from '../../material/Action'
+import { GainProducts, Production } from '../../material/Action'
 import { Alliance } from '../../material/Alliance'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
@@ -8,7 +8,7 @@ import { Product, PRODUCTS_QUANTITY } from '../../material/Product'
 import { CustomMoveType } from '../CustomMoveType'
 import { ActionRule } from './ActionRule'
 
-export abstract class GainProductsRule<E extends Gift | Production> extends ActionRule<E> {
+export abstract class GainProductsRule<E extends GainProducts | Production> extends ActionRule<E> {
   gainProduct(product: Product, quantity = 1) {
     const moves: MaterialMove[] = []
     const supply = this.material(MaterialType.Product).location(LocationType.ProductPiles).id(product)
