@@ -13,10 +13,11 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
   }
 
   getCardActions(card: SpecialActionCard): Action[] {
-    if (card === SpecialActionCard.SpecialAction6 || card === SpecialActionCard.SpecialAction19) {
-      return this.getCardMultipleActions(card)
+    const actions = this.getCardMultipleActions(card)
+    if (actions.length === 1 || card === SpecialActionCard.SpecialAction6 || card === SpecialActionCard.SpecialAction19) {
+      return actions
     } else {
-      return [{ type: ActionType.Multiple, actions: this.getCardMultipleActions(card) }]
+      return [{ type: ActionType.Multiple, actions: actions }]
     }
   }
 
