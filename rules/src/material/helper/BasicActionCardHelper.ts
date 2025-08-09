@@ -6,7 +6,6 @@ import { BasicActionCard } from '../BasicActionCard'
 import { LocationType } from '../LocationType'
 import { MaterialType } from '../MaterialType'
 import { Product } from '../Product'
-import { ShipCard } from '../ShipCard'
 
 export class BasicActionCardHelper extends MaterialRulesPart {
   constructor(
@@ -75,8 +74,7 @@ export class BasicActionCardHelper extends MaterialRulesPart {
           type: this.computeActionIfPlayerHasGdanskAlliance(),
           actions: [
             {
-              type: ActionType.PurchaseShip,
-              playerHasShip19: this.checkPlayerHaveShip19
+              type: ActionType.PurchaseShip
             },
             {
               type: ActionType.AdvanceLawsuit,
@@ -160,8 +158,7 @@ export class BasicActionCardHelper extends MaterialRulesPart {
               type: ActionType.CourtRuling
             },
             {
-              type: ActionType.PurchaseShip,
-              playerHasShip19: this.checkPlayerHaveShip19
+              type: ActionType.PurchaseShip
             }
           ]
         }
@@ -194,9 +191,5 @@ export class BasicActionCardHelper extends MaterialRulesPart {
 
   get checkPlayerHaveGdanskAllianceCard(): boolean {
     return this.material(MaterialType.AllianceCard).location(LocationType.PlayerAlliances).player(this.player).id(Alliance.Gdansk).length > 0
-  }
-
-  get checkPlayerHaveShip19() {
-    return this.material(MaterialType.ShipCard).location(LocationType.PlayerShipCards).player(this.player).id(ShipCard.Ship19).length > 0
   }
 }

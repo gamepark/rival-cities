@@ -29,6 +29,7 @@ import { PerformMultipleActionsHeader } from './PerformMultipleActionsHeader'
 import { PiracyHeader } from './PiracyHeader'
 import { ProductionHeader } from './ProductionHeader'
 import { ProductSwapHeader } from './ProductSwapHeader'
+import { PurchaseShipHeader } from './PurchaseShipHeader'
 import { ResolveLawsuitHeader } from './ResolveLawsuitHeader'
 
 export const Headers: Partial<Record<RuleId, ComponentType>> = {
@@ -59,6 +60,7 @@ export const Headers: Partial<Record<RuleId, ComponentType>> = {
   [RuleId.Production]: ProductionHeader,
   [RuleId.Gift]: GiftHeader,
   [RuleId.ProductSwap]: ProductSwapHeader,
+  [RuleId.PurchaseShip]: PurchaseShipHeader,
   [RuleId.PayToPerformActionAgain]: PayToPerformActionAgainHeader,
   [RuleId.ConfirmEndTurn]: ConfirmEndTurnHeader
 }

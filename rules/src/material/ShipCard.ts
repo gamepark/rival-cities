@@ -1,5 +1,6 @@
 import { getEnumValues, MaterialGame, MaterialMove } from '@gamepark/rules-api'
 import { Action } from './Actions/Actions'
+import { ActionType } from './Actions/ActionType'
 import { ShipCardHelper } from './helper/ShipCardHelper'
 import { Product } from './Product'
 
@@ -42,7 +43,7 @@ export type ShipCardData = {
   }
   effect: {
     type: ShipEffectType
-    action?: (game: MaterialGame, player: number) => Action[]
+    getActions?: (game: MaterialGame, player: number) => Action[]
     move?: (game: MaterialGame, player: number) => MaterialMove[]
   }
   getNbStars: (_nbShip: number) => number
@@ -53,34 +54,69 @@ export const shipCards = getEnumValues(ShipCard)
 export const shipCardsData: Record<ShipCard, ShipCardData> = {
   [ShipCard.Ship1]: {
     cost: { type: Product.Furniture, quantity: 3 },
-    effect: { type: ShipEffectType.Instant, action: (game, player) => new ShipCardHelper(game, player).shipCard1() },
+    effect: { type: ShipEffectType.Instant, getActions: () => [{ type: ActionType.EarnPrestige }, { type: ActionType.EarnPrestige }] },
     getNbStars: () => 1
   },
   [ShipCard.Ship2]: {
     cost: { type: Product.Cloth, quantity: 3 },
-    effect: { type: ShipEffectType.Instant, action: (game, player) => new ShipCardHelper(game, player).shipCard2() },
+    effect: {
+      type: ShipEffectType.Instant,
+      getActions: () => [
+        {
+          type: ActionType.AdvanceLawsuit,
+          nbTimeAlreadyAdvanced: 0
+        },
+        {
+          type: ActionType.AdvanceLawsuit,
+          nbTimeAlreadyAdvanced: 0
+        }
+      ]
+    },
     getNbStars: () => 2
   },
   [ShipCard.Ship3]: {
     cost: { type: Product.Leather, quantity: 3 },
-    effect: { type: ShipEffectType.Instant, action: (game, player) => new ShipCardHelper(game, player).shipCard3() },
+    effect: { type: ShipEffectType.Instant, getActions: () => [{ type: ActionType.DrawSpecialActionCard }] },
     getNbStars: () => 2
   },
   [ShipCard.Ship4]: {
     cost: { type: Product.Furniture, quantity: 2 },
-    effect: { type: ShipEffectType.Instant, action: (game, player) => new ShipCardHelper(game, player).shipCard4() },
+    effect: {
+      type: ShipEffectType.Instant,
+      getActions: () => [
+        {
+          type: ActionType.GainLetter,
+          nbLettersToTake: 1
+        }
+      ]
+    },
     getNbStars: () => 3
   },
   [ShipCard.Ship5]: {
     cost: { type: Product.Furniture, quantity: 2 },
-    effect: { type: ShipEffectType.Instant, action: (game, player) => new ShipCardHelper(game, player).shipCard5() },
+    effect: {
+      type: ShipEffectType.Instant,
+      getActions: () => [
+        {
+          type: ActionType.GainLetter,
+          nbLettersToTake: 2
+        }
+      ]
+    },
     getNbStars: () => 1
   },
   [ShipCard.Ship6]: {
     cost: { type: Product.Leather, quantity: 4 },
     effect: {
       type: ShipEffectType.OffSeason,
-      action: (game, player) => new ShipCardHelper(game, player).shipCard6()
+      getActions: () => [
+        {
+          type: ActionType.Donation,
+          nbProduct: 0,
+          nbStars: 1,
+          nbTimes: 1
+        }
+      ]
     },
     getNbStars: () => 2
   },
@@ -88,7 +124,14 @@ export const shipCardsData: Record<ShipCard, ShipCardData> = {
     cost: { type: Product.Cloth, quantity: 5 },
     effect: {
       type: ShipEffectType.OffSeason,
-      action: (game, player) => new ShipCardHelper(game, player).shipCard7()
+      getActions: () => [
+        {
+          type: ActionType.Gift,
+          productType: Product.Furniture,
+          nbProductToTake: 2,
+          canUseAlliance: false
+        }
+      ]
     },
     getNbStars: () => 1
   },
@@ -96,7 +139,7 @@ export const shipCardsData: Record<ShipCard, ShipCardData> = {
     cost: { type: Product.Cloth, quantity: 4 },
     effect: {
       type: ShipEffectType.OffSeason,
-      action: (game, player) => new ShipCardHelper(game, player).shipCard8()
+      getActions: () => [{ type: ActionType.EarnPrestige }]
     },
     getNbStars: () => 1
   },
@@ -104,7 +147,14 @@ export const shipCardsData: Record<ShipCard, ShipCardData> = {
     cost: { type: Product.Beer, quantity: 5 },
     effect: {
       type: ShipEffectType.OffSeason,
-      action: (game, player) => new ShipCardHelper(game, player).shipCard9()
+      getActions: () => [
+        {
+          type: ActionType.Gift,
+          productType: Product.Cloth,
+          nbProductToTake: 2,
+          canUseAlliance: false
+        }
+      ]
     },
     getNbStars: () => 2
   },
@@ -112,7 +162,12 @@ export const shipCardsData: Record<ShipCard, ShipCardData> = {
     cost: { type: Product.Beer, quantity: 5 },
     effect: {
       type: ShipEffectType.OffSeason,
-      action: (game, player) => new ShipCardHelper(game, player).shipCard10()
+      getActions: () => [
+        {
+          type: ActionType.GainLetter,
+          nbLettersToTake: 1
+        }
+      ]
     },
     getNbStars: () => 1
   },

@@ -4,26 +4,35 @@ import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { ShipCard, shipCardsData, ShipEffectType } from '../../material/ShipCard'
 import { CustomMoveType } from '../CustomMoveType'
-import { EndOfGameHelper } from '../helper/EndOfGameHelper'
 import { ActionRule } from './ActionRule'
 
 export class PurchaseShipActionRule extends ActionRule<PurchaseShipAction> {
-  getPlayerMoves(): MaterialMove[] {
-    const moves: MaterialMove[] = []
-    moves.push(...this.possibleCardsToGet().moveItems({ type: LocationType.PlayerShipCards, player: this.player }))
-    moves.push(this.customMove(CustomMoveType.Pass, this.action))
-    return moves
+  getPlayerMoves() {
+    const discount = this.discount
+    const products = this.products
+    const affordableShips = this.material(MaterialType.ShipCard)
+      .location(LocationType.ShipCardsRiver)
+      .id<ShipCard>((ship) => {
+        const cost = shipCardsData[ship].cost
+        return products.id(cost.type).getQuantity() >= cost.quantity - discount
+      })
+    return [...affordableShips.moveItems({ type: LocationType.PlayerShipCards, player: this.player }), this.customMove(CustomMoveType.Pass)]
+  }
+
+  get products() {
+    return this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(this.player)
+  }
+
+  get discount() {
+    return this.material(MaterialType.ShipCard).id(ShipCard.Ship19).getItem()?.location.player === this.player ? 1 : 0
   }
 
   beforeItemMove(move: ItemMove): MaterialMove[] {
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.ShipCard)(move) && move.location.type === LocationType.PlayerShipCards) {
-      moves.push(
-        this.material(MaterialType.ShipCard)
-          .location(LocationType.ShipCardsDeck)
-          .maxBy((it) => it.location.x!)
-          .moveItem({ type: LocationType.ShipCardsRiver })
-      )
+      const ship = this.material(MaterialType.ShipCard).getItem<ShipCard>(move.itemIndex).id
+      const cost = shipCardsData[ship].cost
+      moves.push(this.products.id(cost.type).moveItem({ type: LocationType.ProductPiles, id: cost.type }, cost.quantity - this.discount))
     }
     return moves
   }
@@ -31,40 +40,19 @@ export class PurchaseShipActionRule extends ActionRule<PurchaseShipAction> {
   afterItemMove(move: ItemMove): MaterialMove[] {
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.ShipCard)(move) && move.location.type === LocationType.PlayerShipCards) {
-      return new EndOfGameHelper(this.game).checkInstantEndOfGame(this.movesOnPushasedShip(move))
-    }
-    return moves
-  }
-
-  movesOnPushasedShip(move: MaterialMove): MaterialMove[] {
-    if (!isMoveItemType(MaterialType.ShipCard)(move)) return []
-    const moves: MaterialMove[] = []
-    const shipId: ShipCard = this.material(MaterialType.ShipCard).index(move.itemIndex).getItem()?.id
-    const shipData = shipCardsData[shipId]
-    const costQuantity = this.action.playerHasShip19 ? shipData.cost.quantity - 1 : shipData.cost.quantity
-    moves.push(...this.playerProducts.id(shipData.cost.type).moveItems({ type: LocationType.ProductPiles, id: shipData.cost.type }, costQuantity))
-    if (shipData.effect.type === ShipEffectType.Instant) {
-      if (shipData.effect.action) {
-        shipData.effect.action(this.game, this.player).forEach((it) => this.addActionBonus(it))
+      const ship = this.material(MaterialType.ShipCard).getItem<ShipCard>(move.itemIndex).id
+      const effect = shipCardsData[ship].effect
+      if (effect.type === ShipEffectType.Instant && effect.getActions) {
+        for (const action of effect.getActions(this.game, this.player)) {
+          this.addActionBonus(action)
+        }
       }
+      const deck = this.material(MaterialType.ShipCard).location(LocationType.ShipCardsDeck).deck()
+      if (deck.length) {
+        moves.push(deck.dealOne({ type: LocationType.ShipCardsRiver }))
+      }
+      moves.push(this.endAction())
     }
-    moves.push(this.endAction())
     return moves
-  }
-
-  possibleCardsToGet() {
-    return this.shipCards.filter((item) => {
-      const shipData = shipCardsData[item.id as ShipCard]
-      const costQuantity = this.action.playerHasShip19 ? shipData.cost.quantity - 1 : shipData.cost.quantity
-      return this.playerProducts.id(shipData.cost.type).getQuantity() >= costQuantity
-    })
-  }
-
-  get playerProducts() {
-    return this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(this.player)
-  }
-
-  get shipCards() {
-    return this.material(MaterialType.ShipCard).location(LocationType.ShipCardsRiver)
   }
 }

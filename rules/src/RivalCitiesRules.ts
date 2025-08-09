@@ -16,7 +16,7 @@ import {
   StackingStrategy,
   TimeLimit
 } from '@gamepark/rules-api'
-import { City } from './City'
+import { City, getRival } from './City'
 import { Action } from './material/Actions/Actions'
 import { ActionType } from './material/Actions/ActionType'
 import { LocationType } from './material/LocationType'
@@ -174,6 +174,12 @@ export class RivalCitiesRules
     }
     if (isMoveItemType(MaterialType.PrestigeMarker)(move) && Math.abs(move.location.x!) >= 8) {
       return [this.endGame()]
+    } else if (isMoveItemType(MaterialType.ShipCard)(move) && move.location.type === LocationType.PlayerShipCards) {
+      const player = move.location.player!
+      const ships = this.material(MaterialType.ShipCard).location(LocationType.PlayerShipCards)
+      if (ships.player(player).length >= ships.player(getRival(player)).length + 3) {
+        return [this.endGame()]
+      }
     }
     consequences.push(...super.afterItemMove(move))
     return consequences

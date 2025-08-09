@@ -13,7 +13,7 @@ export class OffSeasonGetShipsBonusesRule extends PlayerTurnRule {
 
     if (shipToProcess) {
       const shipCardData = shipCardsData[shipToProcess.id as ShipCard]
-      if (shipCardData.effect.action) {
+      if (shipCardData.effect.getActions) {
         this.memorize<ShipCard[]>(MemoryType.ShipsIdsAlreadyProcessed, (old) => [...old, shipToProcess.id as ShipCard])
         this.memorize(
           MemoryType.PendingRule,
@@ -21,7 +21,7 @@ export class OffSeasonGetShipsBonusesRule extends PlayerTurnRule {
             ? RuleId.OffSeasonGetPrestigeBonuses
             : RuleId.OffSeasonGetShipsBonuses
         )
-        this.memorize(MemoryType.Actions, shipCardData.effect.action(this.game, this.player))
+        this.memorize(MemoryType.Actions, shipCardData.effect.getActions(this.game, this.player))
         return [this.startRule(ActionRuleIds[this.remind<Action[]>(MemoryType.Actions)[0].type])]
       }
     }

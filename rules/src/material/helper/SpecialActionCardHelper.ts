@@ -1,10 +1,7 @@
 import { MaterialGame, MaterialRulesPart } from '@gamepark/rules-api'
 import { Action } from '../Actions/Actions'
 import { ActionType } from '../Actions/ActionType'
-import { LocationType } from '../LocationType'
-import { MaterialType } from '../MaterialType'
 import { Product } from '../Product'
-import { ShipCard } from '../ShipCard'
 import { SpecialActionCard } from '../SpecialActionCard'
 
 export class SpecialActionCardHelper extends MaterialRulesPart {
@@ -56,8 +53,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
             nbTimeAlreadyAdvanced: 0
           },
           {
-            type: ActionType.PurchaseShip,
-            playerHasShip19: this.checkPlayerHaveShip19
+            type: ActionType.PurchaseShip
           },
           {
             type: ActionType.Gift,
@@ -175,8 +171,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
             nbTimeAlreadyAdvanced: 0
           },
           {
-            type: ActionType.PurchaseShip,
-            playerHasShip19: this.checkPlayerHaveShip19
+            type: ActionType.PurchaseShip
           },
           {
             type: ActionType.Gift,
@@ -259,8 +254,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
             nbTimeAlreadyAdvanced: 0
           },
           {
-            type: ActionType.PurchaseShip,
-            playerHasShip19: this.checkPlayerHaveShip19
+            type: ActionType.PurchaseShip
           },
           {
             type: ActionType.GainLetter,
@@ -352,9 +346,5 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
           }
         ]
     }
-  }
-
-  get checkPlayerHaveShip19() {
-    return this.material(MaterialType.ShipCard).location(LocationType.PlayerShipCards).player(this.player).id(ShipCard.Ship19).length > 0
   }
 }

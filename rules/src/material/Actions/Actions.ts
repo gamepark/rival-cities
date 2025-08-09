@@ -36,7 +36,7 @@ export type BuildFactoryAction = {
 
 export type DonationAction = {
   type: ActionType.Donation
-  productType: Product | undefined
+  productType?: Product
   nbProduct: number
   nbStars: number
   nbTimes: number
@@ -77,7 +77,6 @@ export type ProductSwapAction = {
 
 export type PurchaseShipAction = {
   type: ActionType.PurchaseShip
-  playerHasShip19: boolean
 } & ActionCommon
 
 export type CourtRullingAction = {
