@@ -71,7 +71,6 @@ export class LawsuitCardHelper extends MaterialRulesPart {
     return [
       {
         type: ActionType.Gift,
-        productType: undefined,
         nbProductToTake: 2,
         canUseAlliance: false
       }
@@ -110,7 +109,6 @@ export class LawsuitCardHelper extends MaterialRulesPart {
       },
       {
         type: ActionType.Donation,
-        productType: undefined,
         nbProduct: 0,
         nbStars: 2,
         nbTimes: 1
@@ -149,7 +147,6 @@ export class LawsuitCardHelper extends MaterialRulesPart {
       },
       {
         type: ActionType.Gift,
-        productType: undefined,
         nbProductToTake: 1,
         canUseAlliance: false
       }

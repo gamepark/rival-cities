@@ -42,7 +42,6 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
           },
           {
             type: ActionType.Gift,
-            productType: undefined,
             nbProductToTake: 2,
             canUseAlliance: true
           }
@@ -58,7 +57,6 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
           },
           {
             type: ActionType.Gift,
-            productType: undefined,
             nbProductToTake: 1,
             canUseAlliance: true
           }
@@ -315,7 +313,6 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
           },
           {
             type: ActionType.Gift,
-            productType: undefined,
             nbProductToTake: 1,
             canUseAlliance: true
           },
@@ -331,7 +328,6 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
         return [
           {
             type: ActionType.Gift,
-            productType: undefined,
             nbProductToTake: 2,
             canUseAlliance: true
           },

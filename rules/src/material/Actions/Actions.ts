@@ -68,7 +68,7 @@ export type GainLetterAction = {
 
 export type GiftAction = {
   type: ActionType.Gift
-  productType: Product | undefined
+  productType?: Product
   nbProductToTake: number
   canUseAlliance: boolean
 } & GainProductAction
@@ -106,7 +106,7 @@ export type ChooseSpecialActionCardAction = {
 
 export type PayToPerformActionAgainAction = {
   type: ActionType.PayToPerformActionAgain
-  productType: Product | undefined
+  productType?: Product
   price: number
   actionToPerformAgain: Action
 } & ActionCommon

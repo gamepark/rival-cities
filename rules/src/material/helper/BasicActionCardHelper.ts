@@ -88,7 +88,6 @@ export class BasicActionCardHelper extends MaterialRulesPart {
             },
             {
               type: ActionType.Donation,
-              productType: undefined,
               nbProduct: 2,
               nbTimes: 1,
               nbStars: 1
@@ -135,7 +134,6 @@ export class BasicActionCardHelper extends MaterialRulesPart {
             {
               type: ActionType.Gift,
               nbProductToTake: 1,
-              productType: undefined,
               canUseAlliance: true
             },
             {

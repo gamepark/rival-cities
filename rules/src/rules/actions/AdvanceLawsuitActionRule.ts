@@ -61,7 +61,6 @@ export class AdvanceLawsuitActionRule extends ActionRule<AdvanceLawsuitAction> {
         ) {
           this.addActionBonus({
             type: ActionType.PayToPerformActionAgain,
-            productType: undefined,
             price: 1,
             actionToPerformAgain: {
               type: ActionType.AdvanceLawsuit,
