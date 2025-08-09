@@ -52,7 +52,7 @@ export class AdvanceLawsuitRule extends ActionRule<AdvanceLawsuit> {
         const timeAlreadyAdvanced = this.action.nbTimeAlreadyAdvanced ?? 0
 
         if (
-          this.hasLeHavreAlliance &&
+          this.hasAlliance(Alliance.LeHavre) &&
           !this.action.isLeHavreBonus &&
           timeAlreadyAdvanced === 0 &&
           this.playerProducts.length &&
@@ -109,9 +109,5 @@ export class AdvanceLawsuitRule extends ActionRule<AdvanceLawsuit> {
       return this.material(MaterialType.LawsuitCard).location(LocationType.LawsuitSpace)
     }
     return this.material(MaterialType.LawsuitCard).location(LocationType.LawsuitSpace).parent(this.action.lawsuitAdvancedLocation)
-  }
-
-  get hasLeHavreAlliance() {
-    return this.material(MaterialType.AllianceCard).id(Alliance.LeHavre).getItem()?.location.player === this.player
   }
 }

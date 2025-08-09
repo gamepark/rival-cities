@@ -1,7 +1,6 @@
 import { isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
 import { Donation } from '../../material/Action'
 import { Alliance } from '../../material/Alliance'
-import { AllianceCardHelper } from '../../material/helper/AllianceCardHelper'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { CustomMoveType } from '../CustomMoveType'
@@ -13,11 +12,10 @@ export class DonationRule extends ActionRule<Donation> {
     // TODO: do not use donation for lawsuit star gains
     const moves: MaterialMove[] = []
     if (this.action.nbProduct === 0) {
-      const playerHaveAllianceAmsterdam = new AllianceCardHelper(this.game).checkPlayerAllianceCardById(Alliance.Amsterdam)
       moves.push(
         ...this.starTokens.moveItems(
           { type: LocationType.PlayerStarTokens, player: this.player },
-          playerHaveAllianceAmsterdam ? this.nbStars + 1 : this.nbStars
+          this.hasAlliance(Alliance.Amsterdam) ? this.nbStars + 1 : this.nbStars
         )
       )
     }
@@ -34,14 +32,10 @@ export class DonationRule extends ActionRule<Donation> {
     const starTokensStock = this.material(MaterialType.StarToken).location(LocationType.StarTokenDeck)
     const products = this.action.product ? playerProducts.id(this.action.product) : playerProducts
     if (products.getQuantity() >= this.action.nbProduct && starTokensStock.getQuantity() > 0) {
-      const stars = this.hasAmsterdamAlliance ? this.action.nbStars + 1 : this.action.nbStars
+      const stars = this.hasAlliance(Alliance.Amsterdam) ? this.action.nbStars + 1 : this.action.nbStars
       moves.push(starTokensStock.moveItem({ type: LocationType.PlayerStarTokens, player: this.player }, stars))
     }
     return moves
-  }
-
-  get hasAmsterdamAlliance() {
-    return this.material(MaterialType.AllianceCard).id(Alliance.Amsterdam).getItem()?.location.player === this.player
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {

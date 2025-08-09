@@ -25,7 +25,7 @@ export class EarnPrestigeRule extends ActionRule<EarnPrestige> {
   afterItemMove(move: ItemMove) {
     if (isMoveItemType(MaterialType.PrestigeMarker)(move)) {
       const performAgainActions: PayToPerformActionAgainAction[] = []
-      if (!this.action.isBruxellesBonus && this.hasBruxellesAlliance && this.hasFurniture) {
+      if (!this.action.isBruxellesBonus && this.hasAlliance(Alliance.Bruxelles, this.playerEarningPrestige) && this.hasFurniture) {
         performAgainActions.push({
           type: ActionType.PayToPerformActionAgain,
           product: Product.Furniture,
@@ -57,10 +57,6 @@ export class EarnPrestigeRule extends ActionRule<EarnPrestige> {
       return this.removeActionAndMove()
     }
     return []
-  }
-
-  get hasBruxellesAlliance() {
-    return this.material(MaterialType.AllianceCard).id(Alliance.LeHavre).getItem()?.location.player === this.playerEarningPrestige
   }
 
   get hasFurniture() {

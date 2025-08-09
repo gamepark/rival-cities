@@ -22,7 +22,7 @@ export class DrawSpecialActionCardRule extends ActionRule<DrawSpecialActionCard>
 
   afterItemMove(move: ItemMove) {
     if (isMoveItemType(MaterialType.SpecialActionCard)(move)) {
-      if (this.hasKjjobenhavnAlliance && !this.action.isKjjobenhavnBonus && this.hasBeer) {
+      if (this.hasAlliance(Alliance.Kjjobenhavn) && !this.action.isKjjobenhavnBonus && this.hasBeer) {
         this.addActionBonus({
           type: ActionType.PayToPerformActionAgain,
           product: Product.Beer,
@@ -36,10 +36,6 @@ export class DrawSpecialActionCardRule extends ActionRule<DrawSpecialActionCard>
       return this.removeActionAndMove()
     }
     return []
-  }
-
-  get hasKjjobenhavnAlliance() {
-    return this.material(MaterialType.AllianceCard).id(Alliance.Kjjobenhavn).getItem()?.location.player === this.player
   }
 
   get hasBeer() {
