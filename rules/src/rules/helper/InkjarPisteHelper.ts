@@ -2,6 +2,7 @@ import { Location, PlayerTurnRule } from '@gamepark/rules-api'
 import { range, sumBy } from 'lodash'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
+import { Ship } from '../../material/Ship'
 
 export const INK_SPACES = 20
 
@@ -24,6 +25,6 @@ export class InkJarPisteHelper extends PlayerTurnRule {
   }
 
   get hasShip17() {
-    return this.material(MaterialType.ShipCard).id(17).getItem()?.location.player === this.player
+    return this.material(MaterialType.ShipCard).id(Ship.Ship17).getItem()?.location.player === this.player
   }
 }

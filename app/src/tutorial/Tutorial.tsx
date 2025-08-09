@@ -5,6 +5,7 @@ import { Alliance } from '@gamepark/rival-cities/material/Alliance'
 import { LocationType } from '@gamepark/rival-cities/material/LocationType'
 import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
 import { Product } from '@gamepark/rival-cities/material/Product'
+import { Ship } from '@gamepark/rival-cities/material/Ship'
 import { CustomMoveType } from '@gamepark/rival-cities/rules/CustomMoveType'
 import { isCustomMoveType, isMoveItemType, MaterialGame, MaterialMove } from '@gamepark/rules-api'
 import { Trans } from 'react-i18next'
@@ -396,7 +397,7 @@ export class Tutorial extends MaterialTutorial<number, MaterialType, LocationTyp
         auto: true,
         interrupt: () => true,
         filter: (move: MaterialMove, game: MaterialGame) =>
-          isMoveItemType(MaterialType.ShipCard)(move) && this.material(game, MaterialType.ShipCard).index(move.itemIndex).getItem()?.id === 1
+          isMoveItemType(MaterialType.ShipCard)(move) && this.material(game, MaterialType.ShipCard).index(move.itemIndex).getItem()?.id === Ship.Ship1
       }
     },
     {

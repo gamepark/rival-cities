@@ -1,3 +1,4 @@
+import { Ship } from '@gamepark/rival-cities/material/Ship'
 import DeutchShip1 from '../../../images/cards/ship/de/Ship01.jpg'
 import DeutchShip2 from '../../../images/cards/ship/de/Ship02.jpg'
 import DeutchShip3 from '../../../images/cards/ship/de/Ship03.jpg'
@@ -23,27 +24,27 @@ import { ShipCardDescription } from '../../ShipCardDescription'
 
 export class DeutchShipCardDescription extends ShipCardDescription {
   images = {
-    [1]: DeutchShip1,
-    [2]: DeutchShip2,
-    [3]: DeutchShip3,
-    [4]: DeutchShip4,
-    [5]: DeutchShip5,
-    [6]: DeutchShip6,
-    [7]: DeutchShip7,
-    [8]: DeutchShip8,
-    [9]: DeutchShip9,
-    [10]: DeutchShip10,
-    [11]: DeutchShip11,
-    [12]: DeutchShip12,
-    [13]: DeutchShip13,
-    [14]: DeutchShip14,
-    [15]: DeutchShip15,
-    [16]: DeutchShip16,
-    [17]: DeutchShip17,
-    [18]: DeutchShip18,
-    [19]: DeutchShip19,
-    [20]: DeutchShip20,
-    [21]: DeutchShip21
+    [Ship.Ship1]: DeutchShip1,
+    [Ship.Ship2]: DeutchShip2,
+    [Ship.Ship3]: DeutchShip3,
+    [Ship.Ship4]: DeutchShip4,
+    [Ship.Ship5]: DeutchShip5,
+    [Ship.Ship6]: DeutchShip6,
+    [Ship.Ship7]: DeutchShip7,
+    [Ship.Ship8]: DeutchShip8,
+    [Ship.Ship9]: DeutchShip9,
+    [Ship.Ship10]: DeutchShip10,
+    [Ship.Ship11]: DeutchShip11,
+    [Ship.Ship12]: DeutchShip12,
+    [Ship.Ship13]: DeutchShip13,
+    [Ship.Ship14]: DeutchShip14,
+    [Ship.Ship15]: DeutchShip15,
+    [Ship.Ship16]: DeutchShip16,
+    [Ship.Ship17]: DeutchShip17,
+    [Ship.Ship18]: DeutchShip18,
+    [Ship.Ship19]: DeutchShip19,
+    [Ship.Ship20]: DeutchShip20,
+    [Ship.Ship21]: DeutchShip21
   }
 }
 

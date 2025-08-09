@@ -6,6 +6,7 @@ import { BasicActionCardHelper } from '../material/helper/BasicActionCardHelper'
 import { SpecialActionCardHelper } from '../material/helper/SpecialActionCardHelper'
 import { LocationType } from '../material/LocationType'
 import { MaterialType } from '../material/MaterialType'
+import { Ship } from '../material/Ship'
 import { SpecialActionCard } from '../material/SpecialActionCard'
 import { CustomMoveType } from './CustomMoveType'
 import { ActionRuleIds } from './helper/ActionRuleIds'
@@ -114,6 +115,6 @@ export class ChooseActionRule extends PlayerTurnRule {
   }
 
   get playerHaveShip18() {
-    return this.material(MaterialType.ShipCard).location(LocationType.PlayerShipCards).player(this.player).id(18).length > 0
+    return this.material(MaterialType.ShipCard).location(LocationType.PlayerShipCards).player(this.player).id(Ship.Ship18).length > 0
   }
 }

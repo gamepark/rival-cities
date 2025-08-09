@@ -1,5 +1,4 @@
 import { getEnumValues, MaterialGameSetup } from '@gamepark/rules-api'
-import { range } from 'lodash'
 import shuffle from 'lodash/shuffle'
 import { City } from './City'
 import { basicActionCardPlaces, specialActionCardPlaces } from './constantes'
@@ -9,6 +8,7 @@ import { Lawsuit } from './material/Lawsuit'
 import { LocationType } from './material/LocationType'
 import { MaterialType } from './material/MaterialType'
 import { Product, products } from './material/Product'
+import { Ship } from './material/Ship'
 import { specialActionCards } from './material/SpecialActionCard'
 import { RivalCitiesOptions } from './RivalCitiesOptions'
 import { RivalCitiesRules } from './RivalCitiesRules'
@@ -55,8 +55,7 @@ export class RivalCitiesSetup extends MaterialGameSetup<City, MaterialType, Loca
   }
 
   setupShipCards() {
-    const numberOfShips = 21
-    const ships = shuffle(range(1, numberOfShips + 1)).slice(0, 10)
+    const ships = shuffle(getEnumValues(Ship)).slice(0, 10)
     this.material(MaterialType.ShipCard).createItems(ships.map((ship) => ({ id: ship, location: { type: LocationType.ShipCardsDeck } })))
     this.material(MaterialType.ShipCard).location(LocationType.ShipCardsDeck).limit(4).moveItems({ type: LocationType.ShipCardsRiver })
   }

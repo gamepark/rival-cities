@@ -1,3 +1,4 @@
+import { Ship } from '@gamepark/rival-cities/material/Ship'
 import FrenchShip1 from '../../../images/cards/ship/fr/Ship01.jpg'
 import FrenchShip2 from '../../../images/cards/ship/fr/Ship02.jpg'
 import FrenchShip3 from '../../../images/cards/ship/fr/Ship03.jpg'
@@ -23,27 +24,27 @@ import { ShipCardDescription } from '../../ShipCardDescription'
 
 export class FrenchShipCardDescription extends ShipCardDescription {
   images = {
-    [1]: FrenchShip1,
-    [2]: FrenchShip2,
-    [3]: FrenchShip3,
-    [4]: FrenchShip4,
-    [5]: FrenchShip5,
-    [6]: FrenchShip6,
-    [7]: FrenchShip7,
-    [8]: FrenchShip8,
-    [9]: FrenchShip9,
-    [10]: FrenchShip10,
-    [11]: FrenchShip11,
-    [12]: FrenchShip12,
-    [13]: FrenchShip13,
-    [14]: FrenchShip14,
-    [15]: FrenchShip15,
-    [16]: FrenchShip16,
-    [17]: FrenchShip17,
-    [18]: FrenchShip18,
-    [19]: FrenchShip19,
-    [20]: FrenchShip20,
-    [21]: FrenchShip21
+    [Ship.Ship1]: FrenchShip1,
+    [Ship.Ship2]: FrenchShip2,
+    [Ship.Ship3]: FrenchShip3,
+    [Ship.Ship4]: FrenchShip4,
+    [Ship.Ship5]: FrenchShip5,
+    [Ship.Ship6]: FrenchShip6,
+    [Ship.Ship7]: FrenchShip7,
+    [Ship.Ship8]: FrenchShip8,
+    [Ship.Ship9]: FrenchShip9,
+    [Ship.Ship10]: FrenchShip10,
+    [Ship.Ship11]: FrenchShip11,
+    [Ship.Ship12]: FrenchShip12,
+    [Ship.Ship13]: FrenchShip13,
+    [Ship.Ship14]: FrenchShip14,
+    [Ship.Ship15]: FrenchShip15,
+    [Ship.Ship16]: FrenchShip16,
+    [Ship.Ship17]: FrenchShip17,
+    [Ship.Ship18]: FrenchShip18,
+    [Ship.Ship19]: FrenchShip19,
+    [Ship.Ship20]: FrenchShip20,
+    [Ship.Ship21]: FrenchShip21
   }
 }
 

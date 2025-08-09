@@ -2,6 +2,7 @@ import { css } from '@emotion/react'
 import { linkButtonCss, PlayMoveButton } from '@gamepark/react-game'
 import { Alliance } from '@gamepark/rival-cities/material/Alliance'
 import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
+import { Ship } from '@gamepark/rival-cities/material/Ship'
 import { MaterialMoveBuilder } from '@gamepark/rules-api'
 import displayMaterialHelp = MaterialMoveBuilder.displayMaterialHelp
 
@@ -11,7 +12,7 @@ export const components = {
 }
 
 export const allianceBtn = (id: Alliance) => <PlayMoveButton css={linkButtonCss} move={displayMaterialHelp(MaterialType.AllianceCard, { id })} transient />
-export const shipBtn = (id: number) => <PlayMoveButton css={linkButtonCss} move={displayMaterialHelp(MaterialType.ShipCard, { id })} transient />
+export const shipBtn = (id: Ship) => <PlayMoveButton css={linkButtonCss} move={displayMaterialHelp(MaterialType.ShipCard, { id })} transient />
 
 export const note = css`
   border: 1px solid black;

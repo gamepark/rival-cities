@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { MaterialHelpProps } from '@gamepark/react-game'
 import { Product } from '@gamepark/rival-cities/material/Product'
-import { getShipData } from '@gamepark/rival-cities/material/Ship'
+import { Ship, shipData } from '@gamepark/rival-cities/material/Ship'
 import { FC } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { components, note } from './utils'
@@ -18,7 +18,7 @@ export const ShipCardHelp: FC<MaterialHelpProps> = ({ item }) => {
       {item.id && (
         <>
           <p>
-            <b>{t(`help.price`)}</b> <Price cardId={item.id as number} />
+            <b>{t(`help.price`)}</b> <Price cardId={item.id as Ship} />
           </p>
           {item.id < 20 && (
             <>
@@ -37,14 +37,14 @@ export const ShipCardHelp: FC<MaterialHelpProps> = ({ item }) => {
   )
 }
 
-const Price = ({ cardId }: { cardId: number }) => {
-  const data = getShipData(cardId)
-  if (!data) return <></>
+const Price = ({ cardId }: { cardId: Ship }) => {
+  const cost = shipData[cardId].cost
+  if (!cost) return <></>
   const product = {
     [Product.Leather]: 'help.price.leather',
     [Product.Furniture]: 'help.price.furniture',
     [Product.Cloth]: 'help.price.cloth',
     [Product.Beer]: 'help.price.beer'
   }
-  return <Trans defaults={product[data.cost.type]} values={{ quantity: data.cost.quantity }} components={components} />
+  return <Trans defaults={product[cost.type]} values={{ quantity: cost.quantity }} components={components} />
 }

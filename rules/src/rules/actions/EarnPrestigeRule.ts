@@ -5,6 +5,7 @@ import { Alliance } from '../../material/Alliance'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { Product } from '../../material/Product'
+import { Ship } from '../../material/Ship'
 import { ActionRule } from './ActionRule'
 
 export class EarnPrestigeRule extends ActionRule<EarnPrestige> {
@@ -63,7 +64,7 @@ export class EarnPrestigeRule extends ActionRule<EarnPrestige> {
   }
 
   get hasShip16() {
-    return this.material(MaterialType.ShipCard).id(16).getItem()?.location.player === this.playerEarningPrestige
+    return this.material(MaterialType.ShipCard).id(Ship.Ship16).getItem()?.location.player === this.playerEarningPrestige
   }
 
   get beers() {
