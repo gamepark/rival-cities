@@ -2,7 +2,6 @@
 import { MaterialHelpProps, useRules } from '@gamepark/react-game'
 import { ActionType } from '@gamepark/rival-cities/material/Action'
 import { SpecialActionCardHelper } from '@gamepark/rival-cities/material/helper/SpecialActionCardHelper'
-import { ShipCard } from '@gamepark/rival-cities/material/ShipCard'
 import { SpecialActionCard } from '@gamepark/rival-cities/material/SpecialActionCard'
 import { RivalCitiesRules } from '@gamepark/rival-cities/RivalCitiesRules'
 import { FC } from 'react'
@@ -42,7 +41,7 @@ export const SpecialActionCardHelp: FC<MaterialHelpProps> = ({ item }) => {
           defaults={`help.special.action.card.note`}
           components={{
             ...components,
-            ship: shipBtn(ShipCard.Ship18)
+            ship: shipBtn(18)
           }}
         />
       </p>

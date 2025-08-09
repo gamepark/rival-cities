@@ -3,7 +3,7 @@ import { Production } from '../../material/Action'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { Product } from '../../material/Product'
-import { ShipCard, shipCardsData, ShipEffectType } from '../../material/ShipCard'
+import { getShipData, ShipEffectType } from '../../material/ShipCard'
 import { CustomMoveType } from '../CustomMoveType'
 import { GainProductsRule } from './GainProductsRule'
 
@@ -21,7 +21,7 @@ export class ProductionRule extends GainProductsRule<Production> {
     const moves = super.triggerProductGainedEffects(product)
     if (!this.action.productsGained) {
       for (const ship of this.playerShips) {
-        if (shipCardsData[ship].effect.type === ShipEffectType.OnProduction) {
+        if (getShipData(ship).effect.type === ShipEffectType.OnProduction) {
           moves.push(this.customMove(CustomMoveType.TriggerShipEffect, ship))
         }
       }
@@ -32,7 +32,7 @@ export class ProductionRule extends GainProductsRule<Production> {
   onCustomMove(move: CustomMove) {
     if (move.type === CustomMoveType.TriggerShipEffect) {
       this.action.quantity++
-      const product = shipCardsData[move.data as ShipCard].effect.product!
+      const product = getShipData(move.data as number).effect.product!
       return this.gainProduct(product)
     }
     return super.onCustomMove(move)
@@ -50,7 +50,7 @@ export class ProductionRule extends GainProductsRule<Production> {
     return this.material(MaterialType.ShipCard)
       .location(LocationType.PlayerShipCards)
       .player(this.player)
-      .getItems<ShipCard>()
+      .getItems<number>()
       .map((item) => item.id)
   }
 }

@@ -4,7 +4,6 @@ import { Action, ResolveLawsuitAction } from '../../material/Action'
 import { LawsuitCard, lawsuitCardData } from '../../material/LawsuitCard'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
-import { ShipCard } from '../../material/ShipCard'
 import { ActionRuleIds } from '../helper/ActionRuleIds'
 import { EndOfGameHelper } from '../helper/EndOfGameHelper'
 import { MemoryType } from '../MemoryType'
@@ -51,7 +50,7 @@ export class ResolveLawsuitRule extends ActionRule<ResolveLawsuitAction> {
 
   beforeItemMove(move: ItemMove): MaterialMove[] {
     if (isMoveItemType(MaterialType.LawsuitCard)(move) && move.location.type === LocationType.PlayerLawsuitCards) {
-      const playerShip15 = this.material(MaterialType.ShipCard).location(LocationType.PlayerShipCards).player(move.location.player).id(ShipCard.Ship15)
+      const playerShip15 = this.material(MaterialType.ShipCard).location(LocationType.PlayerShipCards).player(move.location.player).id(15)
       if (playerShip15.length > 0) {
         return [
           ...this.material(MaterialType.StarToken)

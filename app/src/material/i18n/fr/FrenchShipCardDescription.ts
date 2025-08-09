@@ -1,5 +1,3 @@
-import { ShipCard } from '@gamepark/rival-cities/material/ShipCard'
-import { ShipCardDescription } from '../../ShipCardDescription'
 import FrenchShip1 from '../../../images/cards/ship/fr/Ship01.jpg'
 import FrenchShip2 from '../../../images/cards/ship/fr/Ship02.jpg'
 import FrenchShip3 from '../../../images/cards/ship/fr/Ship03.jpg'
@@ -21,29 +19,31 @@ import FrenchShip18 from '../../../images/cards/ship/fr/Ship18.jpg'
 import FrenchShip19 from '../../../images/cards/ship/fr/Ship19.jpg'
 import FrenchShip20 from '../../../images/cards/ship/fr/Ship20.jpg'
 import FrenchShip21 from '../../../images/cards/ship/fr/Ship21.jpg'
+import { ShipCardDescription } from '../../ShipCardDescription'
+
 export class FrenchShipCardDescription extends ShipCardDescription {
   images = {
-    [ShipCard.Ship1]: FrenchShip1,
-    [ShipCard.Ship2]: FrenchShip2,
-    [ShipCard.Ship3]: FrenchShip3,
-    [ShipCard.Ship4]: FrenchShip4,
-    [ShipCard.Ship5]: FrenchShip5,
-    [ShipCard.Ship6]: FrenchShip6,
-    [ShipCard.Ship7]: FrenchShip7,
-    [ShipCard.Ship8]: FrenchShip8,
-    [ShipCard.Ship9]: FrenchShip9,
-    [ShipCard.Ship10]: FrenchShip10,
-    [ShipCard.Ship11]: FrenchShip11,
-    [ShipCard.Ship12]: FrenchShip12,
-    [ShipCard.Ship13]: FrenchShip13,
-    [ShipCard.Ship14]: FrenchShip14,
-    [ShipCard.Ship15]: FrenchShip15,
-    [ShipCard.Ship16]: FrenchShip16,
-    [ShipCard.Ship17]: FrenchShip17,
-    [ShipCard.Ship18]: FrenchShip18,
-    [ShipCard.Ship19]: FrenchShip19,
-    [ShipCard.Ship20]: FrenchShip20,
-    [ShipCard.Ship21]: FrenchShip21
+    [1]: FrenchShip1,
+    [2]: FrenchShip2,
+    [3]: FrenchShip3,
+    [4]: FrenchShip4,
+    [5]: FrenchShip5,
+    [6]: FrenchShip6,
+    [7]: FrenchShip7,
+    [8]: FrenchShip8,
+    [9]: FrenchShip9,
+    [10]: FrenchShip10,
+    [11]: FrenchShip11,
+    [12]: FrenchShip12,
+    [13]: FrenchShip13,
+    [14]: FrenchShip14,
+    [15]: FrenchShip15,
+    [16]: FrenchShip16,
+    [17]: FrenchShip17,
+    [18]: FrenchShip18,
+    [19]: FrenchShip19,
+    [20]: FrenchShip20,
+    [21]: FrenchShip21
   }
 }
 

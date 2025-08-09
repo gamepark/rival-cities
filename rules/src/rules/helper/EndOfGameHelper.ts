@@ -4,7 +4,7 @@ import { Alliance, alliancesData } from '../../material/Alliance'
 import { LawsuitCard, lawsuitCardData } from '../../material/LawsuitCard'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
-import { ShipCard, shipCardsData } from '../../material/ShipCard'
+import { getShipData } from '../../material/ShipCard'
 
 export class EndOfGameHelper extends PlayerTurnRule {
   checkOffSeasonEndOfGame(moveIfGameNotEnded: MaterialMove): MaterialMove[] {
@@ -63,8 +63,8 @@ export class EndOfGameHelper extends PlayerTurnRule {
       .map((it) => lawsuitCardData[it.id as LawsuitCard].nbStars)
       .reduce((acc, cur) => acc + cur, 0)
     score += this.getPlayerShipCards(playerId)
-      .getItems()
-      .map((it) => shipCardsData[it.id as ShipCard].getNbStars(this.getPlayerShipCards(playerId).length))
+      .getItems<number>()
+      .map((it) => getShipData(it.id).getNbStars(this.getPlayerShipCards(playerId).length))
       .reduce((acc, cur) => acc + cur, 0)
     score += this.material(MaterialType.StarToken).location(LocationType.PlayerStarTokens).player(playerId).getQuantity()
     if (playerId === City.Hamburg && this.prestigeMarkerLocation > 0) {

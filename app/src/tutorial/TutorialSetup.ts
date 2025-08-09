@@ -3,8 +3,8 @@ import { Alliance } from '@gamepark/rival-cities/material/Alliance'
 import { LawsuitCard } from '@gamepark/rival-cities/material/LawsuitCard'
 import { LocationType } from '@gamepark/rival-cities/material/LocationType'
 import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
-import { shipCards } from '@gamepark/rival-cities/material/ShipCard'
 import { RivalCitiesSetup } from '@gamepark/rival-cities/RivalCitiesSetup'
+import range from 'lodash/range'
 
 export const me = City.Altona
 export const opponent = City.Hamburg
@@ -28,7 +28,7 @@ export class TutorialSetup extends RivalCitiesSetup {
   }
 
   setupShipCards() {
-    const shipCardsItems = shipCards.slice(0, 10).map((it) => ({ id: it, location: { type: LocationType.ShipCardsDeck } }))
+    const shipCardsItems = range(1, 11).map((it) => ({ id: it, location: { type: LocationType.ShipCardsDeck } }))
     this.material(MaterialType.ShipCard).createItems(shipCardsItems)
     this.material(MaterialType.ShipCard).location(LocationType.ShipCardsDeck).limit(4).moveItems({
       type: LocationType.ShipCardsRiver

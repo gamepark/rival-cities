@@ -1,5 +1,3 @@
-import { ShipCard } from '@gamepark/rival-cities/material/ShipCard'
-import { ShipCardDescription } from '../../ShipCardDescription'
 import DeutchShip1 from '../../../images/cards/ship/de/Ship01.jpg'
 import DeutchShip2 from '../../../images/cards/ship/de/Ship02.jpg'
 import DeutchShip3 from '../../../images/cards/ship/de/Ship03.jpg'
@@ -21,29 +19,31 @@ import DeutchShip18 from '../../../images/cards/ship/de/Ship18.jpg'
 import DeutchShip19 from '../../../images/cards/ship/de/Ship19.jpg'
 import DeutchShip20 from '../../../images/cards/ship/de/Ship20.jpg'
 import DeutchShip21 from '../../../images/cards/ship/de/Ship21.jpg'
+import { ShipCardDescription } from '../../ShipCardDescription'
+
 export class DeutchShipCardDescription extends ShipCardDescription {
   images = {
-    [ShipCard.Ship1]: DeutchShip1,
-    [ShipCard.Ship2]: DeutchShip2,
-    [ShipCard.Ship3]: DeutchShip3,
-    [ShipCard.Ship4]: DeutchShip4,
-    [ShipCard.Ship5]: DeutchShip5,
-    [ShipCard.Ship6]: DeutchShip6,
-    [ShipCard.Ship7]: DeutchShip7,
-    [ShipCard.Ship8]: DeutchShip8,
-    [ShipCard.Ship9]: DeutchShip9,
-    [ShipCard.Ship10]: DeutchShip10,
-    [ShipCard.Ship11]: DeutchShip11,
-    [ShipCard.Ship12]: DeutchShip12,
-    [ShipCard.Ship13]: DeutchShip13,
-    [ShipCard.Ship14]: DeutchShip14,
-    [ShipCard.Ship15]: DeutchShip15,
-    [ShipCard.Ship16]: DeutchShip16,
-    [ShipCard.Ship17]: DeutchShip17,
-    [ShipCard.Ship18]: DeutchShip18,
-    [ShipCard.Ship19]: DeutchShip19,
-    [ShipCard.Ship20]: DeutchShip20,
-    [ShipCard.Ship21]: DeutchShip21
+    [1]: DeutchShip1,
+    [2]: DeutchShip2,
+    [3]: DeutchShip3,
+    [4]: DeutchShip4,
+    [5]: DeutchShip5,
+    [6]: DeutchShip6,
+    [7]: DeutchShip7,
+    [8]: DeutchShip8,
+    [9]: DeutchShip9,
+    [10]: DeutchShip10,
+    [11]: DeutchShip11,
+    [12]: DeutchShip12,
+    [13]: DeutchShip13,
+    [14]: DeutchShip14,
+    [15]: DeutchShip15,
+    [16]: DeutchShip16,
+    [17]: DeutchShip17,
+    [18]: DeutchShip18,
+    [19]: DeutchShip19,
+    [20]: DeutchShip20,
+    [21]: DeutchShip21
   }
 }
 

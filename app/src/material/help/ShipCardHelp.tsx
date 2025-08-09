@@ -1,10 +1,10 @@
 /** @jsxImportSource @emotion/react */
 import { MaterialHelpProps } from '@gamepark/react-game'
+import { Product } from '@gamepark/rival-cities/material/Product'
+import { getShipData } from '@gamepark/rival-cities/material/ShipCard'
 import { FC } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { components, note } from './utils'
-import { ShipCard, shipCardsData } from '@gamepark/rival-cities/material/ShipCard'
-import { Product } from '@gamepark/rival-cities/material/Product'
 
 export const ShipCardHelp: FC<MaterialHelpProps> = ({ item }) => {
   const { t } = useTranslation()
@@ -18,7 +18,7 @@ export const ShipCardHelp: FC<MaterialHelpProps> = ({ item }) => {
       {item.id && (
         <>
           <p>
-            <b>{t(`help.price`)}</b> <Price cardId={item.id as ShipCard} />
+            <b>{t(`help.price`)}</b> <Price cardId={item.id as number} />
           </p>
           {item.id < 20 && (
             <>
@@ -37,8 +37,8 @@ export const ShipCardHelp: FC<MaterialHelpProps> = ({ item }) => {
   )
 }
 
-const Price = ({ cardId }: { cardId: ShipCard }) => {
-  const data = shipCardsData[cardId]
+const Price = ({ cardId }: { cardId: number }) => {
+  const data = getShipData(cardId)
   if (!data) return <></>
   const product = {
     [Product.Leather]: 'help.price.leather',

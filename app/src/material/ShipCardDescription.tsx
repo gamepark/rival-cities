@@ -1,6 +1,5 @@
 import { CardDescription, ItemContext } from '@gamepark/react-game'
 import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
-import { ShipCard } from '@gamepark/rival-cities/material/ShipCard'
 import { isMoveItemType, MaterialMove } from '@gamepark/rules-api'
 import Ship1 from '../images/cards/ship/en/Ship01.jpg'
 import Ship2 from '../images/cards/ship/en/Ship02.jpg'
@@ -33,27 +32,27 @@ export class ShipCardDescription extends CardDescription {
   backImage = ShipBack
 
   images = {
-    [ShipCard.Ship1]: Ship1,
-    [ShipCard.Ship2]: Ship2,
-    [ShipCard.Ship3]: Ship3,
-    [ShipCard.Ship4]: Ship4,
-    [ShipCard.Ship5]: Ship5,
-    [ShipCard.Ship6]: Ship6,
-    [ShipCard.Ship7]: Ship7,
-    [ShipCard.Ship8]: Ship8,
-    [ShipCard.Ship9]: Ship9,
-    [ShipCard.Ship10]: Ship10,
-    [ShipCard.Ship11]: Ship11,
-    [ShipCard.Ship12]: Ship12,
-    [ShipCard.Ship13]: Ship13,
-    [ShipCard.Ship14]: Ship14,
-    [ShipCard.Ship15]: Ship15,
-    [ShipCard.Ship16]: Ship16,
-    [ShipCard.Ship17]: Ship17,
-    [ShipCard.Ship18]: Ship18,
-    [ShipCard.Ship19]: Ship19,
-    [ShipCard.Ship20]: Ship20,
-    [ShipCard.Ship21]: Ship21
+    [1]: Ship1,
+    [2]: Ship2,
+    [3]: Ship3,
+    [4]: Ship4,
+    [5]: Ship5,
+    [6]: Ship6,
+    [7]: Ship7,
+    [8]: Ship8,
+    [9]: Ship9,
+    [10]: Ship10,
+    [11]: Ship11,
+    [12]: Ship12,
+    [13]: Ship13,
+    [14]: Ship14,
+    [15]: Ship15,
+    [16]: Ship16,
+    [17]: Ship17,
+    [18]: Ship18,
+    [19]: Ship19,
+    [20]: Ship20,
+    [21]: Ship21
   }
 
   canShortClick(move: MaterialMove, context: ItemContext): boolean {
