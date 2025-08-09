@@ -4,7 +4,7 @@ import { ResolveLawsuitAction } from '../../material/Action'
 import { Lawsuit, lawsuitData } from '../../material/Lawsuit'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
-import { Ship } from '../../material/Ship'
+import { Ship, shipData, ShipEffectType } from '../../material/Ship'
 import { MemoryType } from '../MemoryType'
 import { RuleId } from '../RuleId'
 import { ActionRule } from './ActionRule'
@@ -47,20 +47,6 @@ export class ResolveLawsuitRule extends ActionRule<ResolveLawsuitAction> {
     return moves
   }
 
-  beforeItemMove(move: ItemMove): MaterialMove[] {
-    if (isMoveItemType(MaterialType.LawsuitCard)(move) && move.location.type === LocationType.PlayerLawsuitCards) {
-      const playerShip15 = this.material(MaterialType.ShipCard).location(LocationType.PlayerShipCards).player(move.location.player).id(Ship.Ship15)
-      if (playerShip15.length > 0) {
-        return [
-          ...this.material(MaterialType.StarToken)
-            .location(LocationType.StarTokenDeck)
-            .moveItems({ type: LocationType.PlayerStarTokens, player: move.location.player }, 2)
-        ]
-      }
-    }
-    return []
-  }
-
   afterItemMove(move: ItemMove): MaterialMove[] {
     if (isMoveItemType(MaterialType.LawsuitCard)(move)) {
       if (move.location.type === LocationType.PlayerLawsuitCards) {
@@ -68,7 +54,14 @@ export class ResolveLawsuitRule extends ActionRule<ResolveLawsuitAction> {
           this.memorize(MemoryType.PendingRule, RuleId.OffSeasonChangeSpecialCards)
         }
         const lawsuit = this.material(MaterialType.LawsuitCard).getItem<Lawsuit>(move.itemIndex).id
-        const actions = lawsuitData[lawsuit].winBonus
+        const actions = structuredClone(lawsuitData[lawsuit].winBonus)
+        const playerShips = this.material(MaterialType.ShipCard).player(move.location.player).getItems<Ship>()
+        for (const ship of playerShips) {
+          const effect = shipData[ship.id].effect
+          if (effect?.type === ShipEffectType.WinLawsuitBonus) {
+            actions.push(effect.action)
+          }
+        }
         this.addActions(...structuredClone(actions))
       } else if (move.location.type === LocationType.LawsuitSpace) {
         return [this.startNextRule()]

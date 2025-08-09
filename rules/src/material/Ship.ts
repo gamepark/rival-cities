@@ -28,7 +28,8 @@ export enum Ship {
 export enum ShipEffectType {
   Instant = 1,
   OffSeasonBonus,
-  ProductionBonus
+  ProductionBonus,
+  WinLawsuitBonus
 }
 
 export type InstantEffect = {
@@ -46,7 +47,12 @@ export type ProductionBonusEffect = {
   product: Product
 }
 
-export type ShipEffect = InstantEffect | OffSeasonBonusEffect | ProductionBonusEffect
+export type WinLawsuitBonusEffect = {
+  type: ShipEffectType.WinLawsuitBonus
+  action: Action
+}
+
+export type ShipEffect = InstantEffect | OffSeasonBonusEffect | ProductionBonusEffect | WinLawsuitBonusEffect
 
 export type ShipData = {
   cost: {
@@ -175,6 +181,10 @@ export const shipData: Record<Ship, ShipData> = {
   },
   [Ship.Ship15]: {
     cost: { type: Product.Cloth, quantity: 3 },
+    effect: {
+      type: ShipEffectType.WinLawsuitBonus,
+      action: { type: ActionType.GainStars, stars: 2 }
+    },
     getNbStars: () => 1
   },
   [Ship.Ship16]: {
