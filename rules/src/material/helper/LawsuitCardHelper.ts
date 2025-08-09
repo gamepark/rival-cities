@@ -94,8 +94,8 @@ export class LawsuitCardHelper extends MaterialRulesPart {
   lawersuitCard5ActionOnAdvance(): Action[] {
     return [
       {
-        type: ActionType.ReturnFactory,
-        nbFactoryCanReturn: 2
+        type: ActionType.ReactivateFactory,
+        count: 2
       }
     ]
   }

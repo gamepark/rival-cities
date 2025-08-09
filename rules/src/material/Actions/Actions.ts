@@ -83,9 +83,9 @@ export type CourtRullingAction = {
   type: ActionType.CourtRuling
 } & ActionCommon
 
-export type ReturnFactoryAction = {
-  type: ActionType.ReturnFactory
-  nbFactoryCanReturn: number
+export type ReactivateFactoryAction = {
+  type: ActionType.ReactivateFactory
+  count: number
 } & ActionCommon
 
 export type PiracyAction = {
@@ -123,7 +123,7 @@ export type Action =
   | ProductSwapAction
   | PurchaseShipAction
   | CourtRullingAction
-  | ReturnFactoryAction
+  | ReactivateFactoryAction
   | PiracyAction
   | ResolveLawsuitAction
   | ChooseSpecialActionCardAction

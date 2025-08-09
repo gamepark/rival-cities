@@ -13,7 +13,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
   }
 
   getCardActions(card: SpecialActionCard): Action[] {
-    if (card === SpecialActionCard.SpecialAction6) {
+    if (card === SpecialActionCard.SpecialAction6 || card === SpecialActionCard.SpecialAction19) {
       return this.getCardMultipleActions(card)
     } else {
       return [{ type: ActionType.Multiple, actions: this.getCardMultipleActions(card) }]
@@ -264,12 +264,12 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
       case SpecialActionCard.SpecialAction19:
         return [
           {
-            type: ActionType.AdvanceLawsuit,
-            nbTimeAlreadyAdvanced: 0
+            type: ActionType.ReactivateFactory,
+            count: 3
           },
           {
-            type: ActionType.ReturnFactory,
-            nbFactoryCanReturn: 3
+            type: ActionType.AdvanceLawsuit,
+            nbTimeAlreadyAdvanced: 0
           }
         ]
       case SpecialActionCard.SpecialAction20:

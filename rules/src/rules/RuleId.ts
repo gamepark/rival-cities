@@ -19,7 +19,7 @@ export enum RuleId {
   ProductSwap,
   PurchaseShip,
   CourtRuling,
-  ReturnFactory,
+  ReactivateFactory,
   Piracy,
   OffSeasonTakeBell,
   OffSeasonPayForAlliance,

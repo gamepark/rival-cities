@@ -36,8 +36,8 @@ import { PiracyActionRule } from './rules/actions/PiracyActionRule'
 import { ProductionActionRule } from './rules/actions/ProductionActionRule'
 import { ProductSwapActionRule } from './rules/actions/ProductSwapActionRule'
 import { PurchaseShipActionRule } from './rules/actions/PurchaseShipActionRule'
+import { ReactivateFactoryActionRule } from './rules/actions/ReactivateFactoryActionRule'
 import { ResolveLawsuitActionRule } from './rules/actions/ResolveLawsuitActionRule'
-import { ReturnFactoryActionRule } from './rules/actions/ReturnFactoryActionRule'
 import { AdvanceInkJarRule } from './rules/AdvanceInkJarRule'
 import { ChooseActionRule } from './rules/ChooseActionRule'
 import { ChooseFirstProductRule } from './rules/ChooseFirstProductRule'
@@ -96,7 +96,7 @@ export class RivalCitiesRules
     [RuleId.FormAlliance]: FormAllianceActionRule,
     [RuleId.Gift]: GiftActionRule,
     [RuleId.ProductSwap]: ProductSwapActionRule,
-    [RuleId.ReturnFactory]: ReturnFactoryActionRule,
+    [RuleId.ReactivateFactory]: ReactivateFactoryActionRule,
     [RuleId.CourtRuling]: CourtRulingActionRule,
     [RuleId.Production]: ProductionActionRule,
     [RuleId.PayToPerformActionAgain]: PayToPerformActionAgainRule,

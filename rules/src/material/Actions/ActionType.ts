@@ -11,7 +11,7 @@ export enum ActionType {
   ProductSwap,
   PurchaseShip,
   CourtRuling,
-  ReturnFactory,
+  ReactivateFactory,
   Piracy,
   Split,
   Multiple,

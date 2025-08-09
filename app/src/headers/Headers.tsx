@@ -30,6 +30,7 @@ import { PiracyHeader } from './PiracyHeader'
 import { ProductionHeader } from './ProductionHeader'
 import { ProductSwapHeader } from './ProductSwapHeader'
 import { PurchaseShipHeader } from './PurchaseShipHeader'
+import { ReactivateFactoryHeader } from './ReactivateFactoryHeader'
 import { ResolveLawsuitHeader } from './ResolveLawsuitHeader'
 
 export const Headers: Partial<Record<RuleId, ComponentType>> = {
@@ -43,6 +44,7 @@ export const Headers: Partial<Record<RuleId, ComponentType>> = {
   [RuleId.AdvanceLawsuit]: AdvanceLawsuitHeader,
   [RuleId.DrawSpecialActionCard]: DrawSpecialActionCardHeader,
   [RuleId.EarnPrestige]: EarnPrestigeHeader,
+  [RuleId.ReactivateFactory]: ReactivateFactoryHeader,
   [RuleId.Piracy]: PiracyHeader,
   [RuleId.GainLetter]: GainLetterHeader,
   [RuleId.OffSeasonTakeBell]: OffSeasonTakeBellHeader,

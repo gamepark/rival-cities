@@ -17,8 +17,8 @@ import { PiracyActionRule } from '../actions/PiracyActionRule'
 import { ProductionActionRule } from '../actions/ProductionActionRule'
 import { ProductSwapActionRule } from '../actions/ProductSwapActionRule'
 import { PurchaseShipActionRule } from '../actions/PurchaseShipActionRule'
+import { ReactivateFactoryActionRule } from '../actions/ReactivateFactoryActionRule'
 import { ResolveLawsuitActionRule } from '../actions/ResolveLawsuitActionRule'
-import { ReturnFactoryActionRule } from '../actions/ReturnFactoryActionRule'
 import { ChooseSpecialActionRule } from '../ChooseSpecialActionRule'
 import { PayToPerformActionAgainRule } from '../PayToPerformActionAgainRule'
 
@@ -48,8 +48,8 @@ export const getActionRule = (game: MaterialGame, action: Action): ActionRule =>
       return new PurchaseShipActionRule(game, action)
     case ActionType.CourtRuling:
       return new CourtRulingActionRule(game, action)
-    case ActionType.ReturnFactory:
-      return new ReturnFactoryActionRule(game, action)
+    case ActionType.ReactivateFactory:
+      return new ReactivateFactoryActionRule(game, action)
     case ActionType.Piracy:
       return new PiracyActionRule(game, action)
     case ActionType.Split:
