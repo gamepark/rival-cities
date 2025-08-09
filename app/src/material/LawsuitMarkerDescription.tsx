@@ -7,7 +7,7 @@ import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
 import { isMoveItemType, MaterialItem, MaterialMove } from '@gamepark/rules-api'
 import React from 'react'
 import { Trans } from 'react-i18next'
-import LawsuitMarker from '../images/tokens/LawersuitMarker.png'
+import LawsuitMarker from '../images/tokens/LawsuitMarker.png'
 
 export class LawsuitMarkerDescription extends TokenDescription {
   width = 0.8

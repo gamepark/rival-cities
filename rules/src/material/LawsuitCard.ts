@@ -31,44 +31,44 @@ export const lawsuitCards = getEnumValues(LawsuitCard)
 export const lawsuitCardData: Record<LawsuitCard, LawsuitCardData> = {
   [LawsuitCard.Lawsuit1]: {
     cost: [{ type: Product.Cloth, quantity: 1 }],
-    actionInAdvance: (game, player) => new LawsuitCardHelper(game, player).lawersuitCard1ActionOnAdvance(),
-    actionInWin: (game, player) => new LawsuitCardHelper(game, player).lawersuitCard1ActionOnWin(),
+    actionInAdvance: (game, player) => new LawsuitCardHelper(game, player).lawsuitCard1ActionOnAdvance(),
+    actionInWin: (game, player) => new LawsuitCardHelper(game, player).lawsuitCard1ActionOnWin(),
     nbStars: 1
   },
   [LawsuitCard.Lawsuit2]: {
     cost: [{ type: Product.Leather, quantity: 1 }],
-    actionInAdvance: (game, player) => new LawsuitCardHelper(game, player).lawersuitCard2ActionOnAdvance(),
-    actionInWin: (game, player) => new LawsuitCardHelper(game, player).lawersuitCard2ActionOnWin(),
+    actionInAdvance: (game, player) => new LawsuitCardHelper(game, player).lawsuitCard2ActionOnAdvance(),
+    actionInWin: (game, player) => new LawsuitCardHelper(game, player).lawsuitCard2ActionOnWin(),
     nbStars: 2
   },
   [LawsuitCard.Lawsuit3]: {
     cost: [{ type: Product.Furniture, quantity: 1 }],
-    actionInAdvance: (game, player) => new LawsuitCardHelper(game, player).lawersuitCard3ActionOnAdvance(),
-    actionInWin: (game, player) => new LawsuitCardHelper(game, player).lawersuitCard3ActionOnWin(),
+    actionInAdvance: (game, player) => new LawsuitCardHelper(game, player).lawsuitCard3ActionOnAdvance(),
+    actionInWin: (game, player) => new LawsuitCardHelper(game, player).lawsuitCard3ActionOnWin(),
     nbStars: 3
   },
   [LawsuitCard.Lawsuit4]: {
     cost: [{ type: 'Letter', quantity: 1 }],
-    actionInAdvance: (game, player) => new LawsuitCardHelper(game, player).lawersuitCard4ActionOnAdvance(),
-    actionInWin: (game, player) => new LawsuitCardHelper(game, player).lawersuitCard4ActionOnWin(),
+    actionInAdvance: (game, player) => new LawsuitCardHelper(game, player).lawsuitCard4ActionOnAdvance(),
+    actionInWin: (game, player) => new LawsuitCardHelper(game, player).lawsuitCard4ActionOnWin(),
     nbStars: 4
   },
   [LawsuitCard.Lawsuit5]: {
     cost: [{ type: Product.Leather, quantity: 1 }],
-    actionInAdvance: (game, player) => new LawsuitCardHelper(game, player).lawersuitCard5ActionOnAdvance(),
-    actionInWin: (game, player) => new LawsuitCardHelper(game, player).lawersuitCard5ActionOnWin(),
+    actionInAdvance: (game, player) => new LawsuitCardHelper(game, player).lawsuitCard5ActionOnAdvance(),
+    actionInWin: (game, player) => new LawsuitCardHelper(game, player).lawsuitCard5ActionOnWin(),
     nbStars: 2
   },
   [LawsuitCard.Lawsuit6]: {
     cost: [{ type: Product.Furniture, quantity: 1 }],
-    actionInAdvance: (game, player) => new LawsuitCardHelper(game, player).lawersuitCard6ActionOnAdvance(),
-    actionInWin: (game, player) => new LawsuitCardHelper(game, player).lawersuitCard6ActionOnWin(),
+    actionInAdvance: (game, player) => new LawsuitCardHelper(game, player).lawsuitCard6ActionOnAdvance(),
+    actionInWin: (game, player) => new LawsuitCardHelper(game, player).lawsuitCard6ActionOnWin(),
     nbStars: 2
   },
   [LawsuitCard.Lawsuit7]: {
     cost: [{ type: Product.Cloth, quantity: 1 }],
-    actionInAdvance: (game, player) => new LawsuitCardHelper(game, player).lawersuitCard7ActionOnAdvance(),
-    actionInWin: (game, player) => new LawsuitCardHelper(game, player).lawersuitCard7ActionOnWin(),
+    actionInAdvance: (game, player) => new LawsuitCardHelper(game, player).lawsuitCard7ActionOnAdvance(),
+    actionInWin: (game, player) => new LawsuitCardHelper(game, player).lawsuitCard7ActionOnWin(),
     nbStars: 2
   },
   [LawsuitCard.Lawsuit8]: {
@@ -76,20 +76,20 @@ export const lawsuitCardData: Record<LawsuitCard, LawsuitCardData> = {
       { type: Product.Cloth, quantity: 1 },
       { type: Product.Leather, quantity: 1 }
     ],
-    actionInAdvance: (game, player) => new LawsuitCardHelper(game, player).lawersuitCard8ActionOnAdvance(),
-    actionInWin: (game, player) => new LawsuitCardHelper(game, player).lawersuitCard8ActionOnWin(),
+    actionInAdvance: (game, player) => new LawsuitCardHelper(game, player).lawsuitCard8ActionOnAdvance(),
+    actionInWin: (game, player) => new LawsuitCardHelper(game, player).lawsuitCard8ActionOnWin(),
     nbStars: 3
   },
   [LawsuitCard.Lawsuit9]: {
     cost: [{ type: Product.Leather, quantity: 1 }],
-    actionInAdvance: (game, player) => new LawsuitCardHelper(game, player).lawersuitCard9ActionOnAdvance(),
-    actionInWin: (game, player) => new LawsuitCardHelper(game, player).lawersuitCard9ActionOnWin(),
+    actionInAdvance: (game, player) => new LawsuitCardHelper(game, player).lawsuitCard9ActionOnAdvance(),
+    actionInWin: (game, player) => new LawsuitCardHelper(game, player).lawsuitCard9ActionOnWin(),
     nbStars: 2
   },
   [LawsuitCard.Lawsuit10]: {
     cost: [{ type: Product.Beer, quantity: 2 }],
-    actionInAdvance: (game, player) => new LawsuitCardHelper(game, player).lawersuitCard10ActionOnAdvance(),
-    actionInWin: (game, player) => new LawsuitCardHelper(game, player).lawersuitCard10ActionOnWin(),
+    actionInAdvance: (game, player) => new LawsuitCardHelper(game, player).lawsuitCard10ActionOnAdvance(),
+    actionInWin: (game, player) => new LawsuitCardHelper(game, player).lawsuitCard10ActionOnWin(),
     nbStars: 2
   }
 }

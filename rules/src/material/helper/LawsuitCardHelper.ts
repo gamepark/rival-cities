@@ -10,7 +10,7 @@ export class LawsuitCardHelper extends MaterialRulesPart {
     this.player = player
   }
 
-  lawersuitCard1ActionOnAdvance(): Action[] {
+  lawsuitCard1ActionOnAdvance(): Action[] {
     return [
       {
         type: ActionType.GainProducts,
@@ -20,7 +20,7 @@ export class LawsuitCardHelper extends MaterialRulesPart {
     ]
   }
 
-  lawersuitCard1ActionOnWin(): Action[] {
+  lawsuitCard1ActionOnWin(): Action[] {
     return [
       {
         type: ActionType.GainProducts,
@@ -33,7 +33,7 @@ export class LawsuitCardHelper extends MaterialRulesPart {
     ]
   }
 
-  lawersuitCard2ActionOnAdvance(): Action[] {
+  lawsuitCard2ActionOnAdvance(): Action[] {
     return [
       {
         type: ActionType.GainProducts,
@@ -43,7 +43,7 @@ export class LawsuitCardHelper extends MaterialRulesPart {
     ]
   }
 
-  lawersuitCard2ActionOnWin(): Action[] {
+  lawsuitCard2ActionOnWin(): Action[] {
     return [
       {
         type: ActionType.BuildFactory,
@@ -52,7 +52,7 @@ export class LawsuitCardHelper extends MaterialRulesPart {
     ]
   }
 
-  lawersuitCard3ActionOnAdvance(): Action[] {
+  lawsuitCard3ActionOnAdvance(): Action[] {
     return [
       {
         type: ActionType.GainProducts,
@@ -62,7 +62,7 @@ export class LawsuitCardHelper extends MaterialRulesPart {
     ]
   }
 
-  lawersuitCard3ActionOnWin(): Action[] {
+  lawsuitCard3ActionOnWin(): Action[] {
     return [
       {
         type: ActionType.GainProducts,
@@ -71,11 +71,11 @@ export class LawsuitCardHelper extends MaterialRulesPart {
     ]
   }
 
-  lawersuitCard4ActionOnAdvance(): Action[] {
+  lawsuitCard4ActionOnAdvance(): Action[] {
     return [{ type: ActionType.EarnPrestige }]
   }
 
-  lawersuitCard4ActionOnWin(): Action[] {
+  lawsuitCard4ActionOnWin(): Action[] {
     return [
       {
         type: ActionType.BuildFactory,
@@ -84,7 +84,7 @@ export class LawsuitCardHelper extends MaterialRulesPart {
     ]
   }
 
-  lawersuitCard5ActionOnAdvance(): Action[] {
+  lawsuitCard5ActionOnAdvance(): Action[] {
     return [
       {
         type: ActionType.ReactivateFactory,
@@ -93,7 +93,7 @@ export class LawsuitCardHelper extends MaterialRulesPart {
     ]
   }
 
-  lawersuitCard5ActionOnWin(): Action[] {
+  lawsuitCard5ActionOnWin(): Action[] {
     return [
       {
         type: ActionType.GainProducts,
@@ -109,11 +109,11 @@ export class LawsuitCardHelper extends MaterialRulesPart {
     ]
   }
 
-  lawersuitCard6ActionOnAdvance(): Action[] {
+  lawsuitCard6ActionOnAdvance(): Action[] {
     return [{ type: ActionType.EarnPrestige }]
   }
 
-  lawersuitCard6ActionOnWin(): Action[] {
+  lawsuitCard6ActionOnWin(): Action[] {
     return [
       {
         type: ActionType.GainLetter,
@@ -122,7 +122,7 @@ export class LawsuitCardHelper extends MaterialRulesPart {
     ]
   }
 
-  lawersuitCard7ActionOnAdvance(): Action[] {
+  lawsuitCard7ActionOnAdvance(): Action[] {
     return [
       {
         type: ActionType.GainProducts,
@@ -132,7 +132,7 @@ export class LawsuitCardHelper extends MaterialRulesPart {
     ]
   }
 
-  lawersuitCard7ActionOnWin(): Action[] {
+  lawsuitCard7ActionOnWin(): Action[] {
     return [
       {
         type: ActionType.EarnPrestige
@@ -144,7 +144,7 @@ export class LawsuitCardHelper extends MaterialRulesPart {
     ]
   }
 
-  lawersuitCard8ActionOnAdvance(): Action[] {
+  lawsuitCard8ActionOnAdvance(): Action[] {
     return [
       {
         type: ActionType.GainProducts,
@@ -158,7 +158,7 @@ export class LawsuitCardHelper extends MaterialRulesPart {
     ]
   }
 
-  lawersuitCard8ActionOnWin(): Action[] {
+  lawsuitCard8ActionOnWin(): Action[] {
     return [
       {
         type: ActionType.BuildFactory,
@@ -167,11 +167,11 @@ export class LawsuitCardHelper extends MaterialRulesPart {
     ]
   }
 
-  lawersuitCard9ActionOnAdvance(): Action[] {
+  lawsuitCard9ActionOnAdvance(): Action[] {
     return [{ type: ActionType.EarnPrestige }]
   }
 
-  lawersuitCard9ActionOnWin(): Action[] {
+  lawsuitCard9ActionOnWin(): Action[] {
     return [
       {
         type: ActionType.GainLetter,
@@ -180,7 +180,7 @@ export class LawsuitCardHelper extends MaterialRulesPart {
     ]
   }
 
-  lawersuitCard10ActionOnAdvance(): Action[] {
+  lawsuitCard10ActionOnAdvance(): Action[] {
     return [
       {
         type: ActionType.GainProducts,
@@ -190,7 +190,7 @@ export class LawsuitCardHelper extends MaterialRulesPart {
     ]
   }
 
-  lawersuitCard10ActionOnWin(): Action[] {
+  lawsuitCard10ActionOnWin(): Action[] {
     return [
       {
         type: ActionType.BuildFactory,
