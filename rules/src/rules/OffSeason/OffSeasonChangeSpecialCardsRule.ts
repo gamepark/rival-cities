@@ -22,7 +22,7 @@ export class OffSeasonChangeSpecialCardsRule extends PlayerTurnRule {
   }
 
   afterItemMove(move: ItemMove) {
-    if (isMoveItemType(MaterialType.SpecialActionCard)(move) && move.location.type === LocationType.CardPiste && move.location.id === 16) {
+    if (isMoveItemType(MaterialType.SpecialActionCard)(move) && move.location.type === LocationType.CardPiste) {
       const nextSpace = specialActionCardPlaces[specialActionCardPlaces.indexOf(move.location.id as number) + 1]
       if (nextSpace !== undefined) {
         return [this.dealActionCard(nextSpace)]

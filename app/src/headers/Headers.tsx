@@ -14,6 +14,7 @@ import { DrawSpecialActionCardHeader } from './DrawSpecialActionCardHeader'
 import { EarnPrestigeHeader } from './EarnPrestigeHeader'
 import { FormAllianceHeader } from './FormAllianceHeader'
 import { GainLetterHeader } from './GainLetterHeader'
+import { GainStarsHeader } from './GainStarsHeader'
 import { GiftHeader } from './GiftHeader'
 import { OffSeasonChangeSpecialCardsHeader } from './OffSeasonChangeSpecialCardsHeader'
 import { OffSeasonGetPrestigeBonusesHeader } from './OffSeasonGetPrestigeBonusesHeader'
@@ -64,5 +65,6 @@ export const Headers: Partial<Record<RuleId, ComponentType>> = {
   [RuleId.ProductSwap]: ProductSwapHeader,
   [RuleId.PurchaseShip]: PurchaseShipHeader,
   [RuleId.PayToPerformActionAgain]: PayToPerformActionAgainHeader,
+  [RuleId.GainStars]: GainStarsHeader,
   [RuleId.ConfirmEndTurn]: ConfirmEndTurnHeader
 }

@@ -30,6 +30,7 @@ import { EarnPrestigeRule } from './rules/actions/EarnPrestigeRule'
 import { FormAllianceRule } from './rules/actions/FormAllianceRule'
 import { GainLetterRule } from './rules/actions/GainLetterRule'
 import { GainProductsRule } from './rules/actions/GainProductsRule'
+import { GainStarsRule } from './rules/actions/GainStarsRule'
 import { PerformMultipleActionsRule } from './rules/actions/PerformMultipleActionsRule'
 import { PiracyRule } from './rules/actions/PiracyRule'
 import { ProductionRule } from './rules/actions/ProductionRule'
@@ -99,6 +100,7 @@ export class RivalCitiesRules
     [RuleId.CourtRuling]: CourtRulingRule,
     [RuleId.Production]: ProductionRule,
     [RuleId.PayToPerformActionAgain]: PayToPerformActionAgainRule,
+    [RuleId.GainStars]: GainStarsRule,
     [RuleId.ConfirmEndTurn]: ConfirmEndTurnRule
   }
 

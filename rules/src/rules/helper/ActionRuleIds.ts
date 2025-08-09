@@ -20,5 +20,6 @@ export const ActionRuleIds: Record<ActionType, RuleId> = {
   [ActionType.Multiple]: RuleId.PerformMultipleActions,
   [ActionType.ResolveLawsuit]: RuleId.ResolveLawsuit,
   [ActionType.ChooseSpecialActionCard]: RuleId.ChooseSpecialAction,
-  [ActionType.PayToPerformActionAgain]: RuleId.PayToPerformActionAgain
+  [ActionType.PayToPerformActionAgain]: RuleId.PayToPerformActionAgain,
+  [ActionType.GainStars]: RuleId.GainStars
 }

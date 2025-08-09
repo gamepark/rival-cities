@@ -53,17 +53,8 @@ export const lawsuitData: Record<Lawsuit, LawsuitData> = {
     cost: [{ type: Product.Leather, quantity: 1 }],
     advanceBonus: [{ type: ActionType.ReactivateFactory, count: 2 }],
     winBonus: [
-      {
-        type: ActionType.GainProducts,
-        product: Product.Beer,
-        quantity: 3
-      },
-      {
-        type: ActionType.Donation,
-        nbProduct: 0,
-        nbStars: 2,
-        nbTimes: 1
-      }
+      { type: ActionType.GainProducts, product: Product.Beer, quantity: 3 },
+      { type: ActionType.GainStars, stars: 2 }
     ],
     nbStars: 2
   },

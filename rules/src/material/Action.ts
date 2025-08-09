@@ -19,7 +19,8 @@ export enum ActionType {
   Piracy,
   ResolveLawsuit,
   ChooseSpecialActionCard,
-  PayToPerformActionAgain
+  PayToPerformActionAgain,
+  GainStars
 }
 
 type ActionCommon = {
@@ -127,6 +128,11 @@ export type PayToPerformActionAgainAction = {
   actionToPerformAgain: Action
 } & ActionCommon
 
+export type GainStars = {
+  type: ActionType.GainStars
+  stars: number
+} & ActionCommon
+
 export type Action =
   | SplitAction
   | MultipleActions
@@ -147,3 +153,4 @@ export type Action =
   | ResolveLawsuitAction
   | ChooseSpecialActionCardAction
   | PayToPerformActionAgainAction
+  | GainStars

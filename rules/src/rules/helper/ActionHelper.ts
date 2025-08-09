@@ -11,6 +11,7 @@ import { EarnPrestigeRule } from '../actions/EarnPrestigeRule'
 import { FormAllianceRule } from '../actions/FormAllianceRule'
 import { GainLetterRule } from '../actions/GainLetterRule'
 import { GainProductsRule } from '../actions/GainProductsRule'
+import { GainStarsRule } from '../actions/GainStarsRule'
 import { PerformMultipleActionsRule } from '../actions/PerformMultipleActionsRule'
 import { PiracyRule } from '../actions/PiracyRule'
 import { ProductionRule } from '../actions/ProductionRule'
@@ -61,5 +62,7 @@ export const getActionRule = (game: MaterialGame, action: Action): ActionRule =>
       return new ChooseSpecialActionRule(game, action)
     case ActionType.PayToPerformActionAgain:
       return new PayToPerformActionAgainRule(game, action)
+    case ActionType.GainStars:
+      return new GainStarsRule(game, action)
   }
 }

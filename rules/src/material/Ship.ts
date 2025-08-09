@@ -105,7 +105,7 @@ export const shipData: Record<Ship, ShipData> = {
     cost: { type: Product.Leather, quantity: 4 },
     effect: {
       type: ShipEffectType.OffSeasonBonus,
-      actions: [{ type: ActionType.Donation, nbProduct: 0, nbStars: 1, nbTimes: 1 }]
+      actions: [{ type: ActionType.GainStars, stars: 1 }]
     },
     getNbStars: () => 2
   },
