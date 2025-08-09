@@ -5,8 +5,7 @@ export enum ShipEffectType {
   Instant = 1,
   OffSeason,
   OnProduction,
-  Always,
-  None
+  Always
 }
 
 export type ShipData = {
@@ -14,7 +13,7 @@ export type ShipData = {
     type: Product
     quantity: number
   }
-  effect: {
+  effect?: {
     type: ShipEffectType
     actions?: Action[]
     product?: Product
@@ -186,13 +185,11 @@ export function getShipData(ship: number): ShipData {
     case 20:
       return {
         cost: { type: Product.Leather, quantity: 4 },
-        effect: { type: ShipEffectType.None },
         getNbStars: () => 5
       }
     case 21:
       return {
         cost: { type: Product.Cloth, quantity: 3 },
-        effect: { type: ShipEffectType.None },
         getNbStars: (nbShip) => nbShip
       }
     default:

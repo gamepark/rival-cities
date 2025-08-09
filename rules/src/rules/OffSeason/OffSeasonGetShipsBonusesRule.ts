@@ -13,7 +13,7 @@ export class OffSeasonGetShipsBonusesRule extends PlayerTurnRule {
 
     if (shipToProcess) {
       const shipCardData = getShipData(shipToProcess.id as number)
-      if (shipCardData.effect.actions) {
+      if (shipCardData.effect?.actions) {
         this.memorize<number[]>(MemoryType.ShipsIdsAlreadyProcessed, (old) => [...old, shipToProcess.id as number])
         this.memorize(
           MemoryType.PendingRule,
@@ -32,7 +32,7 @@ export class OffSeasonGetShipsBonusesRule extends PlayerTurnRule {
   get shipsOffSeason() {
     const shipCards = this.material(MaterialType.ShipCard)
       .location(LocationType.PlayerShipCards)
-      .id<number>((ship) => getShipData(ship).effect.type === ShipEffectType.OffSeason)
+      .id<number>((ship) => getShipData(ship).effect?.type === ShipEffectType.OffSeason)
       .getItems()
 
     return shipCards.sort((a, b) => {

@@ -42,7 +42,7 @@ export class PurchaseShipRule extends ActionRule<PurchaseShip> {
     if (isMoveItemType(MaterialType.ShipCard)(move) && move.location.type === LocationType.PlayerShipCards) {
       const ship = this.material(MaterialType.ShipCard).getItem<number>(move.itemIndex).id
       const effect = getShipData(ship).effect
-      if (effect.type === ShipEffectType.Instant && effect.actions) {
+      if (effect?.type === ShipEffectType.Instant && effect.actions) {
         for (const action of effect.actions) {
           this.addActionBonus(action)
         }

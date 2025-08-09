@@ -21,7 +21,7 @@ export class ProductionRule extends GainProductsRule<Production> {
     const moves = super.triggerProductGainedEffects(product)
     if (!this.action.productsGained) {
       for (const ship of this.playerShips) {
-        if (getShipData(ship).effect.type === ShipEffectType.OnProduction) {
+        if (getShipData(ship).effect?.type === ShipEffectType.OnProduction) {
           moves.push(this.customMove(CustomMoveType.TriggerShipEffect, ship))
         }
       }
@@ -32,7 +32,7 @@ export class ProductionRule extends GainProductsRule<Production> {
   onCustomMove(move: CustomMove) {
     if (move.type === CustomMoveType.TriggerShipEffect) {
       this.action.quantity++
-      const product = getShipData(move.data as number).effect.product!
+      const product = getShipData(move.data as number).effect!.product!
       return this.gainProduct(product)
     }
     return super.onCustomMove(move)
