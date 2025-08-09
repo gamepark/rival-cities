@@ -1,7 +1,7 @@
 import { isDeleteItemType, isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
 import { City } from '../../City'
 import { Action, ResolveLawsuitAction } from '../../material/Action'
-import { LawsuitCard, lawsuitCardData } from '../../material/LawsuitCard'
+import { Lawsuit, lawsuitData } from '../../material/Lawsuit'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { ActionRuleIds } from '../helper/ActionRuleIds'
@@ -80,9 +80,9 @@ export class ResolveLawsuitRule extends ActionRule<ResolveLawsuitAction> {
     if (this.remind(MemoryType.PendingRule)) {
       this.memorize(MemoryType.PendingRule, RuleId.OffSeasonChangeSpecialCards)
     }
-    const cardId = this.material(MaterialType.LawsuitCard).getItem(move.itemIndex).id as LawsuitCard
-    const lawsuitData = lawsuitCardData[cardId]
-    this.memorize(MemoryType.Actions, JSON.parse(JSON.stringify(lawsuitData.winBonus)))
+    const cardId = this.material(MaterialType.LawsuitCard).getItem(move.itemIndex).id as Lawsuit
+    const actions = lawsuitData[cardId].winBonus
+    this.memorize(MemoryType.Actions, JSON.parse(JSON.stringify(actions)))
     return [this.startRule(ActionRuleIds[this.remind<Action[]>(MemoryType.Actions)[0].type])]
   }
 }

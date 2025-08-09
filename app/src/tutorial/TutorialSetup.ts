@@ -1,6 +1,6 @@
 import { City } from '@gamepark/rival-cities/City'
 import { Alliance } from '@gamepark/rival-cities/material/Alliance'
-import { LawsuitCard } from '@gamepark/rival-cities/material/LawsuitCard'
+import { Lawsuit } from '@gamepark/rival-cities/material/Lawsuit'
 import { LocationType } from '@gamepark/rival-cities/material/LocationType'
 import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
 import { RivalCitiesSetup } from '@gamepark/rival-cities/RivalCitiesSetup'
@@ -11,14 +11,14 @@ export const opponent = City.Hamburg
 
 const allianceCardsToUse: Alliance[] = [Alliance.Oslo, Alliance.LeHavre, Alliance.Bruxelles, Alliance.Kjjobenhavn]
 
-const lawsuitCardsToUse: LawsuitCard[] = [
-  LawsuitCard.Lawsuit10,
-  LawsuitCard.Lawsuit1,
-  LawsuitCard.Lawsuit2,
-  LawsuitCard.Lawsuit3,
-  LawsuitCard.Lawsuit4,
-  LawsuitCard.Lawsuit5,
-  LawsuitCard.Lawsuit6
+const lawsuitCardsToUse: Lawsuit[] = [
+  Lawsuit.Lawsuit10,
+  Lawsuit.Lawsuit1,
+  Lawsuit.Lawsuit2,
+  Lawsuit.Lawsuit3,
+  Lawsuit.Lawsuit4,
+  Lawsuit.Lawsuit5,
+  Lawsuit.Lawsuit6
 ]
 
 export class TutorialSetup extends RivalCitiesSetup {

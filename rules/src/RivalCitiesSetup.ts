@@ -1,11 +1,11 @@
-import { MaterialGameSetup } from '@gamepark/rules-api'
+import { getEnumValues, MaterialGameSetup } from '@gamepark/rules-api'
 import { range } from 'lodash'
 import shuffle from 'lodash/shuffle'
 import { City } from './City'
 import { basicActionCardPlaces, specialActionCardPlaces } from './constantes'
 import { allianceCards } from './material/Alliance'
 import { basicActionCards } from './material/BasicActionCard'
-import { lawsuitCards } from './material/LawsuitCard'
+import { Lawsuit } from './material/Lawsuit'
 import { LocationType } from './material/LocationType'
 import { MaterialType } from './material/MaterialType'
 import { Product, products } from './material/Product'
@@ -80,7 +80,7 @@ export class RivalCitiesSetup extends MaterialGameSetup<City, MaterialType, Loca
   }
 
   setupLawsuitDeck() {
-    const lawsuitCardItems = shuffle(lawsuitCards)
+    const lawsuitCardItems = shuffle(getEnumValues(Lawsuit))
       .slice(0, 7)
       .map((it) => ({ id: it, location: { type: LocationType.LawsuitDeck } }))
     this.material(MaterialType.LawsuitCard).createItems(lawsuitCardItems)

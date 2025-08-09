@@ -1,5 +1,4 @@
-import { LawsuitCard } from '@gamepark/rival-cities/material/LawsuitCard'
-import { LawsuitCardDescription } from '../../LawsuitCardDescription'
+import { Lawsuit } from '@gamepark/rival-cities/material/Lawsuit'
 import FrenchLawsuit1 from '../../../images/cards/lawsuit/fr/Lawsuit01.jpg'
 import FrenchLawsuit2 from '../../../images/cards/lawsuit/fr/Lawsuit02.jpg'
 import FrenchLawsuit3 from '../../../images/cards/lawsuit/fr/Lawsuit03.jpg'
@@ -10,19 +9,20 @@ import FrenchLawsuit7 from '../../../images/cards/lawsuit/fr/Lawsuit07.jpg'
 import FrenchLawsuit8 from '../../../images/cards/lawsuit/fr/Lawsuit08.jpg'
 import FrenchLawsuit9 from '../../../images/cards/lawsuit/fr/Lawsuit09.jpg'
 import FrenchLawsuit10 from '../../../images/cards/lawsuit/fr/Lawsuit10.jpg'
+import { LawsuitCardDescription } from '../../LawsuitCardDescription'
 
 export class FrenchLawsuitCardDescription extends LawsuitCardDescription {
   images = {
-    [LawsuitCard.Lawsuit1]: FrenchLawsuit1,
-    [LawsuitCard.Lawsuit2]: FrenchLawsuit2,
-    [LawsuitCard.Lawsuit3]: FrenchLawsuit3,
-    [LawsuitCard.Lawsuit4]: FrenchLawsuit4,
-    [LawsuitCard.Lawsuit5]: FrenchLawsuit5,
-    [LawsuitCard.Lawsuit6]: FrenchLawsuit6,
-    [LawsuitCard.Lawsuit7]: FrenchLawsuit7,
-    [LawsuitCard.Lawsuit8]: FrenchLawsuit8,
-    [LawsuitCard.Lawsuit9]: FrenchLawsuit9,
-    [LawsuitCard.Lawsuit10]: FrenchLawsuit10
+    [Lawsuit.Lawsuit1]: FrenchLawsuit1,
+    [Lawsuit.Lawsuit2]: FrenchLawsuit2,
+    [Lawsuit.Lawsuit3]: FrenchLawsuit3,
+    [Lawsuit.Lawsuit4]: FrenchLawsuit4,
+    [Lawsuit.Lawsuit5]: FrenchLawsuit5,
+    [Lawsuit.Lawsuit6]: FrenchLawsuit6,
+    [Lawsuit.Lawsuit7]: FrenchLawsuit7,
+    [Lawsuit.Lawsuit8]: FrenchLawsuit8,
+    [Lawsuit.Lawsuit9]: FrenchLawsuit9,
+    [Lawsuit.Lawsuit10]: FrenchLawsuit10
   }
 }
 

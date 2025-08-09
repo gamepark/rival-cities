@@ -1,7 +1,7 @@
 import { MaterialMove, PlayerTurnRule } from '@gamepark/rules-api'
 import { City } from '../../City'
 import { Alliance, alliancesData } from '../../material/Alliance'
-import { LawsuitCard, lawsuitCardData } from '../../material/LawsuitCard'
+import { Lawsuit, lawsuitData } from '../../material/Lawsuit'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { getShipData } from '../../material/Ship'
@@ -60,7 +60,7 @@ export class EndOfGameHelper extends PlayerTurnRule {
       .reduce((acc, cur) => acc + cur, 0)
     score += this.getPlayerLawsuitCards(playerId)
       .getItems()
-      .map((it) => lawsuitCardData[it.id as LawsuitCard].nbStars)
+      .map((it) => lawsuitData[it.id as Lawsuit].nbStars)
       .reduce((acc, cur) => acc + cur, 0)
     score += this.getPlayerShipCards(playerId)
       .getItems<number>()

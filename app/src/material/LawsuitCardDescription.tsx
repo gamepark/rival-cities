@@ -1,7 +1,7 @@
 import { faArrowRightArrowLeft, faCheck } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { CardDescription, ItemContext, ItemMenuButton, pointerCursorCss } from '@gamepark/react-game'
-import { LawsuitCard } from '@gamepark/rival-cities/material/LawsuitCard'
+import { Lawsuit } from '@gamepark/rival-cities/material/Lawsuit'
 import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
 import { CustomMoveType } from '@gamepark/rival-cities/rules/CustomMoveType'
 import { isCustomMoveType, isMoveItemType, MaterialItem, MaterialMove } from '@gamepark/rules-api'
@@ -29,16 +29,16 @@ export class LawsuitCardDescription extends CardDescription {
   menuAlwaysVisible = true
 
   images = {
-    [LawsuitCard.Lawsuit1]: Lawsuit1,
-    [LawsuitCard.Lawsuit2]: Lawsuit2,
-    [LawsuitCard.Lawsuit3]: Lawsuit3,
-    [LawsuitCard.Lawsuit4]: Lawsuit4,
-    [LawsuitCard.Lawsuit5]: Lawsuit5,
-    [LawsuitCard.Lawsuit6]: Lawsuit6,
-    [LawsuitCard.Lawsuit7]: Lawsuit7,
-    [LawsuitCard.Lawsuit8]: Lawsuit8,
-    [LawsuitCard.Lawsuit9]: Lawsuit9,
-    [LawsuitCard.Lawsuit10]: Lawsuit10
+    [Lawsuit.Lawsuit1]: Lawsuit1,
+    [Lawsuit.Lawsuit2]: Lawsuit2,
+    [Lawsuit.Lawsuit3]: Lawsuit3,
+    [Lawsuit.Lawsuit4]: Lawsuit4,
+    [Lawsuit.Lawsuit5]: Lawsuit5,
+    [Lawsuit.Lawsuit6]: Lawsuit6,
+    [Lawsuit.Lawsuit7]: Lawsuit7,
+    [Lawsuit.Lawsuit8]: Lawsuit8,
+    [Lawsuit.Lawsuit9]: Lawsuit9,
+    [Lawsuit.Lawsuit10]: Lawsuit10
   }
 
   getItemMenu(item: MaterialItem, context: ItemContext, legalMoves: MaterialMove[]): React.ReactNode {

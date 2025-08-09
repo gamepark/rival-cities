@@ -1,6 +1,6 @@
 import { MaterialGame, MaterialItem, MaterialRulesPart } from '@gamepark/rules-api'
 import { City } from '../../City'
-import { LawsuitCard, lawsuitCardData } from '../../material/LawsuitCard'
+import { Lawsuit, lawsuitData } from '../../material/Lawsuit'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 
@@ -12,11 +12,11 @@ export class AdvanceLawsuitHelper extends MaterialRulesPart {
     super(game)
   }
 
-  checkIfCanAdvanceInLawsuit(itemId: LawsuitCard, parent: number) {
+  checkIfCanAdvanceInLawsuit(itemId: Lawsuit, parent: number) {
     if (!itemId) return false
-    const lawsuitData = lawsuitCardData[itemId]
+    const cost = lawsuitData[itemId].cost
     let haveSuffisantProducts = true
-    lawsuitData.cost.forEach((cost) => {
+    cost.forEach((cost) => {
       if (cost.type === 'Letter') {
         if (this.playerLetters.getQuantity() < cost.quantity) {
           haveSuffisantProducts = false

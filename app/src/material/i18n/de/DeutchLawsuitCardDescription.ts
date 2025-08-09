@@ -1,5 +1,4 @@
-import { LawsuitCard } from '@gamepark/rival-cities/material/LawsuitCard'
-import { LawsuitCardDescription } from '../../LawsuitCardDescription'
+import { Lawsuit } from '@gamepark/rival-cities/material/Lawsuit'
 import DeutchLawsuit1 from '../../../images/cards/lawsuit/de/Lawsuit01.jpg'
 import DeutchLawsuit2 from '../../../images/cards/lawsuit/de/Lawsuit02.jpg'
 import DeutchLawsuit3 from '../../../images/cards/lawsuit/de/Lawsuit03.jpg'
@@ -10,19 +9,20 @@ import DeutchLawsuit7 from '../../../images/cards/lawsuit/de/Lawsuit07.jpg'
 import DeutchLawsuit8 from '../../../images/cards/lawsuit/de/Lawsuit08.jpg'
 import DeutchLawsuit9 from '../../../images/cards/lawsuit/de/Lawsuit09.jpg'
 import DeutchLawsuit10 from '../../../images/cards/lawsuit/de/Lawsuit10.jpg'
+import { LawsuitCardDescription } from '../../LawsuitCardDescription'
 
 export class DeutchLawsuitCardDescription extends LawsuitCardDescription {
   images = {
-    [LawsuitCard.Lawsuit1]: DeutchLawsuit1,
-    [LawsuitCard.Lawsuit2]: DeutchLawsuit2,
-    [LawsuitCard.Lawsuit3]: DeutchLawsuit3,
-    [LawsuitCard.Lawsuit4]: DeutchLawsuit4,
-    [LawsuitCard.Lawsuit5]: DeutchLawsuit5,
-    [LawsuitCard.Lawsuit6]: DeutchLawsuit6,
-    [LawsuitCard.Lawsuit7]: DeutchLawsuit7,
-    [LawsuitCard.Lawsuit8]: DeutchLawsuit8,
-    [LawsuitCard.Lawsuit9]: DeutchLawsuit9,
-    [LawsuitCard.Lawsuit10]: DeutchLawsuit10
+    [Lawsuit.Lawsuit1]: DeutchLawsuit1,
+    [Lawsuit.Lawsuit2]: DeutchLawsuit2,
+    [Lawsuit.Lawsuit3]: DeutchLawsuit3,
+    [Lawsuit.Lawsuit4]: DeutchLawsuit4,
+    [Lawsuit.Lawsuit5]: DeutchLawsuit5,
+    [Lawsuit.Lawsuit6]: DeutchLawsuit6,
+    [Lawsuit.Lawsuit7]: DeutchLawsuit7,
+    [Lawsuit.Lawsuit8]: DeutchLawsuit8,
+    [Lawsuit.Lawsuit9]: DeutchLawsuit9,
+    [Lawsuit.Lawsuit10]: DeutchLawsuit10
   }
 }
 

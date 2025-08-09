@@ -2,7 +2,7 @@ import { isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
 import { City } from '../../City'
 import { ActionType, AdvanceLawsuit } from '../../material/Action'
 import { Alliance } from '../../material/Alliance'
-import { LawsuitCard, lawsuitCardData } from '../../material/LawsuitCard'
+import { Lawsuit, lawsuitData } from '../../material/Lawsuit'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { CustomMoveType } from '../CustomMoveType'
@@ -30,7 +30,7 @@ export class AdvanceLawsuitRule extends ActionRule<AdvanceLawsuit> {
     if (isMoveItemType(MaterialType.LawsuitMarker)(move)) {
       const card = this.lawsuitCards.parent(move.location.parent).getItem()
       if (card) {
-        lawsuitCardData[card.id as LawsuitCard].cost.forEach((cost) => {
+        lawsuitData[card.id as Lawsuit].cost.forEach((cost) => {
           if (cost.type === 'Letter') {
             moves.push(...this.playerLetters.limit(cost.quantity).moveItems({ type: LocationType.LetterDeck }))
           } else {
@@ -84,7 +84,7 @@ export class AdvanceLawsuitRule extends ActionRule<AdvanceLawsuit> {
           })
         }
         if (timeAlreadyAdvanced === 0) {
-          for (const action of lawsuitCardData[card.id as LawsuitCard].advanceBonus) {
+          for (const action of lawsuitData[card.id as Lawsuit].advanceBonus) {
             this.addActionBonus(JSON.parse(JSON.stringify(action)))
           }
         }
@@ -95,7 +95,7 @@ export class AdvanceLawsuitRule extends ActionRule<AdvanceLawsuit> {
   }
 
   possibleCardsToGet() {
-    return this.lawsuitCards.getItems<LawsuitCard>((item) => this.advanceLawsuitHelper.checkIfCanAdvanceInLawsuit(item.id, item.location.parent!))
+    return this.lawsuitCards.getItems<Lawsuit>((item) => this.advanceLawsuitHelper.checkIfCanAdvanceInLawsuit(item.id, item.location.parent!))
   }
 
   get playerProducts() {
