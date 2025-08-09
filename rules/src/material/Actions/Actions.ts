@@ -1,4 +1,3 @@
-import { City } from '../../City'
 import { Product } from '../Product'
 import { ActionType } from './ActionType'
 
@@ -14,7 +13,6 @@ export type ChoiceAction = {
 export type MultipleAction = {
   type: ActionType.Multiple
   actions: Action[]
-  player?: City
 } & ActionCommon
 
 export type ProductionAction = {

@@ -21,7 +21,7 @@ export class ChooseSpecialActionRule extends ActionRule<ChooseSpecialActionCardA
     if (isMoveItemType(MaterialType.SpecialActionCard)(move) && move.location.type === LocationType.SpecialActionCardsDiscard) {
       const actions: Action[] = []
       const cardId = this.material(MaterialType.SpecialActionCard).index(move.itemIndex).getItem()?.id as SpecialActionCard
-      actions.push(new SpecialActionCardHelper(this.game).getCardAction(cardId))
+      actions.push(...new SpecialActionCardHelper(this.game).getCardActions(cardId))
       this.memorize(MemoryType.Actions, actions)
       return [this.startRule(ActionRuleIds[actions[0].type])]
     }

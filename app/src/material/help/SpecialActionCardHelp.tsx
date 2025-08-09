@@ -15,7 +15,7 @@ export const SpecialActionCardHelp: FC<MaterialHelpProps> = ({ item }) => {
 
   if (!rules) return <></>
 
-  const actions = new SpecialActionCardHelper(rules.game).getCardActions(item.id as SpecialActionCard)
+  const actions = new SpecialActionCardHelper(rules.game).getCardMultipleActions(item.id as SpecialActionCard)
 
   return (
     <>

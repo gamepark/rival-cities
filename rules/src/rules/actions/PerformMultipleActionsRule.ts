@@ -6,16 +6,9 @@ import { getActionRule } from '../helper/ActionHelper'
 import { ActionRuleIds } from '../helper/ActionRuleIds'
 import { MemoryType } from '../MemoryType'
 import { ActionRule } from './ActionRule'
-import { EarnPrestigeActionRule } from './EarnPrestigeActionRule'
 
 export class PerformMultipleActionsRule extends ActionRule<MultipleAction> {
   onRuleStart(_move: RuleMove, _previousRule?: RuleStep, _context?: PlayMoveContext): MaterialMove[] {
-    const firstAction = this.action.actions[0]
-    if (firstAction.type === ActionType.EarnPrestige && firstAction.rival) {
-      const action = this.action.actions.splice(1)[0]
-      this.startActionImmediately(action)
-      return new EarnPrestigeActionRule(this.game).onRuleStart()
-    }
     // TODO: fix that:
     this.forget(MemoryType.ProductChosen)
     const moves: MaterialMove[] = []

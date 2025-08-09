@@ -1,5 +1,5 @@
 import { MaterialGame, MaterialRulesPart } from '@gamepark/rules-api'
-import { Action, MultipleAction } from '../Actions/Actions'
+import { Action } from '../Actions/Actions'
 import { ActionType } from '../Actions/ActionType'
 import { LocationType } from '../LocationType'
 import { MaterialType } from '../MaterialType'
@@ -15,19 +15,15 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
     super(game)
   }
 
-  getCardAction(card: SpecialActionCard): MultipleAction {
-    const action: MultipleAction = {
-      type: ActionType.Multiple,
-      actions: new SpecialActionCardHelper(this.game).getCardActions(card)
-    }
+  getCardActions(card: SpecialActionCard): Action[] {
     if (card === SpecialActionCard.SpecialAction6) {
-      // TODO: handle rival prestige gain a better way?
-      action.player = this.player
+      return this.getCardMultipleActions(card)
+    } else {
+      return [{ type: ActionType.Multiple, actions: this.getCardMultipleActions(card) }]
     }
-    return action
   }
 
-  getCardActions(card: SpecialActionCard): Action[] {
+  getCardMultipleActions(card: SpecialActionCard): Action[] {
     switch (card) {
       case SpecialActionCard.SpecialAction1:
         return [

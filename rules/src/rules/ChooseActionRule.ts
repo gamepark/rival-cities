@@ -21,7 +21,7 @@ export class ChooseActionRule extends PlayerTurnRule {
       return []
     }
     if (this.playerSpecialActionCards.length === 0) {
-      const actions = [this.inkjarCardAction]
+      const actions = this.inkJarCardActions
       this.memorize(MemoryType.Actions, actions)
       return [this.startRule(ActionRuleIds[actions[0].type])]
     }
@@ -52,9 +52,9 @@ export class ChooseActionRule extends PlayerTurnRule {
     if (isMoveItemType(MaterialType.SpecialActionCard)(move) && move.location.type === LocationType.SpecialActionCardsDiscard) {
       const actions: Action[] = []
       const cardId = this.material(MaterialType.SpecialActionCard).index(move.itemIndex).getItem()?.id as SpecialActionCard
-      actions.push(new SpecialActionCardHelper(this.game).getCardAction(cardId))
+      actions.push(...new SpecialActionCardHelper(this.game).getCardActions(cardId))
       if (this.remind(MemoryType.IsUseLetter) || this.playerHaveShip18) {
-        actions.push(this.inkjarCardAction)
+        actions.push(...this.inkJarCardActions)
       }
       this.memorize(MemoryType.Actions, actions)
       return [this.startRule(ActionRuleIds[actions[0].type])]
@@ -67,7 +67,7 @@ export class ChooseActionRule extends PlayerTurnRule {
 
   onCustomMove(move: CustomMove): MaterialMove[] {
     if (isCustomMoveType(CustomMoveType.PlaysInkjarCard)(move)) {
-      const actions = [this.inkjarCardAction]
+      const actions = this.inkJarCardActions
       if (this.remind(MemoryType.IsUseLetter) || this.playerHaveShip18) {
         actions.push({ type: ActionType.ChooseSpecialActionCard })
       }
@@ -77,14 +77,14 @@ export class ChooseActionRule extends PlayerTurnRule {
     return []
   }
 
-  get inkjarCardAction(): Action {
-    if (this.inkjarLocationId === 0) return { type: ActionType.Gift, nbProductToTake: 1, productType: undefined, canUseAlliance: true }
+  get inkJarCardActions(): Action[] {
+    if (this.inkjarLocationId === 0) return [{ type: ActionType.Gift, nbProductToTake: 1, productType: undefined, canUseAlliance: true }]
     if (specialActionCardPlaces.includes(this.inkjarLocationId)) {
       const cardId = this.specialActioncardInInkjarPlace.getItem()?.id as SpecialActionCard
-      return new SpecialActionCardHelper(this.game).getCardAction(cardId)
+      return new SpecialActionCardHelper(this.game).getCardActions(cardId)
     }
     const cardId = this.basicActioncardInInkjarPlace.getItem()?.id as BasicActionCard
-    return new BasicActionCardHelper(this.game).getCardAction(cardId)
+    return [new BasicActionCardHelper(this.game).getCardAction(cardId)]
   }
 
   get playerCanUseLetter() {
