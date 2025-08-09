@@ -1,11 +1,11 @@
 import { MaterialMove } from '@gamepark/rules-api'
 import { isEqual } from 'lodash'
-import { ChoiceAction } from '../../material/Actions/Actions'
+import { SplitAction } from '../../material/Actions/Actions'
 import { getActionRule } from '../helper/ActionHelper'
 import { ActionRuleIds } from '../helper/ActionRuleIds'
 import { ActionRule } from './ActionRule'
 
-export class ChooseSplitActionRule extends ActionRule<ChoiceAction> {
+export class ChooseSplitActionRule extends ActionRule<SplitAction> {
   getPlayerMoves(): MaterialMove[] {
     return this.action.actions.flatMap((action) => getActionRule(this.game, action).getPlayerMoves())
   }

@@ -5,7 +5,7 @@ type ActionCommon = {
   isRivalTurn?: boolean
 }
 
-export type ChoiceAction = {
+export type SplitAction = {
   type: ActionType.Split
   actions: Action[]
 } & ActionCommon
@@ -112,7 +112,7 @@ export type PayToPerformActionAgainAction = {
 } & ActionCommon
 
 export type Action =
-  | ChoiceAction
+  | SplitAction
   | MultipleAction
   | ProductionAction
   | AdvanceLawsuitAction
