@@ -7,7 +7,6 @@ import { SpecialActionCard } from '../material/SpecialActionCard'
 import { ActionRule } from './actions/ActionRule'
 import { CustomMoveType } from './CustomMoveType'
 import { ActionRuleIds } from './helper/ActionRuleIds'
-import { MemoryType } from './MemoryType'
 
 export class ChooseSpecialActionRule extends ActionRule<ChooseSpecialActionCardAction> {
   getPlayerMoves(): MaterialMove[] {
@@ -22,7 +21,7 @@ export class ChooseSpecialActionRule extends ActionRule<ChooseSpecialActionCardA
       const actions: Action[] = []
       const cardId = this.material(MaterialType.SpecialActionCard).index(move.itemIndex).getItem()?.id as SpecialActionCard
       actions.push(...new SpecialActionCardHelper(this.game).getCardActions(cardId))
-      this.memorize(MemoryType.Actions, actions)
+      this.addActions(...actions)
       return [this.startRule(ActionRuleIds[actions[0].type])]
     }
     return []

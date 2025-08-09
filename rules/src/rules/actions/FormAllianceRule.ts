@@ -13,7 +13,7 @@ export class FormAllianceRule extends ActionRule<FormAlliance> {
     if (this.playerLetters.length) {
       moves.push(...this.opponentAllianceCards.moveItems({ type: LocationType.PlayerAlliances, player: this.player }))
     }
-    moves.push(this.customMove(CustomMoveType.Pass, this.action))
+    moves.push(this.customMove(CustomMoveType.Pass))
     return moves
   }
 

@@ -8,12 +8,12 @@ import { ActionRuleIds } from '../helper/ActionRuleIds'
 import { MemoryType } from '../MemoryType'
 import { RuleId } from '../RuleId'
 
-export abstract class ActionRule<E extends Action = Action> extends PlayerTurnRule {
-  action: E
+export abstract class ActionRule<A extends Action> extends PlayerTurnRule {
+  action: A
 
-  constructor(game: MaterialGame, action?: E) {
+  constructor(game: MaterialGame, action?: A) {
     super(game)
-    this.action = action ?? (this.actions[0] as E)
+    this.action = action ?? (this.actions[0] as A)
   }
 
   get actions(): Action[] {
@@ -21,41 +21,32 @@ export abstract class ActionRule<E extends Action = Action> extends PlayerTurnRu
   }
 
   endAction() {
-    return this.customMove(CustomMoveType.EndAction, this.action)
+    return this.customMove(CustomMoveType.EndAction)
   }
 
   onCustomMove(move: CustomMove): MaterialMove[] {
     if (move.type === CustomMoveType.Pass || move.type === CustomMoveType.EndAction) {
-      return this.removeActionAndMove()
+      return [this.startNextRule()]
     }
     return []
   }
 
-  removeActionAndMove() {
-    const isRivalTurn = this.actions.shift()?.isRivalTurn
-    return this.moveToNextAction(isRivalTurn)
-  }
-
-  startAction(action: Action) {
-    this.actions.unshift(action)
-    return this.moveToNextAction()
-  }
-
-  addActionBonus(...action: Action[]) {
+  addActions(...action: Action[]) {
     this.actions.splice(1, 0, ...action)
   }
 
-  moveToNextAction(isRivalTurn?: boolean) {
-    const willBeRivalTurn = this.actions[0]?.isRivalTurn
+  startNextRule() {
+    const isRivalTurn = this.actions[0]?.isRivalTurn
+    const willBeRivalTurn = this.actions[1]?.isRivalTurn
     if ((!isRivalTurn && !willBeRivalTurn) || (isRivalTurn && willBeRivalTurn)) {
-      return [this.startRule(this.nextRuleId)]
+      return this.startRule(this.nextRuleId)
     } else {
-      return [this.startPlayerTurn(this.nextRuleId, getRival(this.player))]
+      return this.startPlayerTurn(this.nextRuleId, getRival(this.player))
     }
   }
 
   get nextRuleId() {
-    if (this.actions.length === 0) {
+    if (this.actions.length < 2) {
       const pendingRule = this.remind<RuleId | undefined>(MemoryType.PendingRule)
       if (pendingRule) {
         this.forget(MemoryType.PendingRule)
@@ -63,10 +54,15 @@ export abstract class ActionRule<E extends Action = Action> extends PlayerTurnRu
       }
       return RuleId.ConfirmEndTurn
     }
-    return ActionRuleIds[this.actions[0].type]
+    return ActionRuleIds[this.actions[1].type]
   }
 
   hasAlliance(alliance: Alliance, player = this.player) {
     return this.material(MaterialType.AllianceCard).id(alliance).getItem()?.location.player === player
+  }
+
+  onRuleEnd() {
+    this.memorize<Action[]>(MemoryType.Actions, (actions) => actions.slice(1))
+    return []
   }
 }

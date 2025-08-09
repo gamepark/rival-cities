@@ -29,7 +29,7 @@ export class BuildFactoryRule extends ActionRule<BuildFactory> {
       if (this.factories.length > 0) {
         moves.push(...this.factories.moveItems({ type: LocationType.PlayerFactories, player: this.player }, 1))
       }
-      moves.push(this.customMove(CustomMoveType.Pass, this.action))
+      moves.push(this.customMove(CustomMoveType.Pass))
     }
     return moves
   }

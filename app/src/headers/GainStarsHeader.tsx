@@ -12,7 +12,7 @@ export const GainStarsHeader = () => {
   const rules = useRules<RivalCitiesRules>()!
   const activePlayer = rules.game.rule?.player
   const player = usePlayerName(activePlayer)
-  const count = new GainStarsRule(rules.game).action?.stars
+  const count = new GainStarsRule(rules.game).action.stars
 
   if (activePlayer === me) {
     return (

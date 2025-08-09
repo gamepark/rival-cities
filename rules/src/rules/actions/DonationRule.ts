@@ -28,7 +28,7 @@ export class DonationRule extends ActionRule<Donation> {
     if (productsToPay) {
       return playerProducts.moveItems((item) => ({ type: LocationType.ProductPiles, id: item.id }))
     }
-    const moves: MaterialMove[] = [this.customMove(CustomMoveType.Pass, this.action)]
+    const moves: MaterialMove[] = [this.customMove(CustomMoveType.Pass)]
     const starTokensStock = this.material(MaterialType.StarToken).location(LocationType.StarTokenDeck)
     const products = this.action.product ? playerProducts.id(this.action.product) : playerProducts
     if (products.getQuantity() >= this.action.nbProduct && starTokensStock.getQuantity() > 0) {

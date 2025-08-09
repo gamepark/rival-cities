@@ -16,14 +16,14 @@ export class DrawSpecialActionCardRule extends ActionRule<DrawSpecialActionCard>
     if (deck.length) {
       return [deck.dealOne({ type: LocationType.PlayerSpecialActionCardsHand, player: this.player })]
     } else {
-      return this.removeActionAndMove()
+      return [this.startNextRule()]
     }
   }
 
   afterItemMove(move: ItemMove) {
     if (isMoveItemType(MaterialType.SpecialActionCard)(move)) {
       if (this.hasAlliance(Alliance.Kjjobenhavn) && !this.action.isKjjobenhavnBonus && this.hasBeer) {
-        this.addActionBonus({
+        this.addActions({
           type: ActionType.PayToPerformActionAgain,
           product: Product.Beer,
           price: 1,
@@ -33,7 +33,7 @@ export class DrawSpecialActionCardRule extends ActionRule<DrawSpecialActionCard>
           }
         })
       }
-      return this.removeActionAndMove()
+      return [this.startNextRule()]
     }
     return []
   }

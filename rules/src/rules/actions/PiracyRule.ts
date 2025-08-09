@@ -8,7 +8,7 @@ import { ActionRule } from './ActionRule'
 export class PiracyRule extends ActionRule<Piracy> {
   onRuleStart() {
     if (!this.rivalProducts.getQuantity()) {
-      return this.removeActionAndMove()
+      return [this.startNextRule()]
     }
     return []
   }
@@ -21,7 +21,7 @@ export class PiracyRule extends ActionRule<Piracy> {
     if (isMoveItemType(MaterialType.Product)(move)) {
       this.action.nbProductsToSteal--
       if (!this.action.nbProductsToSteal || !this.rivalProducts.getQuantity()) {
-        return this.removeActionAndMove()
+        return [this.startNextRule()]
       }
     }
     return []

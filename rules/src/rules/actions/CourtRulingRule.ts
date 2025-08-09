@@ -25,7 +25,7 @@ export class CourtRulingRule extends ActionRule<CourtRuling> {
       }
     }
 
-    moves.push(this.customMove(CustomMoveType.Pass, this.action))
+    moves.push(this.customMove(CustomMoveType.Pass))
     return moves
   }
 
@@ -39,7 +39,8 @@ export class CourtRulingRule extends ActionRule<CourtRuling> {
 
   onCustomMove(move: CustomMove): MaterialMove[] {
     if (isCustomMoveType(CustomMoveType.ResolveLawsuit)(move)) {
-      return this.startAction({ type: ActionType.ResolveLawsuit })
+      this.addActions({ type: ActionType.ResolveLawsuit })
+      return [this.startNextRule()]
     }
     return super.onCustomMove(move)
   }

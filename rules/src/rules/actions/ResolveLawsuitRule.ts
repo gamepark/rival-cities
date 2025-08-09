@@ -83,7 +83,7 @@ export class ResolveLawsuitRule extends ActionRule<ResolveLawsuitAction> {
     }
     const cardId = this.material(MaterialType.LawsuitCard).getItem(move.itemIndex).id as Lawsuit
     const actions = lawsuitData[cardId].winBonus
-    this.memorize(MemoryType.Actions, JSON.parse(JSON.stringify(actions)))
+    this.addActions(...JSON.parse(JSON.stringify(actions)))
     return [this.startRule(ActionRuleIds[actions[0].type])]
   }
 }

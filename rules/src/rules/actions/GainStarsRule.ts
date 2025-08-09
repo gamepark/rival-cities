@@ -11,7 +11,7 @@ export class GainStarsRule extends ActionRule<GainStars> {
     if (supply.getQuantity() > 0) {
       moves.push(supply.moveItem({ type: LocationType.PlayerStarTokens, player: this.player }, this.action.stars))
     }
-    moves.push(...this.removeActionAndMove())
+    moves.push(this.startNextRule())
     return moves
   }
 }

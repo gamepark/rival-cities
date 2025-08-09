@@ -44,7 +44,7 @@ export class PurchaseShipRule extends ActionRule<PurchaseShip> {
       const effect = shipData[ship].effect
       if (effect?.type === ShipEffectType.Instant && effect.actions) {
         for (const action of effect.actions) {
-          this.addActionBonus(action)
+          this.addActions(action)
         }
       }
       const deck = this.material(MaterialType.ShipCard).location(LocationType.ShipCardsDeck).deck()

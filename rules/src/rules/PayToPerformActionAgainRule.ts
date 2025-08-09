@@ -14,7 +14,7 @@ export class PayToPerformActionAgainRule extends ActionRule<PayToPerformActionAg
     } else {
       moves.push(...this.playerProducts.moveItems((it) => ({ type: LocationType.ProductPiles, id: it.id })))
     }
-    moves.push(this.customMove(CustomMoveType.Pass, this.action))
+    moves.push(this.customMove(CustomMoveType.Pass))
     return moves
   }
 
@@ -31,7 +31,7 @@ export class PayToPerformActionAgainRule extends ActionRule<PayToPerformActionAg
         this.memorize(MemoryType.Count, 0)
         if (this.action.actionToPerformAgain) {
           const actionToPerformAgain = this.action.actionToPerformAgain
-          this.addActionBonus(actionToPerformAgain)
+          this.addActions(actionToPerformAgain)
           return [this.endAction()]
         }
       }

@@ -22,7 +22,7 @@ import { ResolveLawsuitRule } from '../actions/ResolveLawsuitRule'
 import { ChooseSpecialActionRule } from '../ChooseSpecialActionRule'
 import { PayToPerformActionAgainRule } from '../PayToPerformActionAgainRule'
 
-export const getActionRule = (game: MaterialGame, action: Action): ActionRule => {
+export const getActionRule = (game: MaterialGame, action: Action): ActionRule<Action> => {
   switch (action.type) {
     case ActionType.Production:
       return new ProductionRule(game, action)

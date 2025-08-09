@@ -52,9 +52,9 @@ export class EarnPrestigeRule extends ActionRule<EarnPrestige> {
         })
       }
       if (performAgainActions.length) {
-        this.addActionBonus(...performAgainActions)
+        this.addActions(...performAgainActions)
       }
-      return this.removeActionAndMove()
+      return [this.startNextRule()]
     }
     return []
   }

@@ -13,7 +13,7 @@ export class GainLetterRule extends ActionRule<GainLetter> {
   getPlayerMoves(): MaterialMove[] {
     return [
       ...this.letters.moveItems({ type: LocationType.PlayerLetterDeck, player: this.player }, this.action.nbLettersToTake),
-      this.customMove(CustomMoveType.Pass, this.action)
+      this.customMove(CustomMoveType.Pass)
     ]
   }
 

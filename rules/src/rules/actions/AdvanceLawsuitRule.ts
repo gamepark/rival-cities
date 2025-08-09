@@ -21,7 +21,7 @@ export class AdvanceLawsuitRule extends ActionRule<AdvanceLawsuit> {
         moves.push(marker.moveItem(({ location }) => ({ ...location, x: location.x! + moveX })))
       }
     })
-    moves.push(this.customMove(CustomMoveType.Pass, this.action))
+    moves.push(this.customMove(CustomMoveType.Pass))
     return moves
   }
 
@@ -58,7 +58,7 @@ export class AdvanceLawsuitRule extends ActionRule<AdvanceLawsuit> {
           this.playerProducts.length &&
           this.possibleCardsToGet().length > 0
         ) {
-          this.addActionBonus({
+          this.addActions({
             type: ActionType.PayToPerformActionAgain,
             price: 1,
             actionToPerformAgain: {
@@ -69,14 +69,14 @@ export class AdvanceLawsuitRule extends ActionRule<AdvanceLawsuit> {
           })
         }
         if (lawsuitX === 1 && timeAlreadyAdvanced < 1 && this.advanceLawsuitHelper.checkMarkerIsNotAtMaxX(marker)) {
-          this.addActionBonus({
+          this.addActions({
             type: ActionType.AdvanceLawsuit,
             lawsuitAdvancedLocation: marker.location.parent,
             nbTimeAlreadyAdvanced: timeAlreadyAdvanced + 1,
             isLeHavreBonus: this.action.isLeHavreBonus
           })
         } else if (lawsuitX === 2 && timeAlreadyAdvanced < 2 && this.advanceLawsuitHelper.checkMarkerIsNotAtMaxX(marker)) {
-          this.addActionBonus({
+          this.addActions({
             type: ActionType.AdvanceLawsuit,
             lawsuitAdvancedLocation: marker.location.parent,
             nbTimeAlreadyAdvanced: timeAlreadyAdvanced + 1,
@@ -85,7 +85,7 @@ export class AdvanceLawsuitRule extends ActionRule<AdvanceLawsuit> {
         }
         if (timeAlreadyAdvanced === 0) {
           for (const action of lawsuitData[card.id as Lawsuit].advanceBonus) {
-            this.addActionBonus(JSON.parse(JSON.stringify(action)))
+            this.addActions(JSON.parse(JSON.stringify(action)))
           }
         }
         moves.push(this.endAction())
