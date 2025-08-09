@@ -1,4 +1,4 @@
-import { isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
+import { isMoveItemType, ItemMove } from '@gamepark/rules-api'
 import { DrawSpecialActionCardAction } from '../../material/Actions/Actions'
 import { ActionType } from '../../material/Actions/ActionType'
 import { Alliance } from '../../material/Alliance'
@@ -9,6 +9,10 @@ import { ActionRule } from './ActionRule'
 
 export class DrawSpecialActionCardActionRule extends ActionRule<DrawSpecialActionCardAction> {
   onRuleStart() {
+    return this.getPlayerMoves()
+  }
+
+  getPlayerMoves() {
     const deck = this.material(MaterialType.SpecialActionCard).location(LocationType.SpecialActionCardsDeck).deck()
     if (deck.length) {
       return [deck.dealOne({ type: LocationType.PlayerSpecialActionCardsHand, player: this.player })]
@@ -17,7 +21,7 @@ export class DrawSpecialActionCardActionRule extends ActionRule<DrawSpecialActio
     }
   }
 
-  afterItemMove(move: ItemMove): MaterialMove[] {
+  afterItemMove(move: ItemMove) {
     if (isMoveItemType(MaterialType.SpecialActionCard)(move)) {
       if (this.hasKjjobenhavnAlliance && !this.action.isKjjobenhavnBonus && this.hasBeer) {
         this.addActionBonus({

@@ -1,5 +1,5 @@
-import { MaterialMove, PlayMoveContext, RuleMove, RuleStep } from '@gamepark/rules-api'
-import { isEqual } from 'lodash'
+import { isMoveItem, MaterialMove, PlayMoveContext, RuleMove, RuleStep } from '@gamepark/rules-api'
+import { isEqual, omit } from 'lodash'
 import { Action, MultipleAction } from '../../material/Actions/Actions'
 import { ActionType } from '../../material/Actions/ActionType'
 import { getActionRule } from '../helper/ActionHelper'
@@ -13,7 +13,7 @@ export class PerformMultipleActionsRule extends ActionRule<MultipleAction> {
     this.forget(MemoryType.ProductChosen)
     const moves: MaterialMove[] = []
     this.action.actions.forEach((a) => {
-      if (a.type === ActionType.ReturnFactory || a.type === ActionType.DrawSpecialActionCard) {
+      if (a.type === ActionType.ReturnFactory) {
         moves.push(...getActionRule(this.game, a).onRuleStart(_move, _previousRule, _context))
       }
     })
@@ -28,7 +28,8 @@ export class PerformMultipleActionsRule extends ActionRule<MultipleAction> {
     for (let index = 0; index < this.action.actions.length; index++) {
       const action = this.action.actions[index]
       const legalMoves = getActionRule(this.game, action).getPlayerMoves()
-      if (legalMoves.some((legalMove) => isEqual(legalMove, move))) {
+      const playedMove = isMoveItem(move) ? omit(move, 'reveal') : move
+      if (legalMoves.some((legalMove) => isEqual(legalMove, playedMove))) {
         this.action.actions.splice(index, 1)
         this.startActionImmediately(action)
       }

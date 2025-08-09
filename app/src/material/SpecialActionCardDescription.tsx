@@ -5,33 +5,33 @@ import { LocationType } from '@gamepark/rival-cities/material/LocationType'
 import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
 import { SpecialActionCard } from '@gamepark/rival-cities/material/SpecialActionCard'
 import { CustomMoveType } from '@gamepark/rival-cities/rules/CustomMoveType'
+import { isCustomMoveType, isMoveItemType, MaterialItem, MaterialMove } from '@gamepark/rules-api'
 import { Trans } from 'react-i18next'
 import SpecialAction1 from '../images/cards/action/special/ActionSpecial01.jpg'
+import SpecialAction4 from '../images/cards/action/special/ActionSpecial04.jpg'
+import SpecialAction8 from '../images/cards/action/special/ActionSpecial08.jpg'
+import SpecialAction14 from '../images/cards/action/special/ActionSpecial14.jpg'
+import SpecialAction15 from '../images/cards/action/special/ActionSpecial15.jpg'
+import SpecialAction18 from '../images/cards/action/special/ActionSpecial18.jpg'
+import SpecialAction19 from '../images/cards/action/special/ActionSpecial19.jpg'
+import SpecialAction21 from '../images/cards/action/special/ActionSpecial21.jpg'
+import SpecialActionBack from '../images/cards/action/special/ActionSpecialBack.jpg'
 import SpecialAction2 from '../images/cards/action/special/en/ActionSpecial02.jpg'
 import SpecialAction3 from '../images/cards/action/special/en/ActionSpecial03.jpg'
-import SpecialAction4 from '../images/cards/action/special/ActionSpecial04.jpg'
 import SpecialAction5 from '../images/cards/action/special/en/ActionSpecial05.jpg'
 import SpecialAction6 from '../images/cards/action/special/en/ActionSpecial06.jpg'
 import SpecialAction7 from '../images/cards/action/special/en/ActionSpecial07.jpg'
-import SpecialAction8 from '../images/cards/action/special/ActionSpecial08.jpg'
 import SpecialAction9 from '../images/cards/action/special/en/ActionSpecial09.jpg'
 import SpecialAction10 from '../images/cards/action/special/en/ActionSpecial10.jpg'
 import SpecialAction11 from '../images/cards/action/special/en/ActionSpecial11.jpg'
 import SpecialAction12 from '../images/cards/action/special/en/ActionSpecial12.jpg'
 import SpecialAction13 from '../images/cards/action/special/en/ActionSpecial13.jpg'
-import SpecialAction14 from '../images/cards/action/special/ActionSpecial14.jpg'
-import SpecialAction15 from '../images/cards/action/special/ActionSpecial15.jpg'
 import SpecialAction16 from '../images/cards/action/special/en/ActionSpecial16.jpg'
 import SpecialAction17 from '../images/cards/action/special/en/ActionSpecial17.jpg'
-import SpecialAction18 from '../images/cards/action/special/ActionSpecial18.jpg'
-import SpecialAction19 from '../images/cards/action/special/ActionSpecial19.jpg'
 import SpecialAction20 from '../images/cards/action/special/en/ActionSpecial20.jpg'
-import SpecialAction21 from '../images/cards/action/special/ActionSpecial21.jpg'
 import SpecialAction22 from '../images/cards/action/special/en/ActionSpecial22.jpg'
 import SpecialAction23 from '../images/cards/action/special/en/ActionSpecial23.jpg'
 import SpecialAction24 from '../images/cards/action/special/en/ActionSpecial24.jpg'
-import SpecialActionBack from '../images/cards/action/special/ActionSpecialBack.png'
-import { isCustomMoveType, isMoveItemType, MaterialItem, MaterialMove } from '@gamepark/rules-api'
 import { SpecialActionCardHelp } from './help/SpecialActionCardHelp'
 
 export class SpecialActionCardDescription extends CardDescription {
@@ -82,6 +82,12 @@ export class SpecialActionCardDescription extends CardDescription {
         move.location.type === LocationType.PlayerSpecialActionCardsHand &&
         move.itemIndex === context.index
     )
+    const draw = legalMoves.find(
+      (move) =>
+        isMoveItemType(MaterialType.SpecialActionCard)(move) &&
+        move.location.type === LocationType.PlayerSpecialActionCardsHand &&
+        move.itemIndex === context.index
+    )
     const discard = legalMoves.find(
       (move) =>
         isMoveItemType(MaterialType.SpecialActionCard)(move) &&
@@ -103,6 +109,14 @@ export class SpecialActionCardDescription extends CardDescription {
             </ItemMenuButton>
           )}
         </>
+      )
+    }
+
+    if (item.location.type === LocationType.SpecialActionCardsDeck && draw) {
+      return (
+        <ItemMenuButton label={<Trans defaults="button.draw" />} move={draw}>
+          <FontAwesomeIcon icon={faHand} css={pointerCursorCss} />
+        </ItemMenuButton>
       )
     }
 
