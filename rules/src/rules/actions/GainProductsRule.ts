@@ -8,7 +8,7 @@ import { Product, PRODUCTS_QUANTITY } from '../../material/Product'
 import { CustomMoveType } from '../CustomMoveType'
 import { ActionRule } from './ActionRule'
 
-export abstract class GainProductsRule<E extends GainProducts | Production> extends ActionRule<E> {
+export class GainProductsRule<E extends GainProducts | Production> extends ActionRule<E> {
   onRuleStart(): MaterialMove[] {
     const playerMoves = this.getPlayerMoves()
     if (playerMoves.length === 1) {

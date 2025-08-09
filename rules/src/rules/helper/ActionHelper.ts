@@ -10,7 +10,7 @@ import { DrawSpecialActionCardRule } from '../actions/DrawSpecialActionCardRule'
 import { EarnPrestigeRule } from '../actions/EarnPrestigeRule'
 import { FormAllianceRule } from '../actions/FormAllianceRule'
 import { GainLetterRule } from '../actions/GainLetterRule'
-import { GiftRule } from '../actions/GiftRule'
+import { GainProductsRule } from '../actions/GainProductsRule'
 import { PerformMultipleActionsRule } from '../actions/PerformMultipleActionsRule'
 import { PiracyRule } from '../actions/PiracyRule'
 import { ProductionRule } from '../actions/ProductionRule'
@@ -40,7 +40,7 @@ export const getActionRule = (game: MaterialGame, action: Action): ActionRule =>
     case ActionType.GainLetter:
       return new GainLetterRule(game, action)
     case ActionType.GainProducts:
-      return new GiftRule(game, action)
+      return new GainProductsRule(game, action)
     case ActionType.ProductSwap:
       return new ProductSwapRule(game, action)
     case ActionType.PurchaseShip:

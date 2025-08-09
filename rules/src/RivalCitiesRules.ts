@@ -29,7 +29,7 @@ import { DrawSpecialActionCardRule } from './rules/actions/DrawSpecialActionCard
 import { EarnPrestigeRule } from './rules/actions/EarnPrestigeRule'
 import { FormAllianceRule } from './rules/actions/FormAllianceRule'
 import { GainLetterRule } from './rules/actions/GainLetterRule'
-import { GiftRule } from './rules/actions/GiftRule'
+import { GainProductsRule } from './rules/actions/GainProductsRule'
 import { PerformMultipleActionsRule } from './rules/actions/PerformMultipleActionsRule'
 import { PiracyRule } from './rules/actions/PiracyRule'
 import { ProductionRule } from './rules/actions/ProductionRule'
@@ -93,7 +93,7 @@ export class RivalCitiesRules
     [RuleId.BuildFactory]: BuildFactoryRule,
     [RuleId.Donation]: DonationRule,
     [RuleId.FormAlliance]: FormAllianceRule,
-    [RuleId.Gift]: GiftRule,
+    [RuleId.Gift]: GainProductsRule,
     [RuleId.ProductSwap]: ProductSwapRule,
     [RuleId.ReactivateFactory]: ReactivateFactoryRule,
     [RuleId.CourtRuling]: CourtRulingRule,
