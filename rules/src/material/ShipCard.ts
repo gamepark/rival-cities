@@ -3,20 +3,33 @@ import { Product } from './Product'
 
 export enum ShipEffectType {
   Instant = 1,
-  OffSeason,
-  OnProduction
+  OffSeasonBonus,
+  ProductionBonus
 }
+
+export type InstantEffect = {
+  type: ShipEffectType.Instant
+  actions: Action[]
+}
+
+export type OffSeasonBonusEffect = {
+  type: ShipEffectType.OffSeasonBonus
+  actions: Action[]
+}
+
+export type ProductionBonusEffect = {
+  type: ShipEffectType.ProductionBonus
+  product: Product
+}
+
+export type ShipEffect = InstantEffect | OffSeasonBonusEffect | ProductionBonusEffect
 
 export type ShipData = {
   cost: {
     type: Product
     quantity: number
   }
-  effect?: {
-    type: ShipEffectType
-    actions?: Action[]
-    product?: Product
-  }
+  effect?: ShipEffect
   getNbStars: (_nbShip: number) => number
 }
 
@@ -74,7 +87,7 @@ export function getShipData(ship: number): ShipData {
       return {
         cost: { type: Product.Leather, quantity: 4 },
         effect: {
-          type: ShipEffectType.OffSeason,
+          type: ShipEffectType.OffSeasonBonus,
           actions: [{ type: ActionType.Donation, nbProduct: 0, nbStars: 1, nbTimes: 1 }]
         },
         getNbStars: () => 2
@@ -83,7 +96,7 @@ export function getShipData(ship: number): ShipData {
       return {
         cost: { type: Product.Cloth, quantity: 5 },
         effect: {
-          type: ShipEffectType.OffSeason,
+          type: ShipEffectType.OffSeasonBonus,
           actions: [{ type: ActionType.GainProducts, product: Product.Furniture, quantity: 2 }]
         },
         getNbStars: () => 1
@@ -92,7 +105,7 @@ export function getShipData(ship: number): ShipData {
       return {
         cost: { type: Product.Cloth, quantity: 4 },
         effect: {
-          type: ShipEffectType.OffSeason,
+          type: ShipEffectType.OffSeasonBonus,
           actions: [{ type: ActionType.EarnPrestige }]
         },
         getNbStars: () => 1
@@ -101,7 +114,7 @@ export function getShipData(ship: number): ShipData {
       return {
         cost: { type: Product.Beer, quantity: 5 },
         effect: {
-          type: ShipEffectType.OffSeason,
+          type: ShipEffectType.OffSeasonBonus,
           actions: [{ type: ActionType.GainProducts, product: Product.Cloth, quantity: 2 }]
         },
         getNbStars: () => 2
@@ -110,7 +123,7 @@ export function getShipData(ship: number): ShipData {
       return {
         cost: { type: Product.Beer, quantity: 5 },
         effect: {
-          type: ShipEffectType.OffSeason,
+          type: ShipEffectType.OffSeasonBonus,
           actions: [{ type: ActionType.GainLetter, nbLettersToTake: 1 }]
         },
         getNbStars: () => 1
@@ -119,7 +132,7 @@ export function getShipData(ship: number): ShipData {
       return {
         cost: { type: Product.Cloth, quantity: 4 },
         effect: {
-          type: ShipEffectType.OnProduction,
+          type: ShipEffectType.ProductionBonus,
           product: Product.Beer
         },
         getNbStars: () => 1
@@ -128,7 +141,7 @@ export function getShipData(ship: number): ShipData {
       return {
         cost: { type: Product.Beer, quantity: 6 },
         effect: {
-          type: ShipEffectType.OnProduction,
+          type: ShipEffectType.ProductionBonus,
           product: Product.Leather
         },
         getNbStars: () => 1
@@ -137,7 +150,7 @@ export function getShipData(ship: number): ShipData {
       return {
         cost: { type: Product.Leather, quantity: 4 },
         effect: {
-          type: ShipEffectType.OnProduction,
+          type: ShipEffectType.ProductionBonus,
           product: Product.Cloth
         },
         getNbStars: () => 1
@@ -146,7 +159,7 @@ export function getShipData(ship: number): ShipData {
       return {
         cost: { type: Product.Cloth, quantity: 5 },
         effect: {
-          type: ShipEffectType.OnProduction,
+          type: ShipEffectType.ProductionBonus,
           product: Product.Furniture
         },
         getNbStars: () => 1

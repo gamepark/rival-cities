@@ -8,7 +8,7 @@ import { CustomMoveType } from '../CustomMoveType'
 import { GainProductsRule } from './GainProductsRule'
 
 export class ProductionRule extends GainProductsRule<Production> {
-  onGainProduct(product: Product, quantity: number = 1): MaterialMove[] {
+  onGainProduct(product: Product, quantity = 1): MaterialMove[] {
     const moves: MaterialMove[] = []
     if (!this.action.quantity) {
       moves.push(this.availableFactories.rotateItem(true))
@@ -21,7 +21,7 @@ export class ProductionRule extends GainProductsRule<Production> {
     const moves = super.triggerProductGainedEffects(product)
     if (!this.action.productsGained) {
       for (const ship of this.playerShips) {
-        if (getShipData(ship).effect?.type === ShipEffectType.OnProduction) {
+        if (getShipData(ship).effect?.type === ShipEffectType.ProductionBonus) {
           moves.push(this.customMove(CustomMoveType.TriggerShipEffect, ship))
         }
       }
@@ -32,8 +32,10 @@ export class ProductionRule extends GainProductsRule<Production> {
   onCustomMove(move: CustomMove) {
     if (move.type === CustomMoveType.TriggerShipEffect) {
       this.action.quantity++
-      const product = getShipData(move.data as number).effect!.product!
-      return this.gainProduct(product)
+      const shipEffect = getShipData(move.data as number).effect
+      if (shipEffect?.type === ShipEffectType.ProductionBonus) {
+        return this.gainProduct(shipEffect.product)
+      }
     }
     return super.onCustomMove(move)
   }
