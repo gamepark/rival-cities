@@ -3,7 +3,7 @@ import { Production } from '../../material/Action'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { Product } from '../../material/Product'
-import { getShipData, ShipEffectType } from '../../material/ShipCard'
+import { getShipData, ShipEffectType } from '../../material/Ship'
 import { CustomMoveType } from '../CustomMoveType'
 import { GainProductsRule } from './GainProductsRule'
 

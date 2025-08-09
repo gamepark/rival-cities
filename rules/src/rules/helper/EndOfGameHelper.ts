@@ -4,7 +4,7 @@ import { Alliance, alliancesData } from '../../material/Alliance'
 import { LawsuitCard, lawsuitCardData } from '../../material/LawsuitCard'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
-import { getShipData } from '../../material/ShipCard'
+import { getShipData } from '../../material/Ship'
 
 export class EndOfGameHelper extends PlayerTurnRule {
   checkOffSeasonEndOfGame(moveIfGameNotEnded: MaterialMove): MaterialMove[] {

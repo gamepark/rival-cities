@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { MaterialHelpProps } from '@gamepark/react-game'
 import { Product } from '@gamepark/rival-cities/material/Product'
-import { getShipData } from '@gamepark/rival-cities/material/ShipCard'
+import { getShipData } from '@gamepark/rival-cities/material/Ship'
 import { FC } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { components, note } from './utils'

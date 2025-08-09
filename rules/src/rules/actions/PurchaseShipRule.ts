@@ -2,7 +2,7 @@ import { isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
 import { PurchaseShip } from '../../material/Action'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
-import { getShipData, ShipEffectType } from '../../material/ShipCard'
+import { getShipData, ShipEffectType } from '../../material/Ship'
 import { CustomMoveType } from '../CustomMoveType'
 import { ActionRule } from './ActionRule'
 
