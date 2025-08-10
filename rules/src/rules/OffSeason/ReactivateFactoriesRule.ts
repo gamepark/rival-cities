@@ -11,7 +11,7 @@ export class ReactivateFactoriesRule extends PlayerTurnRule {
       moves.push(this.endGame())
     } else {
       const player = this.material(MaterialType.BellToken).getItem()!.location.player!
-      moves.push(this.startPlayerTurn(RuleId.OffSeasonReturnBell, player))
+      moves.push(this.startPlayerTurn(RuleId.ReturnBell, player))
     }
     return moves
   }

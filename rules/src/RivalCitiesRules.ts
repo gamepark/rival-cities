@@ -50,10 +50,10 @@ import { MemoryHelper } from './rules/helper/MemoryHelper'
 import { Memory } from './rules/Memory'
 import { GainPrestigeIncomeRule } from './rules/OffSeason/GainPrestigeIncomeRule'
 import { GainShipsIncomeRule } from './rules/OffSeason/GainShipsIncomeRule'
-import { OffSeasonReturnBellRule } from './rules/OffSeason/OffSeasonReturnBellRule'
 import { PayAlliancesUpkeepRule } from './rules/OffSeason/PayAlliancesUpkeepRule'
 import { ReactivateFactoriesRule } from './rules/OffSeason/ReactivateFactoriesRule'
 import { ReplaceSpecialActionCardsRule } from './rules/OffSeason/ReplaceSpecialActionCardsRule'
+import { ReturnBellRule } from './rules/OffSeason/ReturnBellRule'
 import { TakeBellRule } from './rules/OffSeason/TakeBellRule'
 import { PayInkJarMovementCostRule } from './rules/PayInkJarMovementCostRule'
 import { PayToPerformActionAgainRule } from './rules/PayToPerformActionAgainRule'
@@ -100,7 +100,7 @@ export class RivalCitiesRules
     [RuleId.GainPrestigeIncome]: GainPrestigeIncomeRule,
     [RuleId.ReplaceSpecialActionCards]: ReplaceSpecialActionCardsRule,
     [RuleId.ReactivateFactories]: ReactivateFactoriesRule,
-    [RuleId.OffSeasonReturnBell]: OffSeasonReturnBellRule
+    [RuleId.ReturnBell]: ReturnBellRule
   }
 
   locationsStrategies = {

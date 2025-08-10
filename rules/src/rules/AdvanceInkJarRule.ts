@@ -16,14 +16,15 @@ export class AdvanceInkJarRule extends PlayerTurnRule {
     const endSpace = move.location.id as number
     const distance = (endSpace + INK_SPACES - initialSpace) % INK_SPACES
     const movementCost = new InkJarPisteHelper(this.game).getMovementCost(distance)
-    if (endSpace < initialSpace) {
-      this.memorize(Memory.PendingRule, RuleId.TakeBell)
-    }
+    const offSeason = endSpace < initialSpace
     if (movementCost > 0) {
+      if (offSeason) {
+        this.memorize(Memory.PendingRule, RuleId.TakeBell)
+      }
       this.memorize(Memory.Count, movementCost)
       return [this.startRule(RuleId.PayInkJarMovementCost)]
     } else {
-      return [this.startRule(this.remind<RuleId | undefined>(Memory.PendingRule) ?? RuleId.ChooseAction)]
+      return [this.startRule(offSeason ? RuleId.TakeBell : RuleId.ChooseAction)]
     }
   }
 }

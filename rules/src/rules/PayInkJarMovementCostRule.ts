@@ -21,4 +21,9 @@ export class PayInkJarMovementCostRule extends PlayerTurnRule {
   get playerProducts() {
     return this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(this.player)
   }
+
+  onRuleEnd() {
+    this.forget(Memory.PendingRule)
+    return []
+  }
 }
