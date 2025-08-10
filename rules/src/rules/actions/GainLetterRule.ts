@@ -20,7 +20,7 @@ export class GainLetterRule extends ActionRule<GainLetter> {
   afterItemMove(move: ItemMove): MaterialMove[] {
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.Letter)(move)) {
-      moves.push(this.endAction())
+      moves.push(this.startNextRule())
     }
     return moves
   }

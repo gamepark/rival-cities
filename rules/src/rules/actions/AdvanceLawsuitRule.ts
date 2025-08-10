@@ -59,7 +59,7 @@ export class AdvanceLawsuitRule extends ActionRule<AdvanceLawsuit> {
       })
     }
     this.addActions(...extraActions)
-    return [...new CostHelper(this.game).pay(this.player, cost), this.endAction()]
+    return [...new CostHelper(this.game).pay(this.player, cost), this.startNextRule()]
   }
 
   get lawsuitCards() {

@@ -32,7 +32,7 @@ export class CourtRulingRule extends ActionRule<CourtRuling> {
   afterItemMove(move: ItemMove): MaterialMove[] {
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.LawsuitPiece)(move)) {
-      moves.push(this.endAction())
+      moves.push(this.startNextRule())
     }
     return moves
   }

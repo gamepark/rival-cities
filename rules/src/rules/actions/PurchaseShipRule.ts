@@ -51,7 +51,7 @@ export class PurchaseShipRule extends ActionRule<PurchaseShip> {
       if (deck.length) {
         moves.push(deck.dealOne({ type: LocationType.ShipCardsRiver }))
       }
-      moves.push(this.endAction())
+      moves.push(this.startNextRule())
     }
     return moves
   }

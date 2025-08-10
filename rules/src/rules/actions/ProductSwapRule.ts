@@ -30,7 +30,7 @@ export class ProductSwapRule extends ActionRule<ProductSwap> {
         this.memorize(Memory.Count, this.nbSwaps + 1)
         if (this.remind(Memory.Count) === this.action.nbPossibleSwaps) {
           this.memorize(Memory.Count, 0)
-          return [this.endAction()]
+          return [this.startNextRule()]
         }
       }
     }

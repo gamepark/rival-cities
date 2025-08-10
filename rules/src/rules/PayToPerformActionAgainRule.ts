@@ -36,7 +36,7 @@ export class PayToPerformActionAgainRule extends ActionRule<PayToPerformActionAg
   afterItemMove(move: ItemMove) {
     if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.ProductPiles) {
       this.addActions(this.action.extraAction)
-      return [this.endAction()]
+      return [this.startNextRule()]
     }
     return []
   }

@@ -22,12 +22,8 @@ export abstract class ActionRule<A extends Action> extends PlayerTurnRule {
     return this.remind<Action[]>(Memory.Actions)
   }
 
-  endAction() {
-    return this.customMove(CustomMoveType.EndAction)
-  }
-
   onCustomMove(move: CustomMove): MaterialMove[] {
-    if (move.type === CustomMoveType.Pass || move.type === CustomMoveType.EndAction) {
+    if (move.type === CustomMoveType.Pass) {
       return [this.startNextRule()]
     }
     return []

@@ -16,7 +16,7 @@ export class BuildFactoryRule extends ActionRule<BuildFactory> {
       return this.factories.moveItems({ type: LocationType.PlayerFactories, player: this.player, rotation: false }, 1)
     }
     if (this.getProducts().getQuantity() < (this.action.price ?? 0)) {
-      return [this.endAction()]
+      return [this.startNextRule()]
     }
     return []
   }
@@ -49,12 +49,12 @@ export class BuildFactoryRule extends ActionRule<BuildFactory> {
     if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.ProductPiles) {
       if (this.remind(Memory.Count) === this.action.price) {
         this.memorize(Memory.Count, 0)
-        return [this.endAction()]
+        return [this.startNextRule()]
       }
     }
     if (isMoveItemType(MaterialType.Factory)(move) && move.location.type === LocationType.PlayerFactories) {
       if (this.action.price === 0) {
-        return [this.endAction()]
+        return [this.startNextRule()]
       }
     }
     return moves

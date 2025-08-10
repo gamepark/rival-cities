@@ -28,14 +28,14 @@ export class DonationRule extends ActionRule<Donation> {
     if (isMoveItemType(MaterialType.StarToken)(move) && move.location.type === LocationType.PlayerStarTokens) {
       if (this.action.product) {
         const products = this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(this.player).id(this.action.product)
-        return [products.moveItem({ type: LocationType.ProductPiles, id: this.action.product }, this.action.cost), this.endAction()]
+        return [products.moveItem({ type: LocationType.ProductPiles, id: this.action.product }, this.action.cost), this.startNextRule()]
       } else {
         this.memorize(Memory.Count, this.action.cost)
       }
     } else if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.ProductPiles && !this.action.product) {
       const count = this.memorize<number>(Memory.Count, (count) => count - 1)
       if (count === 0) {
-        return [this.endAction()]
+        return [this.startNextRule()]
       }
     }
     return []

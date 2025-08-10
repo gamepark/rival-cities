@@ -73,7 +73,7 @@ export class GainProductsRule<A extends GainProducts | Production> extends Actio
     }
     this.action.quantity -= quantity
     if (!this.canGainMore) {
-      moves.push(this.endAction())
+      moves.push(this.startNextRule())
     }
     return moves
   }
