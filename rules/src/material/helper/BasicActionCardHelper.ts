@@ -41,7 +41,7 @@ export class BasicActionCardHelper extends MaterialRulesPart {
       case BasicActionCard.BasicAction4:
         return {
           type: ActionType.BuildFactory,
-          price: 2
+          cost: 2
         }
       case BasicActionCard.BasicAction5:
         return {

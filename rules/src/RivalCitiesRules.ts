@@ -4,7 +4,6 @@ import {
   FillGapStrategy,
   hideItemId,
   hideItemIdToOthers,
-  isCustomMoveType,
   isMoveItemType,
   ItemMove,
   MaterialGame,
@@ -46,7 +45,6 @@ import { ChooseSpecialActionRule } from './rules/ChooseSpecialActionRule'
 import { ConfirmEndTurnRule } from './rules/ConfirmEndTurnRule'
 import { CustomMoveType } from './rules/CustomMoveType'
 import { EndOfGameHelper } from './rules/helper/EndOfGameHelper'
-import { MemoryHelper } from './rules/helper/MemoryHelper'
 import { Memory } from './rules/Memory'
 import { GainPrestigeIncomeRule } from './rules/OffSeason/GainPrestigeIncomeRule'
 import { GainShipsIncomeRule } from './rules/OffSeason/GainShipsIncomeRule'
@@ -195,9 +193,6 @@ export class RivalCitiesRules
   }
 
   onCustomMove(move: CustomMove): MaterialMove[] {
-    if (isCustomMoveType(CustomMoveType.Pass)(move)) {
-      new MemoryHelper(this.game).clearMemory()
-    }
     if (move.type === CustomMoveType.SpendLetterToSwapProduct) {
       const letters = this.material(MaterialType.Letter).player(move.data as City)
       const actions = this.memorize<Action[]>(Memory.Actions, (actions) => [{ type: ActionType.SwapProduct, times: 1 }, ...actions])

@@ -76,7 +76,8 @@ export type DrawSpecialActionCard = {
 
 export type BuildFactory = {
   type: ActionType.BuildFactory
-  price: number
+  cost?: number
+  building?: boolean
 } & ActionCommon
 
 export type EarnPrestige = {

@@ -12,7 +12,6 @@ import { Ship } from './material/Ship'
 import { specialActionCards } from './material/SpecialActionCard'
 import { RivalCitiesOptions } from './RivalCitiesOptions'
 import { RivalCitiesRules } from './RivalCitiesRules'
-import { Memory } from './rules/Memory'
 import { RuleId } from './rules/RuleId'
 
 /**
@@ -40,7 +39,6 @@ export class RivalCitiesSetup extends MaterialGameSetup<City, MaterialType, Loca
     this.setupLawsuits()
     this.setupProducts()
     this.setupPlayers()
-    this.initializeMemory()
   }
 
   setupSpecialActionCards() {
@@ -106,11 +104,5 @@ export class RivalCitiesSetup extends MaterialGameSetup<City, MaterialType, Loca
 
   start() {
     this.startSimultaneousRule(RuleId.ChooseFirstProduct)
-  }
-
-  private initializeMemory() {
-    this.memorize(Memory.Count, 0)
-    this.memorize(Memory.IsBuildInProgress, false)
-    this.memorize(Memory.Actions, [])
   }
 }

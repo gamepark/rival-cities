@@ -32,7 +32,7 @@ export const lawsuitData: Record<Lawsuit, LawsuitData> = {
   [Lawsuit.Lawsuit2]: {
     cost: cost(1, Product.Leather),
     advanceBonus: [{ type: ActionType.GainProducts, product: Product.Furniture, quantity: 1 }],
-    winBonus: [{ type: ActionType.BuildFactory, price: 0 }],
+    winBonus: [{ type: ActionType.BuildFactory }],
     nbStars: 2
   },
   [Lawsuit.Lawsuit3]: {
@@ -44,7 +44,7 @@ export const lawsuitData: Record<Lawsuit, LawsuitData> = {
   [Lawsuit.Lawsuit4]: {
     cost: { type: CostType.Letters, amount: 1 },
     advanceBonus: [{ type: ActionType.EarnPrestige }],
-    winBonus: [{ type: ActionType.BuildFactory, price: 0 }],
+    winBonus: [{ type: ActionType.BuildFactory }],
     nbStars: 4
   },
   [Lawsuit.Lawsuit5]: {
@@ -74,7 +74,7 @@ export const lawsuitData: Record<Lawsuit, LawsuitData> = {
       { type: ActionType.GainProducts, product: Product.Beer, quantity: 1 },
       { type: ActionType.GainLetter, nbLettersToTake: 1 }
     ],
-    winBonus: [{ type: ActionType.BuildFactory, price: 0 }],
+    winBonus: [{ type: ActionType.BuildFactory }],
     nbStars: 3
   },
   [Lawsuit.Lawsuit9]: {
@@ -86,7 +86,7 @@ export const lawsuitData: Record<Lawsuit, LawsuitData> = {
   [Lawsuit.Lawsuit10]: {
     cost: cost(2, Product.Beer),
     advanceBonus: [{ type: ActionType.GainProducts, product: Product.Cloth, quantity: 1 }],
-    winBonus: [{ type: ActionType.BuildFactory, price: 0 }],
+    winBonus: [{ type: ActionType.BuildFactory }],
     nbStars: 2
   }
 }

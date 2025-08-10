@@ -7,17 +7,16 @@ import { isCustomMoveType } from '@gamepark/rules-api'
 import { Trans } from 'react-i18next'
 
 export const BuildFactoryHeader = () => {
-  const player = usePlayerId()
+  const me = usePlayerId()
   const rules = useRules<RivalCitiesRules>()!
-  const activePlayer = rules.game.rule?.player
-  const itsMe = player && activePlayer === player
-  const name = usePlayerName(activePlayer)
+  const activePlayer = rules.getActivePlayer()
+  const player = usePlayerName(activePlayer)
   const pass = useLegalMove(isCustomMoveType(CustomMoveType.Pass))
 
-  if (itsMe) {
+  if (activePlayer === me) {
     return (
       <Trans
-        defaults={`header.build.factory.you`}
+        defaults="header.build.factory.you"
         components={{
           pass: <PlayMoveButton move={pass} />
         }}
@@ -25,5 +24,5 @@ export const BuildFactoryHeader = () => {
     )
   }
 
-  return <Trans defaults={`header.build.factory.player`} values={{ player: name }} />
+  return <Trans defaults="header.build.factory.player" values={{ player }} />
 }

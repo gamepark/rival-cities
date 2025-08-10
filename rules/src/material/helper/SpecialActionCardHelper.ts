@@ -192,8 +192,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
             type: ActionType.AdvanceLawsuit
           },
           {
-            type: ActionType.BuildFactory,
-            price: 0
+            type: ActionType.BuildFactory
           }
         ]
       case SpecialActionCard.SpecialAction15:
@@ -202,8 +201,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
             type: ActionType.AdvanceLawsuit
           },
           {
-            type: ActionType.BuildFactory,
-            price: 0
+            type: ActionType.BuildFactory
           }
         ]
       case SpecialActionCard.SpecialAction16:
