@@ -15,7 +15,7 @@ export class BuildFactoryRule extends ActionRule<BuildFactory> {
     if (this.action.price === 0) {
       return this.factories.moveItems({ type: LocationType.PlayerFactories, player: this.player }, 1)
     }
-    if (this.playerProducts.getQuantity() < (this.action.price ?? 0)) {
+    if (this.getProducts().getQuantity() < (this.action.price ?? 0)) {
       return [this.endAction()]
     }
     return []
@@ -24,7 +24,7 @@ export class BuildFactoryRule extends ActionRule<BuildFactory> {
   getPlayerMoves(): MaterialMove[] {
     const moves: MaterialMove[] = []
     if (this.isBuildInProgress) {
-      moves.push(...this.playerProducts.moveItems((item) => ({ type: LocationType.ProductPiles, id: item.id })))
+      moves.push(...this.getProducts().moveItems((item) => ({ type: LocationType.ProductPiles, id: item.id })))
     } else {
       if (this.factories.length > 0) {
         moves.push(...this.factories.moveItems({ type: LocationType.PlayerFactories, player: this.player }, 1))
@@ -58,10 +58,6 @@ export class BuildFactoryRule extends ActionRule<BuildFactory> {
       }
     }
     return moves
-  }
-
-  get playerProducts() {
-    return this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(this.player)
   }
 
   get factories() {

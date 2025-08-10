@@ -10,9 +10,9 @@ export class PayToPerformActionAgainRule extends ActionRule<PayToPerformActionAg
   getPlayerMoves(): MaterialMove[] {
     const moves: MaterialMove[] = []
     if (this.action.product) {
-      moves.push(...this.playerProducts.id(this.action.product).moveItems((it) => ({ type: LocationType.ProductPiles, id: it.id })))
+      moves.push(...this.getProduct(this.action.product).moveItems((it) => ({ type: LocationType.ProductPiles, id: it.id })))
     } else {
-      moves.push(...this.playerProducts.moveItems((it) => ({ type: LocationType.ProductPiles, id: it.id })))
+      moves.push(...this.getProducts().moveItems((it) => ({ type: LocationType.ProductPiles, id: it.id })))
     }
     moves.push(this.customMove(CustomMoveType.Pass))
     return moves
@@ -37,9 +37,5 @@ export class PayToPerformActionAgainRule extends ActionRule<PayToPerformActionAg
       }
     }
     return []
-  }
-
-  get playerProducts() {
-    return this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(this.player)
   }
 }

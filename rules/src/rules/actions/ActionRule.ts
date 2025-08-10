@@ -64,16 +64,24 @@ export abstract class ActionRule<A extends Action> extends PlayerTurnRule {
     return this.material(MaterialType.AllianceCard).id(alliance).getItem()?.location.player === player
   }
 
+  getProducts(player = this.player) {
+    return this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(player)
+  }
+
+  getProduct(product: Product, player = this.player) {
+    return this.getProducts(player).id(product)
+  }
+
   canPay(cost: Cost, player = this.player) {
     switch (cost.type) {
       case CostType.Product:
-        return this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(player).id(cost.product).getQuantity() >= cost.amount
+        return this.getProduct(cost.product, player).getQuantity() >= cost.amount
       case CostType.Products: {
-        const products = this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(player)
+        const products = this.getProducts(player)
         return getEnumValues(Product).every((product) => products.id(product).getQuantity() >= (cost.amount[product] ?? 0))
       }
       case CostType.AnyProducts:
-        return this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(player).getQuantity() >= cost.amount
+        return this.getProducts(player).getQuantity() >= cost.amount
       case CostType.Letters:
         return this.material(MaterialType.Letter).location(LocationType.PlayerLetterDeck).player(this.player).getQuantity() >= cost.amount
     }

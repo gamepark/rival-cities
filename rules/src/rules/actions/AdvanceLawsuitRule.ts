@@ -65,13 +65,13 @@ export class AdvanceLawsuitRule extends ActionRule<AdvanceLawsuit> {
     const moves: MaterialMove[] = []
     switch (cost.type) {
       case CostType.Product:
-        moves.push(this.playerProducts.id(cost.product).moveItem({ type: LocationType.ProductPiles, id: cost.product }, cost.amount))
+        moves.push(this.getProduct(cost.product).moveItem({ type: LocationType.ProductPiles, id: cost.product }, cost.amount))
         break
       case CostType.Products:
         for (const product of getEnumValues(Product)) {
           const amount = cost.amount[product]
           if (amount) {
-            moves.push(this.playerProducts.id(product).moveItem({ type: LocationType.ProductPiles, id: product }, amount))
+            moves.push(this.getProduct(product).moveItem({ type: LocationType.ProductPiles, id: product }, amount))
           }
         }
         break
@@ -80,10 +80,6 @@ export class AdvanceLawsuitRule extends ActionRule<AdvanceLawsuit> {
         break
     }
     return moves
-  }
-
-  get playerProducts() {
-    return this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(this.player)
   }
 
   get playerLetters() {
