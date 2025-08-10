@@ -1,4 +1,4 @@
-import { isMoveItemType, ItemMove, PlayerTurnRule } from '@gamepark/rules-api'
+import { isMoveItemType, isMoveItemTypeAtOnce, isShuffleItemType, ItemMove, PlayerTurnRule } from '@gamepark/rules-api'
 import { specialActionCardPlaces } from '../../constantes'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
@@ -9,23 +9,34 @@ export class ReplaceSpecialActionCardsRule extends PlayerTurnRule {
     const cardsOnBoard = this.material(MaterialType.SpecialActionCard)
       .location(LocationType.CardPiste)
       .sort((item) => item.location.id as number)
-    return [...cardsOnBoard.moveItems({ type: LocationType.SpecialActionCardsDiscard }), this.dealActionCard(specialActionCardPlaces[0])]
+    if (cardsOnBoard.length) {
+      return [cardsOnBoard.moveItemsAtOnce({ type: LocationType.SpecialActionCardsDiscard })]
+    } else {
+      return this.dealActionCard(specialActionCardPlaces[0])
+    }
   }
 
   dealActionCard(space: number) {
     const deck = this.material(MaterialType.SpecialActionCard).location(LocationType.SpecialActionCardsDeck).deck()
     if (deck.length) {
-      return deck.dealOne({ type: LocationType.CardPiste, id: space })
+      return [deck.dealOne({ type: LocationType.CardPiste, id: space })]
+    } else if (this.material(MaterialType.SpecialActionCard).location(LocationType.SpecialActionCardsDiscard).length) {
+      return []
     } else {
-      return this.startRule(RuleId.ReactivateFactories)
+      return [this.startRule(RuleId.ReactivateFactories)]
     }
   }
 
   afterItemMove(move: ItemMove) {
-    if (isMoveItemType(MaterialType.SpecialActionCard)(move) && move.location.type === LocationType.CardPiste) {
-      const nextSpace = specialActionCardPlaces[specialActionCardPlaces.indexOf(move.location.id as number) + 1]
+    if (
+      (isMoveItemTypeAtOnce(MaterialType.SpecialActionCard)(move) && move.location.type === LocationType.SpecialActionCardsDiscard) ||
+      (isMoveItemType(MaterialType.SpecialActionCard)(move) && move.location.type === LocationType.CardPiste) ||
+      isShuffleItemType(MaterialType.SpecialActionCard)(move)
+    ) {
+      const cardsOnPiste = this.material(MaterialType.SpecialActionCard).location(LocationType.CardPiste)
+      const nextSpace = specialActionCardPlaces.find((place) => cardsOnPiste.locationId(place).length === 0)
       if (nextSpace !== undefined) {
-        return [this.dealActionCard(nextSpace)]
+        return this.dealActionCard(nextSpace)
       } else {
         return [this.startRule(RuleId.ReactivateFactories)]
       }
