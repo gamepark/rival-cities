@@ -7,7 +7,7 @@ export enum ActionType {
   Production,
   GainProducts,
   Donation,
-  ProductSwap,
+  SwapProduct,
   GainLetter,
   DrawSpecialActionCard,
   BuildFactory,
@@ -58,9 +58,10 @@ export type Donation = {
   times: number
 } & ActionCommon
 
-export type ProductSwap = {
-  type: ActionType.ProductSwap
-  nbPossibleSwaps: number
+export type SwapProduct = {
+  type: ActionType.SwapProduct
+  times: number
+  swap?: boolean
 } & ActionCommon
 
 export type GainLetter = {
@@ -139,7 +140,7 @@ export type Action =
   | Production
   | GainProducts
   | Donation
-  | ProductSwap
+  | SwapProduct
   | GainLetter
   | DrawSpecialActionCard
   | BuildFactory

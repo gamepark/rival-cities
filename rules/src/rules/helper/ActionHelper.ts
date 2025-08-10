@@ -15,7 +15,7 @@ import { GainStarsRule } from '../actions/GainStarsRule'
 import { PerformMultipleActionsRule } from '../actions/PerformMultipleActionsRule'
 import { PiracyRule } from '../actions/PiracyRule'
 import { ProductionRule } from '../actions/ProductionRule'
-import { ProductSwapRule } from '../actions/ProductSwapRule'
+import { SwapProductRule } from '../actions/SwapProductRule'
 import { PurchaseShipRule } from '../actions/PurchaseShipRule'
 import { ReactivateFactoryRule } from '../actions/ReactivateFactoryRule'
 import { ResolveLawsuitRule } from '../actions/ResolveLawsuitRule'
@@ -42,8 +42,8 @@ export const getActionRule = (game: MaterialGame, action: Action): ActionRule<Ac
       return new GainLetterRule(game, action)
     case ActionType.GainProducts:
       return new GainProductsRule(game, action)
-    case ActionType.ProductSwap:
-      return new ProductSwapRule(game, action)
+    case ActionType.SwapProduct:
+      return new SwapProductRule(game, action)
     case ActionType.PurchaseShip:
       return new PurchaseShipRule(game, action)
     case ActionType.CourtRuling:

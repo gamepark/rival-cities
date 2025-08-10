@@ -3,16 +3,15 @@ import { usePlayerId, usePlayerName, useRules } from '@gamepark/react-game'
 import { RivalCitiesRules } from '@gamepark/rival-cities/RivalCitiesRules'
 import { Trans } from 'react-i18next'
 
-export const ProductSwapHeader = () => {
-  const player = usePlayerId()
+export const SwapProductHeader = () => {
+  const me = usePlayerId()
   const rules = useRules<RivalCitiesRules>()!
   const activePlayer = rules.game.rule?.player
-  const itsMe = player && activePlayer === player
-  const name = usePlayerName(activePlayer)
+  const player = usePlayerName(activePlayer)
 
-  if (itsMe) {
-    return <Trans defaults={`header.swap.you`} />
+  if (activePlayer === me) {
+    return <Trans defaults="header.swap.you" />
   }
 
-  return <Trans defaults={`header.swap.player`} values={{ player: name }} />
+  return <Trans defaults="header.swap.player" values={{ player }} />
 }

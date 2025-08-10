@@ -81,8 +81,8 @@ export class BasicActionCardHelper extends MaterialRulesPart {
           type: ActionType.Multiple,
           actions: [
             {
-              type: ActionType.ProductSwap,
-              nbPossibleSwaps: 2
+              type: ActionType.SwapProduct,
+              times: 2
             },
             {
               type: ActionType.Donation,

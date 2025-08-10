@@ -116,8 +116,8 @@ export class ProductDescription extends TokenDescription {
   checkIfIsExchange(context: ItemContext): boolean {
     const pendingActions: Action[] | undefined = context.rules.remind(Memory.Actions) ?? []
     const currentAction = pendingActions[0] as MultipleActions
-    const isSwapAction = currentAction?.actions?.some((action) => action.type === ActionType.ProductSwap)
-    return context.rules.game.rule?.id === RuleId.ProductSwap || isSwapAction
+    const isSwapAction = currentAction?.actions?.some((action) => action.type === ActionType.SwapProduct)
+    return context.rules.game.rule?.id === RuleId.SwapProduct || isSwapAction
   }
 }
 

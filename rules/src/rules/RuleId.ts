@@ -9,7 +9,7 @@ export enum RuleId {
   Production,
   Gift,
   Donation,
-  ProductSwap,
+  SwapProduct,
   GainLetter,
   DrawSpecialActionCard,
   BuildFactory,

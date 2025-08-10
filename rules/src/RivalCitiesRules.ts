@@ -35,10 +35,10 @@ import { GainStarsRule } from './rules/actions/GainStarsRule'
 import { PerformMultipleActionsRule } from './rules/actions/PerformMultipleActionsRule'
 import { PiracyRule } from './rules/actions/PiracyRule'
 import { ProductionRule } from './rules/actions/ProductionRule'
-import { ProductSwapRule } from './rules/actions/ProductSwapRule'
 import { PurchaseShipRule } from './rules/actions/PurchaseShipRule'
 import { ReactivateFactoryRule } from './rules/actions/ReactivateFactoryRule'
 import { ResolveLawsuitRule } from './rules/actions/ResolveLawsuitRule'
+import { SwapProductRule } from './rules/actions/SwapProductRule'
 import { AdvanceInkJarRule } from './rules/AdvanceInkJarRule'
 import { ChooseActionRule } from './rules/ChooseActionRule'
 import { ChooseFirstProductRule } from './rules/ChooseFirstProductRule'
@@ -79,7 +79,7 @@ export class RivalCitiesRules
     [RuleId.Production]: ProductionRule,
     [RuleId.Gift]: GainProductsRule,
     [RuleId.Donation]: DonationRule,
-    [RuleId.ProductSwap]: ProductSwapRule,
+    [RuleId.SwapProduct]: SwapProductRule,
     [RuleId.GainLetter]: GainLetterRule,
     [RuleId.DrawSpecialActionCard]: DrawSpecialActionCardRule,
     [RuleId.BuildFactory]: BuildFactoryRule,
@@ -200,11 +200,11 @@ export class RivalCitiesRules
     }
     if (move.type === CustomMoveType.SpendLetterToSwapProduct) {
       const letters = this.material(MaterialType.Letter).player(move.data as City)
-      const actions = this.memorize<Action[]>(Memory.Actions, (actions) => [{ type: ActionType.ProductSwap, nbPossibleSwaps: 1 }, ...actions])
+      const actions = this.memorize<Action[]>(Memory.Actions, (actions) => [{ type: ActionType.SwapProduct, times: 1 }, ...actions])
       if (actions.length === 1) {
         this.memorize(Memory.PendingRule, this.game.rule?.id)
       }
-      return [letters.moveItem({ type: LocationType.LetterDeck }), this.startRule(RuleId.ProductSwap)]
+      return [letters.moveItem({ type: LocationType.LetterDeck }), this.startRule(RuleId.SwapProduct)]
     }
 
     return super.onCustomMove(move)

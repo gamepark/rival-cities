@@ -23,10 +23,10 @@ import { PayToPerformActionAgainHeader } from './PayToPerformActionAgainHeader'
 import { PerformMultipleActionsHeader } from './PerformMultipleActionsHeader'
 import { PiracyHeader } from './PiracyHeader'
 import { ProductionHeader } from './ProductionHeader'
-import { ProductSwapHeader } from './ProductSwapHeader'
 import { PurchaseShipHeader } from './PurchaseShipHeader'
 import { ReactivateFactoryHeader } from './ReactivateFactoryHeader'
 import { ResolveLawsuitHeader } from './ResolveLawsuitHeader'
+import { SwapProductHeader } from './SwapProductHeader'
 import { TakeBellHeader } from './TakeBellHeader'
 
 export const Headers: Partial<Record<RuleId, ComponentType>> = {
@@ -40,7 +40,7 @@ export const Headers: Partial<Record<RuleId, ComponentType>> = {
   [RuleId.Production]: ProductionHeader,
   [RuleId.Gift]: GiftHeader,
   [RuleId.Donation]: DonationHeader,
-  [RuleId.ProductSwap]: ProductSwapHeader,
+  [RuleId.SwapProduct]: SwapProductHeader,
   [RuleId.GainLetter]: GainLetterHeader,
   [RuleId.DrawSpecialActionCard]: DrawSpecialActionCardHeader,
   [RuleId.BuildFactory]: BuildFactoryHeader,

@@ -11,7 +11,7 @@ export const ActionRuleIds: Record<ActionType, RuleId> = {
   [ActionType.FormAlliance]: RuleId.FormAlliance,
   [ActionType.GainLetter]: RuleId.GainLetter,
   [ActionType.GainProducts]: RuleId.Gift,
-  [ActionType.ProductSwap]: RuleId.ProductSwap,
+  [ActionType.SwapProduct]: RuleId.SwapProduct,
   [ActionType.PurchaseShip]: RuleId.PurchaseShip,
   [ActionType.CourtRuling]: RuleId.CourtRuling,
   [ActionType.ReactivateFactory]: RuleId.ReactivateFactory,
