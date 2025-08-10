@@ -5,8 +5,6 @@ import { Lawsuit, lawsuitData } from '../../material/Lawsuit'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { Ship, shipData, ShipEffectType } from '../../material/Ship'
-import { Memory } from '../Memory'
-import { RuleId } from '../RuleId'
 import { ActionRule } from './ActionRule'
 
 export class ResolveLawsuitRule extends ActionRule<ResolveLawsuitAction> {
@@ -47,11 +45,11 @@ export class ResolveLawsuitRule extends ActionRule<ResolveLawsuitAction> {
     return moves
   }
 
-  afterItemMove(move: ItemMove): MaterialMove[] {
+  afterItemMove(move: ItemMove) {
     if (isMoveItemType(MaterialType.LawsuitCard)(move)) {
       if (move.location.type === LocationType.PlayerLawsuitCards) {
-        if (this.remind(Memory.PendingRule)) {
-          this.memorize(Memory.PendingRule, RuleId.OffSeasonChangeSpecialCards)
+        if (this.player !== move.location.player) {
+          this.action.isRivalTurn = true
         }
         const lawsuit = this.material(MaterialType.LawsuitCard).getItem<Lawsuit>(move.itemIndex).id
         const actions = structuredClone(lawsuitData[lawsuit].winBonus)
