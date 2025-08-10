@@ -5,6 +5,5 @@ export enum Memory {
   IsBuildInProgress,
   Actions,
   AlliancesUpkeep,
-  IsUseLetter,
-  ShipsIdsAlreadyProcessed
+  IsUseLetter
 }
