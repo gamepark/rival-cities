@@ -202,7 +202,8 @@ export class RivalCitiesRules
       if (actions.length === 1) {
         this.memorize(Memory.PendingRule, this.game.rule?.id)
       }
-      return [letters.moveItem({ type: LocationType.LetterDeck }), this.startRule(RuleId.SwapProduct)]
+      this.game.rule!.id = RuleId.SwapProduct
+      return [letters.moveItem({ type: LocationType.LetterDeck })]
     }
 
     return super.onCustomMove(move)
