@@ -3,13 +3,13 @@ import shuffle from 'lodash/shuffle'
 import { City } from './City'
 import { basicActionCardPlaces, specialActionCardPlaces } from './constantes'
 import { allianceCards } from './material/Alliance'
-import { basicActionCards } from './material/BasicActionCard'
+import { BasicAction } from './material/BasicAction'
 import { Lawsuit } from './material/Lawsuit'
 import { LocationType } from './material/LocationType'
 import { MaterialType } from './material/MaterialType'
 import { Product, products } from './material/Product'
 import { Ship } from './material/Ship'
-import { specialActionCards } from './material/SpecialActionCard'
+import { SpecialAction } from './material/SpecialAction'
 import { RivalCitiesOptions } from './RivalCitiesOptions'
 import { RivalCitiesRules } from './RivalCitiesRules'
 import { RuleId } from './rules/RuleId'
@@ -28,10 +28,10 @@ export class RivalCitiesSetup extends MaterialGameSetup<City, MaterialType, Loca
     this.material(MaterialType.Factory).createItem({ quantity: 12, location: { type: LocationType.FactoryDeck } })
     this.material(MaterialType.StarToken).createItem({ quantity: 12, location: { type: LocationType.StarTokenDeck } })
 
-    const basicCards = options.firstPlay ? basicActionCards : shuffle(basicActionCards)
-    basicActionCardPlaces.forEach((id, index) => {
-      this.material(MaterialType.BasicActionCard).createItem({ id: basicCards[index], location: { type: LocationType.CardPiste, id } })
-    })
+    const cardsPlace = options.firstPlay ? basicActionCardPlaces : shuffle(basicActionCardPlaces)
+    this.material(MaterialType.BasicActionCard).createItems(
+      getEnumValues(BasicAction).map((basicAction, index) => ({ id: basicAction, location: { type: LocationType.CardPiste, id: cardsPlace[index] } }))
+    )
 
     this.setupSpecialActionCards()
     this.setupShipCards()
@@ -42,7 +42,7 @@ export class RivalCitiesSetup extends MaterialGameSetup<City, MaterialType, Loca
   }
 
   setupSpecialActionCards() {
-    const specialActionCardsItems = shuffle(specialActionCards).map((it) => ({ id: it, location: { type: LocationType.SpecialActionCardsDeck } }))
+    const specialActionCardsItems = shuffle(getEnumValues(SpecialAction)).map((it) => ({ id: it, location: { type: LocationType.SpecialActionCardsDeck } }))
     this.material(MaterialType.SpecialActionCard).createItems(specialActionCardsItems)
     specialActionCardPlaces.forEach((id) => {
       this.material(MaterialType.SpecialActionCard).location(LocationType.SpecialActionCardsDeck).moveItem({

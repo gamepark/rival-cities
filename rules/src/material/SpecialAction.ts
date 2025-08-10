@@ -1,6 +1,4 @@
-import { getEnumValues } from '@gamepark/rules-api'
-
-export enum SpecialActionCard {
+export enum SpecialAction {
   SpecialAction1 = 1,
   SpecialAction2,
   SpecialAction3,
@@ -26,5 +24,3 @@ export enum SpecialActionCard {
   SpecialAction23,
   SpecialAction24
 }
-
-export const specialActionCards = getEnumValues(SpecialActionCard)

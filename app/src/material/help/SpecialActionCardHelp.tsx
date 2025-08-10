@@ -3,7 +3,7 @@ import { MaterialHelpProps, useRules } from '@gamepark/react-game'
 import { ActionType } from '@gamepark/rival-cities/material/Action'
 import { SpecialActionCardHelper } from '@gamepark/rival-cities/material/helper/SpecialActionCardHelper'
 import { Ship } from '@gamepark/rival-cities/material/Ship'
-import { SpecialActionCard } from '@gamepark/rival-cities/material/SpecialActionCard'
+import { SpecialAction } from '@gamepark/rival-cities/material/SpecialAction'
 import { RivalCitiesRules } from '@gamepark/rival-cities/RivalCitiesRules'
 import { FC } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
@@ -15,7 +15,7 @@ export const SpecialActionCardHelp: FC<MaterialHelpProps> = ({ item }) => {
 
   if (!rules) return <></>
 
-  const actions = new SpecialActionCardHelper(rules.game).getCardMultipleActions(item.id as SpecialActionCard)
+  const actions = new SpecialActionCardHelper(rules.game).getCardMultipleActions(item.id as SpecialAction)
 
   // TODO fix and factorize actions help
   return (

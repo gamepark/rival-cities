@@ -1,7 +1,7 @@
 import { faHand } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { CardDescription, ItemContext, ItemMenuButton, pointerCursorCss } from '@gamepark/react-game'
-import { BasicActionCard } from '@gamepark/rival-cities/material/BasicActionCard'
+import { BasicAction } from '@gamepark/rival-cities/material/BasicAction'
 import { LocationType } from '@gamepark/rival-cities/material/LocationType'
 import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
 import { CustomMoveType } from '@gamepark/rival-cities/rules/CustomMoveType'
@@ -31,21 +31,21 @@ export class BasicActionCardDescription extends CardDescription {
   menuAlwaysVisible = true
 
   images = {
-    [BasicActionCard.BasicAction1]: BasicAction1,
-    [BasicActionCard.BasicAction2]: BasicAction2,
-    [BasicActionCard.BasicAction3]: BasicAction3,
-    [BasicActionCard.BasicAction4]: BasicAction4,
-    [BasicActionCard.BasicAction5]: BasicAction5,
-    [BasicActionCard.BasicAction6]: BasicAction6,
-    [BasicActionCard.BasicAction7]: BasicAction7,
-    [BasicActionCard.BasicAction8]: BasicAction8,
-    [BasicActionCard.BasicAction9]: BasicAction9,
-    [BasicActionCard.BasicAction10]: BasicAction10,
-    [BasicActionCard.BasicAction11]: BasicAction11,
-    [BasicActionCard.BasicAction12]: BasicAction12,
-    [BasicActionCard.BasicAction13]: BasicAction13,
-    [BasicActionCard.BasicAction14]: BasicAction14,
-    [BasicActionCard.BasicAction15]: BasicAction15
+    [BasicAction.BasicAction1]: BasicAction1,
+    [BasicAction.BasicAction2]: BasicAction2,
+    [BasicAction.BasicAction3]: BasicAction3,
+    [BasicAction.BasicAction4]: BasicAction4,
+    [BasicAction.BasicAction5]: BasicAction5,
+    [BasicAction.BasicAction6]: BasicAction6,
+    [BasicAction.BasicAction7]: BasicAction7,
+    [BasicAction.BasicAction8]: BasicAction8,
+    [BasicAction.BasicAction9]: BasicAction9,
+    [BasicAction.BasicAction10]: BasicAction10,
+    [BasicAction.BasicAction11]: BasicAction11,
+    [BasicAction.BasicAction12]: BasicAction12,
+    [BasicAction.BasicAction13]: BasicAction13,
+    [BasicAction.BasicAction14]: BasicAction14,
+    [BasicAction.BasicAction15]: BasicAction15
   }
 
   getItemMenu(item: MaterialItem, context: ItemContext, legalMoves: MaterialMove[]) {

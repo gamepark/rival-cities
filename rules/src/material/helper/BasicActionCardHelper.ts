@@ -1,7 +1,7 @@
 import { MaterialGame, MaterialRulesPart } from '@gamepark/rules-api'
 import { Action, ActionType } from '../Action'
 import { Alliance } from '../Alliance'
-import { BasicActionCard } from '../BasicActionCard'
+import { BasicAction } from '../BasicAction'
 import { LocationType } from '../LocationType'
 import { MaterialType } from '../MaterialType'
 import { Product } from '../Product'
@@ -14,9 +14,9 @@ export class BasicActionCardHelper extends MaterialRulesPart {
     super(game)
   }
 
-  getCardAction(card: BasicActionCard): Action {
+  getCardAction(card: BasicAction): Action {
     switch (card) {
-      case BasicActionCard.BasicAction1:
+      case BasicAction.BasicAction1:
         return {
           type: this.computeActionIfPlayerHasGdanskAlliance(),
           actions: [
@@ -32,18 +32,18 @@ export class BasicActionCardHelper extends MaterialRulesPart {
             }
           ]
         }
-      case BasicActionCard.BasicAction2:
+      case BasicAction.BasicAction2:
         return { type: ActionType.DrawSpecialActionCard }
-      case BasicActionCard.BasicAction3:
+      case BasicAction.BasicAction3:
         return {
           type: ActionType.FormAlliance
         }
-      case BasicActionCard.BasicAction4:
+      case BasicAction.BasicAction4:
         return {
           type: ActionType.BuildFactory,
           cost: 2
         }
-      case BasicActionCard.BasicAction5:
+      case BasicAction.BasicAction5:
         return {
           type: this.computeActionIfPlayerHasGdanskAlliance(),
           actions: [
@@ -58,13 +58,13 @@ export class BasicActionCardHelper extends MaterialRulesPart {
             }
           ]
         }
-      case BasicActionCard.BasicAction6:
+      case BasicAction.BasicAction6:
         return {
           type: ActionType.Production,
           product: Product.Cloth,
           quantity: 1
         }
-      case BasicActionCard.BasicAction7:
+      case BasicAction.BasicAction7:
         return {
           type: this.computeActionIfPlayerHasGdanskAlliance(),
           actions: [
@@ -76,7 +76,7 @@ export class BasicActionCardHelper extends MaterialRulesPart {
             }
           ]
         }
-      case BasicActionCard.BasicAction8:
+      case BasicAction.BasicAction8:
         return {
           type: ActionType.Multiple,
           actions: [
@@ -92,7 +92,7 @@ export class BasicActionCardHelper extends MaterialRulesPart {
             }
           ]
         }
-      case BasicActionCard.BasicAction9:
+      case BasicAction.BasicAction9:
         return {
           type: this.computeActionIfPlayerHasGdanskAlliance(),
           actions: [
@@ -106,7 +106,7 @@ export class BasicActionCardHelper extends MaterialRulesPart {
             }
           ]
         }
-      case BasicActionCard.BasicAction10:
+      case BasicAction.BasicAction10:
         return {
           type: this.computeActionIfPlayerHasGdanskAlliance(),
           actions: [
@@ -118,13 +118,13 @@ export class BasicActionCardHelper extends MaterialRulesPart {
             }
           ]
         }
-      case BasicActionCard.BasicAction11:
+      case BasicAction.BasicAction11:
         return {
           type: ActionType.Production,
           product: Product.Leather,
           quantity: 1
         }
-      case BasicActionCard.BasicAction12:
+      case BasicAction.BasicAction12:
         return {
           type: this.computeActionIfPlayerHasGdanskAlliance(),
           actions: [
@@ -138,7 +138,7 @@ export class BasicActionCardHelper extends MaterialRulesPart {
             }
           ]
         }
-      case BasicActionCard.BasicAction13:
+      case BasicAction.BasicAction13:
         return {
           type: this.computeActionIfPlayerHasGdanskAlliance(),
           actions: [
@@ -150,7 +150,7 @@ export class BasicActionCardHelper extends MaterialRulesPart {
             }
           ]
         }
-      case BasicActionCard.BasicAction14:
+      case BasicAction.BasicAction14:
         return {
           type: this.computeActionIfPlayerHasGdanskAlliance(),
           actions: [
@@ -164,7 +164,7 @@ export class BasicActionCardHelper extends MaterialRulesPart {
             }
           ]
         }
-      case BasicActionCard.BasicAction15:
+      case BasicAction.BasicAction15:
         return {
           type: ActionType.AdvanceLawsuit
         }

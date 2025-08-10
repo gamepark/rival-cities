@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { CardDescription, ItemContext, ItemMenuButton, pointerCursorCss } from '@gamepark/react-game'
 import { LocationType } from '@gamepark/rival-cities/material/LocationType'
 import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
-import { SpecialActionCard } from '@gamepark/rival-cities/material/SpecialActionCard'
+import { SpecialAction } from '@gamepark/rival-cities/material/SpecialAction'
 import { CustomMoveType } from '@gamepark/rival-cities/rules/CustomMoveType'
 import { isCustomMoveType, isMoveItemType, MaterialItem, MaterialMove } from '@gamepark/rules-api'
 import { Trans } from 'react-i18next'
@@ -43,30 +43,30 @@ export class SpecialActionCardDescription extends CardDescription {
   menuAlwaysVisible = true
 
   images = {
-    [SpecialActionCard.SpecialAction1]: SpecialAction1,
-    [SpecialActionCard.SpecialAction2]: SpecialAction2,
-    [SpecialActionCard.SpecialAction3]: SpecialAction3,
-    [SpecialActionCard.SpecialAction4]: SpecialAction4,
-    [SpecialActionCard.SpecialAction5]: SpecialAction5,
-    [SpecialActionCard.SpecialAction6]: SpecialAction6,
-    [SpecialActionCard.SpecialAction7]: SpecialAction7,
-    [SpecialActionCard.SpecialAction8]: SpecialAction8,
-    [SpecialActionCard.SpecialAction9]: SpecialAction9,
-    [SpecialActionCard.SpecialAction10]: SpecialAction10,
-    [SpecialActionCard.SpecialAction11]: SpecialAction11,
-    [SpecialActionCard.SpecialAction12]: SpecialAction12,
-    [SpecialActionCard.SpecialAction13]: SpecialAction13,
-    [SpecialActionCard.SpecialAction14]: SpecialAction14,
-    [SpecialActionCard.SpecialAction15]: SpecialAction15,
-    [SpecialActionCard.SpecialAction16]: SpecialAction16,
-    [SpecialActionCard.SpecialAction17]: SpecialAction17,
-    [SpecialActionCard.SpecialAction18]: SpecialAction18,
-    [SpecialActionCard.SpecialAction19]: SpecialAction19,
-    [SpecialActionCard.SpecialAction20]: SpecialAction20,
-    [SpecialActionCard.SpecialAction21]: SpecialAction21,
-    [SpecialActionCard.SpecialAction22]: SpecialAction22,
-    [SpecialActionCard.SpecialAction23]: SpecialAction23,
-    [SpecialActionCard.SpecialAction24]: SpecialAction24
+    [SpecialAction.SpecialAction1]: SpecialAction1,
+    [SpecialAction.SpecialAction2]: SpecialAction2,
+    [SpecialAction.SpecialAction3]: SpecialAction3,
+    [SpecialAction.SpecialAction4]: SpecialAction4,
+    [SpecialAction.SpecialAction5]: SpecialAction5,
+    [SpecialAction.SpecialAction6]: SpecialAction6,
+    [SpecialAction.SpecialAction7]: SpecialAction7,
+    [SpecialAction.SpecialAction8]: SpecialAction8,
+    [SpecialAction.SpecialAction9]: SpecialAction9,
+    [SpecialAction.SpecialAction10]: SpecialAction10,
+    [SpecialAction.SpecialAction11]: SpecialAction11,
+    [SpecialAction.SpecialAction12]: SpecialAction12,
+    [SpecialAction.SpecialAction13]: SpecialAction13,
+    [SpecialAction.SpecialAction14]: SpecialAction14,
+    [SpecialAction.SpecialAction15]: SpecialAction15,
+    [SpecialAction.SpecialAction16]: SpecialAction16,
+    [SpecialAction.SpecialAction17]: SpecialAction17,
+    [SpecialAction.SpecialAction18]: SpecialAction18,
+    [SpecialAction.SpecialAction19]: SpecialAction19,
+    [SpecialAction.SpecialAction20]: SpecialAction20,
+    [SpecialAction.SpecialAction21]: SpecialAction21,
+    [SpecialAction.SpecialAction22]: SpecialAction22,
+    [SpecialAction.SpecialAction23]: SpecialAction23,
+    [SpecialAction.SpecialAction24]: SpecialAction24
   }
 
   canShortClick(move: MaterialMove, context: ItemContext): boolean {

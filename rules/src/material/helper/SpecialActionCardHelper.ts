@@ -1,7 +1,7 @@
 import { MaterialGame, MaterialRulesPart } from '@gamepark/rules-api'
 import { Action, ActionType } from '../Action'
 import { Product } from '../Product'
-import { SpecialActionCard } from '../SpecialActionCard'
+import { SpecialAction } from '../SpecialAction'
 
 export class SpecialActionCardHelper extends MaterialRulesPart {
   constructor(
@@ -11,18 +11,18 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
     super(game)
   }
 
-  getCardActions(card: SpecialActionCard): Action[] {
+  getCardActions(card: SpecialAction): Action[] {
     const actions = this.getCardMultipleActions(card)
-    if (actions.length === 1 || card === SpecialActionCard.SpecialAction6 || card === SpecialActionCard.SpecialAction19) {
+    if (actions.length === 1 || card === SpecialAction.SpecialAction6 || card === SpecialAction.SpecialAction19) {
       return actions
     } else {
       return [{ type: ActionType.Multiple, actions: actions }]
     }
   }
 
-  getCardMultipleActions(card: SpecialActionCard): Action[] {
+  getCardMultipleActions(card: SpecialAction): Action[] {
     switch (card) {
-      case SpecialActionCard.SpecialAction1:
+      case SpecialAction.SpecialAction1:
         return [
           {
             type: ActionType.AdvanceLawsuit
@@ -32,7 +32,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
             nbLettersToTake: 2
           }
         ]
-      case SpecialActionCard.SpecialAction2:
+      case SpecialAction.SpecialAction2:
         return [
           {
             type: ActionType.AdvanceLawsuit
@@ -43,7 +43,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
             isGift: true
           }
         ]
-      case SpecialActionCard.SpecialAction3:
+      case SpecialAction.SpecialAction3:
         return [
           {
             type: ActionType.AdvanceLawsuit
@@ -57,7 +57,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
             isGift: true
           }
         ]
-      case SpecialActionCard.SpecialAction4:
+      case SpecialAction.SpecialAction4:
         return [
           {
             type: ActionType.AdvanceLawsuit
@@ -65,14 +65,14 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
           { type: ActionType.DrawSpecialActionCard },
           { type: ActionType.DrawSpecialActionCard }
         ]
-      case SpecialActionCard.SpecialAction5:
+      case SpecialAction.SpecialAction5:
         return [
           {
             type: ActionType.Piracy,
             nbProductsToSteal: 1
           }
         ]
-      case SpecialActionCard.SpecialAction6:
+      case SpecialAction.SpecialAction6:
         return [
           {
             type: ActionType.EarnPrestige,
@@ -83,7 +83,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
             nbProductsToSteal: 3
           }
         ]
-      case SpecialActionCard.SpecialAction7:
+      case SpecialAction.SpecialAction7:
         return [
           {
             type: ActionType.AdvanceLawsuit
@@ -98,7 +98,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
             type: ActionType.FormAlliance
           }
         ]
-      case SpecialActionCard.SpecialAction8:
+      case SpecialAction.SpecialAction8:
         return [
           {
             type: ActionType.AdvanceLawsuit
@@ -111,7 +111,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
             nbLettersToTake: 1
           }
         ]
-      case SpecialActionCard.SpecialAction9:
+      case SpecialAction.SpecialAction9:
         return [
           {
             type: ActionType.AdvanceLawsuit
@@ -126,7 +126,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
             isGift: true
           }
         ]
-      case SpecialActionCard.SpecialAction10:
+      case SpecialAction.SpecialAction10:
         return [
           {
             type: ActionType.AdvanceLawsuit
@@ -145,14 +145,14 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
             times: 1
           }
         ]
-      case SpecialActionCard.SpecialAction11:
+      case SpecialAction.SpecialAction11:
         return [
           {
             type: ActionType.Production,
             quantity: 1
           }
         ]
-      case SpecialActionCard.SpecialAction12:
+      case SpecialAction.SpecialAction12:
         return [
           {
             type: ActionType.AdvanceLawsuit
@@ -167,7 +167,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
             isGift: true
           }
         ]
-      case SpecialActionCard.SpecialAction13:
+      case SpecialAction.SpecialAction13:
         return [
           {
             type: ActionType.AdvanceLawsuit
@@ -186,7 +186,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
             times: 1
           }
         ]
-      case SpecialActionCard.SpecialAction14:
+      case SpecialAction.SpecialAction14:
         return [
           {
             type: ActionType.AdvanceLawsuit
@@ -195,7 +195,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
             type: ActionType.BuildFactory
           }
         ]
-      case SpecialActionCard.SpecialAction15:
+      case SpecialAction.SpecialAction15:
         return [
           {
             type: ActionType.AdvanceLawsuit
@@ -204,7 +204,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
             type: ActionType.BuildFactory
           }
         ]
-      case SpecialActionCard.SpecialAction16:
+      case SpecialAction.SpecialAction16:
         return [
           {
             type: ActionType.Production,
@@ -212,7 +212,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
             quantity: 1
           }
         ]
-      case SpecialActionCard.SpecialAction17:
+      case SpecialAction.SpecialAction17:
         return [
           {
             type: ActionType.AdvanceLawsuit
@@ -227,7 +227,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
             isGift: true
           }
         ]
-      case SpecialActionCard.SpecialAction18:
+      case SpecialAction.SpecialAction18:
         return [
           {
             type: ActionType.AdvanceLawsuit
@@ -240,7 +240,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
             nbLettersToTake: 1
           }
         ]
-      case SpecialActionCard.SpecialAction19:
+      case SpecialAction.SpecialAction19:
         return [
           {
             type: ActionType.ReactivateFactory,
@@ -250,7 +250,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
             type: ActionType.AdvanceLawsuit
           }
         ]
-      case SpecialActionCard.SpecialAction20:
+      case SpecialAction.SpecialAction20:
         return [
           {
             type: ActionType.AdvanceLawsuit
@@ -265,7 +265,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
             type: ActionType.FormAlliance
           }
         ]
-      case SpecialActionCard.SpecialAction21:
+      case SpecialAction.SpecialAction21:
         return [
           {
             type: ActionType.AdvanceLawsuit
@@ -275,7 +275,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
             nbLettersToTake: 2
           }
         ]
-      case SpecialActionCard.SpecialAction22:
+      case SpecialAction.SpecialAction22:
         return [
           {
             type: ActionType.AdvanceLawsuit
@@ -284,7 +284,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
             type: ActionType.CourtRuling
           }
         ]
-      case SpecialActionCard.SpecialAction23:
+      case SpecialAction.SpecialAction23:
         return [
           {
             type: ActionType.AdvanceLawsuit
@@ -302,7 +302,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
             times: 2
           }
         ]
-      case SpecialActionCard.SpecialAction24:
+      case SpecialAction.SpecialAction24:
         return [
           {
             type: ActionType.GainProducts,

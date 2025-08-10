@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { useRules } from '@gamepark/react-game'
 import { ActionType } from '@gamepark/rival-cities/material/Action'
-import { BasicActionCard } from '@gamepark/rival-cities/material/BasicActionCard'
+import { BasicAction } from '@gamepark/rival-cities/material/BasicAction'
 import { BasicActionCardHelper } from '@gamepark/rival-cities/material/helper/BasicActionCardHelper'
 import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
 import { RivalCitiesRules } from '@gamepark/rival-cities/RivalCitiesRules'
@@ -24,7 +24,7 @@ export const ChooseSplitActionHelp = () => {
 
   if (!basicCardInInkjarLocation) return <></>
 
-  const action = new BasicActionCardHelper(rules.game).getCardAction(basicCardInInkjarLocation as BasicActionCard)
+  const action = new BasicActionCardHelper(rules.game).getCardAction(basicCardInInkjarLocation as BasicAction)
 
   const isMultiChoiceCard = action.type === ActionType.Split
 
