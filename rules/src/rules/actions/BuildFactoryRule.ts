@@ -21,7 +21,7 @@ export class BuildFactoryRule extends ActionRule<BuildFactory> {
     }
     const factoriesSupply = this.factoriesSupply
     if (factoriesSupply.length && products.getQuantity() >= (this.action.cost ?? 0)) {
-      factoriesSupply.moveItem({ type: LocationType.PlayerFactories, player: this.player, rotation: false })
+      moves.push(factoriesSupply.moveItem({ type: LocationType.PlayerFactories, player: this.player, rotation: false }))
     }
     if (!this.action.building) {
       moves.push(this.customMove(CustomMoveType.Pass))
