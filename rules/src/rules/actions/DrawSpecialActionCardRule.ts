@@ -1,6 +1,7 @@
 import { isMoveItemType, ItemMove } from '@gamepark/rules-api'
 import { ActionType, DrawSpecialActionCard } from '../../material/Action'
 import { Alliance } from '../../material/Alliance'
+import { cost } from '../../material/Cost'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { Product } from '../../material/Product'
@@ -25,9 +26,8 @@ export class DrawSpecialActionCardRule extends ActionRule<DrawSpecialActionCard>
       if (this.hasAlliance(Alliance.Kjjobenhavn) && !this.action.isKjjobenhavnBonus && this.hasBeer) {
         this.addActions({
           type: ActionType.PayToPerformActionAgain,
-          product: Product.Beer,
-          price: 1,
-          actionToPerformAgain: {
+          cost: cost(1, Product.Beer),
+          extraAction: {
             type: ActionType.DrawSpecialActionCard,
             isKjjobenhavnBonus: true
           }

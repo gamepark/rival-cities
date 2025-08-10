@@ -1,40 +1,35 @@
 import { isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
 import { PayToPerformActionAgainAction } from '../material/Action'
+import { CostType } from '../material/Cost'
 import { LocationType } from '../material/LocationType'
 import { MaterialType } from '../material/MaterialType'
 import { ActionRule } from './actions/ActionRule'
 import { CustomMoveType } from './CustomMoveType'
-import { MemoryType } from './MemoryType'
 
 export class PayToPerformActionAgainRule extends ActionRule<PayToPerformActionAgainAction> {
+  onRuleStart() {
+    const moves = this.getPlayerMoves()
+    return moves.length === 1 ? moves : []
+  }
+
   getPlayerMoves(): MaterialMove[] {
-    const moves: MaterialMove[] = []
-    if (this.action.product) {
-      moves.push(...this.getProduct(this.action.product).moveItems((it) => ({ type: LocationType.ProductPiles, id: it.id })))
+    const moves: MaterialMove[] = [this.customMove(CustomMoveType.Pass)]
+    const cost = this.action.cost
+    if (cost.type === CostType.Product) {
+      const product = this.getProduct(cost.product)
+      if (product.getQuantity() >= cost.amount) {
+        moves.push(product.moveItem({ type: LocationType.ProductPiles, id: cost.product }, cost.amount))
+      }
     } else {
-      moves.push(...this.getProducts().moveItems((it) => ({ type: LocationType.ProductPiles, id: it.id })))
+      moves.push(...this.getProducts().moveItems((item) => ({ type: LocationType.ProductPiles, id: item.id })))
     }
-    moves.push(this.customMove(CustomMoveType.Pass))
     return moves
   }
 
-  beforeItemMove(move: ItemMove): MaterialMove[] {
+  afterItemMove(move: ItemMove) {
     if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.ProductPiles) {
-      this.memorize<number>(MemoryType.Count, (old) => old + 1)
-    }
-    return []
-  }
-
-  afterItemMove(move: ItemMove): MaterialMove[] {
-    if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.ProductPiles) {
-      if (this.remind(MemoryType.Count) === this.action.price) {
-        this.memorize(MemoryType.Count, 0)
-        if (this.action.actionToPerformAgain) {
-          const actionToPerformAgain = this.action.actionToPerformAgain
-          this.addActions(actionToPerformAgain)
-          return [this.endAction()]
-        }
-      }
+      this.addActions(this.action.extraAction)
+      return [this.endAction()]
     }
     return []
   }

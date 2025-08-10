@@ -2,6 +2,7 @@ import { isMoveItemType, ItemMove } from '@gamepark/rules-api'
 import { City, getRival } from '../../City'
 import { ActionType, EarnPrestige, PayToPerformActionAgainAction } from '../../material/Action'
 import { Alliance } from '../../material/Alliance'
+import { cost } from '../../material/Cost'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { Product } from '../../material/Product'
@@ -28,10 +29,9 @@ export class EarnPrestigeRule extends ActionRule<EarnPrestige> {
       if (!this.action.isBruxellesBonus && this.hasAlliance(Alliance.Bruxelles, this.playerEarningPrestige) && this.hasFurniture) {
         performAgainActions.push({
           type: ActionType.PayToPerformActionAgain,
-          product: Product.Furniture,
-          price: 1,
+          cost: cost(1, Product.Furniture),
           isRivalTurn: this.action.rival ?? this.action.isRivalTurn,
-          actionToPerformAgain: {
+          extraAction: {
             type: ActionType.EarnPrestige,
             isBruxellesBonus: true,
             isRivalTurn: this.action.rival ?? this.action.isRivalTurn
@@ -41,10 +41,9 @@ export class EarnPrestigeRule extends ActionRule<EarnPrestige> {
       if (!this.action.isShip16Bonus && this.hasShip16 && this.beers >= 2) {
         performAgainActions.push({
           type: ActionType.PayToPerformActionAgain,
-          product: Product.Beer,
-          price: 2,
+          cost: cost(2, Product.Beer),
           isRivalTurn: this.action.rival ?? this.action.isRivalTurn,
-          actionToPerformAgain: {
+          extraAction: {
             type: ActionType.EarnPrestige,
             isShip16Bonus: true,
             isRivalTurn: this.action.rival ?? this.action.isRivalTurn

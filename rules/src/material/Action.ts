@@ -1,3 +1,4 @@
+import { AnyProductsCost, ProductCost } from './Cost'
 import { Product } from './Product'
 
 export enum ActionType {
@@ -123,9 +124,8 @@ export type ChooseSpecialActionCardAction = {
 
 export type PayToPerformActionAgainAction = {
   type: ActionType.PayToPerformActionAgain
-  product?: Product
-  price: number
-  actionToPerformAgain: Action
+  cost: ProductCost | AnyProductsCost
+  extraAction: Action
 } & ActionCommon
 
 export type GainStars = {

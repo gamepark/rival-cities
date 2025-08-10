@@ -53,8 +53,8 @@ export class AdvanceLawsuitRule extends ActionRule<AdvanceLawsuit> {
     if (this.hasAlliance(Alliance.LeHavre) && !this.action.isLeHavreBonus && count === 0) {
       extraActions.push({
         type: ActionType.PayToPerformActionAgain,
-        price: 1,
-        actionToPerformAgain: { type: ActionType.AdvanceLawsuit, isLeHavreBonus: true }
+        cost: { type: CostType.AnyProducts, amount: 1 },
+        extraAction: { type: ActionType.AdvanceLawsuit, isLeHavreBonus: true }
       })
     }
     this.addActions(...extraActions)
