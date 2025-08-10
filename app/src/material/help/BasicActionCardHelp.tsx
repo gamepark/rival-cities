@@ -1,21 +1,14 @@
 /** @jsxImportSource @emotion/react */
-import { MaterialHelpProps, useRules } from '@gamepark/react-game'
+import { MaterialHelpProps } from '@gamepark/react-game'
 import { ActionType } from '@gamepark/rival-cities/material/Action'
 import { Alliance } from '@gamepark/rival-cities/material/Alliance'
-import { BasicAction } from '@gamepark/rival-cities/material/BasicAction'
-import { BasicActionCardHelper } from '@gamepark/rival-cities/material/helper/BasicActionCardHelper'
-import { RivalCitiesRules } from '@gamepark/rival-cities/RivalCitiesRules'
-import { FC } from 'react'
+import { BasicAction, basicCardAction } from '@gamepark/rival-cities/material/BasicAction'
 import { Trans, useTranslation } from 'react-i18next'
 import { allianceBtn, components, note } from './utils'
 
-export const BasicActionCardHelp: FC<MaterialHelpProps> = ({ item }) => {
+export function BasicActionCardHelp({ item }: MaterialHelpProps) {
   const { t } = useTranslation()
-  const rules = useRules<RivalCitiesRules>()
-  if (!rules) return <></>
-  const action = new BasicActionCardHelper(rules.game).getCardAction(item.id as BasicAction)
-  const isMultiChoiceCard = action.type === ActionType.Split
-
+  const action = basicCardAction[item.id as BasicAction]
   return (
     <>
       <h2>{t(`help.basic.action.card`)}</h2>
@@ -41,7 +34,7 @@ export const BasicActionCardHelp: FC<MaterialHelpProps> = ({ item }) => {
               <p>
                 <Trans defaults={`help.action.descr.${a.type}`} values={a} components={components} />
               </p>
-              {isMultiChoiceCard && index < action.actions.length - 1 && (
+              {action.type === ActionType.Split && index < action.actions.length - 1 && (
                 <p>
                   <b>{t(`help.action.descr.or`)}</b>
                 </p>
@@ -54,7 +47,7 @@ export const BasicActionCardHelp: FC<MaterialHelpProps> = ({ item }) => {
           <Trans defaults={`help.action.descr.${action.type}`} values={action} components={components} />
         </p>
       )}
-      {isMultiChoiceCard && (
+      {action.type === ActionType.Split && (
         <p css={note}>
           <Trans
             defaults={`help.basic.action.card.note`}

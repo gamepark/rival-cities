@@ -1,13 +1,11 @@
 import { CustomMove, isCustomMoveType, isMoveItemType, ItemMove, MaterialMove, PlayerTurnRule } from '@gamepark/rules-api'
 import { specialActionCardPlaces } from '../constantes'
 import { Action, ActionType } from '../material/Action'
-import { BasicAction } from '../material/BasicAction'
-import { BasicActionCardHelper } from '../material/helper/BasicActionCardHelper'
-import { SpecialActionCardHelper } from '../material/helper/SpecialActionCardHelper'
+import { BasicAction, basicCardAction } from '../material/BasicAction'
 import { LocationType } from '../material/LocationType'
 import { MaterialType } from '../material/MaterialType'
 import { Ship } from '../material/Ship'
-import { SpecialAction } from '../material/SpecialAction'
+import { SpecialAction, specialCardActions } from '../material/SpecialAction'
 import { CustomMoveType } from './CustomMoveType'
 import { ActionRuleIds } from './helper/ActionRuleIds'
 import { Memory } from './Memory'
@@ -71,7 +69,7 @@ export class ChooseActionRule extends PlayerTurnRule {
     if (isMoveItemType(MaterialType.SpecialActionCard)(move) && move.location.type === LocationType.SpecialActionCardsDiscard) {
       const actions: Action[] = []
       const cardId = this.material(MaterialType.SpecialActionCard).getItem<SpecialAction>(move.itemIndex).id
-      actions.push(...new SpecialActionCardHelper(this.game).getCardActions(cardId))
+      actions.push(...structuredClone(specialCardActions[cardId]))
       if (this.isOptionCActive) {
         actions.push(...this.inkJarCardActions)
         this.forget(Memory.LetterSpentForOptionC)
@@ -96,10 +94,10 @@ export class ChooseActionRule extends PlayerTurnRule {
       return [{ type: ActionType.GainProducts, quantity: 1, isGift: true }]
     } else if (specialActionCardPlaces.includes(this.inkJarLocationId)) {
       const specialAction = this.specialActionCard.getItem<SpecialAction>()!.id
-      return new SpecialActionCardHelper(this.game).getCardActions(specialAction)
+      return structuredClone(specialCardActions[specialAction])
     } else {
       const basicAction = this.basicActionCard.getItem<BasicAction>()!.id
-      return [new BasicActionCardHelper(this.game).getCardAction(basicAction)]
+      return [structuredClone(basicCardAction[basicAction])]
     }
   }
 

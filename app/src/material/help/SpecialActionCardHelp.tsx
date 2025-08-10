@@ -1,21 +1,15 @@
 /** @jsxImportSource @emotion/react */
-import { MaterialHelpProps, useRules } from '@gamepark/react-game'
+import { MaterialHelpProps } from '@gamepark/react-game'
 import { ActionType } from '@gamepark/rival-cities/material/Action'
-import { SpecialActionCardHelper } from '@gamepark/rival-cities/material/helper/SpecialActionCardHelper'
 import { Ship } from '@gamepark/rival-cities/material/Ship'
-import { SpecialAction } from '@gamepark/rival-cities/material/SpecialAction'
-import { RivalCitiesRules } from '@gamepark/rival-cities/RivalCitiesRules'
+import { SpecialAction, specialCardActions } from '@gamepark/rival-cities/material/SpecialAction'
 import { FC } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { components, note, shipBtn } from './utils'
 
 export const SpecialActionCardHelp: FC<MaterialHelpProps> = ({ item }) => {
   const { t } = useTranslation()
-  const rules = useRules<RivalCitiesRules>()
-
-  if (!rules) return <></>
-
-  const actions = new SpecialActionCardHelper(rules.game).getCardMultipleActions(item.id as SpecialAction)
+  const actions = specialCardActions[item.id as SpecialAction]
 
   // TODO fix and factorize actions help
   return (
