@@ -2,24 +2,24 @@ import { ActionType } from '../../material/Action'
 import { RuleId } from '../RuleId'
 
 export const ActionRuleIds: Record<ActionType, RuleId> = {
+  [ActionType.Split]: RuleId.ChooseSplitAction,
+  [ActionType.Multiple]: RuleId.PerformMultipleActions,
   [ActionType.Production]: RuleId.Production,
-  [ActionType.AdvanceLawsuit]: RuleId.AdvanceLawsuit,
-  [ActionType.BuildFactory]: RuleId.BuildFactory,
+  [ActionType.GainProducts]: RuleId.Gift,
   [ActionType.Donation]: RuleId.Donation,
+  [ActionType.SwapProduct]: RuleId.SwapProduct,
+  [ActionType.GainLetter]: RuleId.GainLetter,
   [ActionType.DrawSpecialActionCard]: RuleId.DrawSpecialActionCard,
+  [ActionType.BuildFactory]: RuleId.BuildFactory,
   [ActionType.EarnPrestige]: RuleId.EarnPrestige,
   [ActionType.FormAlliance]: RuleId.FormAlliance,
-  [ActionType.GainLetter]: RuleId.GainLetter,
-  [ActionType.GainProducts]: RuleId.Gift,
-  [ActionType.SwapProduct]: RuleId.SwapProduct,
   [ActionType.PurchaseShip]: RuleId.PurchaseShip,
+  [ActionType.AdvanceLawsuit]: RuleId.AdvanceLawsuit,
   [ActionType.CourtRuling]: RuleId.CourtRuling,
   [ActionType.ReactivateFactory]: RuleId.ReactivateFactory,
   [ActionType.Piracy]: RuleId.Piracy,
-  [ActionType.Split]: RuleId.ChooseSplitAction,
-  [ActionType.Multiple]: RuleId.PerformMultipleActions,
   [ActionType.ResolveLawsuit]: RuleId.ResolveLawsuit,
-  [ActionType.ChooseSpecialActionCard]: RuleId.ChooseSpecialAction,
+  [ActionType.PlaySpecialActionCard]: RuleId.PlaySpecialActionCard,
   [ActionType.PayToPerformActionAgain]: RuleId.PayToPerformActionAgain,
   [ActionType.GainStars]: RuleId.GainStars
 }

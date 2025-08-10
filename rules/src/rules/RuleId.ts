@@ -3,7 +3,7 @@ export enum RuleId {
   AdvanceInkJar,
   PayInkJarMovementCost,
   ChooseAction,
-  ChooseSpecialAction,
+  PlaySpecialActionCard,
   ChooseSplitAction,
   PerformMultipleActions,
   Production,

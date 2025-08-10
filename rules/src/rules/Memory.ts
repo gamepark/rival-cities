@@ -3,5 +3,5 @@ export enum Memory {
   PendingRule,
   Actions,
   AlliancesUpkeep,
-  IsUseLetter
+  LetterSpentForOptionC
 }

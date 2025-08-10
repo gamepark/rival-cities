@@ -6,7 +6,7 @@ import { CustomMoveType } from '@gamepark/rival-cities/rules/CustomMoveType'
 import { isCustomMoveType } from '@gamepark/rules-api'
 import { Trans } from 'react-i18next'
 
-export const ChooseSpecialActionHeader = () => {
+export const PlaySpecialActionCardHeader = () => {
   const player = usePlayerId()
   const rules = useRules<RivalCitiesRules>()!
   const activePlayer = rules.game.rule?.player
@@ -17,7 +17,7 @@ export const ChooseSpecialActionHeader = () => {
   if (itsMe) {
     return (
       <Trans
-        defaults="header.choose.special.action.you"
+        defaults="header.play-card.you"
         components={{
           pass: <PlayMoveButton move={pass} />
         }}
@@ -25,5 +25,5 @@ export const ChooseSpecialActionHeader = () => {
     )
   }
 
-  return <Trans defaults="header.choose.special.action.player" values={{ player: name }} />
+  return <Trans defaults="header.play-card.player" values={{ player: name }} />
 }

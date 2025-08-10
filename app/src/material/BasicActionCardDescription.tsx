@@ -3,16 +3,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { CardDescription, ItemContext, ItemMenuButton, pointerCursorCss } from '@gamepark/react-game'
 import { BasicActionCard } from '@gamepark/rival-cities/material/BasicActionCard'
 import { LocationType } from '@gamepark/rival-cities/material/LocationType'
+import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
 import { CustomMoveType } from '@gamepark/rival-cities/rules/CustomMoveType'
 import { isCustomMoveType, MaterialItem, MaterialMove } from '@gamepark/rules-api'
 import { Trans } from 'react-i18next'
-import BasicAction1 from '../images/cards/action/basic/en/ActionBasic01.jpg'
 import BasicAction2 from '../images/cards/action/basic/ActionBasic02.jpg'
-import BasicAction3 from '../images/cards/action/basic/en/ActionBasic03.jpg'
 import BasicAction4 from '../images/cards/action/basic/ActionBasic04.jpg'
+import BasicAction7 from '../images/cards/action/basic/ActionBasic07.jpg'
+import BasicAction15 from '../images/cards/action/basic/ActionBasic15.jpg'
+import BasicAction1 from '../images/cards/action/basic/en/ActionBasic01.jpg'
+import BasicAction3 from '../images/cards/action/basic/en/ActionBasic03.jpg'
 import BasicAction5 from '../images/cards/action/basic/en/ActionBasic05.jpg'
 import BasicAction6 from '../images/cards/action/basic/en/ActionBasic06.jpg'
-import BasicAction7 from '../images/cards/action/basic/ActionBasic07.jpg'
 import BasicAction8 from '../images/cards/action/basic/en/ActionBasic08.jpg'
 import BasicAction9 from '../images/cards/action/basic/en/ActionBasic09.jpg'
 import BasicAction10 from '../images/cards/action/basic/en/ActionBasic10.jpg'
@@ -20,7 +22,6 @@ import BasicAction11 from '../images/cards/action/basic/en/ActionBasic11.jpg'
 import BasicAction12 from '../images/cards/action/basic/en/ActionBasic12.jpg'
 import BasicAction13 from '../images/cards/action/basic/en/ActionBasic13.jpg'
 import BasicAction14 from '../images/cards/action/basic/en/ActionBasic14.jpg'
-import BasicAction15 from '../images/cards/action/basic/ActionBasic15.jpg'
 import { BasicActionCardHelp } from './help/BasicActionCardHelp'
 
 export class BasicActionCardDescription extends CardDescription {
@@ -47,8 +48,9 @@ export class BasicActionCardDescription extends CardDescription {
     [BasicActionCard.BasicAction15]: BasicAction15
   }
 
-  getItemMenu(item: MaterialItem, _context: ItemContext, legalMoves: MaterialMove[]) {
-    const play = legalMoves.find((move) => isCustomMoveType(CustomMoveType.PlaysInkjarCard)(move) && move.data === item.location.id)
+  getItemMenu(item: MaterialItem, context: ItemContext, legalMoves: MaterialMove[]) {
+    const inkJarLocationId = context.rules.material(MaterialType.InkJar).getItem()!.location.id
+    const play = item.location.id === inkJarLocationId && legalMoves.find((move) => isCustomMoveType(CustomMoveType.PlaysInkjarCard)(move))
 
     if (item.location.type === LocationType.CardPiste && play) {
       return (

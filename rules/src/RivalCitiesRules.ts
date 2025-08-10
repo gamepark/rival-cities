@@ -41,7 +41,6 @@ import { SwapProductRule } from './rules/actions/SwapProductRule'
 import { AdvanceInkJarRule } from './rules/AdvanceInkJarRule'
 import { ChooseActionRule } from './rules/ChooseActionRule'
 import { ChooseFirstProductRule } from './rules/ChooseFirstProductRule'
-import { ChooseSpecialActionRule } from './rules/ChooseSpecialActionRule'
 import { ConfirmEndTurnRule } from './rules/ConfirmEndTurnRule'
 import { CustomMoveType } from './rules/CustomMoveType'
 import { EndOfGameHelper } from './rules/helper/EndOfGameHelper'
@@ -55,6 +54,7 @@ import { ReturnBellRule } from './rules/OffSeason/ReturnBellRule'
 import { TakeBellRule } from './rules/OffSeason/TakeBellRule'
 import { PayInkJarMovementCostRule } from './rules/PayInkJarMovementCostRule'
 import { PayToPerformActionAgainRule } from './rules/PayToPerformActionAgainRule'
+import { PlaySpecialActionCardRule } from './rules/PlaySpecialActionCardRule'
 import { RuleId } from './rules/RuleId'
 
 /**
@@ -71,7 +71,7 @@ export class RivalCitiesRules
     [RuleId.AdvanceInkJar]: AdvanceInkJarRule,
     [RuleId.PayInkJarMovementCost]: PayInkJarMovementCostRule,
     [RuleId.ChooseAction]: ChooseActionRule,
-    [RuleId.ChooseSpecialAction]: ChooseSpecialActionRule,
+    [RuleId.PlaySpecialActionCard]: PlaySpecialActionCardRule,
     [RuleId.ChooseSplitAction]: ChooseSplitActionRule,
     [RuleId.PerformMultipleActions]: PerformMultipleActionsRule,
     [RuleId.Production]: ProductionRule,

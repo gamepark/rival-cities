@@ -75,7 +75,8 @@ export class SpecialActionCardDescription extends CardDescription {
   }
 
   getItemMenu(item: MaterialItem, context: ItemContext, legalMoves: MaterialMove[]) {
-    const play = legalMoves.find((move) => isCustomMoveType(CustomMoveType.PlaysInkjarCard)(move) && move.data === item.location.id)
+    const inkJarLocationId = context.rules.material(MaterialType.InkJar).getItem()!.location.id
+    const play = item.location.id === inkJarLocationId && legalMoves.find((move) => isCustomMoveType(CustomMoveType.PlaysInkjarCard)(move))
     const take = legalMoves.find(
       (move) =>
         isMoveItemType(MaterialType.SpecialActionCard)(move) &&

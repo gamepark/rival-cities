@@ -19,7 +19,7 @@ export enum ActionType {
   ReactivateFactory,
   Piracy,
   ResolveLawsuit,
-  ChooseSpecialActionCard,
+  PlaySpecialActionCard,
   PayToPerformActionAgain,
   GainStars
 }
@@ -120,8 +120,8 @@ export type ResolveLawsuitAction = {
   type: ActionType.ResolveLawsuit
 } & ActionCommon
 
-export type ChooseSpecialActionCardAction = {
-  type: ActionType.ChooseSpecialActionCard
+export type PlaySpecialActionCard = {
+  type: ActionType.PlaySpecialActionCard
 } & ActionCommon
 
 export type PayToPerformActionAgainAction = {
@@ -153,6 +153,6 @@ export type Action =
   | ReactivateFactory
   | Piracy
   | ResolveLawsuitAction
-  | ChooseSpecialActionCardAction
+  | PlaySpecialActionCard
   | PayToPerformActionAgainAction
   | GainStars

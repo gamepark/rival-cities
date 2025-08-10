@@ -7,7 +7,6 @@ import { AdvanceLawsuitHeader } from './AdvanceLawsuitHeader'
 import { BuildFactoryHeader } from './BuildFactoryHeader'
 import { ChooseActionHeader } from './ChooseActionHeader'
 import { ChooseFirstProductHeader } from './ChooseFirstProductHeader'
-import { ChooseSpecialActionHeader } from './ChooseSpecialActionHeader'
 import { ChooseSplitActionHeader } from './ChooseSplitActionHeader'
 import { ConfirmEndTurnHeader } from './ConfirmEndTurnHeader'
 import { DonationHeader } from './DonationHeader'
@@ -22,6 +21,7 @@ import { PayInkJarMovementCostHeader } from './PayInkJarMovementCostHeader'
 import { PayToPerformActionAgainHeader } from './PayToPerformActionAgainHeader'
 import { PerformMultipleActionsHeader } from './PerformMultipleActionsHeader'
 import { PiracyHeader } from './PiracyHeader'
+import { PlaySpecialActionCardHeader } from './PlaySpecialActionCardHeader'
 import { ProductionHeader } from './ProductionHeader'
 import { PurchaseShipHeader } from './PurchaseShipHeader'
 import { ReactivateFactoryHeader } from './ReactivateFactoryHeader'
@@ -34,7 +34,7 @@ export const Headers: Partial<Record<RuleId, ComponentType>> = {
   [RuleId.AdvanceInkJar]: AdvanceInkJarHeader,
   [RuleId.PayInkJarMovementCost]: PayInkJarMovementCostHeader,
   [RuleId.ChooseAction]: ChooseActionHeader,
-  [RuleId.ChooseSpecialAction]: ChooseSpecialActionHeader,
+  [RuleId.PlaySpecialActionCard]: PlaySpecialActionCardHeader,
   [RuleId.ChooseSplitAction]: ChooseSplitActionHeader,
   [RuleId.PerformMultipleActions]: PerformMultipleActionsHeader,
   [RuleId.Production]: ProductionHeader,

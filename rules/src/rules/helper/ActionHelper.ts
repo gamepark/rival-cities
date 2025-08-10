@@ -15,12 +15,12 @@ import { GainStarsRule } from '../actions/GainStarsRule'
 import { PerformMultipleActionsRule } from '../actions/PerformMultipleActionsRule'
 import { PiracyRule } from '../actions/PiracyRule'
 import { ProductionRule } from '../actions/ProductionRule'
-import { SwapProductRule } from '../actions/SwapProductRule'
 import { PurchaseShipRule } from '../actions/PurchaseShipRule'
 import { ReactivateFactoryRule } from '../actions/ReactivateFactoryRule'
 import { ResolveLawsuitRule } from '../actions/ResolveLawsuitRule'
-import { ChooseSpecialActionRule } from '../ChooseSpecialActionRule'
+import { SwapProductRule } from '../actions/SwapProductRule'
 import { PayToPerformActionAgainRule } from '../PayToPerformActionAgainRule'
+import { PlaySpecialActionCardRule } from '../PlaySpecialActionCardRule'
 
 export const getActionRule = (game: MaterialGame, action: Action): ActionRule<Action> => {
   switch (action.type) {
@@ -58,8 +58,8 @@ export const getActionRule = (game: MaterialGame, action: Action): ActionRule<Ac
       return new PerformMultipleActionsRule(game, action)
     case ActionType.ResolveLawsuit:
       return new ResolveLawsuitRule(game, action)
-    case ActionType.ChooseSpecialActionCard:
-      return new ChooseSpecialActionRule(game, action)
+    case ActionType.PlaySpecialActionCard:
+      return new PlaySpecialActionCardRule(game, action)
     case ActionType.PayToPerformActionAgain:
       return new PayToPerformActionAgainRule(game, action)
     case ActionType.GainStars:

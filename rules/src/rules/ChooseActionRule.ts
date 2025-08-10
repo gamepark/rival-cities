@@ -15,106 +15,119 @@ import { RuleId } from './RuleId'
 
 export class ChooseActionRule extends PlayerTurnRule {
   onRuleStart(): MaterialMove[] {
-    this.memorize(Memory.IsUseLetter, false)
-    if (specialActionCardPlaces.includes(this.inkjarLocationId)) {
-      return []
-    }
-    if (this.playerSpecialActionCards.length === 0) {
-      const actions = this.inkJarCardActions
-      this.memorize(Memory.Actions, actions)
-      return [this.startRule(ActionRuleIds[actions[0].type])]
+    if (!specialActionCardPlaces.includes(this.inkJarLocationId) && !this.hasSpecialActionCard) {
+      return [this.playActions(this.inkJarCardActions)]
     }
     return []
   }
 
-  getPlayerMoves(): MaterialMove[] {
+  playActions(actions: Action[]) {
+    this.memorize(Memory.Actions, actions)
+    return this.startRule(ActionRuleIds[actions[0].type])
+  }
+
+  getPlayerMoves() {
     const moves: MaterialMove[] = []
-    if (this.playerCanUseLetter) {
-      moves.push(...this.playerLetters.moveItems({ type: LocationType.LetterDeck }))
+
+    const isSpecialActionLocation = specialActionCardPlaces.includes(this.inkJarLocationId)
+    const specialActionCard = this.specialActionCard
+
+    if (!isSpecialActionLocation || specialActionCard.length) {
+      moves.push(this.customMove(CustomMoveType.PlaysInkjarCard)) // Option A
     }
-    moves.push(...this.playerSpecialActionCards.moveItems({ type: LocationType.SpecialActionCardsDiscard }))
-    moves.push(this.customMove(CustomMoveType.PlaysInkjarCard, this.inkjarLocationId))
-    if (specialActionCardPlaces.includes(this.inkjarLocationId) && !this.remind(Memory.IsUseLetter)) {
-      moves.push(this.specialActioncardInInkjarPlace.moveItem({ type: LocationType.PlayerSpecialActionCardsHand, player: this.player }))
+
+    moves.push(...this.specialActionCards.moveItems({ type: LocationType.SpecialActionCardsDiscard })) // Option B
+
+    const letters = this.playerLetters
+    if (letters.getQuantity() > 0 && this.hasSpecialActionCard && !this.isOptionCActive) {
+      moves.push(...letters.moveItems({ type: LocationType.LetterDeck })) // Option C
     }
+
+    if (specialActionCard.length && !this.remind(Memory.LetterSpentForOptionC)) {
+      moves.push(specialActionCard.moveItem({ type: LocationType.PlayerSpecialActionCardsHand, player: this.player })) // Option D
+    }
+
     return moves
   }
 
-  beforeItemMove(move: ItemMove): MaterialMove[] {
-    if (isMoveItemType(MaterialType.Letter)(move)) {
-      this.memorize(Memory.IsUseLetter, true)
+  get isOptionCActive() {
+    return this.remind(Memory.LetterSpentForOptionC) || this.hasShip18
+  }
+
+  onCustomMove(move: CustomMove): MaterialMove[] {
+    // Option A
+    if (isCustomMoveType(CustomMoveType.PlaysInkjarCard)(move)) {
+      const actions = this.inkJarCardActions
+      if (this.isOptionCActive) {
+        actions.push({ type: ActionType.PlaySpecialActionCard })
+      }
+      return [this.playActions(actions)]
     }
     return []
   }
 
-  afterItemMove(move: ItemMove): MaterialMove[] {
+  afterItemMove(move: ItemMove) {
+    // Option B
     if (isMoveItemType(MaterialType.SpecialActionCard)(move) && move.location.type === LocationType.SpecialActionCardsDiscard) {
       const actions: Action[] = []
-      const cardId = this.material(MaterialType.SpecialActionCard).index(move.itemIndex).getItem()?.id as SpecialActionCard
+      const cardId = this.material(MaterialType.SpecialActionCard).getItem<SpecialActionCard>(move.itemIndex).id
       actions.push(...new SpecialActionCardHelper(this.game).getCardActions(cardId))
-      if (this.remind(Memory.IsUseLetter) || this.playerHaveShip18) {
+      if (this.isOptionCActive) {
         actions.push(...this.inkJarCardActions)
+        this.forget(Memory.LetterSpentForOptionC)
       }
-      this.memorize(Memory.Actions, actions)
-      return [this.startRule(ActionRuleIds[actions[0].type])]
+      return [this.playActions(actions)]
     }
+
+    // Option C
+    if (isMoveItemType(MaterialType.Letter)(move)) {
+      this.memorize(Memory.LetterSpentForOptionC, true)
+    }
+
+    // Option D
     if (isMoveItemType(MaterialType.SpecialActionCard)(move) && move.location.type === LocationType.PlayerSpecialActionCardsHand) {
       return [this.startPlayerTurn(RuleId.AdvanceInkJar, this.nextPlayer)]
     }
     return []
   }
 
-  onCustomMove(move: CustomMove): MaterialMove[] {
-    if (isCustomMoveType(CustomMoveType.PlaysInkjarCard)(move)) {
-      const actions = this.inkJarCardActions
-      if (this.remind(Memory.IsUseLetter) || this.playerHaveShip18) {
-        actions.push({ type: ActionType.ChooseSpecialActionCard })
-      }
-      this.memorize(Memory.Actions, actions)
-      return [this.startRule(ActionRuleIds[actions[0].type])]
-    }
-    return []
-  }
-
   get inkJarCardActions(): Action[] {
-    if (this.inkjarLocationId === 0) return [{ type: ActionType.GainProducts, quantity: 1, product: undefined, isGift: true }]
-    if (specialActionCardPlaces.includes(this.inkjarLocationId)) {
-      const cardId = this.specialActioncardInInkjarPlace.getItem()?.id as SpecialActionCard
-      return new SpecialActionCardHelper(this.game).getCardActions(cardId)
+    if (this.inkJarLocationId === 0) {
+      return [{ type: ActionType.GainProducts, quantity: 1, isGift: true }]
+    } else if (specialActionCardPlaces.includes(this.inkJarLocationId)) {
+      const specialAction = this.specialActionCard.getItem<SpecialActionCard>()!.id
+      return new SpecialActionCardHelper(this.game).getCardActions(specialAction)
+    } else {
+      const basicAction = this.basicActionCard.getItem<BasicActionCard>()!.id
+      return [new BasicActionCardHelper(this.game).getCardAction(basicAction)]
     }
-    const cardId = this.basicActioncardInInkjarPlace.getItem()?.id as BasicActionCard
-    return [new BasicActionCardHelper(this.game).getCardAction(cardId)]
-  }
-
-  get playerCanUseLetter() {
-    return this.playerLetters.length > 0 && !this.remind(Memory.IsUseLetter) && this.playerSpecialActionCards.getQuantity() > 0 && !this.playerHaveShip18
   }
 
   get playerLetters() {
     return this.material(MaterialType.Letter).location(LocationType.PlayerLetterDeck).player(this.player)
   }
 
-  get playerSpecialActionCards() {
+  get specialActionCards() {
     return this.material(MaterialType.SpecialActionCard).location(LocationType.PlayerSpecialActionCardsHand).player(this.player)
   }
 
-  get inkjarLocationId(): number {
+  get hasSpecialActionCard() {
+    return this.specialActionCards.length > 0
+  }
+
+  get inkJarLocationId(): number {
     return this.material(MaterialType.InkJar).location(LocationType.InkJarPiste).getItem()?.location.id as number
   }
 
-  get specialActioncardInInkjarPlace() {
-    return this.material(MaterialType.SpecialActionCard)
-      .location(LocationType.CardPiste)
-      .filter((it) => it.location.id === this.inkjarLocationId)
+  get specialActionCard() {
+    return this.material(MaterialType.SpecialActionCard).location(LocationType.CardPiste).locationId(this.inkJarLocationId)
   }
 
-  get basicActioncardInInkjarPlace() {
-    return this.material(MaterialType.BasicActionCard)
-      .location(LocationType.CardPiste)
-      .filter((it) => it.location.id === this.inkjarLocationId)
+  get basicActionCard() {
+    return this.material(MaterialType.BasicActionCard).location(LocationType.CardPiste).locationId(this.inkJarLocationId)
   }
 
-  get playerHaveShip18() {
-    return this.material(MaterialType.ShipCard).location(LocationType.PlayerShipCards).player(this.player).id(Ship.Ship18).length > 0
+  get hasShip18() {
+    return this.material(MaterialType.ShipCard).id(Ship.Ship18).getItem()?.location.player === this.player
   }
 }

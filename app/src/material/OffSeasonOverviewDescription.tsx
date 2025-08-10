@@ -2,6 +2,7 @@ import { faHand } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { CardDescription, ItemContext, ItemMenuButton, pointerCursorCss } from '@gamepark/react-game'
 import { LocationType } from '@gamepark/rival-cities/material/LocationType'
+import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
 import { CustomMoveType } from '@gamepark/rival-cities/rules/CustomMoveType'
 import { isCustomMoveType, MaterialItem, MaterialMove } from '@gamepark/rules-api'
 import { Trans } from 'react-i18next'
@@ -18,8 +19,9 @@ export class OffSeasonOverviewDescription extends CardDescription {
 
   image = OffSeasonOverview
 
-  getItemMenu(item: MaterialItem, _context: ItemContext, legalMoves: MaterialMove[]) {
-    const play = legalMoves.find((move) => isCustomMoveType(CustomMoveType.PlaysInkjarCard)(move) && move.data === item.location.id)
+  getItemMenu(item: MaterialItem, context: ItemContext, legalMoves: MaterialMove[]) {
+    const inkJarLocationId = context.rules.material(MaterialType.InkJar).getItem()!.location.id
+    const play = item.location.id === inkJarLocationId && legalMoves.find((move) => isCustomMoveType(CustomMoveType.PlaysInkjarCard)(move))
 
     if (item.location.type === LocationType.CardPiste && play) {
       return (
