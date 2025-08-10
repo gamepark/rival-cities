@@ -17,7 +17,7 @@ export class ProductionRule extends GainProductsRule<Production> {
 
   onGainProduct(product: Product, quantity = 1): MaterialMove[] {
     const moves: MaterialMove[] = []
-    if (!this.action.quantity) {
+    if (this.action.quantity <= 0) {
       moves.push(this.availableFactories.rotateItem(true))
     }
     moves.push(...super.onGainProduct(product, quantity))

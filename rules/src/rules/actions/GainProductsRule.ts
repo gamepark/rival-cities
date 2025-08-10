@@ -20,7 +20,7 @@ export class GainProductsRule<A extends GainProducts | Production> extends Actio
   getPlayerMoves(): MaterialMove[] {
     const moves: MaterialMove[] = []
     if (this.action.product) {
-      moves.push(this.gainProduct(this.action.product, this.action.quantity)[0])
+      moves.push(this.gainProduct(this.action.product, this.action.quantity > 0 ? this.action.quantity : 1)[0])
     } else {
       for (const product of getEnumValues(Product)) {
         const gain = this.gainProduct(product)[0]
