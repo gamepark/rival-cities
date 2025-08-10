@@ -9,6 +9,7 @@ import { ChooseActionHeader } from './ChooseActionHeader'
 import { ChooseFirstProductHeader } from './ChooseFirstProductHeader'
 import { ChooseSplitActionHeader } from './ChooseSplitActionHeader'
 import { ConfirmEndTurnHeader } from './ConfirmEndTurnHeader'
+import { CourtRulingHeader } from './CourtRulingHeader'
 import { DonationHeader } from './DonationHeader'
 import { DrawSpecialActionCardHeader } from './DrawSpecialActionCardHeader'
 import { EarnPrestigeHeader } from './EarnPrestigeHeader'
@@ -48,6 +49,7 @@ export const Headers: Partial<Record<RuleId, ComponentType>> = {
   [RuleId.FormAlliance]: FormAllianceHeader,
   [RuleId.PurchaseShip]: PurchaseShipHeader,
   [RuleId.AdvanceLawsuit]: AdvanceLawsuitHeader,
+  [RuleId.CourtRuling]: CourtRulingHeader,
   [RuleId.ResolveLawsuit]: ResolveLawsuitHeader,
   [RuleId.ReactivateFactory]: ReactivateFactoryHeader,
   [RuleId.Piracy]: PiracyHeader,
