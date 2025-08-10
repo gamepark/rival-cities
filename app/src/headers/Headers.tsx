@@ -23,7 +23,6 @@ import { OffSeasonPayForAllianceHeader } from './OffSeasonPayForAllianceHeader'
 import { OffSeasonPlayerWithMostShipCardsEarnPrestigeHeader } from './OffSeasonPlayerWithMostShipCardsEarnPrestigeHeader'
 import { OffSeasonReactivateFactoriesHeader } from './OffSeasonReactivateFactoriesHeader'
 import { OffSeasonReturnBellHeader } from './OffSeasonReturnBellHeader'
-import { OffSeasonTakeBellHeader } from './OffSeasonTakeBellHeader'
 import { PayProductForAdvanceHeader } from './PayProductForAdvanceHeader'
 import { PayToPerformActionAgainHeader } from './PayToPerformActionAgainHeader'
 import { PerformMultipleActionsHeader } from './PerformMultipleActionsHeader'
@@ -33,6 +32,7 @@ import { ProductSwapHeader } from './ProductSwapHeader'
 import { PurchaseShipHeader } from './PurchaseShipHeader'
 import { ReactivateFactoryHeader } from './ReactivateFactoryHeader'
 import { ResolveLawsuitHeader } from './ResolveLawsuitHeader'
+import { TakeBellHeader } from './TakeBellHeader'
 
 export const Headers: Partial<Record<RuleId, ComponentType>> = {
   [RuleId.ChooseFirstProduct]: ChooseFirstProductHeader,
@@ -59,7 +59,7 @@ export const Headers: Partial<Record<RuleId, ComponentType>> = {
   [RuleId.PayToPerformActionAgain]: PayToPerformActionAgainHeader,
   [RuleId.GainStars]: GainStarsHeader,
   [RuleId.ConfirmEndTurn]: ConfirmEndTurnHeader,
-  [RuleId.OffSeasonTakeBell]: OffSeasonTakeBellHeader,
+  [RuleId.TakeBell]: TakeBellHeader,
   [RuleId.OffSeasonPayForAlliance]: OffSeasonPayForAllianceHeader,
   [RuleId.OffSeasonPlayerWithMostShipCardsEarnPrestige]: OffSeasonPlayerWithMostShipCardsEarnPrestigeHeader,
   [RuleId.OffSeasonGetShipsBonuses]: OffSeasonGetShipsBonusesHeader,

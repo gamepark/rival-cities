@@ -54,7 +54,7 @@ import { OffSeasonPayForAllianceRule } from './rules/OffSeason/OffSeasonPayForAl
 import { OffSeasonPlayerWithMostShipCardsEarnPrestigeRule } from './rules/OffSeason/OffSeasonPlayerWithMostShipCardsEarnPrestigeRule'
 import { OffSeasonReactivateFactoriesRule } from './rules/OffSeason/OffSeasonReactivateFactoriesRule'
 import { OffSeasonReturnBellRule } from './rules/OffSeason/OffSeasonReturnBellRule'
-import { OffSeasonTakeBellRule } from './rules/OffSeason/OffSeasonTakeBellRule'
+import { TakeBellRule } from './rules/OffSeason/TakeBellRule'
 import { PayInkJarMovementCostRule } from './rules/PayInkJarMovementCostRule'
 import { PayToPerformActionAgainRule } from './rules/PayToPerformActionAgainRule'
 import { RuleId } from './rules/RuleId'
@@ -94,7 +94,7 @@ export class RivalCitiesRules
     [RuleId.PayToPerformActionAgain]: PayToPerformActionAgainRule,
     [RuleId.GainStars]: GainStarsRule,
     [RuleId.ConfirmEndTurn]: ConfirmEndTurnRule,
-    [RuleId.OffSeasonTakeBell]: OffSeasonTakeBellRule,
+    [RuleId.TakeBell]: TakeBellRule,
     [RuleId.OffSeasonPayForAlliance]: OffSeasonPayForAllianceRule,
     [RuleId.OffSeasonPlayerWithMostShipCardsEarnPrestige]: OffSeasonPlayerWithMostShipCardsEarnPrestigeRule,
     [RuleId.OffSeasonGetShipsBonuses]: OffSeasonGetShipsBonusesRule,

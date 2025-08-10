@@ -17,7 +17,7 @@ export class AdvanceInkJarRule extends PlayerTurnRule {
     const distance = (endSpace + INK_SPACES - initialSpace) % INK_SPACES
     const movementCost = new InkJarPisteHelper(this.game).getMovementCost(distance)
     if (endSpace < initialSpace) {
-      this.memorize(Memory.PendingRule, RuleId.OffSeasonTakeBell)
+      this.memorize(Memory.PendingRule, RuleId.TakeBell)
     }
     if (movementCost > 0) {
       this.memorize(Memory.Count, movementCost)

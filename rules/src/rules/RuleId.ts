@@ -24,7 +24,7 @@ export enum RuleId {
   PayToPerformActionAgain,
   GainStars,
   ConfirmEndTurn,
-  OffSeasonTakeBell,
+  TakeBell,
   OffSeasonPayForAlliance,
   OffSeasonPlayerWithMostShipCardsEarnPrestige,
   OffSeasonGetShipsBonuses,
