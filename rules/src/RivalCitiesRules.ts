@@ -48,9 +48,9 @@ import { CustomMoveType } from './rules/CustomMoveType'
 import { EndOfGameHelper } from './rules/helper/EndOfGameHelper'
 import { MemoryHelper } from './rules/helper/MemoryHelper'
 import { Memory } from './rules/Memory'
+import { GainShipsIncomeRule } from './rules/OffSeason/GainShipsIncomeRule'
 import { OffSeasonChangeSpecialCardsRule } from './rules/OffSeason/OffSeasonChangeSpecialCardsRule'
 import { OffSeasonGetPrestigeBonusesRule } from './rules/OffSeason/OffSeasonGetPrestigeBonusesRule'
-import { OffSeasonGetShipsBonusesRule } from './rules/OffSeason/OffSeasonGetShipsBonusesRule'
 import { OffSeasonReactivateFactoriesRule } from './rules/OffSeason/OffSeasonReactivateFactoriesRule'
 import { OffSeasonReturnBellRule } from './rules/OffSeason/OffSeasonReturnBellRule'
 import { PayAlliancesUpkeepRule } from './rules/OffSeason/PayAlliancesUpkeepRule'
@@ -96,7 +96,7 @@ export class RivalCitiesRules
     [RuleId.ConfirmEndTurn]: ConfirmEndTurnRule,
     [RuleId.TakeBell]: TakeBellRule,
     [RuleId.PayAlliancesUpkeep]: PayAlliancesUpkeepRule,
-    [RuleId.OffSeasonGetShipsBonuses]: OffSeasonGetShipsBonusesRule,
+    [RuleId.GainShipsIncome]: GainShipsIncomeRule,
     [RuleId.OffSeasonGetPrestigeBonuses]: OffSeasonGetPrestigeBonusesRule,
     [RuleId.OffSeasonChangeSpecialCards]: OffSeasonChangeSpecialCardsRule,
     [RuleId.OffSeasonReactivateFactories]: OffSeasonReactivateFactoriesRule,

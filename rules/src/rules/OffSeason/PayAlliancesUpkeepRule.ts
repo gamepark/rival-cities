@@ -91,11 +91,11 @@ export class PayAlliancesUpkeepRule extends SimultaneousRule {
   getMovesAfterPlayersDone(): MaterialMove[] {
     const player = this.playerWithMostShip
     if (player) {
-      this.memorize(Memory.PendingRule, RuleId.OffSeasonGetShipsBonuses)
+      this.memorize(Memory.PendingRule, RuleId.GainShipsIncome)
       this.memorize<Action[]>(Memory.Actions, [{ type: ActionType.EarnPrestige }])
       return [this.startPlayerTurn(RuleId.EarnPrestige, player)]
     } else {
-      return [this.startRule(RuleId.OffSeasonGetShipsBonuses)]
+      return [this.startRule(RuleId.GainShipsIncome)]
     }
   }
 

@@ -28,7 +28,7 @@ export enum Ship {
 
 export enum ShipEffectType {
   Instant = 1,
-  OffSeasonBonus,
+  Income,
   ProductionBonus,
   WinLawsuitBonus
 }
@@ -38,9 +38,9 @@ export type InstantEffect = {
   actions: Action[]
 }
 
-export type OffSeasonBonusEffect = {
-  type: ShipEffectType.OffSeasonBonus
-  actions: Action[]
+export type IncomeEffect = {
+  type: ShipEffectType.Income
+  action: Action
 }
 
 export type ProductionBonusEffect = {
@@ -53,7 +53,7 @@ export type WinLawsuitBonusEffect = {
   action: Action
 }
 
-export type ShipEffect = InstantEffect | OffSeasonBonusEffect | ProductionBonusEffect | WinLawsuitBonusEffect
+export type ShipEffect = InstantEffect | IncomeEffect | ProductionBonusEffect | WinLawsuitBonusEffect
 
 export type ShipData = {
   cost: ProductCost
@@ -105,40 +105,40 @@ export const shipData: Record<Ship, ShipData> = {
   [Ship.Ship6]: {
     cost: cost(4, Product.Leather),
     effect: {
-      type: ShipEffectType.OffSeasonBonus,
-      actions: [{ type: ActionType.GainStars, stars: 1 }]
+      type: ShipEffectType.Income,
+      action: { type: ActionType.GainStars, stars: 1 }
     },
     getNbStars: () => 2
   },
   [Ship.Ship7]: {
     cost: cost(5, Product.Cloth),
     effect: {
-      type: ShipEffectType.OffSeasonBonus,
-      actions: [{ type: ActionType.GainProducts, product: Product.Furniture, quantity: 2 }]
+      type: ShipEffectType.Income,
+      action: { type: ActionType.GainProducts, product: Product.Furniture, quantity: 2 }
     },
     getNbStars: () => 1
   },
   [Ship.Ship8]: {
     cost: cost(4, Product.Cloth),
     effect: {
-      type: ShipEffectType.OffSeasonBonus,
-      actions: [{ type: ActionType.EarnPrestige }]
+      type: ShipEffectType.Income,
+      action: { type: ActionType.EarnPrestige }
     },
     getNbStars: () => 1
   },
   [Ship.Ship9]: {
     cost: cost(5, Product.Beer),
     effect: {
-      type: ShipEffectType.OffSeasonBonus,
-      actions: [{ type: ActionType.GainProducts, product: Product.Cloth, quantity: 2 }]
+      type: ShipEffectType.Income,
+      action: { type: ActionType.GainProducts, product: Product.Cloth, quantity: 2 }
     },
     getNbStars: () => 2
   },
   [Ship.Ship10]: {
     cost: cost(5, Product.Beer),
     effect: {
-      type: ShipEffectType.OffSeasonBonus,
-      actions: [{ type: ActionType.GainLetter, nbLettersToTake: 1 }]
+      type: ShipEffectType.Income,
+      action: { type: ActionType.GainLetter, nbLettersToTake: 1 }
     },
     getNbStars: () => 1
   },
