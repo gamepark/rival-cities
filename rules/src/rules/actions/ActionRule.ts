@@ -87,6 +87,10 @@ export abstract class ActionRule<A extends Action> extends PlayerTurnRule {
     }
   }
 
+  canAffordAfterSpending(_product: Product) {
+    return true
+  }
+
   onRuleEnd() {
     this.memorize<Action[]>(MemoryType.Actions, (actions) => actions.slice(1))
     return []

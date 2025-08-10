@@ -25,7 +25,7 @@ export class AdvanceLawsuitRule extends ActionRule<AdvanceLawsuit> {
   }
 
   canPayLawsuit(lawsuitIndex: number) {
-    const card = this.material(MaterialType.LawsuitCard).location(LocationType.LawsuitSpace).parent(lawsuitIndex).getItem<Lawsuit>()
+    const card = this.lawsuitCards.parent(lawsuitIndex).getItem<Lawsuit>()
     return !!card && this.canPay(lawsuitData[card.id].cost)
   }
 
@@ -38,7 +38,7 @@ export class AdvanceLawsuitRule extends ActionRule<AdvanceLawsuit> {
 
   onMoveMarker(move: MoveItem) {
     const extraActions: Action[] = []
-    const card = this.material(MaterialType.LawsuitCard).location(LocationType.LawsuitSpace).parent(move.location.parent).getItem<Lawsuit>()!
+    const card = this.lawsuitCards.parent(move.location.parent).getItem<Lawsuit>()!
     const { cost, advanceBonus } = lawsuitData[card.id]
     const count = this.action.count ?? 0
     if (count === 0) {
@@ -84,5 +84,23 @@ export class AdvanceLawsuitRule extends ActionRule<AdvanceLawsuit> {
 
   get playerLetters() {
     return this.material(MaterialType.Letter).location(LocationType.PlayerLetterDeck).player(this.player)
+  }
+
+  get lawsuitCards() {
+    return this.material(MaterialType.LawsuitCard).location(LocationType.LawsuitSpace)
+  }
+
+  canAffordAfterSpending(product: Product) {
+    return this.lawsuitCards.getItems<Lawsuit>().some((item) => {
+      const cost = lawsuitData[item.id].cost
+      switch (cost.type) {
+        case CostType.Product:
+          return cost.product === product ? this.canPay({ ...cost, amount: cost.amount + 1 }) : this.canPay(cost)
+        case CostType.Products:
+          return this.canPay({ ...cost, amount: { ...cost.amount, [product]: (cost.amount[product] ?? 0) + 1 } })
+        default:
+          return this.canPay(cost)
+      }
+    })
   }
 }
