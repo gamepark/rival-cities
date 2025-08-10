@@ -3,46 +3,40 @@ import { FormAlliance } from '../../material/Action'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { CustomMoveType } from '../CustomMoveType'
-import { EndOfGameHelper } from '../helper/EndOfGameHelper'
 import { ActionRule } from './ActionRule'
 
 export class FormAllianceRule extends ActionRule<FormAlliance> {
-  getPlayerMoves(): MaterialMove[] {
+  getPlayerMoves() {
     const moves: MaterialMove[] = []
-    moves.push(...this.allianceCards.moveItems({ type: LocationType.PlayerAlliances, player: this.player }))
+    moves.push(...this.freeAlliances.moveItems({ type: LocationType.PlayerAlliances, player: this.player }))
     if (this.playerLetters.length) {
-      moves.push(...this.opponentAllianceCards.moveItems({ type: LocationType.PlayerAlliances, player: this.player }))
+      moves.push(...this.opponentAlliances.moveItems({ type: LocationType.PlayerAlliances, player: this.player }))
     }
     moves.push(this.customMove(CustomMoveType.Pass))
     return moves
   }
 
   beforeItemMove(move: ItemMove): MaterialMove[] {
+    const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.AllianceCard)(move)) {
-      const oldLocationType = this.material(MaterialType.AllianceCard).index(move.itemIndex).getItem()?.location.type
-      if (oldLocationType === LocationType.PlayerAlliances) {
-        return [this.playerLetters.moveItem(() => ({ type: LocationType.LetterDeck }))]
+      const origin = this.material(MaterialType.AllianceCard).getItem(move.itemIndex).location
+      if (origin.type === LocationType.PlayerAlliances) {
+        moves.push(this.playerLetters.moveItem({ type: LocationType.LetterDeck }))
       }
+      moves.push(this.startNextRule())
     }
-    return []
-  }
-
-  afterItemMove(move: ItemMove): MaterialMove[] {
-    if (isMoveItemType(MaterialType.AllianceCard)(move)) {
-      return new EndOfGameHelper(this.game).checkInstantEndOfGame([this.endAction()])
-    }
-    return []
+    return moves
   }
 
   get playerLetters() {
     return this.material(MaterialType.Letter).location(LocationType.PlayerLetterDeck).player(this.player)
   }
 
-  get allianceCards() {
+  get freeAlliances() {
     return this.material(MaterialType.AllianceCard).location(LocationType.AllianceSpace)
   }
 
-  get opponentAllianceCards() {
+  get opponentAlliances() {
     return this.material(MaterialType.AllianceCard).location(LocationType.PlayerAlliances).player(this.nextPlayer)
   }
 }

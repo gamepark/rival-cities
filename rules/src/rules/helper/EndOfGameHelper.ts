@@ -1,4 +1,4 @@
-import { MaterialMove, PlayerTurnRule } from '@gamepark/rules-api'
+import { PlayerTurnRule } from '@gamepark/rules-api'
 import { City } from '../../City'
 import { Alliance, alliancesData } from '../../material/Alliance'
 import { Lawsuit, lawsuitData } from '../../material/Lawsuit'
@@ -7,18 +7,6 @@ import { MaterialType } from '../../material/MaterialType'
 import { Ship, shipData } from '../../material/Ship'
 
 export class EndOfGameHelper extends PlayerTurnRule {
-  checkInstantEndOfGame(moveIfGameNotEnded: MaterialMove[]): MaterialMove[] {
-    if (
-      this.checkIfAPlayerAs3MoreShips() ||
-      this.checkIfAPlayerhasWin3Lawsuits() ||
-      this.checkIfAPlayerhasThe4Alliances() ||
-      this.checkIfPrestigeMarkerIsOnACity()
-    ) {
-      return [this.endGame()]
-    }
-    return moveIfGameNotEnded
-  }
-
   checkIfWinnerIsDeterminateByScore(): boolean {
     return (
       !this.checkIfAPlayerAs3MoreShips() &&

@@ -182,6 +182,11 @@ export class RivalCitiesRules
       if (this.material(MaterialType.LawsuitCard).player(move.location.player).length === 3) {
         return [this.endGame()]
       }
+    } else if (isMoveItemType(MaterialType.AllianceCard)(move) && move.location.type === LocationType.PlayerAlliances) {
+      const alliances = this.material(MaterialType.AllianceCard).getItems()
+      if (alliances.every((alliance) => alliance.location.player === move.location.player)) {
+        return [this.endGame()]
+      }
     } else if (isMoveItemType(MaterialType.PrestigeMarker)(move) && Math.abs(move.location.x!) >= 8) {
       return [this.endGame()]
     }
