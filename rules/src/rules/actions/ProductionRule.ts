@@ -1,4 +1,4 @@
-import { CustomMove, MaterialMove } from '@gamepark/rules-api'
+import { CustomMove, isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
 import { Production } from '../../material/Action'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
@@ -8,6 +8,13 @@ import { CustomMoveType } from '../CustomMoveType'
 import { GainProductsRule } from './GainProductsRule'
 
 export class ProductionRule extends GainProductsRule<Production> {
+  afterItemMove(move: ItemMove): MaterialMove[] {
+    if (isMoveItemType(MaterialType.Factory)(move) && !this.canGainMore) {
+      return [this.startNextRule()]
+    }
+    return super.afterItemMove(move)
+  }
+
   onGainProduct(product: Product, quantity = 1): MaterialMove[] {
     const moves: MaterialMove[] = []
     if (!this.action.quantity) {
