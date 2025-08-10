@@ -1,31 +1,23 @@
-import { Locator } from '@gamepark/react-game'
+import { DropAreaDescription, FlexLocator } from '@gamepark/react-game'
 import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
-import { Coordinates, Location, XYCoordinates } from '@gamepark/rules-api'
-import { gameBoardLocator } from '../GameBoardLocator'
+import { allianceCardDescription } from '../../material/AllianceCardDescription'
 
-class AllianceSpaceLocator extends Locator {
+class AllianceSpaceLocator extends FlexLocator {
   parentItemType = MaterialType.GameBoard
+  coordinates = { x: 5.95, y: 9.65 }
+  lineSize = 2
+  maxLines = 2
+  gap = { x: 7.1, y: -0.25 }
+  lineGap = { x: 0.15, y: 4.55 }
+  rotateZ = -2
+  getHoverTransform = () => ['translateZ(10em)', 'scale(2.5)']
 
-  getRotateZ(): number {
-    return -2
-  }
-
-  getCoordinates(location: Location): Partial<Coordinates> {
-    const base = gameBoardLocator.coordinates
-    const itemCoordinates = coordinates[location.x!] as XYCoordinates
-    return { x: base.x + itemCoordinates.x, y: base.y + itemCoordinates.y }
-  }
-
-  getHoverTransform(): string[] {
-    return ['translateZ(10em)', 'scale(2.5)']
-  }
+  // TODO: Fix size of FlexLocator automatically generated drop area
+  locationDescription = new DropAreaDescription({
+    width: allianceCardDescription.width * 2 + 0.5,
+    height: allianceCardDescription.height * 2 + 0.5,
+    borderRadius: allianceCardDescription.borderRadius
+  })
 }
-
-const coordinates = [
-  { x: 6.2, y: 14.2 },
-  { x: 6, y: 9.7 },
-  { x: 13.1, y: 9.4 },
-  { x: 13.3, y: 13.9 }
-]
 
 export const allianceSpaceLocator = new AllianceSpaceLocator()

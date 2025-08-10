@@ -4,7 +4,7 @@ export enum CustomMoveType {
   PlaysInkjarCard,
   ResolveLawsuit,
   SpendLetterToSwapProduct,
-  PayForAlliance,
+  ChooseAlliance,
   ConfirmEndTurn,
   TriggerAllianceEffect,
   TriggerShipEffect,

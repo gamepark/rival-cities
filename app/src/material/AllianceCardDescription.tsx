@@ -6,7 +6,6 @@ import { Alliance } from '@gamepark/rival-cities/material/Alliance'
 import { LocationType } from '@gamepark/rival-cities/material/LocationType'
 import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
 import { CustomMoveType } from '@gamepark/rival-cities/rules/CustomMoveType'
-import { AlliancePay } from '@gamepark/rival-cities/rules/OffSeason/OffSeasonPayForAllianceRule'
 import { isCustomMoveType, isMoveItemType, MaterialItem, MaterialMove } from '@gamepark/rules-api'
 import { Trans } from 'react-i18next'
 import AllianceBack from '../images/cards/alliance/AllianceBack.jpg'
@@ -44,7 +43,7 @@ export class AllianceCardDescription extends CardDescription {
   }
 
   getItemMenu(item: MaterialItem, context: ItemContext, legalMoves: MaterialMove[]) {
-    const pay = legalMoves.find((move) => isCustomMoveType(CustomMoveType.PayForAlliance)(move) && (move.data as { pay: AlliancePay }).pay.id === item.id)
+    const pay = legalMoves.find((move) => isCustomMoveType(CustomMoveType.ChooseAlliance)(move) && move.data === item.id)
     const discard = legalMoves.find(
       (move) => isMoveItemType(MaterialType.AllianceCard)(move) && move.location.type === LocationType.AllianceSpace && move.itemIndex === context.index
     )

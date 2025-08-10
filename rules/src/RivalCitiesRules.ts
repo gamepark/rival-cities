@@ -1,6 +1,7 @@
 import {
   CompetitiveRank,
   CustomMove,
+  FillGapStrategy,
   hideItemId,
   hideItemIdToOthers,
   isCustomMoveType,
@@ -50,10 +51,10 @@ import { Memory } from './rules/Memory'
 import { OffSeasonChangeSpecialCardsRule } from './rules/OffSeason/OffSeasonChangeSpecialCardsRule'
 import { OffSeasonGetPrestigeBonusesRule } from './rules/OffSeason/OffSeasonGetPrestigeBonusesRule'
 import { OffSeasonGetShipsBonusesRule } from './rules/OffSeason/OffSeasonGetShipsBonusesRule'
-import { OffSeasonPayForAllianceRule } from './rules/OffSeason/OffSeasonPayForAllianceRule'
 import { OffSeasonPlayerWithMostShipCardsEarnPrestigeRule } from './rules/OffSeason/OffSeasonPlayerWithMostShipCardsEarnPrestigeRule'
 import { OffSeasonReactivateFactoriesRule } from './rules/OffSeason/OffSeasonReactivateFactoriesRule'
 import { OffSeasonReturnBellRule } from './rules/OffSeason/OffSeasonReturnBellRule'
+import { PayAlliancesUpkeepRule } from './rules/OffSeason/PayAlliancesUpkeepRule'
 import { TakeBellRule } from './rules/OffSeason/TakeBellRule'
 import { PayInkJarMovementCostRule } from './rules/PayInkJarMovementCostRule'
 import { PayToPerformActionAgainRule } from './rules/PayToPerformActionAgainRule'
@@ -95,7 +96,7 @@ export class RivalCitiesRules
     [RuleId.GainStars]: GainStarsRule,
     [RuleId.ConfirmEndTurn]: ConfirmEndTurnRule,
     [RuleId.TakeBell]: TakeBellRule,
-    [RuleId.OffSeasonPayForAlliance]: OffSeasonPayForAllianceRule,
+    [RuleId.PayAlliancesUpkeep]: PayAlliancesUpkeepRule,
     [RuleId.OffSeasonPlayerWithMostShipCardsEarnPrestige]: OffSeasonPlayerWithMostShipCardsEarnPrestigeRule,
     [RuleId.OffSeasonGetShipsBonuses]: OffSeasonGetShipsBonusesRule,
     [RuleId.OffSeasonGetPrestigeBonuses]: OffSeasonGetPrestigeBonusesRule,
@@ -111,7 +112,7 @@ export class RivalCitiesRules
       [LocationType.SpecialActionCardsDiscard]: new PositiveSequenceStrategy()
     },
     [MaterialType.AllianceCard]: {
-      [LocationType.AllianceSpace]: new StackingStrategy(),
+      [LocationType.AllianceSpace]: new FillGapStrategy(),
       [LocationType.PlayerAlliances]: new PositiveSequenceStrategy()
     },
     [MaterialType.ShipCard]: {

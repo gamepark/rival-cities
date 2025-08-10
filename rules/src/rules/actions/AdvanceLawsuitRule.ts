@@ -1,13 +1,14 @@
-import { getEnumValues, isMoveItemType, ItemMove, MaterialMove, MoveItem } from '@gamepark/rules-api'
+import { isMoveItemType, ItemMove, MaterialMove, MoveItem } from '@gamepark/rules-api'
 import { City } from '../../City'
 import { Action, ActionType, AdvanceLawsuit } from '../../material/Action'
 import { Alliance } from '../../material/Alliance'
-import { Cost, CostType } from '../../material/Cost'
+import { CostType } from '../../material/Cost'
 import { Lawsuit, lawsuitData } from '../../material/Lawsuit'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { Product } from '../../material/Product'
 import { CustomMoveType } from '../CustomMoveType'
+import { CostHelper } from '../helper/CostHelper'
 import { ActionRule } from './ActionRule'
 
 export class AdvanceLawsuitRule extends ActionRule<AdvanceLawsuit> {
@@ -26,7 +27,7 @@ export class AdvanceLawsuitRule extends ActionRule<AdvanceLawsuit> {
 
   canPayLawsuit(lawsuitIndex: number) {
     const card = this.lawsuitCards.parent(lawsuitIndex).getItem<Lawsuit>()
-    return !!card && this.canPay(lawsuitData[card.id].cost)
+    return !!card && new CostHelper(this.game).canPay(this.player, lawsuitData[card.id].cost)
   }
 
   afterItemMove(move: ItemMove) {
@@ -58,32 +59,7 @@ export class AdvanceLawsuitRule extends ActionRule<AdvanceLawsuit> {
       })
     }
     this.addActions(...extraActions)
-    return [...this.pay(cost), this.endAction()]
-  }
-
-  pay(cost: Cost) {
-    const moves: MaterialMove[] = []
-    switch (cost.type) {
-      case CostType.Product:
-        moves.push(this.getProduct(cost.product).moveItem({ type: LocationType.ProductPiles, id: cost.product }, cost.amount))
-        break
-      case CostType.Products:
-        for (const product of getEnumValues(Product)) {
-          const amount = cost.amount[product]
-          if (amount) {
-            moves.push(this.getProduct(product).moveItem({ type: LocationType.ProductPiles, id: product }, amount))
-          }
-        }
-        break
-      case CostType.Letters:
-        moves.push(this.playerLetters.moveItem({ type: LocationType.LetterDeck }, 1))
-        break
-    }
-    return moves
-  }
-
-  get playerLetters() {
-    return this.material(MaterialType.Letter).location(LocationType.PlayerLetterDeck).player(this.player)
+    return [...new CostHelper(this.game).pay(this.player, cost), this.endAction()]
   }
 
   get lawsuitCards() {
@@ -93,13 +69,14 @@ export class AdvanceLawsuitRule extends ActionRule<AdvanceLawsuit> {
   canAffordAfterSpending(product: Product) {
     return this.lawsuitCards.getItems<Lawsuit>().some((item) => {
       const cost = lawsuitData[item.id].cost
+      const costHelper = new CostHelper(this.game)
       switch (cost.type) {
         case CostType.Product:
-          return cost.product === product ? this.canPay({ ...cost, amount: cost.amount + 1 }) : this.canPay(cost)
+          return cost.product === product ? costHelper.canPay(this.player, { ...cost, amount: cost.amount + 1 }) : costHelper.canPay(this.player, cost)
         case CostType.Products:
-          return this.canPay({ ...cost, amount: { ...cost.amount, [product]: (cost.amount[product] ?? 0) + 1 } })
+          return costHelper.canPay(this.player, { ...cost, amount: { ...cost.amount, [product]: (cost.amount[product] ?? 0) + 1 } })
         default:
-          return this.canPay(cost)
+          return costHelper.canPay(this.player, cost)
       }
     })
   }

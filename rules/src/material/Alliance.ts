@@ -1,5 +1,5 @@
 import { getEnumValues } from '@gamepark/rules-api'
-import { cost, Cost, CostType } from './Cost'
+import { AnyProductsCost, cost, CostType, LettersCost, ProductCost } from './Cost'
 import { Product } from './Product'
 
 export enum Alliance {
@@ -14,7 +14,7 @@ export enum Alliance {
 }
 
 export type AllianceData = {
-  cost: Cost
+  cost: ProductCost | AnyProductsCost | LettersCost
   stars: number
 }
 

@@ -4,7 +4,7 @@ export enum Memory {
   IsProductReturn,
   IsBuildInProgress,
   Actions,
-  AlliancePay,
+  AlliancesUpkeep,
   IsUseLetter,
   ShipsIdsAlreadyProcessed
 }
