@@ -43,7 +43,7 @@ export class AdvanceLawsuitRule extends ActionRule<AdvanceLawsuit> {
     const count = this.action.count ?? 0
     if (count === 0) {
       for (const action of advanceBonus) {
-        extraActions.push(action)
+        extraActions.push(structuredClone(action))
       }
     }
     const lawsuitX = this.material(MaterialType.LawsuitPiece).getItem(move.location.parent!).location.x!
