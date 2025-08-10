@@ -1,4 +1,6 @@
 import { CustomMove, getEnumValues, isCustomMoveType, isMoveItem, ItemMove, MaterialMove, SimultaneousRule } from '@gamepark/rules-api'
+import { City } from '../../City'
+import { Action, ActionType } from '../../material/Action'
 import { Alliance, alliancesData } from '../../material/Alliance'
 import { AnyProductsCost, LettersCost, ProductCost } from '../../material/Cost'
 import { LocationType } from '../../material/LocationType'
@@ -87,8 +89,21 @@ export class PayAlliancesUpkeepRule extends SimultaneousRule {
   }
 
   getMovesAfterPlayersDone(): MaterialMove[] {
-    const playerWhoHaveBell = this.material(MaterialType.BellToken).getItem()!.location.player!
-    return [this.startPlayerTurn(RuleId.OffSeasonPlayerWithMostShipCardsEarnPrestige, playerWhoHaveBell)]
+    const player = this.playerWithMostShip
+    if (player) {
+      this.memorize(Memory.PendingRule, RuleId.OffSeasonGetShipsBonuses)
+      this.memorize<Action[]>(Memory.Actions, [{ type: ActionType.EarnPrestige }])
+      return [this.startPlayerTurn(RuleId.EarnPrestige, player)]
+    } else {
+      return [this.startRule(RuleId.OffSeasonGetShipsBonuses)]
+    }
+  }
+
+  get playerWithMostShip() {
+    const ships = this.material(MaterialType.ShipCard).location(LocationType.PlayerShipCards)
+    const altonaShips = ships.player(City.Altona).length
+    const hamburgShips = ships.player(City.Hamburg).length
+    return altonaShips > hamburgShips ? City.Altona : hamburgShips > altonaShips ? City.Hamburg : undefined
   }
 
   getPlayerProducts(player: number) {
