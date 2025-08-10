@@ -33,7 +33,7 @@ export class GainPrestigeIncomeRule extends PlayerTurnRule {
     actions.push({ type: ActionType.ResolveLawsuit })
     const player = prestigeMarkerX < 0 ? City.Altona : City.Hamburg
     this.memorize(Memory.Actions, actions)
-    this.memorize(Memory.PendingRule, RuleId.OffSeasonChangeSpecialCards)
+    this.memorize(Memory.PendingRule, RuleId.ReplaceSpecialActionCards)
     return [this.startPlayerTurn(ActionRuleIds[actions[0].type], player)]
   }
 }

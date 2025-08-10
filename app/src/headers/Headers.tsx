@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { RuleId } from '@gamepark/rival-cities/rules/RuleId'
 import { ComponentType } from 'react'
+import { Trans } from 'react-i18next'
 import { AdvanceInkJarHeader } from './AdvanceInkJarHeader'
 import { AdvanceLawsuitHeader } from './AdvanceLawsuitHeader'
 import { BuildFactoryHeader } from './BuildFactoryHeader'
@@ -16,7 +17,6 @@ import { FormAllianceHeader } from './FormAllianceHeader'
 import { GainLetterHeader } from './GainLetterHeader'
 import { GainStarsHeader } from './GainStarsHeader'
 import { GiftHeader } from './GiftHeader'
-import { OffSeasonChangeSpecialCardsHeader } from './OffSeasonChangeSpecialCardsHeader'
 import { OffSeasonReactivateFactoriesHeader } from './OffSeasonReactivateFactoriesHeader'
 import { OffSeasonReturnBellHeader } from './OffSeasonReturnBellHeader'
 import { PayAlliancesUpkeepHeader } from './PayAlliancesUpkeepHeader'
@@ -58,7 +58,7 @@ export const Headers: Partial<Record<RuleId, ComponentType>> = {
   [RuleId.ConfirmEndTurn]: ConfirmEndTurnHeader,
   [RuleId.TakeBell]: TakeBellHeader,
   [RuleId.PayAlliancesUpkeep]: PayAlliancesUpkeepHeader,
-  [RuleId.OffSeasonChangeSpecialCards]: OffSeasonChangeSpecialCardsHeader,
+  [RuleId.ReplaceSpecialActionCards]: () => <Trans defaults={`header.replace-cards`} />,
   [RuleId.OffSeasonReactivateFactories]: OffSeasonReactivateFactoriesHeader,
   [RuleId.OffSeasonReturnBell]: OffSeasonReturnBellHeader
 }

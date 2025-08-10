@@ -4,7 +4,7 @@ import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { RuleId } from '../RuleId'
 
-export class OffSeasonChangeSpecialCardsRule extends PlayerTurnRule {
+export class ReplaceSpecialActionCardsRule extends PlayerTurnRule {
   onRuleStart() {
     const cardsOnBoard = this.material(MaterialType.SpecialActionCard)
       .location(LocationType.CardPiste)
