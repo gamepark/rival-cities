@@ -5,7 +5,7 @@ import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
 import { RivalCitiesRules } from '@gamepark/rival-cities/RivalCitiesRules'
 import { DonationRule } from '@gamepark/rival-cities/rules/actions/DonationRule'
 import { CustomMoveType } from '@gamepark/rival-cities/rules/CustomMoveType'
-import { MemoryType } from '@gamepark/rival-cities/rules/MemoryType'
+import { Memory } from '@gamepark/rival-cities/rules/Memory'
 import { isCustomMoveType, isMoveItemType } from '@gamepark/rules-api'
 import { Trans } from 'react-i18next'
 import Star from '../images/icons/Star.png'
@@ -19,7 +19,7 @@ export const DonationHeader = () => {
   const pass = useLegalMove(isCustomMoveType(CustomMoveType.Pass))
   const donate = useLegalMove(isMoveItemType(MaterialType.StarToken))
   const { cost, product, stars, times } = new DonationRule(rules.game).action
-  const count = rules.remind<number>(MemoryType.Count)
+  const count = rules.remind<number>(Memory.Count)
 
   if (activePlayer === me) {
     if (count) {

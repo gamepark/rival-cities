@@ -4,13 +4,13 @@ import { Alliance } from '../../material/Alliance'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { CustomMoveType } from '../CustomMoveType'
-import { MemoryType } from '../MemoryType'
+import { Memory } from '../Memory'
 import { ActionRule } from './ActionRule'
 
 export class DonationRule extends ActionRule<Donation> {
   getPlayerMoves() {
     const playerProducts = this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(this.player)
-    const productsToPay = this.remind<number | undefined>(MemoryType.Count)
+    const productsToPay = this.remind<number | undefined>(Memory.Count)
     if (productsToPay) {
       return playerProducts.moveItems((item) => ({ type: LocationType.ProductPiles, id: item.id }))
     }
@@ -30,10 +30,10 @@ export class DonationRule extends ActionRule<Donation> {
         const products = this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(this.player).id(this.action.product)
         return [products.moveItem({ type: LocationType.ProductPiles, id: this.action.product }, this.action.cost), this.endAction()]
       } else {
-        this.memorize(MemoryType.Count, this.action.cost)
+        this.memorize(Memory.Count, this.action.cost)
       }
     } else if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.ProductPiles && !this.action.product) {
-      const count = this.memorize<number>(MemoryType.Count, (count) => count - 1)
+      const count = this.memorize<number>(Memory.Count, (count) => count - 1)
       if (count === 0) {
         return [this.endAction()]
       }
@@ -43,7 +43,7 @@ export class DonationRule extends ActionRule<Donation> {
 
   onRuleEnd() {
     super.onRuleEnd()
-    this.forget(MemoryType.Count)
+    this.forget(Memory.Count)
     return []
   }
 }

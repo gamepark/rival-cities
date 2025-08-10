@@ -4,7 +4,7 @@ import { ActionType } from '../../material/Action'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { Product } from '../../material/Product'
-import { MemoryType } from '../MemoryType'
+import { Memory } from '../Memory'
 import { RuleId } from '../RuleId'
 
 export class OffSeasonGetPrestigeBonusesRule extends PlayerTurnRule {
@@ -92,8 +92,8 @@ export class OffSeasonGetPrestigeBonusesRule extends PlayerTurnRule {
   }
 
   startResolveLawsuit() {
-    this.memorize(MemoryType.PendingRule, RuleId.OffSeasonChangeSpecialCards)
-    this.memorize(MemoryType.Actions, [{ type: ActionType.ResolveLawsuit }])
+    this.memorize(Memory.PendingRule, RuleId.OffSeasonChangeSpecialCards)
+    this.memorize(Memory.Actions, [{ type: ActionType.ResolveLawsuit }])
     return this.startRule(RuleId.ResolveLawsuit)
   }
 

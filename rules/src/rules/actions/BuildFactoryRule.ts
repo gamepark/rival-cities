@@ -3,15 +3,15 @@ import { BuildFactory } from '../../material/Action'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { CustomMoveType } from '../CustomMoveType'
-import { MemoryType } from '../MemoryType'
+import { Memory } from '../Memory'
 import { ActionRule } from './ActionRule'
 
 export class BuildFactoryRule extends ActionRule<BuildFactory> {
-  isBuildInProgress = this.remind(MemoryType.IsBuildInProgress)
-  nbProductsGiven = this.remind<number>(MemoryType.Count) ?? 0
+  isBuildInProgress = this.remind(Memory.IsBuildInProgress)
+  nbProductsGiven = this.remind<number>(Memory.Count) ?? 0
 
   onRuleStart(): MaterialMove[] {
-    this.memorize(MemoryType.Count, 0)
+    this.memorize(Memory.Count, 0)
     if (this.action.price === 0) {
       return this.factories.moveItems({ type: LocationType.PlayerFactories, player: this.player }, 1)
     }
@@ -37,9 +37,9 @@ export class BuildFactoryRule extends ActionRule<BuildFactory> {
   beforeItemMove(move: ItemMove): MaterialMove[] {
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.Factory)(move) && move.location.type === LocationType.PlayerFactories) {
-      this.memorize(MemoryType.IsBuildInProgress, true)
+      this.memorize(Memory.IsBuildInProgress, true)
     } else if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.ProductPiles && this.isBuildInProgress) {
-      this.memorize(MemoryType.Count, this.nbProductsGiven + 1)
+      this.memorize(Memory.Count, this.nbProductsGiven + 1)
     }
     return moves
   }
@@ -47,8 +47,8 @@ export class BuildFactoryRule extends ActionRule<BuildFactory> {
   afterItemMove(move: ItemMove): MaterialMove[] {
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.ProductPiles) {
-      if (this.remind(MemoryType.Count) === this.action.price) {
-        this.memorize(MemoryType.Count, 0)
+      if (this.remind(Memory.Count) === this.action.price) {
+        this.memorize(Memory.Count, 0)
         return [this.endAction()]
       }
     }

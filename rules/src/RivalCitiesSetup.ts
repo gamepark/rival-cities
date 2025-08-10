@@ -12,7 +12,7 @@ import { Ship } from './material/Ship'
 import { specialActionCards } from './material/SpecialActionCard'
 import { RivalCitiesOptions } from './RivalCitiesOptions'
 import { RivalCitiesRules } from './RivalCitiesRules'
-import { MemoryType } from './rules/MemoryType'
+import { Memory } from './rules/Memory'
 import { RuleId } from './rules/RuleId'
 
 /**
@@ -109,9 +109,9 @@ export class RivalCitiesSetup extends MaterialGameSetup<City, MaterialType, Loca
   }
 
   private initializeMemory() {
-    this.memorize(MemoryType.Count, 0)
-    this.memorize(MemoryType.IsBuildInProgress, false)
-    this.memorize(MemoryType.IsProductReturn, false)
-    this.memorize(MemoryType.Actions, [])
+    this.memorize(Memory.Count, 0)
+    this.memorize(Memory.IsBuildInProgress, false)
+    this.memorize(Memory.IsProductReturn, false)
+    this.memorize(Memory.Actions, [])
   }
 }

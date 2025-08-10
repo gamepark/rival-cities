@@ -1,10 +1,10 @@
 import { MaterialRulesPart } from '@gamepark/rules-api'
-import { MemoryType } from '../MemoryType'
+import { Memory } from '../Memory'
 
 export class MemoryHelper extends MaterialRulesPart {
   clearMemory(): void {
-    this.memorize(MemoryType.Count, 0)
-    this.memorize(MemoryType.IsProductReturn, false)
-    this.memorize(MemoryType.IsBuildInProgress, false)
+    this.memorize(Memory.Count, 0)
+    this.memorize(Memory.IsProductReturn, false)
+    this.memorize(Memory.IsBuildInProgress, false)
   }
 }

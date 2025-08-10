@@ -46,7 +46,7 @@ import { ConfirmEndTurnRule } from './rules/ConfirmEndTurnRule'
 import { CustomMoveType } from './rules/CustomMoveType'
 import { EndOfGameHelper } from './rules/helper/EndOfGameHelper'
 import { MemoryHelper } from './rules/helper/MemoryHelper'
-import { MemoryType } from './rules/MemoryType'
+import { Memory } from './rules/Memory'
 import { OffSeasonChangeSpecialCardsRule } from './rules/OffSeason/OffSeasonChangeSpecialCardsRule'
 import { OffSeasonGetPrestigeBonusesRule } from './rules/OffSeason/OffSeasonGetPrestigeBonusesRule'
 import { OffSeasonGetShipsBonusesRule } from './rules/OffSeason/OffSeasonGetShipsBonusesRule'
@@ -196,9 +196,9 @@ export class RivalCitiesRules
     }
     if (move.type === CustomMoveType.SpendLetterToSwapProduct) {
       const letters = this.material(MaterialType.Letter).player(move.data as City)
-      const actions = this.memorize<Action[]>(MemoryType.Actions, (actions) => [{ type: ActionType.ProductSwap, nbPossibleSwaps: 1 }, ...actions])
+      const actions = this.memorize<Action[]>(Memory.Actions, (actions) => [{ type: ActionType.ProductSwap, nbPossibleSwaps: 1 }, ...actions])
       if (actions.length === 1) {
-        this.memorize(MemoryType.PendingRule, this.game.rule?.id)
+        this.memorize(Memory.PendingRule, this.game.rule?.id)
       }
       return [letters.moveItem({ type: LocationType.LetterDeck }), this.startRule(RuleId.ProductSwap)]
     }

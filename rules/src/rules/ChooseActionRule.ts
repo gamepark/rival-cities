@@ -10,18 +10,18 @@ import { Ship } from '../material/Ship'
 import { SpecialActionCard } from '../material/SpecialActionCard'
 import { CustomMoveType } from './CustomMoveType'
 import { ActionRuleIds } from './helper/ActionRuleIds'
-import { MemoryType } from './MemoryType'
+import { Memory } from './Memory'
 import { RuleId } from './RuleId'
 
 export class ChooseActionRule extends PlayerTurnRule {
   onRuleStart(): MaterialMove[] {
-    this.memorize(MemoryType.IsUseLetter, false)
+    this.memorize(Memory.IsUseLetter, false)
     if (specialActionCardPlaces.includes(this.inkjarLocationId)) {
       return []
     }
     if (this.playerSpecialActionCards.length === 0) {
       const actions = this.inkJarCardActions
-      this.memorize(MemoryType.Actions, actions)
+      this.memorize(Memory.Actions, actions)
       return [this.startRule(ActionRuleIds[actions[0].type])]
     }
     return []
@@ -34,7 +34,7 @@ export class ChooseActionRule extends PlayerTurnRule {
     }
     moves.push(...this.playerSpecialActionCards.moveItems({ type: LocationType.SpecialActionCardsDiscard }))
     moves.push(this.customMove(CustomMoveType.PlaysInkjarCard, this.inkjarLocationId))
-    if (specialActionCardPlaces.includes(this.inkjarLocationId) && !this.remind(MemoryType.IsUseLetter)) {
+    if (specialActionCardPlaces.includes(this.inkjarLocationId) && !this.remind(Memory.IsUseLetter)) {
       moves.push(this.specialActioncardInInkjarPlace.moveItem({ type: LocationType.PlayerSpecialActionCardsHand, player: this.player }))
     }
     return moves
@@ -42,7 +42,7 @@ export class ChooseActionRule extends PlayerTurnRule {
 
   beforeItemMove(move: ItemMove): MaterialMove[] {
     if (isMoveItemType(MaterialType.Letter)(move)) {
-      this.memorize(MemoryType.IsUseLetter, true)
+      this.memorize(Memory.IsUseLetter, true)
     }
     return []
   }
@@ -52,10 +52,10 @@ export class ChooseActionRule extends PlayerTurnRule {
       const actions: Action[] = []
       const cardId = this.material(MaterialType.SpecialActionCard).index(move.itemIndex).getItem()?.id as SpecialActionCard
       actions.push(...new SpecialActionCardHelper(this.game).getCardActions(cardId))
-      if (this.remind(MemoryType.IsUseLetter) || this.playerHaveShip18) {
+      if (this.remind(Memory.IsUseLetter) || this.playerHaveShip18) {
         actions.push(...this.inkJarCardActions)
       }
-      this.memorize(MemoryType.Actions, actions)
+      this.memorize(Memory.Actions, actions)
       return [this.startRule(ActionRuleIds[actions[0].type])]
     }
     if (isMoveItemType(MaterialType.SpecialActionCard)(move) && move.location.type === LocationType.PlayerSpecialActionCardsHand) {
@@ -67,10 +67,10 @@ export class ChooseActionRule extends PlayerTurnRule {
   onCustomMove(move: CustomMove): MaterialMove[] {
     if (isCustomMoveType(CustomMoveType.PlaysInkjarCard)(move)) {
       const actions = this.inkJarCardActions
-      if (this.remind(MemoryType.IsUseLetter) || this.playerHaveShip18) {
+      if (this.remind(Memory.IsUseLetter) || this.playerHaveShip18) {
         actions.push({ type: ActionType.ChooseSpecialActionCard })
       }
-      this.memorize(MemoryType.Actions, actions)
+      this.memorize(Memory.Actions, actions)
       return [this.startRule(ActionRuleIds[actions[0].type])]
     }
     return []
@@ -87,7 +87,7 @@ export class ChooseActionRule extends PlayerTurnRule {
   }
 
   get playerCanUseLetter() {
-    return this.playerLetters.length > 0 && !this.remind(MemoryType.IsUseLetter) && this.playerSpecialActionCards.getQuantity() > 0 && !this.playerHaveShip18
+    return this.playerLetters.length > 0 && !this.remind(Memory.IsUseLetter) && this.playerSpecialActionCards.getQuantity() > 0 && !this.playerHaveShip18
   }
 
   get playerLetters() {

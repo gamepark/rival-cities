@@ -6,7 +6,7 @@ import { Action, ActionType, MultipleActions } from '@gamepark/rival-cities/mate
 import { LocationType } from '@gamepark/rival-cities/material/LocationType'
 import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
 import { Product } from '@gamepark/rival-cities/material/Product'
-import { MemoryType } from '@gamepark/rival-cities/rules/MemoryType'
+import { Memory } from '@gamepark/rival-cities/rules/Memory'
 import { RuleId } from '@gamepark/rival-cities/rules/RuleId'
 import { isMoveItemType, MaterialItem, MaterialMove } from '@gamepark/rules-api'
 import React from 'react'
@@ -114,7 +114,7 @@ export class ProductDescription extends TokenDescription {
   }
 
   checkIfIsExchange(context: ItemContext): boolean {
-    const pendingActions: Action[] | undefined = context.rules.remind(MemoryType.Actions) ?? []
+    const pendingActions: Action[] | undefined = context.rules.remind(Memory.Actions) ?? []
     const currentAction = pendingActions[0] as MultipleActions
     const isSwapAction = currentAction?.actions?.some((action) => action.type === ActionType.ProductSwap)
     return context.rules.game.rule?.id === RuleId.ProductSwap || isSwapAction

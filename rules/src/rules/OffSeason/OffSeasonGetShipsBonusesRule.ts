@@ -4,26 +4,26 @@ import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { Ship, shipData, ShipEffectType } from '../../material/Ship'
 import { ActionRuleIds } from '../helper/ActionRuleIds'
-import { MemoryType } from '../MemoryType'
+import { Memory } from '../Memory'
 import { RuleId } from '../RuleId'
 
 export class OffSeasonGetShipsBonusesRule extends PlayerTurnRule {
   onRuleStart(): MaterialMove[] {
     const playerShips = this.playerShips
-    const shipToProcess = playerShips.find((it) => !this.remind<Ship[]>(MemoryType.ShipsIdsAlreadyProcessed).includes(it.id))
+    const shipToProcess = playerShips.find((it) => !this.remind<Ship[]>(Memory.ShipsIdsAlreadyProcessed).includes(it.id))
 
     if (shipToProcess) {
       const effect = shipData[shipToProcess.id].effect
       if (effect?.type === ShipEffectType.OffSeasonBonus) {
-        this.memorize<Ship[]>(MemoryType.ShipsIdsAlreadyProcessed, (old) => [...old, shipToProcess.id])
+        this.memorize<Ship[]>(Memory.ShipsIdsAlreadyProcessed, (old) => [...old, shipToProcess.id])
         this.memorize(
-          MemoryType.PendingRule,
-          this.remind<Ship[]>(MemoryType.ShipsIdsAlreadyProcessed).length === playerShips.length
+          Memory.PendingRule,
+          this.remind<Ship[]>(Memory.ShipsIdsAlreadyProcessed).length === playerShips.length
             ? RuleId.OffSeasonGetPrestigeBonuses
             : RuleId.OffSeasonGetShipsBonuses
         )
-        this.memorize(MemoryType.Actions, structuredClone(effect.actions))
-        return [this.startRule(ActionRuleIds[this.remind<Action[]>(MemoryType.Actions)[0].type])]
+        this.memorize(Memory.Actions, structuredClone(effect.actions))
+        return [this.startRule(ActionRuleIds[this.remind<Action[]>(Memory.Actions)[0].type])]
       }
     }
 

@@ -8,7 +8,7 @@ import { MaterialType } from '../../material/MaterialType'
 import { Product } from '../../material/Product'
 import { CustomMoveType } from '../CustomMoveType'
 import { ActionRuleIds } from '../helper/ActionRuleIds'
-import { MemoryType } from '../MemoryType'
+import { Memory } from '../Memory'
 import { RuleId } from '../RuleId'
 
 export abstract class ActionRule<A extends Action> extends PlayerTurnRule {
@@ -20,7 +20,7 @@ export abstract class ActionRule<A extends Action> extends PlayerTurnRule {
   }
 
   get actions(): Action[] {
-    return this.remind<Action[]>(MemoryType.Actions)
+    return this.remind<Action[]>(Memory.Actions)
   }
 
   endAction() {
@@ -50,9 +50,9 @@ export abstract class ActionRule<A extends Action> extends PlayerTurnRule {
 
   get nextRuleId() {
     if (this.actions.length < 2) {
-      const pendingRule = this.remind<RuleId | undefined>(MemoryType.PendingRule)
+      const pendingRule = this.remind<RuleId | undefined>(Memory.PendingRule)
       if (pendingRule) {
-        this.forget(MemoryType.PendingRule)
+        this.forget(Memory.PendingRule)
         return pendingRule
       }
       return RuleId.ConfirmEndTurn
@@ -92,7 +92,7 @@ export abstract class ActionRule<A extends Action> extends PlayerTurnRule {
   }
 
   onRuleEnd() {
-    this.memorize<Action[]>(MemoryType.Actions, (actions) => actions.slice(1))
+    this.memorize<Action[]>(Memory.Actions, (actions) => actions.slice(1))
     return []
   }
 }

@@ -5,7 +5,7 @@ import { Cost, CostType } from '../../material/Cost'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { CustomMoveType } from '../CustomMoveType'
-import { MemoryType } from '../MemoryType'
+import { Memory } from '../Memory'
 import { RuleId } from '../RuleId'
 
 export type AlliancePay = {
@@ -18,7 +18,7 @@ export class OffSeasonPayForAllianceRule extends SimultaneousRule {
   onRuleStart(): MaterialMove[] {
     const moves: MaterialMove[] = []
     this.game.players.forEach((player) => {
-      this.memorize(MemoryType.AlliancePay, [], player)
+      this.memorize(Memory.AlliancePay, [], player)
       if (this.getPlayerAlliances(player).length === 0) {
         moves.push(this.endPlayerTurn(player))
       }
@@ -28,7 +28,7 @@ export class OffSeasonPayForAllianceRule extends SimultaneousRule {
 
   getActivePlayerLegalMoves(player: number): MaterialMove[] {
     const moves: MaterialMove[] = []
-    const allianceToPay = this.remind<AlliancePay[]>(MemoryType.AlliancePay, player).find((it: AlliancePay) => it.alreadyPay < it.cost.amount)
+    const allianceToPay = this.remind<AlliancePay[]>(Memory.AlliancePay, player).find((it: AlliancePay) => it.alreadyPay < it.cost.amount)
     if (allianceToPay) {
       return this.getPlayerProduct(player).moveItems((it) => ({ type: LocationType.ProductPiles, id: it.id }))
     }
@@ -56,11 +56,11 @@ export class OffSeasonPayForAllianceRule extends SimultaneousRule {
       const player =
         this.material(MaterialType.Letter).index(move.itemIndex).getItem()?.location.player ??
         this.material(MaterialType.Product).index(move.itemIndex).getItem()?.location.player
-      const alliancePays: AlliancePay[] | undefined = this.remind<AlliancePay[]>(MemoryType.AlliancePay, player) ?? []
+      const alliancePays: AlliancePay[] | undefined = this.remind<AlliancePay[]>(Memory.AlliancePay, player) ?? []
       const alliancePay = alliancePays.find((it: AlliancePay) => it.alreadyPay < it.cost.amount)
       if (alliancePay) {
         alliancePay.alreadyPay += move.quantity ?? 1
-        this.memorize(MemoryType.AlliancePay, alliancePays, player)
+        this.memorize(Memory.AlliancePay, alliancePays, player)
       }
       if (this.getPlayerAlreadyPayedAlliance(player!).length === this.getPlayerAlliances(player!).length) {
         return [this.endPlayerTurn(player!)]
@@ -78,7 +78,7 @@ export class OffSeasonPayForAllianceRule extends SimultaneousRule {
   onCustomMove(move: CustomMove): MaterialMove[] {
     if (isCustomMoveType(CustomMoveType.PayForAlliance)(move)) {
       const payment = move.data as { pay: AlliancePay; player: City }
-      this.memorize<AlliancePay[]>(MemoryType.AlliancePay, (alliancePays) => [...alliancePays, payment.pay], payment.player)
+      this.memorize<AlliancePay[]>(Memory.AlliancePay, (alliancePays) => [...alliancePays, payment.pay], payment.player)
 
       if (payment.pay.cost.type === CostType.Letters) {
         return this.getPlayerLetters(payment.player).moveItems({ type: LocationType.LetterDeck })
@@ -130,6 +130,6 @@ export class OffSeasonPayForAllianceRule extends SimultaneousRule {
   }
 
   getPlayerAlreadyPayedAlliance(player: number): AlliancePay[] {
-    return this.remind<AlliancePay[]>(MemoryType.AlliancePay, player)?.filter((it: AlliancePay) => it.alreadyPay >= it.cost.amount) ?? []
+    return this.remind<AlliancePay[]>(Memory.AlliancePay, player)?.filter((it: AlliancePay) => it.alreadyPay >= it.cost.amount) ?? []
   }
 }

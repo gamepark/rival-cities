@@ -2,7 +2,7 @@
 
 import { usePlayerId, usePlayerName, useRules } from '@gamepark/react-game'
 import { RivalCitiesRules } from '@gamepark/rival-cities/RivalCitiesRules'
-import { MemoryType } from '@gamepark/rival-cities/rules/MemoryType'
+import { Memory } from '@gamepark/rival-cities/rules/Memory'
 import { Trans } from 'react-i18next'
 
 export const PayProductForAdvanceHeader = () => {
@@ -11,7 +11,7 @@ export const PayProductForAdvanceHeader = () => {
   const activePlayer = rules.game.rule?.player
   const itsMe = player && activePlayer === player
   const name = usePlayerName(activePlayer)
-  const count = rules.remind<number>(MemoryType.Count)
+  const count = rules.remind<number>(Memory.Count)
 
   if (itsMe) {
     return <Trans defaults="header.pay.product.you" values={{ count }} />

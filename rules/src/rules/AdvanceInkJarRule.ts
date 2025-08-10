@@ -1,7 +1,7 @@
 import { isMoveItemType, ItemMove, MaterialMove, PlayerTurnRule } from '@gamepark/rules-api'
 import { MaterialType } from '../material/MaterialType'
 import { INK_SPACES, InkJarPisteHelper } from './helper/InkjarPisteHelper'
-import { MemoryType } from './MemoryType'
+import { Memory } from './Memory'
 import { RuleId } from './RuleId'
 
 export class AdvanceInkJarRule extends PlayerTurnRule {
@@ -17,13 +17,13 @@ export class AdvanceInkJarRule extends PlayerTurnRule {
     const distance = (endSpace + INK_SPACES - initialSpace) % INK_SPACES
     const movementCost = new InkJarPisteHelper(this.game).getMovementCost(distance)
     if (endSpace < initialSpace) {
-      this.memorize(MemoryType.PendingRule, RuleId.OffSeasonTakeBell)
+      this.memorize(Memory.PendingRule, RuleId.OffSeasonTakeBell)
     }
     if (movementCost > 0) {
-      this.memorize(MemoryType.Count, movementCost)
+      this.memorize(Memory.Count, movementCost)
       return [this.startRule(RuleId.PayInkJarMovementCost)]
     } else {
-      return [this.startRule(this.remind<RuleId | undefined>(MemoryType.PendingRule) ?? RuleId.ChooseAction)]
+      return [this.startRule(this.remind<RuleId | undefined>(Memory.PendingRule) ?? RuleId.ChooseAction)]
     }
   }
 }

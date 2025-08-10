@@ -1,12 +1,12 @@
 import { isMoveItemType, ItemMove, MaterialMove, PlayerTurnRule } from '@gamepark/rules-api'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
-import { MemoryType } from '../MemoryType'
+import { Memory } from '../Memory'
 import { RuleId } from '../RuleId'
 
 export class OffSeasonReturnBellRule extends PlayerTurnRule {
   onRuleStart(): MaterialMove[] {
-    this.forget(MemoryType.PendingRule)
+    this.forget(Memory.PendingRule)
     return [this.material(MaterialType.BellToken).moveItem({ type: LocationType.BellTokenIdle })]
   }
 

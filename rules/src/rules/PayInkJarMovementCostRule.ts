@@ -1,7 +1,7 @@
 import { isMoveItemType, ItemMove, MaterialMove, PlayerTurnRule } from '@gamepark/rules-api'
 import { LocationType } from '../material/LocationType'
 import { MaterialType } from '../material/MaterialType'
-import { MemoryType } from './MemoryType'
+import { Memory } from './Memory'
 import { RuleId } from './RuleId'
 
 export class PayInkJarMovementCostRule extends PlayerTurnRule {
@@ -11,9 +11,9 @@ export class PayInkJarMovementCostRule extends PlayerTurnRule {
 
   afterItemMove(move: ItemMove): MaterialMove[] {
     if (!isMoveItemType(MaterialType.Product)(move)) return []
-    const countLeft = this.memorize<number>(MemoryType.Count, (count) => count - 1)
+    const countLeft = this.memorize<number>(Memory.Count, (count) => count - 1)
     if (!countLeft) {
-      return [this.startRule(this.remind<RuleId | undefined>(MemoryType.PendingRule) ?? RuleId.ChooseAction)]
+      return [this.startRule(this.remind<RuleId | undefined>(Memory.PendingRule) ?? RuleId.ChooseAction)]
     }
     return []
   }
