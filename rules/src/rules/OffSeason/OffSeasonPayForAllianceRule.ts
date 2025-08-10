@@ -1,19 +1,16 @@
 import { CustomMove, isCustomMoveType, isMoveItemType, ItemMove, Location, MaterialMove, SimultaneousRule } from '@gamepark/rules-api'
 import { City } from '../../City'
 import { Alliance, AllianceData, alliancesData } from '../../material/Alliance'
+import { Cost, CostType } from '../../material/Cost'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
-import { Product } from '../../material/Product'
 import { CustomMoveType } from '../CustomMoveType'
 import { MemoryType } from '../MemoryType'
 import { RuleId } from '../RuleId'
 
 export type AlliancePay = {
   id: Alliance
-  cost: {
-    product?: Product | 'Letter'
-    amount: number
-  }
+  cost: Cost
   alreadyPay: number
 }
 
@@ -83,10 +80,10 @@ export class OffSeasonPayForAllianceRule extends SimultaneousRule {
       const payment = move.data as { pay: AlliancePay; player: City }
       this.memorize<AlliancePay[]>(MemoryType.AlliancePay, (alliancePays) => [...alliancePays, payment.pay], payment.player)
 
-      if (payment.pay.cost.product === 'Letter') {
+      if (payment.pay.cost.type === CostType.Letters) {
         return this.getPlayerLetters(payment.player).moveItems({ type: LocationType.LetterDeck })
       }
-      if (payment.pay.cost.product) {
+      if (payment.pay.cost.type === CostType.Product) {
         return this.getPlayerProduct(payment.player)
           .id(payment.pay.cost.product)
           .moveItems((it) => ({ type: LocationType.ProductPiles, id: it.id }), payment.pay.cost.amount)
@@ -111,10 +108,10 @@ export class OffSeasonPayForAllianceRule extends SimultaneousRule {
   }
 
   checkIfPlayerHasEnougthProducts(player: number, allianceData: AllianceData): boolean {
-    if (allianceData.cost.product === 'Letter') {
+    if (allianceData.cost.type === CostType.Letters) {
       return this.getPlayerLetters(player).getQuantity() >= allianceData.cost.amount
     }
-    if (allianceData.cost.product) {
+    if (allianceData.cost.type === CostType.Product) {
       return this.getPlayerProduct(player).id(allianceData.cost.product).getQuantity() >= allianceData.cost.amount
     }
     return this.getPlayerProduct(player).getQuantity() >= allianceData.cost.amount

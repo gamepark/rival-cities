@@ -1,4 +1,5 @@
 import { Action, ActionType } from './Action'
+import { cost, ProductCost } from './Cost'
 import { Product } from './Product'
 
 export enum Ship {
@@ -55,17 +56,14 @@ export type WinLawsuitBonusEffect = {
 export type ShipEffect = InstantEffect | OffSeasonBonusEffect | ProductionBonusEffect | WinLawsuitBonusEffect
 
 export type ShipData = {
-  cost: {
-    type: Product
-    quantity: number
-  }
+  cost: ProductCost
   effect?: ShipEffect
   getNbStars: (_nbShip: number) => number
 }
 
 export const shipData: Record<Ship, ShipData> = {
   [Ship.Ship1]: {
-    cost: { type: Product.Furniture, quantity: 3 },
+    cost: cost(3, Product.Furniture),
     effect: {
       type: ShipEffectType.Instant,
       actions: [{ type: ActionType.EarnPrestige }, { type: ActionType.EarnPrestige }]
@@ -73,7 +71,7 @@ export const shipData: Record<Ship, ShipData> = {
     getNbStars: () => 1
   },
   [Ship.Ship2]: {
-    cost: { type: Product.Cloth, quantity: 3 },
+    cost: cost(3, Product.Cloth),
     effect: {
       type: ShipEffectType.Instant,
       actions: [
@@ -84,7 +82,7 @@ export const shipData: Record<Ship, ShipData> = {
     getNbStars: () => 2
   },
   [Ship.Ship3]: {
-    cost: { type: Product.Leather, quantity: 3 },
+    cost: cost(3, Product.Leather),
     effect: {
       type: ShipEffectType.Instant,
       actions: [{ type: ActionType.DrawSpecialActionCard }]
@@ -92,7 +90,7 @@ export const shipData: Record<Ship, ShipData> = {
     getNbStars: () => 2
   },
   [Ship.Ship4]: {
-    cost: { type: Product.Furniture, quantity: 2 },
+    cost: cost(2, Product.Furniture),
     effect: {
       type: ShipEffectType.Instant,
       actions: [{ type: ActionType.GainLetter, nbLettersToTake: 1 }]
@@ -100,7 +98,7 @@ export const shipData: Record<Ship, ShipData> = {
     getNbStars: () => 3
   },
   [Ship.Ship5]: {
-    cost: { type: Product.Furniture, quantity: 2 },
+    cost: cost(2, Product.Furniture),
     effect: {
       type: ShipEffectType.Instant,
       actions: [{ type: ActionType.GainLetter, nbLettersToTake: 2 }]
@@ -108,7 +106,7 @@ export const shipData: Record<Ship, ShipData> = {
     getNbStars: () => 1
   },
   [Ship.Ship6]: {
-    cost: { type: Product.Leather, quantity: 4 },
+    cost: cost(4, Product.Leather),
     effect: {
       type: ShipEffectType.OffSeasonBonus,
       actions: [{ type: ActionType.GainStars, stars: 1 }]
@@ -116,7 +114,7 @@ export const shipData: Record<Ship, ShipData> = {
     getNbStars: () => 2
   },
   [Ship.Ship7]: {
-    cost: { type: Product.Cloth, quantity: 5 },
+    cost: cost(5, Product.Cloth),
     effect: {
       type: ShipEffectType.OffSeasonBonus,
       actions: [{ type: ActionType.GainProducts, product: Product.Furniture, quantity: 2 }]
@@ -124,7 +122,7 @@ export const shipData: Record<Ship, ShipData> = {
     getNbStars: () => 1
   },
   [Ship.Ship8]: {
-    cost: { type: Product.Cloth, quantity: 4 },
+    cost: cost(4, Product.Cloth),
     effect: {
       type: ShipEffectType.OffSeasonBonus,
       actions: [{ type: ActionType.EarnPrestige }]
@@ -132,7 +130,7 @@ export const shipData: Record<Ship, ShipData> = {
     getNbStars: () => 1
   },
   [Ship.Ship9]: {
-    cost: { type: Product.Beer, quantity: 5 },
+    cost: cost(5, Product.Beer),
     effect: {
       type: ShipEffectType.OffSeasonBonus,
       actions: [{ type: ActionType.GainProducts, product: Product.Cloth, quantity: 2 }]
@@ -140,7 +138,7 @@ export const shipData: Record<Ship, ShipData> = {
     getNbStars: () => 2
   },
   [Ship.Ship10]: {
-    cost: { type: Product.Beer, quantity: 5 },
+    cost: cost(5, Product.Beer),
     effect: {
       type: ShipEffectType.OffSeasonBonus,
       actions: [{ type: ActionType.GainLetter, nbLettersToTake: 1 }]
@@ -148,7 +146,7 @@ export const shipData: Record<Ship, ShipData> = {
     getNbStars: () => 1
   },
   [Ship.Ship11]: {
-    cost: { type: Product.Cloth, quantity: 4 },
+    cost: cost(4, Product.Cloth),
     effect: {
       type: ShipEffectType.ProductionBonus,
       product: Product.Beer
@@ -156,7 +154,7 @@ export const shipData: Record<Ship, ShipData> = {
     getNbStars: () => 1
   },
   [Ship.Ship12]: {
-    cost: { type: Product.Beer, quantity: 6 },
+    cost: cost(6, Product.Beer),
     effect: {
       type: ShipEffectType.ProductionBonus,
       product: Product.Leather
@@ -164,7 +162,7 @@ export const shipData: Record<Ship, ShipData> = {
     getNbStars: () => 1
   },
   [Ship.Ship13]: {
-    cost: { type: Product.Leather, quantity: 4 },
+    cost: cost(4, Product.Leather),
     effect: {
       type: ShipEffectType.ProductionBonus,
       product: Product.Cloth
@@ -172,7 +170,7 @@ export const shipData: Record<Ship, ShipData> = {
     getNbStars: () => 1
   },
   [Ship.Ship14]: {
-    cost: { type: Product.Cloth, quantity: 5 },
+    cost: cost(5, Product.Cloth),
     effect: {
       type: ShipEffectType.ProductionBonus,
       product: Product.Furniture
@@ -180,7 +178,7 @@ export const shipData: Record<Ship, ShipData> = {
     getNbStars: () => 1
   },
   [Ship.Ship15]: {
-    cost: { type: Product.Cloth, quantity: 3 },
+    cost: cost(3, Product.Cloth),
     effect: {
       type: ShipEffectType.WinLawsuitBonus,
       action: { type: ActionType.GainStars, stars: 2 }
@@ -188,27 +186,27 @@ export const shipData: Record<Ship, ShipData> = {
     getNbStars: () => 1
   },
   [Ship.Ship16]: {
-    cost: { type: Product.Furniture, quantity: 3 },
+    cost: cost(3, Product.Furniture),
     getNbStars: () => 2
   },
   [Ship.Ship17]: {
-    cost: { type: Product.Leather, quantity: 3 },
+    cost: cost(3, Product.Leather),
     getNbStars: () => 1
   },
   [Ship.Ship18]: {
-    cost: { type: Product.Furniture, quantity: 4 },
+    cost: cost(4, Product.Furniture),
     getNbStars: () => 1
   },
   [Ship.Ship19]: {
-    cost: { type: Product.Beer, quantity: 4 },
+    cost: cost(4, Product.Beer),
     getNbStars: () => 1
   },
   [Ship.Ship20]: {
-    cost: { type: Product.Leather, quantity: 4 },
+    cost: cost(4, Product.Leather),
     getNbStars: () => 5
   },
   [Ship.Ship21]: {
-    cost: { type: Product.Cloth, quantity: 3 },
+    cost: cost(3, Product.Cloth),
     getNbStars: (nbShip) => nbShip
   }
 }

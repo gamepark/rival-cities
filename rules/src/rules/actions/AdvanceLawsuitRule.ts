@@ -1,17 +1,16 @@
-import { isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
+import { getEnumValues, isMoveItemType, ItemMove, MaterialItem, MaterialMove } from '@gamepark/rules-api'
 import { City } from '../../City'
 import { ActionType, AdvanceLawsuit } from '../../material/Action'
 import { Alliance } from '../../material/Alliance'
+import { CostType } from '../../material/Cost'
 import { Lawsuit, lawsuitData } from '../../material/Lawsuit'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
+import { Product } from '../../material/Product'
 import { CustomMoveType } from '../CustomMoveType'
-import { AdvanceLawsuitHelper } from '../helper/AdvanceLawsuitHelper'
 import { ActionRule } from './ActionRule'
 
 export class AdvanceLawsuitRule extends ActionRule<AdvanceLawsuit> {
-  advanceLawsuitHelper = new AdvanceLawsuitHelper(this.game)
-
   getPlayerMoves(): MaterialMove[] {
     const moveX = this.player === City.Altona ? -1 : 1
     const moves: MaterialMove[] = []
@@ -28,15 +27,23 @@ export class AdvanceLawsuitRule extends ActionRule<AdvanceLawsuit> {
   beforeItemMove(move: ItemMove): MaterialMove[] {
     const moves: MaterialMove[] = []
     if (isMoveItemType(MaterialType.LawsuitMarker)(move)) {
-      const card = this.lawsuitCards.parent(move.location.parent).getItem()
-      if (card) {
-        lawsuitData[card.id as Lawsuit].cost.forEach((cost) => {
-          if (cost.type === 'Letter') {
-            moves.push(...this.playerLetters.limit(cost.quantity).moveItems({ type: LocationType.LetterDeck }))
-          } else {
-            moves.push(...this.playerProducts.id(cost.type).moveItems({ type: LocationType.ProductPiles, id: cost.type }, cost.quantity))
+      const card = this.lawsuitCards.parent(move.location.parent).getItem<Lawsuit>()!
+      const cost = lawsuitData[card.id].cost
+      switch (cost.type) {
+        case CostType.Product:
+          moves.push(this.playerProducts.id(cost.product).moveItem({ type: LocationType.ProductPiles, id: cost.product }, cost.amount))
+          break
+        case CostType.Products:
+          for (const product of getEnumValues(Product)) {
+            const amount = cost.amount[product]
+            if (amount) {
+              moves.push(this.playerProducts.id(product).moveItem({ type: LocationType.ProductPiles, id: product }, amount))
+            }
           }
-        })
+          break
+        case CostType.Letters:
+          moves.push(this.playerLetters.moveItem({ type: LocationType.LetterDeck }, 1))
+          break
       }
     }
     return moves
@@ -68,14 +75,14 @@ export class AdvanceLawsuitRule extends ActionRule<AdvanceLawsuit> {
             }
           })
         }
-        if (lawsuitX === 1 && timeAlreadyAdvanced < 1 && this.advanceLawsuitHelper.checkMarkerIsNotAtMaxX(marker)) {
+        if (lawsuitX === 1 && timeAlreadyAdvanced < 1 && this.checkMarkerIsNotAtMaxX(marker)) {
           this.addActions({
             type: ActionType.AdvanceLawsuit,
             lawsuitAdvancedLocation: marker.location.parent,
             nbTimeAlreadyAdvanced: timeAlreadyAdvanced + 1,
             isLeHavreBonus: this.action.isLeHavreBonus
           })
-        } else if (lawsuitX === 2 && timeAlreadyAdvanced < 2 && this.advanceLawsuitHelper.checkMarkerIsNotAtMaxX(marker)) {
+        } else if (lawsuitX === 2 && timeAlreadyAdvanced < 2 && this.checkMarkerIsNotAtMaxX(marker)) {
           this.addActions({
             type: ActionType.AdvanceLawsuit,
             lawsuitAdvancedLocation: marker.location.parent,
@@ -95,7 +102,22 @@ export class AdvanceLawsuitRule extends ActionRule<AdvanceLawsuit> {
   }
 
   possibleCardsToGet() {
-    return this.lawsuitCards.getItems<Lawsuit>((item) => this.advanceLawsuitHelper.checkIfCanAdvanceInLawsuit(item.id, item.location.parent!))
+    return this.lawsuitCards.getItems<Lawsuit>((item) => this.checkIfCanAdvanceInLawsuit(item.id, item.location.parent!))
+  }
+
+  checkIfCanAdvanceInLawsuit(itemId: Lawsuit, parent: number) {
+    if (!itemId) return false
+    const cost = lawsuitData[itemId].cost
+    const marker = this.material(MaterialType.LawsuitMarker).location(LocationType.LawsuitMarkerSpace).parent(parent)
+    return this.canPay(cost) && this.checkMarkerIsNotAtMaxX(marker.getItem()!)
+  }
+
+  checkMarkerIsNotAtMaxX(marker: MaterialItem): boolean {
+    const markerLocationX = marker.location.x ?? 0
+    if (this.player === City.Altona) {
+      return markerLocationX > -4
+    }
+    return markerLocationX < 4
   }
 
   get playerProducts() {

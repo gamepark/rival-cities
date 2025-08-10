@@ -1,4 +1,5 @@
 import { getEnumValues } from '@gamepark/rules-api'
+import { cost, Cost, CostType } from './Cost'
 import { Product } from './Product'
 
 export enum Alliance {
@@ -13,22 +14,19 @@ export enum Alliance {
 }
 
 export type AllianceData = {
-  cost: {
-    product?: Product | 'Letter'
-    amount: number
-  }
+  cost: Cost
   stars: number
 }
 
 export const allianceCards = getEnumValues(Alliance)
 
 export const alliancesData: Record<Alliance, AllianceData> = {
-  [Alliance.Amsterdam]: { cost: { amount: 2 }, stars: 2 },
-  [Alliance.Bruxelles]: { cost: { product: Product.Furniture, amount: 1 }, stars: 2 },
-  [Alliance.Gdansk]: { cost: { product: 'Letter', amount: 1 }, stars: 1 },
-  [Alliance.Kjjobenhavn]: { cost: { product: Product.Beer, amount: 2 }, stars: 1 },
-  [Alliance.LeHavre]: { cost: { amount: 1 }, stars: 2 },
-  [Alliance.London]: { cost: { amount: 1 }, stars: 1 },
-  [Alliance.Novgorod]: { cost: { amount: 1 }, stars: 1 },
-  [Alliance.Oslo]: { cost: { amount: 1 }, stars: 1 }
+  [Alliance.Amsterdam]: { cost: cost(2), stars: 2 },
+  [Alliance.Bruxelles]: { cost: cost(1, Product.Furniture), stars: 2 },
+  [Alliance.Gdansk]: { cost: { type: CostType.Letters, amount: 1 }, stars: 1 },
+  [Alliance.Kjjobenhavn]: { cost: cost(2, Product.Beer), stars: 1 },
+  [Alliance.LeHavre]: { cost: cost(1), stars: 2 },
+  [Alliance.London]: { cost: cost(1), stars: 1 },
+  [Alliance.Novgorod]: { cost: cost(1), stars: 1 },
+  [Alliance.Oslo]: { cost: cost(1), stars: 1 }
 }

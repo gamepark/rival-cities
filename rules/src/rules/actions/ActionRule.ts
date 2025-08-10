@@ -1,8 +1,11 @@
-import { CustomMove, MaterialGame, MaterialMove, PlayerTurnRule } from '@gamepark/rules-api'
+import { CustomMove, getEnumValues, MaterialGame, MaterialMove, PlayerTurnRule } from '@gamepark/rules-api'
 import { getRival } from '../../City'
 import { Action } from '../../material/Action'
 import { Alliance } from '../../material/Alliance'
+import { Cost, CostType } from '../../material/Cost'
+import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
+import { Product } from '../../material/Product'
 import { CustomMoveType } from '../CustomMoveType'
 import { ActionRuleIds } from '../helper/ActionRuleIds'
 import { MemoryType } from '../MemoryType'
@@ -59,6 +62,21 @@ export abstract class ActionRule<A extends Action> extends PlayerTurnRule {
 
   hasAlliance(alliance: Alliance, player = this.player) {
     return this.material(MaterialType.AllianceCard).id(alliance).getItem()?.location.player === player
+  }
+
+  canPay(cost: Cost, player = this.player) {
+    switch (cost.type) {
+      case CostType.Product:
+        return this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(player).id(cost.product).getQuantity() >= cost.amount
+      case CostType.Products: {
+        const products = this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(player)
+        return getEnumValues(Product).every((product) => products.id(product).getQuantity() >= (cost.amount[product] ?? 0))
+      }
+      case CostType.AnyProducts:
+        return this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(player).getQuantity() >= cost.amount
+      case CostType.Letters:
+        return this.material(MaterialType.Letter).location(LocationType.PlayerLetterDeck).player(this.player).getQuantity() >= cost.amount
+    }
   }
 
   onRuleEnd() {

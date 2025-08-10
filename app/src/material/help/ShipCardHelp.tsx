@@ -46,5 +46,5 @@ const Price = ({ cardId }: { cardId: Ship }) => {
     [Product.Cloth]: 'help.price.cloth',
     [Product.Beer]: 'help.price.beer'
   }
-  return <Trans defaults={product[cost.type]} values={{ quantity: cost.quantity }} components={components} />
+  return <Trans defaults={product[cost.product]} values={{ quantity: cost.amount }} components={components} />
 }
