@@ -15,7 +15,7 @@ export class AdvanceLawsuitRule extends ActionRule<AdvanceLawsuit> {
     const moves: MaterialMove[] = [this.customMove(CustomMoveType.Pass)]
     const deltaX = this.player === City.Altona ? -1 : 1
     const markers = this.markers.location((l) => l.x !== deltaX * 4 && this.canPayLawsuit(l.parent!))
-    moves.push(...markers.moveItems((marker) => ({ ...marker, x: marker.location.x! + deltaX })))
+    moves.push(...markers.moveItems((marker) => ({ ...marker.location, x: marker.location.x! + deltaX })))
     return moves
   }
 
