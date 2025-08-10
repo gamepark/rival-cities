@@ -83,6 +83,7 @@ export class GainProductsRule<A extends GainProducts | Production> extends Actio
     if (!this.action.productsGained?.includes(product) && (this.action.type === ActionType.Production || this.action.isGift)) {
       const alliance = this.getBonusAlliance(product)
       if (alliance && this.hasAlliance(alliance)) {
+        this.action.quantity++
         moves.push(this.customMove(CustomMoveType.TriggerAllianceEffect, alliance))
       }
     }
@@ -104,7 +105,6 @@ export class GainProductsRule<A extends GainProducts | Production> extends Actio
 
   onCustomMove(move: CustomMove) {
     if (move.type === CustomMoveType.TriggerAllianceEffect) {
-      this.action.quantity++
       const product = getEnumValues(Product).find((product) => this.getBonusAlliance(product) === move.data)!
       return this.gainProduct(product)
     }
