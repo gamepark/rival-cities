@@ -72,8 +72,7 @@ export class BasicActionCardHelper extends MaterialRulesPart {
               type: ActionType.PurchaseShip
             },
             {
-              type: ActionType.AdvanceLawsuit,
-              nbTimeAlreadyAdvanced: 0
+              type: ActionType.AdvanceLawsuit
             }
           ]
         }
@@ -98,8 +97,7 @@ export class BasicActionCardHelper extends MaterialRulesPart {
           type: this.computeActionIfPlayerHasGdanskAlliance(),
           actions: [
             {
-              type: ActionType.AdvanceLawsuit,
-              nbTimeAlreadyAdvanced: 0
+              type: ActionType.AdvanceLawsuit
             },
             {
               type: ActionType.Production,
@@ -136,8 +134,7 @@ export class BasicActionCardHelper extends MaterialRulesPart {
               isGift: true
             },
             {
-              type: ActionType.AdvanceLawsuit,
-              nbTimeAlreadyAdvanced: 0
+              type: ActionType.AdvanceLawsuit
             }
           ]
         }
@@ -169,8 +166,7 @@ export class BasicActionCardHelper extends MaterialRulesPart {
         }
       case BasicActionCard.BasicAction15:
         return {
-          type: ActionType.AdvanceLawsuit,
-          nbTimeAlreadyAdvanced: 0
+          type: ActionType.AdvanceLawsuit
         }
     }
   }

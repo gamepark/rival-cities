@@ -94,8 +94,8 @@ export type PurchaseShip = {
 
 export type AdvanceLawsuit = {
   type: ActionType.AdvanceLawsuit
-  lawsuitAdvancedLocation?: number
-  nbTimeAlreadyAdvanced: number
+  lawsuitIndex?: number
+  count?: number
   isLeHavreBonus?: boolean
 } & ActionCommon
 

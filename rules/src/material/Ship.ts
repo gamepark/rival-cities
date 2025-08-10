@@ -74,10 +74,7 @@ export const shipData: Record<Ship, ShipData> = {
     cost: cost(3, Product.Cloth),
     effect: {
       type: ShipEffectType.Instant,
-      actions: [
-        { type: ActionType.AdvanceLawsuit, nbTimeAlreadyAdvanced: 0 },
-        { type: ActionType.AdvanceLawsuit, nbTimeAlreadyAdvanced: 0 }
-      ]
+      actions: [{ type: ActionType.AdvanceLawsuit }, { type: ActionType.AdvanceLawsuit }]
     },
     getNbStars: () => 2
   },

@@ -25,8 +25,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
       case SpecialActionCard.SpecialAction1:
         return [
           {
-            type: ActionType.AdvanceLawsuit,
-            nbTimeAlreadyAdvanced: 0
+            type: ActionType.AdvanceLawsuit
           },
           {
             type: ActionType.GainLetter,
@@ -36,8 +35,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
       case SpecialActionCard.SpecialAction2:
         return [
           {
-            type: ActionType.AdvanceLawsuit,
-            nbTimeAlreadyAdvanced: 0
+            type: ActionType.AdvanceLawsuit
           },
           {
             type: ActionType.GainProducts,
@@ -48,8 +46,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
       case SpecialActionCard.SpecialAction3:
         return [
           {
-            type: ActionType.AdvanceLawsuit,
-            nbTimeAlreadyAdvanced: 0
+            type: ActionType.AdvanceLawsuit
           },
           {
             type: ActionType.PurchaseShip
@@ -63,8 +60,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
       case SpecialActionCard.SpecialAction4:
         return [
           {
-            type: ActionType.AdvanceLawsuit,
-            nbTimeAlreadyAdvanced: 0
+            type: ActionType.AdvanceLawsuit
           },
           { type: ActionType.DrawSpecialActionCard },
           { type: ActionType.DrawSpecialActionCard }
@@ -90,8 +86,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
       case SpecialActionCard.SpecialAction7:
         return [
           {
-            type: ActionType.AdvanceLawsuit,
-            nbTimeAlreadyAdvanced: 0
+            type: ActionType.AdvanceLawsuit
           },
           {
             type: ActionType.GainProducts,
@@ -106,8 +101,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
       case SpecialActionCard.SpecialAction8:
         return [
           {
-            type: ActionType.AdvanceLawsuit,
-            nbTimeAlreadyAdvanced: 0
+            type: ActionType.AdvanceLawsuit
           },
           {
             type: ActionType.EarnPrestige
@@ -120,8 +114,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
       case SpecialActionCard.SpecialAction9:
         return [
           {
-            type: ActionType.AdvanceLawsuit,
-            nbTimeAlreadyAdvanced: 0
+            type: ActionType.AdvanceLawsuit
           },
           {
             type: ActionType.EarnPrestige
@@ -136,8 +129,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
       case SpecialActionCard.SpecialAction10:
         return [
           {
-            type: ActionType.AdvanceLawsuit,
-            nbTimeAlreadyAdvanced: 0
+            type: ActionType.AdvanceLawsuit
           },
           {
             type: ActionType.GainProducts,
@@ -163,8 +155,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
       case SpecialActionCard.SpecialAction12:
         return [
           {
-            type: ActionType.AdvanceLawsuit,
-            nbTimeAlreadyAdvanced: 0
+            type: ActionType.AdvanceLawsuit
           },
           {
             type: ActionType.PurchaseShip
@@ -179,8 +170,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
       case SpecialActionCard.SpecialAction13:
         return [
           {
-            type: ActionType.AdvanceLawsuit,
-            nbTimeAlreadyAdvanced: 0
+            type: ActionType.AdvanceLawsuit
           },
           {
             type: ActionType.GainProducts,
@@ -199,8 +189,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
       case SpecialActionCard.SpecialAction14:
         return [
           {
-            type: ActionType.AdvanceLawsuit,
-            nbTimeAlreadyAdvanced: 0
+            type: ActionType.AdvanceLawsuit
           },
           {
             type: ActionType.BuildFactory,
@@ -210,8 +199,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
       case SpecialActionCard.SpecialAction15:
         return [
           {
-            type: ActionType.AdvanceLawsuit,
-            nbTimeAlreadyAdvanced: 0
+            type: ActionType.AdvanceLawsuit
           },
           {
             type: ActionType.BuildFactory,
@@ -229,8 +217,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
       case SpecialActionCard.SpecialAction17:
         return [
           {
-            type: ActionType.AdvanceLawsuit,
-            nbTimeAlreadyAdvanced: 0
+            type: ActionType.AdvanceLawsuit
           },
           {
             type: ActionType.EarnPrestige
@@ -245,8 +232,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
       case SpecialActionCard.SpecialAction18:
         return [
           {
-            type: ActionType.AdvanceLawsuit,
-            nbTimeAlreadyAdvanced: 0
+            type: ActionType.AdvanceLawsuit
           },
           {
             type: ActionType.PurchaseShip
@@ -263,15 +249,13 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
             count: 3
           },
           {
-            type: ActionType.AdvanceLawsuit,
-            nbTimeAlreadyAdvanced: 0
+            type: ActionType.AdvanceLawsuit
           }
         ]
       case SpecialActionCard.SpecialAction20:
         return [
           {
-            type: ActionType.AdvanceLawsuit,
-            nbTimeAlreadyAdvanced: 0
+            type: ActionType.AdvanceLawsuit
           },
           {
             type: ActionType.GainProducts,
@@ -286,8 +270,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
       case SpecialActionCard.SpecialAction21:
         return [
           {
-            type: ActionType.AdvanceLawsuit,
-            nbTimeAlreadyAdvanced: 0
+            type: ActionType.AdvanceLawsuit
           },
           {
             type: ActionType.GainLetter,
@@ -297,8 +280,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
       case SpecialActionCard.SpecialAction22:
         return [
           {
-            type: ActionType.AdvanceLawsuit,
-            nbTimeAlreadyAdvanced: 0
+            type: ActionType.AdvanceLawsuit
           },
           {
             type: ActionType.CourtRuling
@@ -307,8 +289,7 @@ export class SpecialActionCardHelper extends MaterialRulesPart {
       case SpecialActionCard.SpecialAction23:
         return [
           {
-            type: ActionType.AdvanceLawsuit,
-            nbTimeAlreadyAdvanced: 0
+            type: ActionType.AdvanceLawsuit
           },
           {
             type: ActionType.GainProducts,

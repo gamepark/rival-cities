@@ -1,10 +1,9 @@
 /** @jsxImportSource @emotion/react */
 
 import { PlayMoveButton, useLegalMove, usePlayerId, usePlayerName, useRules } from '@gamepark/react-game'
-import { Action, AdvanceLawsuit } from '@gamepark/rival-cities/material/Action'
 import { RivalCitiesRules } from '@gamepark/rival-cities/RivalCitiesRules'
+import { AdvanceLawsuitRule } from '@gamepark/rival-cities/rules/actions/AdvanceLawsuitRule'
 import { CustomMoveType } from '@gamepark/rival-cities/rules/CustomMoveType'
-import { MemoryType } from '@gamepark/rival-cities/rules/MemoryType'
 import { isCustomMoveType } from '@gamepark/rules-api'
 import { Trans } from 'react-i18next'
 
@@ -15,12 +14,9 @@ export const AdvanceLawsuitHeader = () => {
   const itsMe = player && activePlayer === player
   const name = usePlayerName(activePlayer)
   const pass = useLegalMove(isCustomMoveType(CustomMoveType.Pass))
-
-  const actions = rules.remind<Action[]>(MemoryType.Actions) ?? []
-  const currentAction = actions[0] as AdvanceLawsuit
-
+  const action = new AdvanceLawsuitRule(rules.game).action
   if (itsMe) {
-    if (currentAction?.nbTimeAlreadyAdvanced && currentAction.nbTimeAlreadyAdvanced > 0) {
+    if (action.lawsuitIndex !== undefined) {
       return (
         <Trans
           defaults={`header.advance.again.lawsuit.you`}
