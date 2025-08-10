@@ -5,17 +5,16 @@ import { RivalCitiesRules } from '@gamepark/rival-cities/RivalCitiesRules'
 import { Memory } from '@gamepark/rival-cities/rules/Memory'
 import { Trans } from 'react-i18next'
 
-export const PayProductForAdvanceHeader = () => {
-  const player = usePlayerId()
+export const PayInkJarMovementCostHeader = () => {
+  const me = usePlayerId()
   const rules = useRules<RivalCitiesRules>()!
   const activePlayer = rules.game.rule?.player
-  const itsMe = player && activePlayer === player
-  const name = usePlayerName(activePlayer)
+  const player = usePlayerName(activePlayer)
   const count = rules.remind<number>(Memory.Count)
 
-  if (itsMe) {
+  if (activePlayer === me) {
     return <Trans defaults="header.pay.product.you" values={{ count }} />
   }
 
-  return <Trans defaults="header.pay.product.player" values={{ player: name, count }} />
+  return <Trans defaults="header.pay.product.player" values={{ player, count }} />
 }

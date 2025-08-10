@@ -18,7 +18,7 @@ import { GainLetterHeader } from './GainLetterHeader'
 import { GainStarsHeader } from './GainStarsHeader'
 import { GiftHeader } from './GiftHeader'
 import { PayAlliancesUpkeepHeader } from './PayAlliancesUpkeepHeader'
-import { PayProductForAdvanceHeader } from './PayProductForAdvanceHeader'
+import { PayInkJarMovementCostHeader } from './PayInkJarMovementCostHeader'
 import { PayToPerformActionAgainHeader } from './PayToPerformActionAgainHeader'
 import { PerformMultipleActionsHeader } from './PerformMultipleActionsHeader'
 import { PiracyHeader } from './PiracyHeader'
@@ -32,7 +32,7 @@ import { TakeBellHeader } from './TakeBellHeader'
 export const Headers: Partial<Record<RuleId, ComponentType>> = {
   [RuleId.ChooseFirstProduct]: ChooseFirstProductHeader,
   [RuleId.AdvanceInkJar]: AdvanceInkJarHeader,
-  [RuleId.PayInkJarMovementCost]: PayProductForAdvanceHeader,
+  [RuleId.PayInkJarMovementCost]: PayInkJarMovementCostHeader,
   [RuleId.ChooseAction]: ChooseActionHeader,
   [RuleId.ChooseSpecialAction]: ChooseSpecialActionHeader,
   [RuleId.ChooseSplitAction]: ChooseSplitActionHeader,
