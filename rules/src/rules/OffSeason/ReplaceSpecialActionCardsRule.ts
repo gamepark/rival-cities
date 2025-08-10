@@ -17,7 +17,7 @@ export class ReplaceSpecialActionCardsRule extends PlayerTurnRule {
     if (deck.length) {
       return deck.dealOne({ type: LocationType.CardPiste, id: space })
     } else {
-      return this.startRule(RuleId.OffSeasonReactivateFactories)
+      return this.startRule(RuleId.ReactivateFactories)
     }
   }
 
@@ -27,7 +27,7 @@ export class ReplaceSpecialActionCardsRule extends PlayerTurnRule {
       if (nextSpace !== undefined) {
         return [this.dealActionCard(nextSpace)]
       } else {
-        return [this.startRule(RuleId.OffSeasonReactivateFactories)]
+        return [this.startRule(RuleId.ReactivateFactories)]
       }
     }
     return []

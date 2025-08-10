@@ -97,7 +97,7 @@ export class RivalCitiesSetup extends MaterialGameSetup<City, MaterialType, Loca
 
   setupPlayers() {
     this.players.forEach((player, index) => {
-      this.material(MaterialType.Factory).moveItem({ type: LocationType.PlayerFactories, player })
+      this.material(MaterialType.Factory).moveItem({ type: LocationType.PlayerFactories, player, rotation: false })
       this.material(MaterialType.Product)
         .id(Product.Beer)
         .moveItem({ type: LocationType.PlayerProducts, player, id: Product.Beer }, index + 1)

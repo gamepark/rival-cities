@@ -7,13 +7,6 @@ import { MaterialType } from '../../material/MaterialType'
 import { Ship, shipData } from '../../material/Ship'
 
 export class EndOfGameHelper extends PlayerTurnRule {
-  checkOffSeasonEndOfGame(moveIfGameNotEnded: MaterialMove): MaterialMove[] {
-    if (this.factoryDeckIsEmpty || this.starTokensDeckIsEmpty || this.noLawsuitCardsInBoard || this.noShipCardsInBoard) {
-      return [this.endGame()]
-    }
-    return [moveIfGameNotEnded]
-  }
-
   checkInstantEndOfGame(moveIfGameNotEnded: MaterialMove[]): MaterialMove[] {
     if (
       this.checkIfAPlayerAs3MoreShips() ||
@@ -120,28 +113,6 @@ export class EndOfGameHelper extends PlayerTurnRule {
 
   get prestigeMarkerLocation() {
     return this.material(MaterialType.PrestigeMarker).location(LocationType.PrestigeMarkerPiste).getItem()?.location.x ?? 0
-  }
-
-  get factoryDeckIsEmpty() {
-    return this.material(MaterialType.Factory).location(LocationType.FactoryDeck).length === 0
-  }
-
-  get starTokensDeckIsEmpty() {
-    return this.material(MaterialType.StarToken).location(LocationType.StarTokenDeck).length === 0
-  }
-
-  get noLawsuitCardsInBoard() {
-    return (
-      this.material(MaterialType.LawsuitCard).location(LocationType.LawsuitDeck).length === 0 &&
-      this.material(MaterialType.LawsuitCard).location(LocationType.LawsuitSpace).length === 0
-    )
-  }
-
-  get noShipCardsInBoard() {
-    return (
-      this.material(MaterialType.ShipCard).location(LocationType.ShipCardsDeck).length === 0 &&
-      this.material(MaterialType.ShipCard).location(LocationType.ShipCardsRiver).length === 0
-    )
   }
 
   get prestigeMarkerStars() {

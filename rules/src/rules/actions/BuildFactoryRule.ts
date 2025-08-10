@@ -13,7 +13,7 @@ export class BuildFactoryRule extends ActionRule<BuildFactory> {
   onRuleStart(): MaterialMove[] {
     this.memorize(Memory.Count, 0)
     if (this.action.price === 0) {
-      return this.factories.moveItems({ type: LocationType.PlayerFactories, player: this.player }, 1)
+      return this.factories.moveItems({ type: LocationType.PlayerFactories, player: this.player, rotation: false }, 1)
     }
     if (this.getProducts().getQuantity() < (this.action.price ?? 0)) {
       return [this.endAction()]

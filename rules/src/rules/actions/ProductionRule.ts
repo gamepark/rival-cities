@@ -52,7 +52,7 @@ export class ProductionRule extends GainProductsRule<Production> {
   }
 
   get availableFactories() {
-    return this.material(MaterialType.Factory).location(LocationType.PlayerFactories).player(this.player).rotation(undefined)
+    return this.material(MaterialType.Factory).location(LocationType.PlayerFactories).player(this.player).rotation(false)
   }
 
   get playerShips() {

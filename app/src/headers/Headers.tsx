@@ -17,7 +17,6 @@ import { FormAllianceHeader } from './FormAllianceHeader'
 import { GainLetterHeader } from './GainLetterHeader'
 import { GainStarsHeader } from './GainStarsHeader'
 import { GiftHeader } from './GiftHeader'
-import { OffSeasonReactivateFactoriesHeader } from './OffSeasonReactivateFactoriesHeader'
 import { OffSeasonReturnBellHeader } from './OffSeasonReturnBellHeader'
 import { PayAlliancesUpkeepHeader } from './PayAlliancesUpkeepHeader'
 import { PayProductForAdvanceHeader } from './PayProductForAdvanceHeader'
@@ -59,6 +58,6 @@ export const Headers: Partial<Record<RuleId, ComponentType>> = {
   [RuleId.TakeBell]: TakeBellHeader,
   [RuleId.PayAlliancesUpkeep]: PayAlliancesUpkeepHeader,
   [RuleId.ReplaceSpecialActionCards]: () => <Trans defaults={`header.replace-cards`} />,
-  [RuleId.OffSeasonReactivateFactories]: OffSeasonReactivateFactoriesHeader,
+  [RuleId.ReactivateFactories]: () => <Trans defaults={`header.header.reactivate-factories`} />,
   [RuleId.OffSeasonReturnBell]: OffSeasonReturnBellHeader
 }

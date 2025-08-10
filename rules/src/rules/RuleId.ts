@@ -29,6 +29,6 @@ export enum RuleId {
   GainShipsIncome,
   GainPrestigeIncome,
   ReplaceSpecialActionCards,
-  OffSeasonReactivateFactories,
+  ReactivateFactories,
   OffSeasonReturnBell
 }
