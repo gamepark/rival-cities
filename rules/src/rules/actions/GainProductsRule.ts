@@ -57,7 +57,7 @@ export class GainProductsRule<A extends GainProducts | Production> extends Actio
     return moves
   }
 
-  afterItemMove(move: ItemMove): MaterialMove[] {
+  beforeItemMove(move: ItemMove): MaterialMove[] {
     if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.PlayerProducts) {
       const product = this.material(MaterialType.Product).getItem<Product>(move.itemIndex).id
       return this.onGainProduct(product, move.quantity)

@@ -12,7 +12,7 @@ export class ProductionRule extends GainProductsRule<Production> {
     if (isMoveItemType(MaterialType.Factory)(move) && !this.canGainMore) {
       return [this.startNextRule()]
     }
-    return super.afterItemMove(move)
+    return []
   }
 
   onGainProduct(product: Product, quantity = 1): MaterialMove[] {
