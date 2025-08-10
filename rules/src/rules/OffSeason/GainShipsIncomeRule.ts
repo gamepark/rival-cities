@@ -17,11 +17,11 @@ export class GainShipsIncomeRule extends PlayerTurnRule {
     }
     if (altonaIncome.length || hamburgIncome.length) {
       const actions = [...altonaIncome, ...hamburgIncome]
-      this.memorize(Memory.PendingRule, RuleId.OffSeasonGetPrestigeBonuses)
+      this.memorize(Memory.PendingRule, RuleId.GainPrestigeIncome)
       this.memorize(Memory.Actions, actions)
       return [this.startPlayerTurn(ActionRuleIds[actions[0].type], altonaIncome.length ? City.Altona : City.Hamburg)]
     } else {
-      return [this.startRule(RuleId.OffSeasonGetPrestigeBonuses)]
+      return [this.startRule(RuleId.GainPrestigeIncome)]
     }
   }
 

@@ -17,7 +17,6 @@ import { GainLetterHeader } from './GainLetterHeader'
 import { GainStarsHeader } from './GainStarsHeader'
 import { GiftHeader } from './GiftHeader'
 import { OffSeasonChangeSpecialCardsHeader } from './OffSeasonChangeSpecialCardsHeader'
-import { OffSeasonGetPrestigeBonusesHeader } from './OffSeasonGetPrestigeBonusesHeader'
 import { OffSeasonReactivateFactoriesHeader } from './OffSeasonReactivateFactoriesHeader'
 import { OffSeasonReturnBellHeader } from './OffSeasonReturnBellHeader'
 import { PayAlliancesUpkeepHeader } from './PayAlliancesUpkeepHeader'
@@ -59,7 +58,6 @@ export const Headers: Partial<Record<RuleId, ComponentType>> = {
   [RuleId.ConfirmEndTurn]: ConfirmEndTurnHeader,
   [RuleId.TakeBell]: TakeBellHeader,
   [RuleId.PayAlliancesUpkeep]: PayAlliancesUpkeepHeader,
-  [RuleId.OffSeasonGetPrestigeBonuses]: OffSeasonGetPrestigeBonusesHeader,
   [RuleId.OffSeasonChangeSpecialCards]: OffSeasonChangeSpecialCardsHeader,
   [RuleId.OffSeasonReactivateFactories]: OffSeasonReactivateFactoriesHeader,
   [RuleId.OffSeasonReturnBell]: OffSeasonReturnBellHeader

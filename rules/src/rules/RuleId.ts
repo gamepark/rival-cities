@@ -27,7 +27,7 @@ export enum RuleId {
   TakeBell,
   PayAlliancesUpkeep,
   GainShipsIncome,
-  OffSeasonGetPrestigeBonuses,
+  GainPrestigeIncome,
   OffSeasonChangeSpecialCards,
   OffSeasonReactivateFactories,
   OffSeasonReturnBell
