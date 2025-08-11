@@ -7,7 +7,7 @@ import { Trans } from 'react-i18next'
 export const ReactivateFactoryHeader = () => {
   const me = usePlayerId()
   const rules = useRules<RivalCitiesRules>()!
-  const activePlayer = rules.game.rule?.player
+  const activePlayer = rules.getActivePlayer()
   const itsMe = me && activePlayer === me
   const player = usePlayerName(activePlayer)
   const count = new ReactivateFactoryRule(rules.game).action.count

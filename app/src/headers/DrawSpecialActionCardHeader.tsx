@@ -7,7 +7,7 @@ import { Trans } from 'react-i18next'
 export const DrawSpecialActionCardHeader = () => {
   const player = usePlayerId()
   const rules = useRules<RivalCitiesRules>()!
-  const activePlayer = rules.game.rule?.player
+  const activePlayer = rules.getActivePlayer()
   const itsMe = player && activePlayer === player
   const name = usePlayerName(activePlayer)
 

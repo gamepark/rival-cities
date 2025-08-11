@@ -10,7 +10,7 @@ import { getProductIcon, iconCss } from './HeaderIconsCss'
 export const ProductionHeader = () => {
   const me = usePlayerId()
   const rules = useRules<RivalCitiesRules>()!
-  const activePlayer = rules.game.rule?.player
+  const activePlayer = rules.getActivePlayer()
   const player = usePlayerName(activePlayer)
   const pass = useLegalMove(isCustomMoveType(CustomMoveType.Pass))
 
