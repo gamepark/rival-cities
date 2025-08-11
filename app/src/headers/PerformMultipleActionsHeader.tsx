@@ -7,17 +7,16 @@ import { isCustomMoveType } from '@gamepark/rules-api'
 import { Trans } from 'react-i18next'
 
 export const PerformMultipleActionsHeader = () => {
-  const player = usePlayerId()
+  const me = usePlayerId()
   const rules = useRules<RivalCitiesRules>()!
-  const activePlayer = rules.game.rule?.player
-  const itsMe = player && activePlayer === player
-  const name = usePlayerName(activePlayer)
+  const activePlayer = rules.getActivePlayer()
+  const player = usePlayerName(activePlayer)
   const pass = useLegalMove(isCustomMoveType(CustomMoveType.Pass))
 
-  if (itsMe) {
+  if (activePlayer === me) {
     return (
       <Trans
-        defaults={`header.computed.you`}
+        defaults="header.multiple.you"
         components={{
           pass: <PlayMoveButton move={pass} />
         }}
@@ -25,5 +24,5 @@ export const PerformMultipleActionsHeader = () => {
     )
   }
 
-  return <Trans defaults={`header.computed.player`} values={{ player: name }} />
+  return <Trans defaults="header.multiple.player" values={{ player }} />
 }
