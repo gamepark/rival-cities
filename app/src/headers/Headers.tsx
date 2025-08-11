@@ -25,7 +25,6 @@ import { ProductionHeader } from './ProductionHeader'
 import { PurchaseShipHeader } from './PurchaseShipHeader'
 import { ReactivateFactoryHeader } from './ReactivateFactoryHeader'
 import { ResolveLawsuitHeader } from './ResolveLawsuitHeader'
-import { SwapProductHeader } from './SwapProductHeader'
 import { TakeBellHeader } from './TakeBellHeader'
 
 export const Headers: Partial<Record<RuleId, ComponentType>> = {
@@ -39,7 +38,7 @@ export const Headers: Partial<Record<RuleId, ComponentType>> = {
   [RuleId.Production]: ProductionHeader,
   [RuleId.GainProducts]: GainProductsHeader,
   [RuleId.Donation]: DonationHeader,
-  [RuleId.SwapProduct]: SwapProductHeader,
+  [RuleId.SwapProduct]: () => <HeaderText code="swap" moves={{ pass: isCustomMoveType(CustomMoveType.Pass) }} />,
   [RuleId.GainLetter]: GainLetterHeader,
   [RuleId.DrawSpecialActionCard]: DrawSpecialActionCardHeader,
   [RuleId.BuildFactory]: BuildFactoryHeader,
