@@ -5,7 +5,7 @@ import { ProductionRule } from '@gamepark/rival-cities/rules/actions/ProductionR
 import { CustomMoveType } from '@gamepark/rival-cities/rules/CustomMoveType'
 import { isCustomMoveType } from '@gamepark/rules-api'
 import { Trans } from 'react-i18next'
-import { getProductIcon, iconCss } from './HeaderIconsCss'
+import { getProductIcon } from './HeaderIconsCss'
 
 export const ProductionHeader = () => {
   const me = usePlayerId()
@@ -14,7 +14,7 @@ export const ProductionHeader = () => {
   const player = usePlayerName(activePlayer)
   const pass = useLegalMove(isCustomMoveType(CustomMoveType.Pass))
 
-  const { product: product, quantity } = new ProductionRule(rules.game).action
+  const { product, quantity } = new ProductionRule(rules.game).action
 
   if (activePlayer === me) {
     if (quantity) {
@@ -22,7 +22,7 @@ export const ProductionHeader = () => {
         <Trans
           defaults="header.production.you"
           components={{
-            product: <Picture src={getProductIcon(product)} css={iconCss} />
+            product: <Picture src={getProductIcon(product)} />
           }}
         />
       )
@@ -31,7 +31,7 @@ export const ProductionHeader = () => {
         <Trans
           defaults="header.production.factory.you"
           components={{
-            product: <Picture src={getProductIcon(product)} css={iconCss} />,
+            product: <Picture src={getProductIcon(product)} />,
             pass: <PlayMoveButton move={pass} />
           }}
         />
@@ -44,7 +44,7 @@ export const ProductionHeader = () => {
       defaults="header.production.player"
       values={{ player }}
       components={{
-        product: <Picture src={getProductIcon(product)} css={iconCss} />
+        product: <Picture src={getProductIcon(product)} />
       }}
     />
   )

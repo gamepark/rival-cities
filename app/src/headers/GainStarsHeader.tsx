@@ -5,7 +5,6 @@ import { RivalCitiesRules } from '@gamepark/rival-cities/RivalCitiesRules'
 import { GainStarsRule } from '@gamepark/rival-cities/rules/actions/GainStarsRule'
 import { Trans } from 'react-i18next'
 import Star from '../images/icons/Star.png'
-import { iconCss } from './HeaderIconsCss'
 
 export const GainStarsHeader = () => {
   const me = usePlayerId()
@@ -20,7 +19,7 @@ export const GainStarsHeader = () => {
         defaults="header.gain-stars.you"
         values={{ count }}
         components={{
-          star: <Picture src={Star} css={iconCss} />
+          star: <Picture src={Star} />
         }}
       />
     )
@@ -31,7 +30,7 @@ export const GainStarsHeader = () => {
       defaults="header.gain-stars.player"
       values={{ player, count }}
       components={{
-        star: <Picture src={Star} css={iconCss} />
+        star: <Picture src={Star} />
       }}
     />
   )

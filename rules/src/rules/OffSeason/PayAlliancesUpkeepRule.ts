@@ -18,7 +18,6 @@ export type AlliancesUpkeep = {
 export class PayAlliancesUpkeepRule extends SimultaneousRule {
   onRuleStart(): MaterialMove[] {
     if (this.activePlayers.length === 0) {
-      // TODO: this could be done inside the framework
       return this.getMovesAfterPlayersDone()
     }
     for (const player of this.activePlayers) {

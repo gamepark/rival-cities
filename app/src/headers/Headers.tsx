@@ -1,13 +1,14 @@
 /** @jsxImportSource @emotion/react */
+import { HeaderText, Picture } from '@gamepark/react-game'
+import { CustomMoveType } from '@gamepark/rival-cities/rules/CustomMoveType'
 import { RuleId } from '@gamepark/rival-cities/rules/RuleId'
+import { isCustomMoveType } from '@gamepark/rules-api'
 import { ComponentType } from 'react'
 import { Trans } from 'react-i18next'
-import { AdvanceInkJarHeader } from './AdvanceInkJarHeader'
+import ProductIcon from '../images/icons/Product.png'
 import { AdvanceLawsuitHeader } from './AdvanceLawsuitHeader'
 import { BuildFactoryHeader } from './BuildFactoryHeader'
-import { ChooseActionHeader } from './ChooseActionHeader'
 import { ChooseSplitActionHeader } from './ChooseSplitActionHeader'
-import { ChooseStartProductHeader } from './ChooseStartProductHeader'
 import { ConfirmEndTurnHeader } from './ConfirmEndTurnHeader'
 import { CourtRulingHeader } from './CourtRulingHeader'
 import { DonationHeader } from './DonationHeader'
@@ -18,11 +19,8 @@ import { GainLetterHeader } from './GainLetterHeader'
 import { GainStarsHeader } from './GainStarsHeader'
 import { GiftHeader } from './GiftHeader'
 import { PayAlliancesUpkeepHeader } from './PayAlliancesUpkeepHeader'
-import { PayInkJarMovementCostHeader } from './PayInkJarMovementCostHeader'
 import { PayToPerformActionAgainHeader } from './PayToPerformActionAgainHeader'
-import { PerformMultipleActionsHeader } from './PerformMultipleActionsHeader'
 import { PiracyHeader } from './PiracyHeader'
-import { PlaySpecialActionCardHeader } from './PlaySpecialActionCardHeader'
 import { ProductionHeader } from './ProductionHeader'
 import { PurchaseShipHeader } from './PurchaseShipHeader'
 import { ReactivateFactoryHeader } from './ReactivateFactoryHeader'
@@ -31,13 +29,13 @@ import { SwapProductHeader } from './SwapProductHeader'
 import { TakeBellHeader } from './TakeBellHeader'
 
 export const Headers: Partial<Record<RuleId, ComponentType>> = {
-  [RuleId.ChooseStartProduct]: ChooseStartProductHeader,
-  [RuleId.AdvanceInkJar]: AdvanceInkJarHeader,
-  [RuleId.PayInkJarMovementCost]: PayInkJarMovementCostHeader,
-  [RuleId.ChooseAction]: ChooseActionHeader,
-  [RuleId.PlaySpecialActionCard]: PlaySpecialActionCardHeader,
+  [RuleId.ChooseStartProduct]: () => <HeaderText code="start" components={{ product: <Picture src={ProductIcon} /> }} />,
+  [RuleId.AdvanceInkJar]: () => <HeaderText code="ink-jar" />,
+  [RuleId.PayInkJarMovementCost]: () => <HeaderText code="ink-jar.cost" components={{ product: <Picture src={ProductIcon} /> }} />,
+  [RuleId.ChooseAction]: () => <HeaderText code="choose-action" />,
+  [RuleId.PlaySpecialActionCard]: () => <HeaderText code="play-card" moves={{ pass: isCustomMoveType(CustomMoveType.Pass) }} />,
   [RuleId.ChooseSplitAction]: ChooseSplitActionHeader,
-  [RuleId.PerformMultipleActions]: PerformMultipleActionsHeader,
+  [RuleId.PerformMultipleActions]: () => <HeaderText code="multiple" moves={{ pass: isCustomMoveType(CustomMoveType.Pass) }} />,
   [RuleId.Production]: ProductionHeader,
   [RuleId.Gift]: GiftHeader,
   [RuleId.Donation]: DonationHeader,

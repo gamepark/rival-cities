@@ -9,7 +9,7 @@ import { Memory } from '@gamepark/rival-cities/rules/Memory'
 import { isCustomMoveType, isMoveItemType } from '@gamepark/rules-api'
 import { Trans } from 'react-i18next'
 import Star from '../images/icons/Star.png'
-import { getProductIcon, iconCss } from './HeaderIconsCss'
+import { getProductIcon } from './HeaderIconsCss'
 
 export const DonationHeader = () => {
   const me = usePlayerId()
@@ -28,7 +28,7 @@ export const DonationHeader = () => {
           defaults="header.donation.pay.you"
           values={{ count }}
           components={{
-            product: <Picture src={getProductIcon()} css={iconCss} />
+            product: <Picture src={getProductIcon()} />
           }}
         />
       )
@@ -39,8 +39,8 @@ export const DonationHeader = () => {
           values={{ cost, stars, times }}
           components={{
             donate: <PlayMoveButton move={donate} />,
-            item: <Picture src={getProductIcon(product)} css={iconCss} />,
-            star: <Picture src={Star} css={iconCss} />,
+            item: <Picture src={getProductIcon(product)} />,
+            star: <Picture src={Star} />,
             pass: <PlayMoveButton move={pass} />
           }}
         />
@@ -53,7 +53,7 @@ export const DonationHeader = () => {
         defaults="header.donation.pay.player"
         values={{ player, count }}
         components={{
-          product: <Picture src={getProductIcon()} css={iconCss} />
+          product: <Picture src={getProductIcon()} />
         }}
       />
     )
@@ -63,8 +63,8 @@ export const DonationHeader = () => {
         defaults="header.donation.player"
         values={{ player, cost, stars, times }}
         components={{
-          item: <Picture src={getProductIcon(product)} css={iconCss} />,
-          star: <Picture src={Star} css={iconCss} />
+          item: <Picture src={getProductIcon(product)} />,
+          star: <Picture src={Star} />
         }}
       />
     )
