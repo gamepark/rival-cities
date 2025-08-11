@@ -5,15 +5,14 @@ import { RivalCitiesRules } from '@gamepark/rival-cities/RivalCitiesRules'
 import { Trans } from 'react-i18next'
 
 export const AdvanceInkJarHeader = () => {
-  const player = usePlayerId()
+  const me = usePlayerId()
   const rules = useRules<RivalCitiesRules>()!
-  const activePlayer = rules.game.rule?.player
-  const itsMe = player && activePlayer === player
-  const name = usePlayerName(activePlayer)
+  const activePlayer = rules.getActivePlayer()
+  const player = usePlayerName(activePlayer)
 
-  if (itsMe) {
-    return <Trans defaults="header.advance.inkjar.you" />
+  if (activePlayer === me) {
+    return <Trans defaults="header.ink-jar.you" />
   }
 
-  return <Trans defaults="header.advance.inkjar.player" values={{ player: name }} />
+  return <Trans defaults="header.ink-jar.player" values={{ player }} />
 }
