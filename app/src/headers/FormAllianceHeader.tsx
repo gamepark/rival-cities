@@ -7,14 +7,13 @@ import { isCustomMoveType } from '@gamepark/rules-api'
 import { Trans } from 'react-i18next'
 
 export const FormAllianceHeader = () => {
-  const player = usePlayerId()
+  const me = usePlayerId()
   const rules = useRules<RivalCitiesRules>()!
   const activePlayer = rules.getActivePlayer()
-  const itsMe = player && activePlayer === player
-  const name = usePlayerName(activePlayer)
+  const player = usePlayerName(activePlayer)
   const pass = useLegalMove(isCustomMoveType(CustomMoveType.Pass))
 
-  if (itsMe) {
+  if (activePlayer === me) {
     return (
       <Trans
         defaults="header.form.alliance.you"
@@ -25,5 +24,5 @@ export const FormAllianceHeader = () => {
     )
   }
 
-  return <Trans defaults="header.form.alliance.player" values={{ player: name }} />
+  return <Trans defaults="header.form.alliance.player" values={{ player }} />
 }

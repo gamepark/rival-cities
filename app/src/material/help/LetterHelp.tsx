@@ -9,11 +9,10 @@ import { components } from './utils'
 
 export const LetterHelp: FC<MaterialHelpProps> = ({ item, closeDialog }) => {
   const { t } = useTranslation()
-  const player = usePlayerId()
+  const me = usePlayerId()
   const rules = useRules<RivalCitiesRules>()!
   const activePlayer = rules.getActivePlayer()
-  const itsMe = player && activePlayer === player
-  const isPlayerLetter = item.location?.player === player
+  const isPlayerLetter = item.location?.player === me
   const spendLetterToSwapProduct = useLegalMove(isCustomMoveType(CustomMoveType.SpendLetterToSwapProduct))
 
   return (
@@ -27,7 +26,7 @@ export const LetterHelp: FC<MaterialHelpProps> = ({ item, closeDialog }) => {
         <li>{t('help.letter.use.3')}</li>
         <li>{t('help.letter.use.1')}</li>
       </ul>
-      {spendLetterToSwapProduct && isPlayerLetter && itsMe && (
+      {spendLetterToSwapProduct && isPlayerLetter && activePlayer === me && (
         <p>
           <Trans
             defaults="help.letter.spendLetterToSwapProduct"

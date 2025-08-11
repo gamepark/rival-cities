@@ -7,7 +7,7 @@ import { Trans } from 'react-i18next'
 export const StealProductHistory = (props: MoveComponentProps<MoveItem>) => {
   const { move } = props
   const actionPlayer = move.location.player
-  const name = usePlayerName(actionPlayer)
+  const player = usePlayerName(actionPlayer)
 
-  return <Trans defaults="history.steal.product" values={{ player: name, product: move.location.id }} />
+  return <Trans defaults="history.steal.product" values={{ player, product: move.location.id }} />
 }

@@ -8,14 +8,13 @@ import { isCustomMoveType } from '@gamepark/rules-api'
 import { Trans } from 'react-i18next'
 
 export const AdvanceLawsuitHeader = () => {
-  const player = usePlayerId()
+  const me = usePlayerId()
   const rules = useRules<RivalCitiesRules>()!
   const activePlayer = rules.getActivePlayer()
-  const itsMe = player && activePlayer === player
-  const name = usePlayerName(activePlayer)
+  const player = usePlayerName(activePlayer)
   const pass = useLegalMove(isCustomMoveType(CustomMoveType.Pass))
   const action = new AdvanceLawsuitRule(rules.game).action
-  if (itsMe) {
+  if (activePlayer === me) {
     if (action.lawsuitIndex !== undefined) {
       return (
         <Trans
@@ -36,5 +35,5 @@ export const AdvanceLawsuitHeader = () => {
     )
   }
 
-  return <Trans defaults="header.advance.lawsuit.player" values={{ player: name }} />
+  return <Trans defaults="header.advance.lawsuit.player" values={{ player }} />
 }

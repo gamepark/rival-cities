@@ -7,14 +7,13 @@ import { isCustomMoveType } from '@gamepark/rules-api'
 import { Trans } from 'react-i18next'
 
 export const PurchaseShipHeader = () => {
-  const player = usePlayerId()
+  const me = usePlayerId()
   const rules = useRules<RivalCitiesRules>()!
   const activePlayer = rules.getActivePlayer()
-  const itsMe = player && activePlayer === player
-  const name = usePlayerName(activePlayer)
+  const player = usePlayerName(activePlayer)
   const pass = useLegalMove(isCustomMoveType(CustomMoveType.Pass))
 
-  if (itsMe) {
+  if (activePlayer === me) {
     return (
       <Trans
         defaults="header.ship.you"
@@ -25,5 +24,5 @@ export const PurchaseShipHeader = () => {
     )
   }
 
-  return <Trans defaults="header.ship.player" values={{ player: name }} />
+  return <Trans defaults="header.ship.player" values={{ player }} />
 }

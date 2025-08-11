@@ -5,15 +5,14 @@ import { RivalCitiesRules } from '@gamepark/rival-cities/RivalCitiesRules'
 import { Trans } from 'react-i18next'
 
 export const DrawSpecialActionCardHeader = () => {
-  const player = usePlayerId()
+  const me = usePlayerId()
   const rules = useRules<RivalCitiesRules>()!
   const activePlayer = rules.getActivePlayer()
-  const itsMe = player && activePlayer === player
-  const name = usePlayerName(activePlayer)
+  const player = usePlayerName(activePlayer)
 
-  if (itsMe) {
+  if (activePlayer === me) {
     return <Trans defaults="header.draw.special.action.card.you" />
   }
 
-  return <Trans defaults="header.draw.special.action.card.player" values={{ player: name }} />
+  return <Trans defaults="header.draw.special.action.card.player" values={{ player }} />
 }

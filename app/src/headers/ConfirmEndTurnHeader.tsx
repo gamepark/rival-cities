@@ -6,14 +6,13 @@ import { isCustomMoveType } from '@gamepark/rules-api'
 import { Trans } from 'react-i18next'
 
 export const ConfirmEndTurnHeader = () => {
-  const player = usePlayerId()
+  const me = usePlayerId()
   const rules = useRules<RivalCitiesRules>()!
   const activePlayer = rules.getActivePlayer()
-  const itsMe = player && activePlayer === player
-  const name = usePlayerName(activePlayer)
+  const player = usePlayerName(activePlayer)
   const confirmEndTurn = useLegalMove(isCustomMoveType(CustomMoveType.ConfirmEndTurn))
 
-  if (itsMe) {
+  if (activePlayer === me) {
     return (
       <Trans
         defaults="header.confirm.end.turn.you"
@@ -24,5 +23,5 @@ export const ConfirmEndTurnHeader = () => {
     )
   }
 
-  return <Trans defaults="header.confirm.end.turn.player" values={{ player: name }} />
+  return <Trans defaults="header.confirm.end.turn.player" values={{ player }} />
 }

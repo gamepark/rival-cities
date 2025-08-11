@@ -10,13 +10,13 @@ export const WinLawsuitHistory = (props: MoveComponentProps<MoveItem>) => {
   const { context, move } = props
   const game: MaterialGame = context.game
   const actionPlayer = move.location.player
-  const name = usePlayerName(actionPlayer)
+  const player = usePlayerName(actionPlayer)
   const card = game.items[MaterialType.LawsuitCard]![move.itemIndex]
 
   return (
     <Trans
       defaults="history.win.lawsuit"
-      values={{ player: name }}
+      values={{ player }}
       components={{
         card: <PlayMoveButton move={displayMaterialHelp(MaterialType.LawsuitCard, card)} transient />
       }}

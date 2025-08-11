@@ -8,11 +8,10 @@ export const ReactivateFactoryHeader = () => {
   const me = usePlayerId()
   const rules = useRules<RivalCitiesRules>()!
   const activePlayer = rules.getActivePlayer()
-  const itsMe = me && activePlayer === me
   const player = usePlayerName(activePlayer)
   const count = new ReactivateFactoryRule(rules.game).action.count
 
-  if (itsMe) {
+  if (activePlayer === me) {
     return <Trans defaults="header.reactivate-factory.you" values={{ count }} />
   }
 

@@ -10,13 +10,13 @@ export const ReturnAllianceHistory = (props: MoveComponentProps<MoveItem>) => {
   const { context, move } = props
   const game: MaterialGame = context.game
   const actionPlayer = context.action.playerId
-  const name = usePlayerName(actionPlayer)
+  const player = usePlayerName(actionPlayer)
   const allianceCard = game.items[MaterialType.AllianceCard]![move.itemIndex]
 
   return (
     <Trans
       defaults="history.return.alliance"
-      values={{ player: name, id: allianceCard.id }}
+      values={{ player, id: allianceCard.id }}
       components={{
         card: <PlayMoveButton move={displayMaterialHelp(MaterialType.AllianceCard, allianceCard)} transient />
       }}

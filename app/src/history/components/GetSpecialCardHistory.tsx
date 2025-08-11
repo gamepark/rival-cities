@@ -10,13 +10,13 @@ export const GetSpecialCardHistory = (props: MoveComponentProps<MoveItem>) => {
   const { context, move } = props
   const game: MaterialGame = context.game
   const actionPlayer = context.action.playerId
-  const name = usePlayerName(actionPlayer)
+  const player = usePlayerName(actionPlayer)
   const card = game.items[MaterialType.SpecialActionCard]![move.itemIndex]
 
   return (
     <Trans
       defaults="history.get.special.card"
-      values={{ player: name }}
+      values={{ player }}
       components={{
         card: <PlayMoveButton move={displayMaterialHelp(MaterialType.SpecialActionCard, card)} transient />
       }}

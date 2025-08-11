@@ -8,7 +8,7 @@ import { Trans } from 'react-i18next'
 export const AdvanceInLawsuitHistory = (props: MoveComponentProps<MoveItem>) => {
   const { context, move } = props
   const actionPlayer = context.action.playerId
-  const name = usePlayerName(actionPlayer)
+  const player = usePlayerName(actionPlayer)
   const id = new RivalCitiesRules(context.game as MaterialGame).material(MaterialType.LawsuitPiece).getItem(move.location.parent!).location.x! + 1
-  return <Trans defaults="history.advance.lawsuit" values={{ player: name, id }} />
+  return <Trans defaults="history.advance.lawsuit" values={{ player, id }} />
 }

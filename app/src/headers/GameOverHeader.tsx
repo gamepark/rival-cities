@@ -42,7 +42,7 @@ export const GameOverHeader = () => {
   const playerWithBell = rules.material(MaterialType.BellToken).location(LocationType.PlayerBellToken).getItem()?.location.player
 
   if (playerWithBell) {
-    return <Trans defaults="header.end.bell.player" values={{ player: playerWithBell }} />
+    return <Trans defaults="header.end.bell.player" values={{ playerWithBell }} />
   }
 
   return <Trans defaults="result.comp.tie.all" />

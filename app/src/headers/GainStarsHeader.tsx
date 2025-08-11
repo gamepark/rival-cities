@@ -29,7 +29,7 @@ export const GainStarsHeader = () => {
   return (
     <Trans
       defaults="header.gain-stars.player"
-      values={{ player: player, count }}
+      values={{ player, count }}
       components={{
         star: <Picture src={Star} css={iconCss} />
       }}

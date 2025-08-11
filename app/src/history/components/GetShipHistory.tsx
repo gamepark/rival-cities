@@ -10,13 +10,13 @@ export const GetShipHistory = (props: MoveComponentProps<MoveItem>) => {
   const { context, move } = props
   const game: MaterialGame = context.game
   const actionPlayer = context.action.playerId
-  const name = usePlayerName(actionPlayer)
+  const player = usePlayerName(actionPlayer)
   const shipCard = game.items[MaterialType.ShipCard]![move.itemIndex]
 
   return (
     <Trans
       defaults="history.get.ship"
-      values={{ player: name }}
+      values={{ player }}
       components={{
         card: <PlayMoveButton move={displayMaterialHelp(MaterialType.ShipCard, shipCard)} transient />
       }}

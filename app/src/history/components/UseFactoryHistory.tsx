@@ -6,7 +6,7 @@ import { Trans } from 'react-i18next'
 export const UseFactoryHistory = (props: MoveComponentProps) => {
   const { context } = props
   const actionPlayer = context.action.playerId
-  const name = usePlayerName(actionPlayer)
+  const player = usePlayerName(actionPlayer)
 
-  return <Trans defaults="history.use.factory" values={{ player: name }} />
+  return <Trans defaults="history.use.factory" values={{ player }} />
 }

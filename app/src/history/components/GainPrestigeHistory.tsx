@@ -6,7 +6,7 @@ import { Trans } from 'react-i18next'
 export const GainPrestigeHistory = (props: MoveComponentProps) => {
   const { context } = props
   const actionPlayer = context.action.playerId
-  const name = usePlayerName(actionPlayer)
+  const player = usePlayerName(actionPlayer)
 
-  return <Trans defaults="history.gain.prestige" values={{ player: name }} />
+  return <Trans defaults="history.gain.prestige" values={{ player }} />
 }
