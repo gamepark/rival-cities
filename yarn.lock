@@ -1597,10 +1597,10 @@
     pusher-js "^7.0.0"
     redux "^4.2.1"
 
-"@gamepark/react-game@~6.38.1":
-  version "6.38.1"
-  resolved "https://registry.yarnpkg.com/@gamepark/react-game/-/react-game-6.38.1.tgz#3041c6d81db7621f66b87daf66faa69c347383fb"
-  integrity sha512-Fzmsa4tBmB0cbjPqYJNu/YyRepm/vsx7sacNFv0ziLRmWieR31CKWlnMAeuBHVFxgeDu3UeO2cgqyT+hduqI9g==
+"@gamepark/react-game@~6.38.2":
+  version "6.38.2"
+  resolved "https://registry.yarnpkg.com/@gamepark/react-game/-/react-game-6.38.2.tgz#bd4a02b5f6bf57ad9aeb5e2a83a82aafda031402"
+  integrity sha512-qmqYr23m6dMvSj1aHeHAzoQRqyzj9ocV3bDUD0o9L0TWFVRtUfQ/tGgKYiFbfTBMr8PJARbh3ZwByy5EwAdKkQ==
   dependencies:
     "@apollo/client" "^3.5.0"
     "@datadog/browser-logs" "^4.42.0"

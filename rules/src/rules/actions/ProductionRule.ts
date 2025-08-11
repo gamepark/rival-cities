@@ -8,6 +8,14 @@ import { CustomMoveType } from '../CustomMoveType'
 import { GainProductsRule } from './GainProductsRule'
 
 export class ProductionRule extends GainProductsRule<Production> {
+  getPlayerMoves() {
+    const moves = super.getPlayerMoves()
+    if (!this.action.quantity) {
+      moves.push(this.customMove(CustomMoveType.Pass))
+    }
+    return moves
+  }
+
   afterItemMove(move: ItemMove): MaterialMove[] {
     if (isMoveItemType(MaterialType.Factory)(move) && !this.canGainMore) {
       return [this.startNextRule()]

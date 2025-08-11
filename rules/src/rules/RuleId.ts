@@ -7,7 +7,7 @@ export enum RuleId {
   ChooseSplitAction,
   PerformMultipleActions,
   Production,
-  Gift,
+  GainProducts,
   Donation,
   SwapProduct,
   GainLetter,

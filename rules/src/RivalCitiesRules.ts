@@ -76,7 +76,7 @@ export class RivalCitiesRules
     [RuleId.ChooseSplitAction]: ChooseSplitActionRule,
     [RuleId.PerformMultipleActions]: PerformMultipleActionsRule,
     [RuleId.Production]: ProductionRule,
-    [RuleId.Gift]: GainProductsRule,
+    [RuleId.GainProducts]: GainProductsRule,
     [RuleId.Donation]: DonationRule,
     [RuleId.SwapProduct]: SwapProductRule,
     [RuleId.GainLetter]: GainLetterRule,

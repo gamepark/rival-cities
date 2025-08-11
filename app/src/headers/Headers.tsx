@@ -16,8 +16,8 @@ import { DrawSpecialActionCardHeader } from './DrawSpecialActionCardHeader'
 import { EarnPrestigeHeader } from './EarnPrestigeHeader'
 import { FormAllianceHeader } from './FormAllianceHeader'
 import { GainLetterHeader } from './GainLetterHeader'
+import { GainProductsHeader } from './GainProductsHeader'
 import { GainStarsHeader } from './GainStarsHeader'
-import { GiftHeader } from './GiftHeader'
 import { PayAlliancesUpkeepHeader } from './PayAlliancesUpkeepHeader'
 import { PayToPerformActionAgainHeader } from './PayToPerformActionAgainHeader'
 import { PiracyHeader } from './PiracyHeader'
@@ -37,7 +37,7 @@ export const Headers: Partial<Record<RuleId, ComponentType>> = {
   [RuleId.ChooseSplitAction]: ChooseSplitActionHeader,
   [RuleId.PerformMultipleActions]: () => <HeaderText code="multiple" moves={{ pass: isCustomMoveType(CustomMoveType.Pass) }} />,
   [RuleId.Production]: ProductionHeader,
-  [RuleId.Gift]: GiftHeader,
+  [RuleId.GainProducts]: GainProductsHeader,
   [RuleId.Donation]: DonationHeader,
   [RuleId.SwapProduct]: SwapProductHeader,
   [RuleId.GainLetter]: GainLetterHeader,

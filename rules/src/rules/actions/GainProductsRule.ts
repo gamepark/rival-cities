@@ -13,6 +13,8 @@ export class GainProductsRule<A extends GainProducts | Production> extends Actio
     const playerMoves = this.getPlayerMoves()
     if (playerMoves.length === 1) {
       return playerMoves
+    } else if (playerMoves.length === 0) {
+      return [this.startNextRule()]
     }
     return []
   }
@@ -28,9 +30,6 @@ export class GainProductsRule<A extends GainProducts | Production> extends Actio
           moves.push(gain)
         }
       }
-    }
-    if (!moves.length || !this.action.quantity) {
-      moves.push(this.customMove(CustomMoveType.Pass))
     }
     return moves
   }
@@ -107,6 +106,8 @@ export class GainProductsRule<A extends GainProducts | Production> extends Actio
     if (move.type === CustomMoveType.TriggerAllianceEffect) {
       const product = getEnumValues(Product).find((product) => this.getBonusAlliance(product) === move.data)!
       return this.gainProduct(product)
+    } else if (move.type === CustomMoveType.ProductForgo) {
+      return [this.startNextRule()]
     }
     return super.onCustomMove(move)
   }

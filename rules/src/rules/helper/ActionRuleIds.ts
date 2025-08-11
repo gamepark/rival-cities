@@ -5,7 +5,7 @@ export const ActionRuleIds: Record<ActionType, RuleId> = {
   [ActionType.Split]: RuleId.ChooseSplitAction,
   [ActionType.Multiple]: RuleId.PerformMultipleActions,
   [ActionType.Production]: RuleId.Production,
-  [ActionType.GainProducts]: RuleId.Gift,
+  [ActionType.GainProducts]: RuleId.GainProducts,
   [ActionType.Donation]: RuleId.Donation,
   [ActionType.SwapProduct]: RuleId.SwapProduct,
   [ActionType.GainLetter]: RuleId.GainLetter,
