@@ -9,21 +9,20 @@ import { Trans } from 'react-i18next'
 import { PerformMultipleActionsHeader } from './PerformMultipleActionsHeader'
 
 export const ChooseSplitActionHeader = () => {
-  const player = usePlayerId()
+  const me = usePlayerId()
   const rules = useRules<RivalCitiesRules>()!
-  const activePlayer = rules.game.rule?.player
-  const itsMe = player && activePlayer === player
-  const name = usePlayerName(activePlayer)
+  const activePlayer = rules.getActivePlayer()
+  const player = usePlayerName(activePlayer)
   const pass = useLegalMove(isCustomMoveType(CustomMoveType.Pass))
 
   if (new ChooseSplitActionRule(rules.game).hasAlliance(Alliance.Gdansk)) {
     return <PerformMultipleActionsHeader />
   }
 
-  if (itsMe) {
+  if (activePlayer === me) {
     return (
       <Trans
-        defaults={`header.choice.you`}
+        defaults="header.choice.you"
         components={{
           pass: <PlayMoveButton move={pass} />
         }}
@@ -31,5 +30,5 @@ export const ChooseSplitActionHeader = () => {
     )
   }
 
-  return <Trans defaults={`header.choice.player`} values={{ player: name }} />
+  return <Trans defaults="header.choice.player" values={{ player }} />
 }
