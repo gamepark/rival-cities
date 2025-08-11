@@ -41,7 +41,7 @@ import { ResolveLawsuitRule } from './rules/actions/ResolveLawsuitRule'
 import { SwapProductRule } from './rules/actions/SwapProductRule'
 import { AdvanceInkJarRule } from './rules/AdvanceInkJarRule'
 import { ChooseActionRule } from './rules/ChooseActionRule'
-import { ChooseFirstProductRule } from './rules/ChooseFirstProductRule'
+import { ChooseStartProductRule } from './rules/ChooseStartProductRule'
 import { ConfirmEndTurnRule } from './rules/ConfirmEndTurnRule'
 import { CustomMoveType } from './rules/CustomMoveType'
 import { EndOfGameHelper } from './rules/helper/EndOfGameHelper'
@@ -68,7 +68,7 @@ export class RivalCitiesRules
 {
   endOfGameHelper = new EndOfGameHelper(this.game)
   rules = {
-    [RuleId.ChooseFirstProduct]: ChooseFirstProductRule,
+    [RuleId.ChooseStartProduct]: ChooseStartProductRule,
     [RuleId.AdvanceInkJar]: AdvanceInkJarRule,
     [RuleId.PayInkJarMovementCost]: PayInkJarMovementCostRule,
     [RuleId.ChooseAction]: ChooseActionRule,

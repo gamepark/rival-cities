@@ -103,6 +103,6 @@ export class RivalCitiesSetup extends MaterialGameSetup<City, MaterialType, Loca
   }
 
   start() {
-    this.startSimultaneousRule(RuleId.ChooseFirstProduct)
+    this.startPlayerTurn(RuleId.ChooseStartProduct, this.players[0])
   }
 }

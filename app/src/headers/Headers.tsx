@@ -6,8 +6,8 @@ import { AdvanceInkJarHeader } from './AdvanceInkJarHeader'
 import { AdvanceLawsuitHeader } from './AdvanceLawsuitHeader'
 import { BuildFactoryHeader } from './BuildFactoryHeader'
 import { ChooseActionHeader } from './ChooseActionHeader'
-import { ChooseFirstProductHeader } from './ChooseFirstProductHeader'
 import { ChooseSplitActionHeader } from './ChooseSplitActionHeader'
+import { ChooseStartProductHeader } from './ChooseStartProductHeader'
 import { ConfirmEndTurnHeader } from './ConfirmEndTurnHeader'
 import { CourtRulingHeader } from './CourtRulingHeader'
 import { DonationHeader } from './DonationHeader'
@@ -31,7 +31,7 @@ import { SwapProductHeader } from './SwapProductHeader'
 import { TakeBellHeader } from './TakeBellHeader'
 
 export const Headers: Partial<Record<RuleId, ComponentType>> = {
-  [RuleId.ChooseFirstProduct]: ChooseFirstProductHeader,
+  [RuleId.ChooseStartProduct]: ChooseStartProductHeader,
   [RuleId.AdvanceInkJar]: AdvanceInkJarHeader,
   [RuleId.PayInkJarMovementCost]: PayInkJarMovementCostHeader,
   [RuleId.ChooseAction]: ChooseActionHeader,

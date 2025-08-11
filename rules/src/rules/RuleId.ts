@@ -1,5 +1,5 @@
 export enum RuleId {
-  ChooseFirstProduct = 1,
+  ChooseStartProduct = 1,
   AdvanceInkJar,
   PayInkJarMovementCost,
   ChooseAction,
