@@ -19,7 +19,7 @@ export const AdvanceLawsuitHeader = () => {
     if (action.lawsuitIndex !== undefined) {
       return (
         <Trans
-          defaults={`header.advance.again.lawsuit.you`}
+          defaults="header.advance.again.lawsuit.you"
           components={{
             pass: <PlayMoveButton move={pass} />
           }}
@@ -28,7 +28,7 @@ export const AdvanceLawsuitHeader = () => {
     }
     return (
       <Trans
-        defaults={`header.advance.lawsuit.you`}
+        defaults="header.advance.lawsuit.you"
         components={{
           pass: <PlayMoveButton move={pass} />
         }}
@@ -36,5 +36,5 @@ export const AdvanceLawsuitHeader = () => {
     )
   }
 
-  return <Trans defaults={`header.advance.lawsuit.player`} values={{ player: name }} />
+  return <Trans defaults="header.advance.lawsuit.player" values={{ player: name }} />
 }

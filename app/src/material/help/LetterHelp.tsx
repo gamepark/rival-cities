@@ -18,19 +18,19 @@ export const LetterHelp: FC<MaterialHelpProps> = ({ item, closeDialog }) => {
 
   return (
     <>
-      <h2>{t(`help.letter`)}</h2>
+      <h2>{t('help.letter')}</h2>
       <p>
-        <Trans defaults={`help.letter.descr`} components={components} />
+        <Trans defaults="help.letter.descr" components={components} />
       </p>
       <ul>
-        <li>{t(`help.letter.use.2`)}</li>
-        <li>{t(`help.letter.use.3`)}</li>
-        <li>{t(`help.letter.use.1`)}</li>
+        <li>{t('help.letter.use.2')}</li>
+        <li>{t('help.letter.use.3')}</li>
+        <li>{t('help.letter.use.1')}</li>
       </ul>
       {spendLetterToSwapProduct && isPlayerLetter && itsMe && (
         <p>
           <Trans
-            defaults={`help.letter.spendLetterToSwapProduct`}
+            defaults="help.letter.spendLetterToSwapProduct"
             components={{
               ...components,
               spendLetterToSwapProduct: <PlayMoveButton move={spendLetterToSwapProduct} onPlay={closeDialog} />

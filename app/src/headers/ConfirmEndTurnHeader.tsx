@@ -16,7 +16,7 @@ export const ConfirmEndTurnHeader = () => {
   if (itsMe) {
     return (
       <Trans
-        defaults={`header.confirm.end.turn.you`}
+        defaults="header.confirm.end.turn.you"
         components={{
           confirm: <PlayMoveButton move={confirmEndTurn} auto={10} />
         }}
@@ -24,5 +24,5 @@ export const ConfirmEndTurnHeader = () => {
     )
   }
 
-  return <Trans defaults={`header.confirm.end.turn.player`} values={{ player: name }} />
+  return <Trans defaults="header.confirm.end.turn.player" values={{ player: name }} />
 }

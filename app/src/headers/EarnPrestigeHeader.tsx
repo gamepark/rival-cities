@@ -12,8 +12,8 @@ export const EarnPrestigeHeader = () => {
   const name = usePlayerName(activePlayer)
 
   if (itsMe) {
-    return <Trans defaults={`header.earn.prestige.you`} />
+    return <Trans defaults="header.earn.prestige.you" />
   }
 
-  return <Trans defaults={`header.earn.prestige.player`} values={{ player: name }} />
+  return <Trans defaults="header.earn.prestige.player" values={{ player: name }} />
 }

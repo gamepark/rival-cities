@@ -11,22 +11,22 @@ export function BasicActionCardHelp({ item }: MaterialHelpProps) {
   const action = basicCardAction[item.id as BasicAction]
   return (
     <>
-      <h2>{t(`help.basic.action.card`)}</h2>
+      <h2>{t('help.basic.action.card')}</h2>
       <p>
-        <Trans defaults={`help.basic.action.card.descr`} />
+        <Trans defaults={'help.basic.action.card.descr'} />
       </p>
       <ul>
         <li>
-          <Trans defaults={`help.basic.action.card.choice.1`} />
+          <Trans defaults={'help.basic.action.card.choice.1'} />
         </li>
         <li>
-          <Trans defaults={`help.basic.action.card.choice.2`} />
+          <Trans defaults={'help.basic.action.card.choice.2'} />
         </li>
         <li>
-          <Trans defaults={`help.basic.action.card.choice.3`} />
+          <Trans defaults={'help.basic.action.card.choice.3'} />
         </li>
       </ul>
-      <h3>{t(`help.actions`)}</h3>
+      <h3>{t('help.actions')}</h3>
       {action.type === ActionType.Multiple || action.type === ActionType.Split ? (
         <>
           {action.actions.map((a, index) => (
@@ -36,7 +36,7 @@ export function BasicActionCardHelp({ item }: MaterialHelpProps) {
               </p>
               {action.type === ActionType.Split && index < action.actions.length - 1 && (
                 <p>
-                  <b>{t(`help.action.descr.or`)}</b>
+                  <b>{t('help.action.descr.or')}</b>
                 </p>
               )}
             </div>
@@ -50,7 +50,7 @@ export function BasicActionCardHelp({ item }: MaterialHelpProps) {
       {action.type === ActionType.Split && (
         <p css={note}>
           <Trans
-            defaults={`help.basic.action.card.note`}
+            defaults={'help.basic.action.card.note'}
             components={{
               ...components,
               alliance: allianceBtn(Alliance.Gdansk)

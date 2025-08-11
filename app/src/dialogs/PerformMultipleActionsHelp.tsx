@@ -18,7 +18,7 @@ export const PerformMultipleActionsHelp = () => {
 
   return (
     <>
-      <h2>{t(`help.rule.actions`)}</h2>
+      <h2>{t('help.rule.actions')}</h2>
       {action.actions.map((a, index) => (
         <p key={index}>
           <Trans defaults={`help.action.descr.${a.type}`} values={a} components={components} />

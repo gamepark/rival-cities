@@ -16,7 +16,7 @@ export const GiftHeader = () => {
   if (itsMe) {
     return (
       <Trans
-        defaults={`header.gift.you`}
+        defaults="header.gift.you"
         components={{
           pass: <PlayMoveButton move={pass} />
         }}
@@ -24,5 +24,5 @@ export const GiftHeader = () => {
     )
   }
 
-  return <Trans defaults={`header.gift.player`} values={{ player: name }} />
+  return <Trans defaults="header.gift.player" values={{ player: name }} />
 }

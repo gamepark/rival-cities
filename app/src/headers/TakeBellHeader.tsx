@@ -11,8 +11,8 @@ export const TakeBellHeader = () => {
   const player = usePlayerName(activePlayer)
 
   if (activePlayer === me) {
-    return <Trans defaults={`header.take-bell.you`} />
+    return <Trans defaults="header.take-bell.you" />
   }
 
-  return <Trans defaults={`header.take-bell.player`} values={{ player }} />
+  return <Trans defaults="header.take-bell.player" values={{ player }} />
 }

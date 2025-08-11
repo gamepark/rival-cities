@@ -14,13 +14,13 @@ export const SpecialActionCardHelp: FC<MaterialHelpProps> = ({ item }) => {
   // TODO fix and factorize actions help
   return (
     <>
-      <h2>{t(`help.special.action.card`)}</h2>
+      <h2>{t('help.special.action.card')}</h2>
       <p>
-        <Trans defaults={`help.special.action.card.descr`} />
+        <Trans defaults="help.special.action.card.descr" />
       </p>
       {item.id && (
         <>
-          <h3>{t(`help.actions`)}</h3>
+          <h3>{t('help.actions')}</h3>
           {actions.map((a, index) => {
             const rival = a.type === ActionType.EarnPrestige && a.rival ? '.rival' : ''
             return (
@@ -33,7 +33,7 @@ export const SpecialActionCardHelp: FC<MaterialHelpProps> = ({ item }) => {
       )}
       <p css={note}>
         <Trans
-          defaults={`help.special.action.card.note`}
+          defaults="help.special.action.card.note"
           components={{
             ...components,
             ship: shipBtn(Ship.Ship18)

@@ -9,9 +9,9 @@ export const StarTokenHelp: FC<MaterialHelpProps> = () => {
 
   return (
     <>
-      <h2>{t(`help.star.token`)}</h2>
+      <h2>{t('help.star.token')}</h2>
       <p>
-        <Trans defaults={`help.star.token.descr`} components={components} />
+        <Trans defaults="help.star.token.descr" components={components} />
       </p>
     </>
   )

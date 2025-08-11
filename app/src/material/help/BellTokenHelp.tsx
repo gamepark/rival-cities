@@ -9,9 +9,9 @@ export const BellTokenHelp: FC<MaterialHelpProps> = () => {
 
   return (
     <>
-      <h2>{t(`help.bell.token`)}</h2>
+      <h2>{t('help.bell.token')}</h2>
       <p>
-        <Trans defaults={`help.bell.token.descr`} components={components} />
+        <Trans defaults="help.bell.token.descr" components={components} />
       </p>
     </>
   )

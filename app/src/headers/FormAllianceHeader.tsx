@@ -17,7 +17,7 @@ export const FormAllianceHeader = () => {
   if (itsMe) {
     return (
       <Trans
-        defaults={`header.form.alliance.you`}
+        defaults="header.form.alliance.you"
         components={{
           pass: <PlayMoveButton move={pass} />
         }}
@@ -25,5 +25,5 @@ export const FormAllianceHeader = () => {
     )
   }
 
-  return <Trans defaults={`header.form.alliance.player`} values={{ player: name }} />
+  return <Trans defaults="header.form.alliance.player" values={{ player: name }} />
 }

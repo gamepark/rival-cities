@@ -19,7 +19,7 @@ export const ChooseSplitActionHelp = () => {
   const action = basicCardAction[basicAction]
   return (
     <>
-      <h2>{t(`help.rule.actions`)}</h2>
+      <h2>{t('help.rule.actions')}</h2>
       {action.type === ActionType.Multiple || action.type === ActionType.Split ? (
         <>
           {action.actions.map((a, index) => (
@@ -29,7 +29,7 @@ export const ChooseSplitActionHelp = () => {
               </p>
               {action.type === ActionType.Split && index < action.actions.length - 1 && (
                 <p>
-                  <b>{t(`help.action.descr.or`)}</b>
+                  <b>{t('help.action.descr.or')}</b>
                 </p>
               )}
             </div>

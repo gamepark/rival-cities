@@ -20,7 +20,7 @@ export const ProductionHeader = () => {
     if (quantity) {
       return (
         <Trans
-          defaults={`header.production.you`}
+          defaults="header.production.you"
           components={{
             product: <Picture src={getProductIcon(product)} css={iconCss} />
           }}
@@ -41,7 +41,7 @@ export const ProductionHeader = () => {
 
   return (
     <Trans
-      defaults={`header.production.player`}
+      defaults="header.production.player"
       values={{ player }}
       components={{
         product: <Picture src={getProductIcon(product)} css={iconCss} />

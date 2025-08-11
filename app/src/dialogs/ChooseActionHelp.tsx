@@ -6,13 +6,13 @@ export const ChooseActionHelp = () => {
 
   return (
     <>
-      <h2>{t(`help.rule.choose.action`)}</h2>
-      <p>{t(`help.rule.choose.action.descr`)}</p>
+      <h2>{t('help.rule.choose.action')}</h2>
+      <p>{t('help.rule.choose.action.descr')}</p>
       <ul>
-        <li>{t(`help.rule.choose.action.option.a`)}</li>
-        <li>{t(`help.rule.choose.action.option.b`)}</li>
-        <li>{t(`help.rule.choose.action.option.c`)}</li>
-        <li>{t(`help.rule.choose.action.option.d`)}</li>
+        <li>{t('help.rule.choose.action.option.a')}</li>
+        <li>{t('help.rule.choose.action.option.b')}</li>
+        <li>{t('help.rule.choose.action.option.c')}</li>
+        <li>{t('help.rule.choose.action.option.d')}</li>
       </ul>
     </>
   )

@@ -17,7 +17,7 @@ export const PurchaseShipHeader = () => {
   if (itsMe) {
     return (
       <Trans
-        defaults={`header.ship.you`}
+        defaults="header.ship.you"
         components={{
           pass: <PlayMoveButton move={pass} />
         }}
@@ -25,5 +25,5 @@ export const PurchaseShipHeader = () => {
     )
   }
 
-  return <Trans defaults={`header.ship.player`} values={{ player: name }} />
+  return <Trans defaults="header.ship.player" values={{ player: name }} />
 }

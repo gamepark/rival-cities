@@ -9,9 +9,9 @@ export const FactoryHelp: FC<MaterialHelpProps> = () => {
 
   return (
     <>
-      <h2>{t(`help.factory`)}</h2>
+      <h2>{t('help.factory')}</h2>
       <p>
-        <Trans defaults={`help.factory.descr`} components={components} />
+        <Trans defaults="help.factory.descr" components={components} />
       </p>
     </>
   )
