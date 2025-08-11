@@ -32,10 +32,7 @@ export const basicCardAction: Record<BasicAction, Action> = {
   [BasicAction.BasicAction4]: { type: ActionType.BuildFactory, cost: 2 },
   [BasicAction.BasicAction5]: {
     type: ActionType.Split,
-    actions: [
-      { type: ActionType.Production, product: Product.Furniture, quantity: 1 },
-      { type: ActionType.GainLetter, nbLettersToTake: 1 }
-    ]
+    actions: [{ type: ActionType.Production, product: Product.Furniture, quantity: 1 }, { type: ActionType.GainLetter }]
   },
   [BasicAction.BasicAction6]: { type: ActionType.Production, product: Product.Cloth, quantity: 1 },
   [BasicAction.BasicAction7]: {

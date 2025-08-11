@@ -31,7 +31,7 @@ export enum SpecialAction {
 const multipleAction = (...actions: Action[]): Action[] => [{ type: ActionType.Multiple, actions }]
 
 export const specialCardActions: Record<SpecialAction, Action[]> = {
-  [SpecialAction.SpecialAction1]: multipleAction({ type: ActionType.AdvanceLawsuit }, { type: ActionType.GainLetter, nbLettersToTake: 2 }),
+  [SpecialAction.SpecialAction1]: multipleAction({ type: ActionType.AdvanceLawsuit }, { type: ActionType.GainLetter, quantity: 2 }),
   [SpecialAction.SpecialAction2]: multipleAction({ type: ActionType.AdvanceLawsuit }, { type: ActionType.GainProducts, quantity: 2, isGift: true }),
   [SpecialAction.SpecialAction3]: multipleAction(
     { type: ActionType.AdvanceLawsuit },
@@ -53,11 +53,7 @@ export const specialCardActions: Record<SpecialAction, Action[]> = {
     { type: ActionType.GainProducts, product: Product.Cloth, quantity: 1, isGift: true },
     { type: ActionType.FormAlliance }
   ),
-  [SpecialAction.SpecialAction8]: multipleAction(
-    { type: ActionType.AdvanceLawsuit },
-    { type: ActionType.EarnPrestige },
-    { type: ActionType.GainLetter, nbLettersToTake: 1 }
-  ),
+  [SpecialAction.SpecialAction8]: multipleAction({ type: ActionType.AdvanceLawsuit }, { type: ActionType.EarnPrestige }, { type: ActionType.GainLetter }),
   [SpecialAction.SpecialAction9]: multipleAction(
     { type: ActionType.AdvanceLawsuit },
     { type: ActionType.EarnPrestige },
@@ -87,18 +83,14 @@ export const specialCardActions: Record<SpecialAction, Action[]> = {
     { type: ActionType.EarnPrestige },
     { type: ActionType.GainProducts, product: Product.Furniture, quantity: 1, isGift: true }
   ),
-  [SpecialAction.SpecialAction18]: multipleAction(
-    { type: ActionType.AdvanceLawsuit },
-    { type: ActionType.PurchaseShip },
-    { type: ActionType.GainLetter, nbLettersToTake: 1 }
-  ),
+  [SpecialAction.SpecialAction18]: multipleAction({ type: ActionType.AdvanceLawsuit }, { type: ActionType.PurchaseShip }, { type: ActionType.GainLetter }),
   [SpecialAction.SpecialAction19]: [{ type: ActionType.ReactivateFactory, count: 3 }, { type: ActionType.AdvanceLawsuit }],
   [SpecialAction.SpecialAction20]: multipleAction(
     { type: ActionType.AdvanceLawsuit },
     { type: ActionType.GainProducts, product: Product.Furniture, quantity: 1, isGift: true },
     { type: ActionType.FormAlliance }
   ),
-  [SpecialAction.SpecialAction21]: multipleAction({ type: ActionType.AdvanceLawsuit }, { type: ActionType.GainLetter, nbLettersToTake: 2 }),
+  [SpecialAction.SpecialAction21]: multipleAction({ type: ActionType.AdvanceLawsuit }, { type: ActionType.GainLetter, quantity: 2 }),
   [SpecialAction.SpecialAction22]: multipleAction({ type: ActionType.AdvanceLawsuit }, { type: ActionType.CourtRuling }),
   [SpecialAction.SpecialAction23]: multipleAction(
     { type: ActionType.AdvanceLawsuit },

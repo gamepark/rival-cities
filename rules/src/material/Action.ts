@@ -66,7 +66,7 @@ export type SwapProduct = {
 
 export type GainLetter = {
   type: ActionType.GainLetter
-  nbLettersToTake: number
+  quantity?: number
 } & ActionCommon
 
 export type DrawSpecialActionCard = {

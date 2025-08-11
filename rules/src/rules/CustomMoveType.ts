@@ -7,5 +7,6 @@ export enum CustomMoveType {
   ConfirmEndTurn,
   TriggerAllianceEffect,
   TriggerShipEffect,
-  ProductForgo // When you cannot gain a product because the stock is empty and opponent does not have more than you
+  ProductForgo, // When you cannot gain a product because the stock is empty and opponent does not have more than you
+  LetterForgo
 }

@@ -1,18 +1,11 @@
 /** @jsxImportSource @emotion/react */
-
-import { usePlayerId, usePlayerName, useRules } from '@gamepark/react-game'
+import { HeaderText, Picture, useRules } from '@gamepark/react-game'
 import { RivalCitiesRules } from '@gamepark/rival-cities/RivalCitiesRules'
-import { Trans } from 'react-i18next'
+import { GainLetterRule } from '@gamepark/rival-cities/rules/actions/GainLetterRule'
+import Letter from '../images/icons/Letter.png'
 
 export const GainLetterHeader = () => {
-  const me = usePlayerId()
   const rules = useRules<RivalCitiesRules>()!
-  const activePlayer = rules.getActivePlayer()
-  const player = usePlayerName(activePlayer)
-
-  if (activePlayer === me) {
-    return <Trans defaults="header.gain.letter.you" />
-  }
-
-  return <Trans defaults="header.gain.letter.player" values={{ player }} />
+  const quantity = new GainLetterRule(rules.game).action.quantity ?? 1
+  return <HeaderText code="gain-letter" values={{ quantity }} components={{ letter: <Picture src={Letter} /> }} />
 }

@@ -16,7 +16,7 @@ export class GainPrestigeIncomeRule extends PlayerTurnRule {
       actions.push({ type: ActionType.GainStars, stars: 1 })
     }
     if (x >= 6) {
-      actions.push({ type: ActionType.GainLetter, nbLettersToTake: 1 })
+      actions.push({ type: ActionType.GainLetter })
     }
     if (x >= 5) {
       actions.push({ type: ActionType.GainProducts, product: Product.Furniture, quantity: 1 })

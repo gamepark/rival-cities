@@ -90,7 +90,7 @@ export const shipData: Record<Ship, ShipData> = {
     cost: cost(2, Product.Furniture),
     effect: {
       type: ShipEffectType.Instant,
-      actions: [{ type: ActionType.GainLetter, nbLettersToTake: 1 }]
+      actions: [{ type: ActionType.GainLetter }]
     },
     getNbStars: () => 3
   },
@@ -98,7 +98,7 @@ export const shipData: Record<Ship, ShipData> = {
     cost: cost(2, Product.Furniture),
     effect: {
       type: ShipEffectType.Instant,
-      actions: [{ type: ActionType.GainLetter, nbLettersToTake: 2 }]
+      actions: [{ type: ActionType.GainLetter, quantity: 2 }]
     },
     getNbStars: () => 1
   },
@@ -138,7 +138,7 @@ export const shipData: Record<Ship, ShipData> = {
     cost: cost(5, Product.Beer),
     effect: {
       type: ShipEffectType.Income,
-      action: { type: ActionType.GainLetter, nbLettersToTake: 1 }
+      action: { type: ActionType.GainLetter }
     },
     getNbStars: () => 1
   },
