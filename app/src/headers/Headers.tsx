@@ -56,6 +56,6 @@ export const Headers: Partial<Record<RuleId, ComponentType>> = {
   [RuleId.TakeBell]: TakeBellHeader,
   [RuleId.PayAlliancesUpkeep]: PayAlliancesUpkeepHeader,
   [RuleId.ReplaceSpecialActionCards]: () => <Trans defaults="header.replace-cards" />,
-  [RuleId.ReactivateFactories]: () => <Trans defaults="header.header.reactivate-factories" />,
+  [RuleId.ReactivateFactories]: () => <Trans defaults="header.reactivate-factories" />,
   [RuleId.ReturnBell]: () => <Trans defaults="header.return-bell" />
 }
