@@ -1,39 +1,12 @@
 /** @jsxImportSource @emotion/react */
-
-import { PlayMoveButton, useLegalMove, usePlayerId, usePlayerName, useRules } from '@gamepark/react-game'
+import { HeaderText, useRules } from '@gamepark/react-game'
 import { RivalCitiesRules } from '@gamepark/rival-cities/RivalCitiesRules'
 import { AdvanceLawsuitRule } from '@gamepark/rival-cities/rules/actions/AdvanceLawsuitRule'
 import { CustomMoveType } from '@gamepark/rival-cities/rules/CustomMoveType'
 import { isCustomMoveType } from '@gamepark/rules-api'
-import { Trans } from 'react-i18next'
 
 export const AdvanceLawsuitHeader = () => {
-  const me = usePlayerId()
   const rules = useRules<RivalCitiesRules>()!
-  const activePlayer = rules.getActivePlayer()
-  const player = usePlayerName(activePlayer)
-  const pass = useLegalMove(isCustomMoveType(CustomMoveType.Pass))
   const action = new AdvanceLawsuitRule(rules.game).action
-  if (activePlayer === me) {
-    if (action.lawsuitIndex !== undefined) {
-      return (
-        <Trans
-          defaults="header.advance.again.lawsuit.you"
-          components={{
-            pass: <PlayMoveButton move={pass} />
-          }}
-        />
-      )
-    }
-    return (
-      <Trans
-        defaults="header.advance.lawsuit.you"
-        components={{
-          pass: <PlayMoveButton move={pass} />
-        }}
-      />
-    )
-  }
-
-  return <Trans defaults="header.advance.lawsuit.player" values={{ player }} />
+  return <HeaderText code={action.lawsuitIndex === undefined ? 'lawsuit' : 'lawsuit.again'} moves={{ pass: isCustomMoveType(CustomMoveType.Pass) }} />
 }
