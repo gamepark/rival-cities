@@ -1,4 +1,4 @@
-import { Locator } from '@gamepark/react-game'
+import { DeckLocator, Locator } from '@gamepark/react-game'
 import { City } from '@gamepark/rival-cities/City'
 import { LocationType } from '@gamepark/rival-cities/material/LocationType'
 import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
@@ -14,7 +14,6 @@ import { lawsuitSpaceLocator } from './board/LawsuitSpaceLocator'
 import { letterDeckLocator } from './board/LetterDeckLocator'
 import { prestigeMarkerPisteLocator } from './board/PrestigeMarkerPisteLocator'
 import { productPilesLocator } from './board/ProductPilesLocator'
-import { sepcialActionCardsDiscardLocator } from './board/SepcialActionCardsDiscardLocator'
 import { shipCardsDeckLocator } from './board/ShipCardsDeckLocator'
 import { shipCardsRiverLocator } from './board/ShipCardsRiverLocator'
 import { specialActionCardsDeckLocator } from './board/SpecialActionCardsDeckLocator'
@@ -33,7 +32,7 @@ export const Locators: Partial<Record<LocationType, Locator<City, MaterialType, 
   [LocationType.BellTokenSpot]: new Locator({ parentItemType: MaterialType.GameBoard, positionOnParent: { x: 42, y: 1 }, rotateZ: 10 }),
   [LocationType.ActionCardSpace]: actionCardSpaceLocator,
   [LocationType.SpecialActionCardsDeck]: specialActionCardsDeckLocator,
-  [LocationType.SpecialActionCardsDiscard]: sepcialActionCardsDiscardLocator,
+  [LocationType.SpecialActionCardsDiscard]: new DeckLocator({ coordinates: { x: 9, y: -27 } }),
   [LocationType.ShipCardsDeck]: shipCardsDeckLocator,
   [LocationType.ShipCardsRiver]: shipCardsRiverLocator,
   [LocationType.LawsuitDeck]: lawsuitDeckLocator,
