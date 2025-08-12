@@ -5,6 +5,7 @@ import {
   hideItemId,
   hideItemIdToOthers,
   isCustomMoveType,
+  isEndPlayerTurn,
   isMoveItemType,
   ItemMove,
   MaterialGame,
@@ -212,6 +213,8 @@ export class RivalCitiesRules
   itemsCanMerge(type: MaterialType) {
     return type !== MaterialType.LawsuitPiece && super.itemsCanMerge(type)
   }
+
+  keepMoveSecret = (move: MaterialMove) => this.game.rule?.id === RuleId.PayAlliancesUpkeep && !isEndPlayerTurn(move)
 
   giveTime(): number {
     return 60

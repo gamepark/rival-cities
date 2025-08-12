@@ -30,7 +30,7 @@ export class PayAlliancesUpkeepRule extends SimultaneousRule {
     return []
   }
 
-  getAlliances(player: number) {
+  getAlliances(player: City) {
     return this.material(MaterialType.AllianceCard).player(player).getItems<Alliance>()
   }
 
@@ -48,6 +48,9 @@ export class PayAlliancesUpkeepRule extends SimultaneousRule {
             moves.push(this.customMove(CustomMoveType.ChooseAlliance, alliance))
           }
         }
+      }
+      if (!moves.length) {
+        moves.push(this.endPlayerTurn(player))
       }
       return moves
     }
@@ -79,9 +82,6 @@ export class PayAlliancesUpkeepRule extends SimultaneousRule {
       if (!upkeep.cost[alliance]?.amount) {
         delete upkeep.currentAlliance
         upkeep.cost[alliance] = undefined
-        if (!getEnumValues(Alliance).some((alliance) => upkeep.cost[alliance])) {
-          return [this.endPlayerTurn(player)]
-        }
       }
     }
     return []

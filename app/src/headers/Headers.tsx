@@ -13,6 +13,7 @@ import { DonationHeader } from './DonationHeader'
 import { GainLetterHeader } from './GainLetterHeader'
 import { GainProductsHeader } from './GainProductsHeader'
 import { GainStarsHeader } from './GainStarsHeader'
+import { PayAlliancesUpkeepHeader } from './PayAlliancesUpkeepHeader'
 import { PiracyHeader } from './PiracyHeader'
 import { ProductionHeader } from './ProductionHeader'
 import { RepeatActionHeader } from './RepeatActionHeader'
@@ -46,7 +47,7 @@ export const Headers: Partial<Record<RuleId, ComponentType>> = {
   [RuleId.GainStars]: GainStarsHeader,
   [RuleId.ConfirmEndTurn]: ConfirmEndTurnHeader,
   [RuleId.TakeBell]: () => <HeaderText code="take-bell" />,
-  [RuleId.PayAlliancesUpkeep]: () => <HeaderText code="pay-alliances" />,
+  [RuleId.PayAlliancesUpkeep]: PayAlliancesUpkeepHeader,
   [RuleId.ReplaceSpecialActionCards]: () => <Trans defaults="header.replace-cards" />,
   [RuleId.ReactivateFactories]: () => <Trans defaults="header.reactivate-factories" />,
   [RuleId.ReturnBell]: () => <Trans defaults="header.return-bell" />
