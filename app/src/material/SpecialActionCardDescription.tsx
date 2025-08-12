@@ -96,7 +96,7 @@ export class SpecialActionCardDescription extends CardDescription {
         move.itemIndex === context.index
     )
 
-    if (item.location.type === LocationType.CardPiste && (play || take)) {
+    if (item.location.type === LocationType.ActionCardSpace && (play || take)) {
       return (
         <>
           {play && (

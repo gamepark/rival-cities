@@ -22,7 +22,7 @@ export class RivalCitiesSetup extends MaterialGameSetup<City, MaterialType, Loca
 
   setupMaterial(options: RivalCitiesOptions) {
     this.material(MaterialType.BellToken).createItem({ location: { type: LocationType.BellTokenSpot } })
-    this.material(MaterialType.InkJar).createItem({ location: { type: LocationType.InkJarPiste, id: 0 } })
+    this.material(MaterialType.InkJar).createItem({ location: { type: LocationType.InkSpace, id: 0 } })
     this.material(MaterialType.PrestigeMarker).createItem({ location: { type: LocationType.PrestigeMarkerPiste, x: 0 } })
     this.material(MaterialType.Letter).createItem({ quantity: 12, location: { type: LocationType.LetterDeck } })
     this.material(MaterialType.Factory).createItem({ quantity: 12, location: { type: LocationType.FactoryDeck } })
@@ -30,7 +30,7 @@ export class RivalCitiesSetup extends MaterialGameSetup<City, MaterialType, Loca
 
     const cardsPlace = options.firstPlay ? basicActionCardPlaces : shuffle(basicActionCardPlaces)
     this.material(MaterialType.BasicActionCard).createItems(
-      getEnumValues(BasicAction).map((basicAction, index) => ({ id: basicAction, location: { type: LocationType.CardPiste, id: cardsPlace[index] } }))
+      getEnumValues(BasicAction).map((basicAction, index) => ({ id: basicAction, location: { type: LocationType.ActionCardSpace, id: cardsPlace[index] } }))
     )
 
     this.setupSpecialActionCards()
@@ -46,7 +46,7 @@ export class RivalCitiesSetup extends MaterialGameSetup<City, MaterialType, Loca
     this.material(MaterialType.SpecialActionCard).createItems(specialActionCardsItems)
     specialActionCardPlaces.forEach((id) => {
       this.material(MaterialType.SpecialActionCard).location(LocationType.SpecialActionCardsDeck).moveItem({
-        type: LocationType.CardPiste,
+        type: LocationType.ActionCardSpace,
         id
       })
     })

@@ -1,7 +1,7 @@
 export enum LocationType {
   GameBoardPlace = 1,
   BellTokenSpot,
-  CardPiste,
+  ActionCardSpace,
   SpecialActionCardsDeck,
   SpecialActionCardsDiscard,
   ShipCardsDeck,
@@ -11,7 +11,7 @@ export enum LocationType {
   LawsuitSpace,
   LawsuitPieceSpot,
   LawsuitMarkerSpace,
-  InkJarPiste,
+  InkSpace,
   PrestigeMarkerPiste,
   GameOverviewPlace,
   ProductPiles,

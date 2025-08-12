@@ -114,15 +114,15 @@ export class ChooseActionRule extends PlayerTurnRule {
   }
 
   get inkJarLocationId(): number {
-    return this.material(MaterialType.InkJar).location(LocationType.InkJarPiste).getItem()?.location.id as number
+    return this.material(MaterialType.InkJar).location(LocationType.InkSpace).getItem()?.location.id as number
   }
 
   get specialActionCard() {
-    return this.material(MaterialType.SpecialActionCard).location(LocationType.CardPiste).locationId(this.inkJarLocationId)
+    return this.material(MaterialType.SpecialActionCard).location(LocationType.ActionCardSpace).locationId(this.inkJarLocationId)
   }
 
   get basicActionCard() {
-    return this.material(MaterialType.BasicActionCard).location(LocationType.CardPiste).locationId(this.inkJarLocationId)
+    return this.material(MaterialType.BasicActionCard).location(LocationType.ActionCardSpace).locationId(this.inkJarLocationId)
   }
 
   get hasShip18() {

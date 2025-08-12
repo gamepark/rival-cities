@@ -15,7 +15,7 @@ export class OffSeasonOverviewDescription extends CardDescription {
 
   menuAlwaysVisible = true
 
-  staticItem = { location: { type: LocationType.CardPiste, id: 0 } }
+  staticItem = { location: { type: LocationType.ActionCardSpace, id: 0 } }
 
   image = OffSeasonOverview
 
@@ -23,7 +23,7 @@ export class OffSeasonOverviewDescription extends CardDescription {
     const inkJarLocationId = context.rules.material(MaterialType.InkJar).getItem()!.location.id
     const play = item.location.id === inkJarLocationId && legalMoves.find((move) => isCustomMoveType(CustomMoveType.PlayInkJarCard)(move))
 
-    if (item.location.type === LocationType.CardPiste && play) {
+    if (item.location.type === LocationType.ActionCardSpace && play) {
       return (
         <ItemMenuButton label={<Trans defaults="button.play" />} angle={50} radius={4} y={3} move={play}>
           <FontAwesomeIcon icon={faHand} css={pointerCursorCss} />

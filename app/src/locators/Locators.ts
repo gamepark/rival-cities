@@ -3,10 +3,10 @@ import { City } from '@gamepark/rival-cities/City'
 import { LocationType } from '@gamepark/rival-cities/material/LocationType'
 import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
 import { allianceSpaceLocator } from './board/AllianceSpaceLocator'
-import { cardPisteLocator } from './board/CardPisteLocator'
+import { actionCardSpaceLocator } from './board/ActionCardSpaceLocator'
 import { factoryDeckLocator } from './board/FactoryDeckLocator'
 import { gameOverviewPlaceLocator } from './board/GameOverviewPlaceLocator'
-import { inkJarPisteLocator } from './board/InkJarPisteLocator'
+import { inkSpaceLocator } from './board/InkSpaceLocator'
 import { lawsuitDeckLocator } from './board/LawsuitDeckLocator'
 import { lawsuitMarkerSpaceLocator } from './board/LawsuitMarkerSpaceLocator'
 import { lawsuitPieceSpotLocator } from './board/LawsuitPieceSpotLocator'
@@ -31,7 +31,7 @@ import { playerStarTokensDeckLocator } from './player/PlayerStarTokensDeckLocato
 
 export const Locators: Partial<Record<LocationType, Locator<City, MaterialType, LocationType>>> = {
   [LocationType.BellTokenSpot]: new Locator({ parentItemType: MaterialType.GameBoard, positionOnParent: { x: 42, y: 1 }, rotateZ: 10 }),
-  [LocationType.CardPiste]: cardPisteLocator,
+  [LocationType.ActionCardSpace]: actionCardSpaceLocator,
   [LocationType.SpecialActionCardsDeck]: sepcialActionCardsDeckLocator,
   [LocationType.SpecialActionCardsDiscard]: sepcialActionCardsDiscardLocator,
   [LocationType.ShipCardsDeck]: shipCardsDeckLocator,
@@ -41,7 +41,7 @@ export const Locators: Partial<Record<LocationType, Locator<City, MaterialType, 
   [LocationType.LawsuitPieceSpot]: lawsuitPieceSpotLocator,
   [LocationType.LawsuitMarkerSpace]: lawsuitMarkerSpaceLocator,
   [LocationType.AllianceSpace]: allianceSpaceLocator,
-  [LocationType.InkJarPiste]: inkJarPisteLocator,
+  [LocationType.InkSpace]: inkSpaceLocator,
   [LocationType.PrestigeMarkerPiste]: prestigeMarkerPisteLocator,
   [LocationType.GameOverviewPlace]: gameOverviewPlaceLocator,
   [LocationType.ProductPiles]: productPilesLocator,

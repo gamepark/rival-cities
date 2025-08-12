@@ -52,7 +52,7 @@ export class BasicActionCardDescription extends CardDescription {
     const inkJarLocationId = context.rules.material(MaterialType.InkJar).getItem()!.location.id
     const play = item.location.id === inkJarLocationId && legalMoves.find((move) => isCustomMoveType(CustomMoveType.PlayInkJarCard)(move))
 
-    if (item.location.type === LocationType.CardPiste && play) {
+    if (item.location.type === LocationType.ActionCardSpace && play) {
       return (
         <ItemMenuButton label={<Trans defaults="button.play" />} angle={50} radius={4} move={play}>
           <FontAwesomeIcon icon={faHand} css={pointerCursorCss} />

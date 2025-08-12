@@ -106,7 +106,7 @@ export class Tutorial extends MaterialTutorial<number, MaterialType, LocationTyp
         position: { x: 0, y: 30 }
       },
       focus: (game: MaterialGame) => ({
-        materials: [this.material(game, MaterialType.InkJar).location(LocationType.InkJarPiste)],
+        materials: [this.material(game, MaterialType.InkJar).location(LocationType.InkSpace)],
         scale: 0.8
       })
     },
@@ -118,11 +118,11 @@ export class Tutorial extends MaterialTutorial<number, MaterialType, LocationTyp
       focus: () => ({
         locations: [
           {
-            type: LocationType.InkJarPiste,
+            type: LocationType.InkSpace,
             id: 1
           },
           {
-            type: LocationType.InkJarPiste,
+            type: LocationType.InkSpace,
             id: 2
           }
         ]
@@ -136,11 +136,11 @@ export class Tutorial extends MaterialTutorial<number, MaterialType, LocationTyp
       focus: () => ({
         locations: [
           {
-            type: LocationType.InkJarPiste,
+            type: LocationType.InkSpace,
             id: 3
           },
           {
-            type: LocationType.InkJarPiste,
+            type: LocationType.InkSpace,
             id: 4
           }
         ],
@@ -162,8 +162,8 @@ export class Tutorial extends MaterialTutorial<number, MaterialType, LocationTyp
       },
       focus: (game: MaterialGame) => ({
         materials: [
-          this.material(game, MaterialType.InkJar).location(LocationType.InkJarPiste),
-          this.material(game, MaterialType.BasicActionCard).location((loc) => loc.type === LocationType.CardPiste && loc.id === 1)
+          this.material(game, MaterialType.InkJar).location(LocationType.InkSpace),
+          this.material(game, MaterialType.BasicActionCard).location((loc) => loc.type === LocationType.ActionCardSpace && loc.id === 1)
         ],
         scale: 0.5
       })
@@ -232,8 +232,8 @@ export class Tutorial extends MaterialTutorial<number, MaterialType, LocationTyp
       },
       focus: (game: MaterialGame) => ({
         materials: [
-          this.material(game, MaterialType.InkJar).location(LocationType.InkJarPiste),
-          this.material(game, MaterialType.BasicActionCard).location((loc) => loc.type === LocationType.CardPiste && loc.id === 3)
+          this.material(game, MaterialType.InkJar).location(LocationType.InkSpace),
+          this.material(game, MaterialType.BasicActionCard).location((loc) => loc.type === LocationType.ActionCardSpace && loc.id === 3)
         ],
         scale: 0.5
       })
@@ -359,7 +359,7 @@ export class Tutorial extends MaterialTutorial<number, MaterialType, LocationTyp
         text: () => <Trans defaults="tuto.step.22" components={BaseComponents} />
       },
       focus: (game: MaterialGame) => ({
-        materials: [this.material(game, MaterialType.SpecialActionCard).location((loc) => loc.type === LocationType.CardPiste && loc.id === 8)],
+        materials: [this.material(game, MaterialType.SpecialActionCard).location((loc) => loc.type === LocationType.ActionCardSpace && loc.id === 8)],
         scale: 0.5
       })
     },
@@ -462,7 +462,7 @@ export class Tutorial extends MaterialTutorial<number, MaterialType, LocationTyp
         text: () => <Trans defaults="tuto.step.33" components={BaseComponents} />
       },
       focus: (game: MaterialGame) => ({
-        materials: [this.material(game, MaterialType.BasicActionCard).location((loc) => loc.type === LocationType.CardPiste && loc.id === 11)]
+        materials: [this.material(game, MaterialType.BasicActionCard).location((loc) => loc.type === LocationType.ActionCardSpace && loc.id === 11)]
       })
     },
     {

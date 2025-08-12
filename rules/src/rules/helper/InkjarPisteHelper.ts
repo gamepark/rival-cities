@@ -9,7 +9,7 @@ export const INK_SPACES = 20
 export class InkJarPisteHelper extends PlayerTurnRule {
   possibleInkJarLocation(): Location[] {
     const currentPosition = this.material(MaterialType.InkJar).getItem()!.location.id as number
-    return range(1, this.maximumDistance + 1).map((distance) => ({ type: LocationType.InkJarPiste, id: (currentPosition + distance) % INK_SPACES }))
+    return range(1, this.maximumDistance + 1).map((distance) => ({ type: LocationType.InkSpace, id: (currentPosition + distance) % INK_SPACES }))
   }
 
   get maximumDistance() {
