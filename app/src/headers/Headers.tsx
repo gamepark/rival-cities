@@ -7,7 +7,6 @@ import { ComponentType } from 'react'
 import { Trans } from 'react-i18next'
 import ProductIcon from '../images/icons/Product.png'
 import { AdvanceLawsuitHeader } from './AdvanceLawsuitHeader'
-import { BuildFactoryHeader } from './BuildFactoryHeader'
 import { ChooseSplitActionHeader } from './ChooseSplitActionHeader'
 import { ConfirmEndTurnHeader } from './ConfirmEndTurnHeader'
 import { CourtRulingHeader } from './CourtRulingHeader'
@@ -40,7 +39,7 @@ export const Headers: Partial<Record<RuleId, ComponentType>> = {
   [RuleId.SwapProduct]: () => <HeaderText code="swap" moves={{ pass: isCustomMoveType(CustomMoveType.Pass) }} />,
   [RuleId.GainLetter]: GainLetterHeader,
   [RuleId.DrawSpecialActionCard]: () => <HeaderText code="draw" />,
-  [RuleId.BuildFactory]: BuildFactoryHeader,
+  [RuleId.BuildFactory]: () => <HeaderText code="build-factory" moves={{ pass: isCustomMoveType(CustomMoveType.Pass) }} />,
   [RuleId.EarnPrestige]: EarnPrestigeHeader,
   [RuleId.FormAlliance]: FormAllianceHeader,
   [RuleId.PurchaseShip]: PurchaseShipHeader,
