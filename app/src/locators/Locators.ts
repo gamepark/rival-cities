@@ -2,8 +2,8 @@ import { Locator } from '@gamepark/react-game'
 import { City } from '@gamepark/rival-cities/City'
 import { LocationType } from '@gamepark/rival-cities/material/LocationType'
 import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
-import { allianceSpaceLocator } from './board/AllianceSpaceLocator'
 import { actionCardSpaceLocator } from './board/ActionCardSpaceLocator'
+import { allianceSpaceLocator } from './board/AllianceSpaceLocator'
 import { factoryDeckLocator } from './board/FactoryDeckLocator'
 import { gameOverviewPlaceLocator } from './board/GameOverviewPlaceLocator'
 import { inkSpaceLocator } from './board/InkSpaceLocator'
@@ -14,10 +14,10 @@ import { lawsuitSpaceLocator } from './board/LawsuitSpaceLocator'
 import { letterDeckLocator } from './board/LetterDeckLocator'
 import { prestigeMarkerPisteLocator } from './board/PrestigeMarkerPisteLocator'
 import { productPilesLocator } from './board/ProductPilesLocator'
-import { sepcialActionCardsDeckLocator } from './board/SepcialActionCardsDeckLocator'
 import { sepcialActionCardsDiscardLocator } from './board/SepcialActionCardsDiscardLocator'
 import { shipCardsDeckLocator } from './board/ShipCardsDeckLocator'
 import { shipCardsRiverLocator } from './board/ShipCardsRiverLocator'
+import { specialActionCardsDeckLocator } from './board/SpecialActionCardsDeckLocator'
 import { starTokenDeckLocator } from './board/StarTokenDeckLocator'
 import { playerAlliancesLocator } from './player/PlayerAlliancesLocator'
 import { playerBellTokenLocator } from './player/PlayerBellTokenLocator'
@@ -32,7 +32,7 @@ import { playerStarTokensDeckLocator } from './player/PlayerStarTokensDeckLocato
 export const Locators: Partial<Record<LocationType, Locator<City, MaterialType, LocationType>>> = {
   [LocationType.BellTokenSpot]: new Locator({ parentItemType: MaterialType.GameBoard, positionOnParent: { x: 42, y: 1 }, rotateZ: 10 }),
   [LocationType.ActionCardSpace]: actionCardSpaceLocator,
-  [LocationType.SpecialActionCardsDeck]: sepcialActionCardsDeckLocator,
+  [LocationType.SpecialActionCardsDeck]: specialActionCardsDeckLocator,
   [LocationType.SpecialActionCardsDiscard]: sepcialActionCardsDiscardLocator,
   [LocationType.ShipCardsDeck]: shipCardsDeckLocator,
   [LocationType.ShipCardsRiver]: shipCardsRiverLocator,
