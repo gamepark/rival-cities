@@ -18,7 +18,6 @@ import { PayToPerformActionAgainHeader } from './PayToPerformActionAgainHeader'
 import { PiracyHeader } from './PiracyHeader'
 import { ProductionHeader } from './ProductionHeader'
 import { ReactivateFactoryHeader } from './ReactivateFactoryHeader'
-import { ResolveLawsuitHeader } from './ResolveLawsuitHeader'
 import { TakeBellHeader } from './TakeBellHeader'
 
 export const Headers: Partial<Record<RuleId, ComponentType>> = {
@@ -43,7 +42,7 @@ export const Headers: Partial<Record<RuleId, ComponentType>> = {
   [RuleId.CourtRuling]: () => (
     <HeaderText code="court-ruling" moves={{ resolve: isCustomMoveType(CustomMoveType.ResolveLawsuit), pass: isCustomMoveType(CustomMoveType.Pass) }} />
   ),
-  [RuleId.ResolveLawsuit]: ResolveLawsuitHeader,
+  [RuleId.ResolveLawsuit]: () => <Trans defaults="header.resolve.lawsuit" />,
   [RuleId.ReactivateFactory]: ReactivateFactoryHeader,
   [RuleId.Piracy]: PiracyHeader,
   [RuleId.PayToPerformActionAgain]: PayToPerformActionAgainHeader,
