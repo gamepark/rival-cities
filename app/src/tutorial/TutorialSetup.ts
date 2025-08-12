@@ -10,7 +10,7 @@ import { getEnumValues } from '@gamepark/rules-api'
 export const me = City.Altona
 export const opponent = City.Hamburg
 
-const allianceCardsToUse: Alliance[] = [Alliance.Oslo, Alliance.LeHavre, Alliance.Bruxelles, Alliance.Kjjobenhavn]
+const allianceCardsToUse: Alliance[] = [Alliance.Oslo, Alliance.LeHavre, Alliance.Bruxelles, Alliance.Kjobenhavn]
 
 const lawsuitCardsToUse: Lawsuit[] = [
   Lawsuit.Lawsuit10,

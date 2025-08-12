@@ -54,8 +54,8 @@ import { ReplaceSpecialActionCardsRule } from './rules/OffSeason/ReplaceSpecialA
 import { ReturnBellRule } from './rules/OffSeason/ReturnBellRule'
 import { TakeBellRule } from './rules/OffSeason/TakeBellRule'
 import { PayInkJarMovementCostRule } from './rules/PayInkJarMovementCostRule'
-import { PayToPerformActionAgainRule } from './rules/PayToPerformActionAgainRule'
 import { PlaySpecialActionCardRule } from './rules/PlaySpecialActionCardRule'
+import { RepeatActionRule } from './rules/RepeatActionRule'
 import { RuleId } from './rules/RuleId'
 
 /**
@@ -90,7 +90,7 @@ export class RivalCitiesRules
     [RuleId.ResolveLawsuit]: ResolveLawsuitRule,
     [RuleId.ReactivateFactory]: ReactivateFactoryRule,
     [RuleId.Piracy]: PiracyRule,
-    [RuleId.PayToPerformActionAgain]: PayToPerformActionAgainRule,
+    [RuleId.RepeatAction]: RepeatActionRule,
     [RuleId.GainStars]: GainStarsRule,
     [RuleId.ConfirmEndTurn]: ConfirmEndTurnRule,
     [RuleId.TakeBell]: TakeBellRule,

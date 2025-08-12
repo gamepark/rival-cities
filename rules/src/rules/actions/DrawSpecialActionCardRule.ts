@@ -23,10 +23,11 @@ export class DrawSpecialActionCardRule extends ActionRule<DrawSpecialActionCard>
 
   afterItemMove(move: ItemMove) {
     if (isMoveItemType(MaterialType.SpecialActionCard)(move)) {
-      if (this.hasAlliance(Alliance.Kjjobenhavn) && !this.action.isKjjobenhavnBonus && this.hasBeer) {
+      if (this.hasAlliance(Alliance.Kjobenhavn) && !this.action.isKjjobenhavnBonus && this.hasBeer) {
         this.addActions({
-          type: ActionType.PayToPerformActionAgain,
+          type: ActionType.RepeatAction,
           cost: cost(1, Product.Beer),
+          source: Alliance.Kjobenhavn,
           extraAction: {
             type: ActionType.DrawSpecialActionCard,
             isKjjobenhavnBonus: true

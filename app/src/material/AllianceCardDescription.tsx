@@ -31,7 +31,7 @@ export class AllianceCardDescription extends CardDescription {
     [Alliance.Amsterdam]: AllianceAmsterdam,
     [Alliance.Bruxelles]: AllianceBruxelles,
     [Alliance.Gdansk]: AllianceGdansk,
-    [Alliance.Kjjobenhavn]: AllianceKjjobenhavn,
+    [Alliance.Kjobenhavn]: AllianceKjjobenhavn,
     [Alliance.LeHavre]: AllianceLeHavre,
     [Alliance.London]: AllianceLondon,
     [Alliance.Novgorod]: AllianceNovgorod,

@@ -19,8 +19,8 @@ import { PurchaseShipRule } from '../actions/PurchaseShipRule'
 import { ReactivateFactoryRule } from '../actions/ReactivateFactoryRule'
 import { ResolveLawsuitRule } from '../actions/ResolveLawsuitRule'
 import { SwapProductRule } from '../actions/SwapProductRule'
-import { PayToPerformActionAgainRule } from '../PayToPerformActionAgainRule'
 import { PlaySpecialActionCardRule } from '../PlaySpecialActionCardRule'
+import { RepeatActionRule } from '../RepeatActionRule'
 
 export const getActionRule = (game: MaterialGame, action: Action): ActionRule<Action> => {
   switch (action.type) {
@@ -60,8 +60,8 @@ export const getActionRule = (game: MaterialGame, action: Action): ActionRule<Ac
       return new ResolveLawsuitRule(game, action)
     case ActionType.PlaySpecialActionCard:
       return new PlaySpecialActionCardRule(game, action)
-    case ActionType.PayToPerformActionAgain:
-      return new PayToPerformActionAgainRule(game, action)
+    case ActionType.RepeatAction:
+      return new RepeatActionRule(game, action)
     case ActionType.GainStars:
       return new GainStarsRule(game, action)
   }

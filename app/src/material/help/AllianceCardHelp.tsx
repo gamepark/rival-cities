@@ -36,7 +36,7 @@ const Price = ({ cardId }: { cardId: Alliance }) => {
       return <Trans defaults="help.price.furniture" values={{ quantity: 1 }} components={components} />
     case Alliance.Gdansk:
       return <Trans defaults="help.price.letter" values={{ quantity: 1 }} components={components} />
-    case Alliance.Kjjobenhavn:
+    case Alliance.Kjobenhavn:
       return <Trans defaults="help.price.beer" values={{ quantity: 2 }} components={components} />
     case Alliance.LeHavre:
     case Alliance.London:

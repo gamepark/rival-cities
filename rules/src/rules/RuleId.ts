@@ -21,7 +21,7 @@ export enum RuleId {
   ResolveLawsuit,
   ReactivateFactory,
   Piracy,
-  PayToPerformActionAgain,
+  RepeatAction,
   GainStars,
   ConfirmEndTurn,
   TakeBell,

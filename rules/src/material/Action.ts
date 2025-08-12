@@ -1,3 +1,4 @@
+import { Alliance } from './Alliance'
 import { AnyProductsCost, ProductCost } from './Cost'
 import { Product } from './Product'
 
@@ -20,7 +21,7 @@ export enum ActionType {
   Piracy,
   ResolveLawsuit,
   PlaySpecialActionCard,
-  PayToPerformActionAgain,
+  RepeatAction,
   GainStars
 }
 
@@ -124,10 +125,11 @@ export type PlaySpecialActionCard = {
   type: ActionType.PlaySpecialActionCard
 } & ActionCommon
 
-export type PayToPerformActionAgainAction = {
-  type: ActionType.PayToPerformActionAgain
+export type RepeatAction = {
+  type: ActionType.RepeatAction
   cost: ProductCost | AnyProductsCost
   extraAction: Action
+  source?: Alliance
 } & ActionCommon
 
 export type GainStars = {
@@ -154,5 +156,5 @@ export type Action =
   | Piracy
   | ResolveLawsuitAction
   | PlaySpecialActionCard
-  | PayToPerformActionAgainAction
+  | RepeatAction
   | GainStars

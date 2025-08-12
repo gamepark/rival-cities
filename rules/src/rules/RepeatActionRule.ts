@@ -1,5 +1,5 @@
 import { isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
-import { PayToPerformActionAgainAction } from '../material/Action'
+import { RepeatAction } from '../material/Action'
 import { CostType } from '../material/Cost'
 import { LocationType } from '../material/LocationType'
 import { MaterialType } from '../material/MaterialType'
@@ -8,7 +8,7 @@ import { ActionRule } from './actions/ActionRule'
 import { CustomMoveType } from './CustomMoveType'
 import { getActionRule } from './helper/ActionHelper'
 
-export class PayToPerformActionAgainRule extends ActionRule<PayToPerformActionAgainAction> {
+export class RepeatActionRule extends ActionRule<RepeatAction> {
   onRuleStart() {
     const moves = this.getPlayerMoves()
     return moves.length === 1 ? moves : []

@@ -1,6 +1,6 @@
 import { isMoveItemType, ItemMove } from '@gamepark/rules-api'
 import { City, getRival } from '../../City'
-import { ActionType, EarnPrestige, PayToPerformActionAgainAction } from '../../material/Action'
+import { ActionType, EarnPrestige, RepeatAction } from '../../material/Action'
 import { Alliance } from '../../material/Alliance'
 import { cost } from '../../material/Cost'
 import { LocationType } from '../../material/LocationType'
@@ -25,12 +25,13 @@ export class EarnPrestigeRule extends ActionRule<EarnPrestige> {
 
   afterItemMove(move: ItemMove) {
     if (isMoveItemType(MaterialType.PrestigeMarker)(move)) {
-      const performAgainActions: PayToPerformActionAgainAction[] = []
+      const performAgainActions: RepeatAction[] = []
       if (!this.action.isBruxellesBonus && this.hasAlliance(Alliance.Bruxelles, this.playerEarningPrestige) && this.hasFurniture) {
         performAgainActions.push({
-          type: ActionType.PayToPerformActionAgain,
+          type: ActionType.RepeatAction,
           cost: cost(1, Product.Furniture),
           isRivalTurn: this.action.rival ?? this.action.isRivalTurn,
+          source: Alliance.Bruxelles,
           extraAction: {
             type: ActionType.EarnPrestige,
             isBruxellesBonus: true,
@@ -40,7 +41,7 @@ export class EarnPrestigeRule extends ActionRule<EarnPrestige> {
       }
       if (!this.action.isShip16Bonus && this.hasShip16 && this.beers >= 2) {
         performAgainActions.push({
-          type: ActionType.PayToPerformActionAgain,
+          type: ActionType.RepeatAction,
           cost: cost(2, Product.Beer),
           isRivalTurn: this.action.rival ?? this.action.isRivalTurn,
           extraAction: {

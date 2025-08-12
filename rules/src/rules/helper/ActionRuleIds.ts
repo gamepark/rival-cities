@@ -20,6 +20,6 @@ export const ActionRuleIds: Record<ActionType, RuleId> = {
   [ActionType.Piracy]: RuleId.Piracy,
   [ActionType.ResolveLawsuit]: RuleId.ResolveLawsuit,
   [ActionType.PlaySpecialActionCard]: RuleId.PlaySpecialActionCard,
-  [ActionType.PayToPerformActionAgain]: RuleId.PayToPerformActionAgain,
+  [ActionType.RepeatAction]: RuleId.RepeatAction,
   [ActionType.GainStars]: RuleId.GainStars
 }

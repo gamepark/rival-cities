@@ -14,7 +14,7 @@ export class FrenchAllianceCardDescription extends AllianceCardDescription {
     [Alliance.Amsterdam]: FrenchAllianceAmsterdam,
     [Alliance.Bruxelles]: FrenchAllianceBruxelles,
     [Alliance.Gdansk]: FrenchAllianceGdansk,
-    [Alliance.Kjjobenhavn]: FrenchAllianceKjjobenhavn,
+    [Alliance.Kjobenhavn]: FrenchAllianceKjjobenhavn,
     [Alliance.LeHavre]: FrenchAllianceLeHavre,
     [Alliance.London]: FrenchAllianceLondon,
     [Alliance.Novgorod]: FrenchAllianceNovgorod,
