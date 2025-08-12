@@ -1,7 +1,9 @@
 /** @jsxImportSource @emotion/react */
-import { DropAreaDescription, Locator } from '@gamepark/react-game'
+import { DropAreaDescription, Locator, MaterialContext } from '@gamepark/react-game'
 import { LocationType } from '@gamepark/rival-cities/material/LocationType'
 import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
+import { InkJarPisteHelper } from '@gamepark/rival-cities/rules/helper/InkjarPisteHelper'
+import { RuleId } from '@gamepark/rival-cities/rules/RuleId'
 import { isMoveItemType, Location, MaterialMove } from '@gamepark/rules-api'
 
 class InkSpaceLocator extends Locator {
@@ -97,6 +99,12 @@ class InkSpaceLocator extends Locator {
       default:
         return { x: 30, y: 3 }
     }
+  }
+
+  getLocations(context: MaterialContext): Partial<Location>[] {
+    if (context.rules.game.rule?.player !== context.player) return []
+    if (context.rules.game.rule?.id !== RuleId.AdvanceInkJar) return []
+    return new InkJarPisteHelper(context.rules.game).possibleInkJarLocation()
   }
 
   locationDescription = new InkJarPisteDescription()

@@ -192,7 +192,7 @@ export class Tutorial extends MaterialTutorial<number, MaterialType, LocationTyp
         scale: 0.5
       }),
       move: {
-        filter: (move: MaterialMove) => isMoveItemType(MaterialType.Factory)(move)
+        filter: (move: MaterialMove) => isMoveItemType(MaterialType.Product)(move) && move.location.id === Product.Beer
       }
     },
     {
@@ -330,7 +330,7 @@ export class Tutorial extends MaterialTutorial<number, MaterialType, LocationTyp
       move: {
         player: opponent,
         auto: true,
-        filter: (move: MaterialMove) => isMoveItemType(MaterialType.Factory)(move)
+        filter: (move: MaterialMove) => isMoveItemType(MaterialType.Product)(move) && move.location.id === Product.Furniture
       }
     },
     {
@@ -480,7 +480,7 @@ export class Tutorial extends MaterialTutorial<number, MaterialType, LocationTyp
         position: { x: 0, y: 10 }
       },
       move: {
-        filter: (move: MaterialMove) => isMoveItemType(MaterialType.LawsuitMarker)(move) && move.location.id === 0
+        filter: (move: MaterialMove) => isMoveItemType(MaterialType.LawsuitMarker)(move) && move.location.parent === 0
       }
     },
     {
