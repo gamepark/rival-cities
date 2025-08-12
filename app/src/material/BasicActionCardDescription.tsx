@@ -50,7 +50,7 @@ export class BasicActionCardDescription extends CardDescription {
 
   getItemMenu(item: MaterialItem, context: ItemContext, legalMoves: MaterialMove[]) {
     const inkJarLocationId = context.rules.material(MaterialType.InkJar).getItem()!.location.id
-    const play = item.location.id === inkJarLocationId && legalMoves.find((move) => isCustomMoveType(CustomMoveType.PlaysInkjarCard)(move))
+    const play = item.location.id === inkJarLocationId && legalMoves.find((move) => isCustomMoveType(CustomMoveType.PlayInkJarCard)(move))
 
     if (item.location.type === LocationType.CardPiste && play) {
       return (

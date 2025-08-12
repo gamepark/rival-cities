@@ -1,8 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { PlayMoveButton, useLegalMove, usePlayerId, usePlayerName, useRules } from '@gamepark/react-game'
 import { RivalCitiesRules } from '@gamepark/rival-cities/RivalCitiesRules'
-import { CustomMoveType } from '@gamepark/rival-cities/rules/CustomMoveType'
-import { isCustomMoveType } from '@gamepark/rules-api'
+import { isStartPlayerTurn } from '@gamepark/rules-api'
 import { Trans } from 'react-i18next'
 
 export const ConfirmEndTurnHeader = () => {
@@ -10,18 +9,10 @@ export const ConfirmEndTurnHeader = () => {
   const rules = useRules<RivalCitiesRules>()!
   const activePlayer = rules.getActivePlayer()
   const player = usePlayerName(activePlayer)
-  const confirmEndTurn = useLegalMove(isCustomMoveType(CustomMoveType.ConfirmEndTurn))
-
+  const confirm = useLegalMove(isStartPlayerTurn)
   if (activePlayer === me) {
-    return (
-      <Trans
-        defaults="header.confirm.end.turn.you"
-        components={{
-          confirm: <PlayMoveButton move={confirmEndTurn} auto={10} />
-        }}
-      />
-    )
+    return <Trans defaults="header.end-turn.you" components={{ confirm: <PlayMoveButton move={confirm} auto={10} /> }} />
+  } else {
+    return <Trans defaults="header.end-turn.player" values={{ player }} />
   }
-
-  return <Trans defaults="header.confirm.end.turn.player" values={{ player }} />
 }

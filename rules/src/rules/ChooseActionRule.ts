@@ -31,7 +31,7 @@ export class ChooseActionRule extends PlayerTurnRule {
     const specialActionCard = this.specialActionCard
 
     if (!isSpecialActionLocation || specialActionCard.length) {
-      moves.push(this.customMove(CustomMoveType.PlaysInkjarCard)) // Option A
+      moves.push(this.customMove(CustomMoveType.PlayInkJarCard)) // Option A
     }
 
     moves.push(...this.specialActionCards.moveItems({ type: LocationType.SpecialActionCardsDiscard })) // Option B
@@ -54,7 +54,7 @@ export class ChooseActionRule extends PlayerTurnRule {
 
   onCustomMove(move: CustomMove): MaterialMove[] {
     // Option A
-    if (isCustomMoveType(CustomMoveType.PlaysInkjarCard)(move)) {
+    if (isCustomMoveType(CustomMoveType.PlayInkJarCard)(move)) {
       const actions = this.inkJarCardActions
       if (this.isOptionCActive) {
         actions.push({ type: ActionType.PlaySpecialActionCard })

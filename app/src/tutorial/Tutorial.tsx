@@ -7,7 +7,7 @@ import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
 import { Product } from '@gamepark/rival-cities/material/Product'
 import { Ship } from '@gamepark/rival-cities/material/Ship'
 import { CustomMoveType } from '@gamepark/rival-cities/rules/CustomMoveType'
-import { isCustomMoveType, isMoveItemType, MaterialGame, MaterialMove } from '@gamepark/rules-api'
+import { isCustomMoveType, isMoveItemType, isStartPlayerTurn, MaterialGame, MaterialMove } from '@gamepark/rules-api'
 import { Trans } from 'react-i18next'
 import Balance from '../images/illustrations/balance.png'
 import Decision from '../images/illustrations/decision.png'
@@ -210,7 +210,7 @@ export class Tutorial extends MaterialTutorial<number, MaterialType, LocationTyp
     {
       move: {
         auto: true,
-        filter: (move: MaterialMove) => isCustomMoveType(CustomMoveType.ConfirmEndTurn)(move)
+        filter: (move: MaterialMove) => isStartPlayerTurn(move)
       }
     },
     {
@@ -271,7 +271,7 @@ export class Tutorial extends MaterialTutorial<number, MaterialType, LocationTyp
       move: {
         player: opponent,
         auto: true,
-        filter: (move: MaterialMove) => isCustomMoveType(CustomMoveType.ConfirmEndTurn)(move)
+        filter: (move: MaterialMove) => isStartPlayerTurn(move)
       }
     },
     {
@@ -304,7 +304,7 @@ export class Tutorial extends MaterialTutorial<number, MaterialType, LocationTyp
     {
       move: {
         auto: true,
-        filter: (move: MaterialMove) => isCustomMoveType(CustomMoveType.ConfirmEndTurn)(move)
+        filter: (move: MaterialMove) => isStartPlayerTurn(move)
       }
     },
     {
@@ -337,7 +337,7 @@ export class Tutorial extends MaterialTutorial<number, MaterialType, LocationTyp
       move: {
         player: opponent,
         auto: true,
-        filter: (move: MaterialMove) => isCustomMoveType(CustomMoveType.ConfirmEndTurn)(move)
+        filter: (move: MaterialMove) => isStartPlayerTurn(move)
       }
     },
     {
@@ -440,7 +440,7 @@ export class Tutorial extends MaterialTutorial<number, MaterialType, LocationTyp
       move: {
         player: opponent,
         auto: true,
-        filter: (move: MaterialMove) => isCustomMoveType(CustomMoveType.ConfirmEndTurn)(move)
+        filter: (move: MaterialMove) => isStartPlayerTurn(move)
       }
     },
     {
@@ -454,7 +454,7 @@ export class Tutorial extends MaterialTutorial<number, MaterialType, LocationTyp
     {
       move: {
         auto: true,
-        filter: (move: MaterialMove) => isCustomMoveType(CustomMoveType.PlaysInkjarCard)(move)
+        filter: (move: MaterialMove) => isCustomMoveType(CustomMoveType.PlayInkJarCard)(move)
       }
     },
     {
