@@ -18,7 +18,6 @@ import { PayAlliancesUpkeepHeader } from './PayAlliancesUpkeepHeader'
 import { PayToPerformActionAgainHeader } from './PayToPerformActionAgainHeader'
 import { PiracyHeader } from './PiracyHeader'
 import { ProductionHeader } from './ProductionHeader'
-import { PurchaseShipHeader } from './PurchaseShipHeader'
 import { ReactivateFactoryHeader } from './ReactivateFactoryHeader'
 import { ResolveLawsuitHeader } from './ResolveLawsuitHeader'
 import { TakeBellHeader } from './TakeBellHeader'
@@ -40,7 +39,7 @@ export const Headers: Partial<Record<RuleId, ComponentType>> = {
   [RuleId.BuildFactory]: () => <HeaderText code="build-factory" moves={{ pass: isCustomMoveType(CustomMoveType.Pass) }} />,
   [RuleId.EarnPrestige]: () => <HeaderText code="earn-prestige" />,
   [RuleId.FormAlliance]: () => <HeaderText code="alliance" moves={{ pass: isCustomMoveType(CustomMoveType.Pass) }} />,
-  [RuleId.PurchaseShip]: PurchaseShipHeader,
+  [RuleId.PurchaseShip]: () => <HeaderText code="ship" moves={{ pass: isCustomMoveType(CustomMoveType.Pass) }} />,
   [RuleId.AdvanceLawsuit]: AdvanceLawsuitHeader,
   [RuleId.CourtRuling]: CourtRulingHeader,
   [RuleId.ResolveLawsuit]: ResolveLawsuitHeader,
