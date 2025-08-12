@@ -13,11 +13,9 @@ import { DonationHeader } from './DonationHeader'
 import { GainLetterHeader } from './GainLetterHeader'
 import { GainProductsHeader } from './GainProductsHeader'
 import { GainStarsHeader } from './GainStarsHeader'
-import { PayAlliancesUpkeepHeader } from './PayAlliancesUpkeepHeader'
 import { PiracyHeader } from './PiracyHeader'
 import { ProductionHeader } from './ProductionHeader'
 import { RepeatActionHeader } from './RepeatActionHeader'
-import { TakeBellHeader } from './TakeBellHeader'
 
 export const Headers: Partial<Record<RuleId, ComponentType>> = {
   [RuleId.ChooseStartProduct]: () => <HeaderText code="start" components={{ product: <Picture src={ProductIcon} /> }} />,
@@ -47,8 +45,8 @@ export const Headers: Partial<Record<RuleId, ComponentType>> = {
   [RuleId.RepeatAction]: RepeatActionHeader,
   [RuleId.GainStars]: GainStarsHeader,
   [RuleId.ConfirmEndTurn]: ConfirmEndTurnHeader,
-  [RuleId.TakeBell]: TakeBellHeader,
-  [RuleId.PayAlliancesUpkeep]: PayAlliancesUpkeepHeader,
+  [RuleId.TakeBell]: () => <HeaderText code="take-bell" />,
+  [RuleId.PayAlliancesUpkeep]: () => <HeaderText code="pay-alliances" />,
   [RuleId.ReplaceSpecialActionCards]: () => <Trans defaults="header.replace-cards" />,
   [RuleId.ReactivateFactories]: () => <Trans defaults="header.reactivate-factories" />,
   [RuleId.ReturnBell]: () => <Trans defaults="header.return-bell" />
