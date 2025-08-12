@@ -3,7 +3,6 @@ import { City } from '@gamepark/rival-cities/City'
 import { LocationType } from '@gamepark/rival-cities/material/LocationType'
 import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
 import { allianceSpaceLocator } from './board/AllianceSpaceLocator'
-import { bellTokenIdleLocator } from './board/BellTokenIdleLocator'
 import { cardPisteLocator } from './board/CardPisteLocator'
 import { factoryDeckLocator } from './board/FactoryDeckLocator'
 import { gameOverviewPlaceLocator } from './board/GameOverviewPlaceLocator'
@@ -20,7 +19,6 @@ import { sepcialActionCardsDiscardLocator } from './board/SepcialActionCardsDisc
 import { shipCardsDeckLocator } from './board/ShipCardsDeckLocator'
 import { shipCardsRiverLocator } from './board/ShipCardsRiverLocator'
 import { starTokenDeckLocator } from './board/StarTokenDeckLocator'
-import { gameBoardLocator } from './GameBoardLocator'
 import { playerAlliancesLocator } from './player/PlayerAlliancesLocator'
 import { playerBellTokenLocator } from './player/PlayerBellTokenLocator'
 import { playerFactoriesLocator } from './player/PlayerFactoriesLocator'
@@ -32,8 +30,7 @@ import { playerSpecialActionCardsHandLocator } from './player/PlayerSpecialActio
 import { playerStarTokensDeckLocator } from './player/PlayerStarTokensDeckLocator'
 
 export const Locators: Partial<Record<LocationType, Locator<City, MaterialType, LocationType>>> = {
-  [LocationType.GameBoard]: gameBoardLocator,
-  [LocationType.BellTokenIdle]: bellTokenIdleLocator,
+  [LocationType.BellTokenSpot]: new Locator({ parentItemType: MaterialType.GameBoard, positionOnParent: { x: 42, y: 1 }, rotateZ: 10 }),
   [LocationType.CardPiste]: cardPisteLocator,
   [LocationType.SpecialActionCardsDeck]: sepcialActionCardsDeckLocator,
   [LocationType.SpecialActionCardsDiscard]: sepcialActionCardsDiscardLocator,

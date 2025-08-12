@@ -1,6 +1,6 @@
 export enum LocationType {
-  GameBoard = 1,
-  BellTokenIdle,
+  GameBoardPlace = 1,
+  BellTokenSpot,
   CardPiste,
   SpecialActionCardsDeck,
   SpecialActionCardsDiscard,

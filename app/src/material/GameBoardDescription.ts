@@ -8,7 +8,7 @@ export class GameBoardDescription extends BoardDescription {
 
   staticItem = {
     location: {
-      type: LocationType.GameBoard
+      type: LocationType.GameBoardPlace
     }
   }
 

@@ -5,6 +5,6 @@ import { RuleId } from '../RuleId'
 
 export class ReturnBellRule extends PlayerTurnRule {
   onRuleStart() {
-    return [this.material(MaterialType.BellToken).moveItem({ type: LocationType.BellTokenIdle }), this.startRule(RuleId.ChooseAction)]
+    return [this.material(MaterialType.BellToken).moveItem({ type: LocationType.BellTokenSpot }), this.startRule(RuleId.ChooseAction)]
   }
 }
