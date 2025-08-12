@@ -11,7 +11,6 @@ import { ChooseSplitActionHeader } from './ChooseSplitActionHeader'
 import { ConfirmEndTurnHeader } from './ConfirmEndTurnHeader'
 import { CourtRulingHeader } from './CourtRulingHeader'
 import { DonationHeader } from './DonationHeader'
-import { EarnPrestigeHeader } from './EarnPrestigeHeader'
 import { FormAllianceHeader } from './FormAllianceHeader'
 import { GainLetterHeader } from './GainLetterHeader'
 import { GainProductsHeader } from './GainProductsHeader'
@@ -40,7 +39,7 @@ export const Headers: Partial<Record<RuleId, ComponentType>> = {
   [RuleId.GainLetter]: GainLetterHeader,
   [RuleId.DrawSpecialActionCard]: () => <HeaderText code="draw" />,
   [RuleId.BuildFactory]: () => <HeaderText code="build-factory" moves={{ pass: isCustomMoveType(CustomMoveType.Pass) }} />,
-  [RuleId.EarnPrestige]: EarnPrestigeHeader,
+  [RuleId.EarnPrestige]: () => <HeaderText code="earn-prestige" />,
   [RuleId.FormAlliance]: FormAllianceHeader,
   [RuleId.PurchaseShip]: PurchaseShipHeader,
   [RuleId.AdvanceLawsuit]: AdvanceLawsuitHeader,
