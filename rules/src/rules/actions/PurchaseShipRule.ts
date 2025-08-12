@@ -47,7 +47,7 @@ export class PurchaseShipRule extends ActionRule<PurchaseShip> {
           this.addActions(action)
         }
       }
-      const deck = this.material(MaterialType.ShipCard).location(LocationType.ShipCardsDeck).deck()
+      const deck = this.material(MaterialType.ShipCard).location(LocationType.ShipStack).deck()
       if (deck.length) {
         moves.push(deck.dealOne({ type: LocationType.ShipCardsRiver }))
       }

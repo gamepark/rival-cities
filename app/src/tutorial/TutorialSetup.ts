@@ -31,9 +31,9 @@ export class TutorialSetup extends RivalCitiesSetup {
   setupShipCards() {
     const shipCardsItems = getEnumValues(Ship)
       .slice(0, 10)
-      .map((it) => ({ id: it, location: { type: LocationType.ShipCardsDeck } }))
+      .map((it) => ({ id: it, location: { type: LocationType.ShipStack } }))
     this.material(MaterialType.ShipCard).createItems(shipCardsItems)
-    this.material(MaterialType.ShipCard).location(LocationType.ShipCardsDeck).limit(4).moveItems({
+    this.material(MaterialType.ShipCard).location(LocationType.ShipStack).limit(4).moveItems({
       type: LocationType.ShipCardsRiver
     })
   }

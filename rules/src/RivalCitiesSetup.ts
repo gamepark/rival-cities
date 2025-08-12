@@ -42,10 +42,10 @@ export class RivalCitiesSetup extends MaterialGameSetup<City, MaterialType, Loca
   }
 
   setupSpecialActionCards() {
-    const specialActionCardsItems = shuffle(getEnumValues(SpecialAction)).map((it) => ({ id: it, location: { type: LocationType.SpecialActionCardsDeck } }))
+    const specialActionCardsItems = shuffle(getEnumValues(SpecialAction)).map((it) => ({ id: it, location: { type: LocationType.ActionStack } }))
     this.material(MaterialType.SpecialActionCard).createItems(specialActionCardsItems)
     specialActionCardPlaces.forEach((id) => {
-      this.material(MaterialType.SpecialActionCard).location(LocationType.SpecialActionCardsDeck).moveItem({
+      this.material(MaterialType.SpecialActionCard).location(LocationType.ActionStack).moveItem({
         type: LocationType.ActionCardSpace,
         id
       })
@@ -54,8 +54,8 @@ export class RivalCitiesSetup extends MaterialGameSetup<City, MaterialType, Loca
 
   setupShipCards() {
     const ships = shuffle(getEnumValues(Ship)).slice(0, 10)
-    this.material(MaterialType.ShipCard).createItems(ships.map((ship) => ({ id: ship, location: { type: LocationType.ShipCardsDeck } })))
-    this.material(MaterialType.ShipCard).location(LocationType.ShipCardsDeck).limit(4).moveItems({ type: LocationType.ShipCardsRiver })
+    this.material(MaterialType.ShipCard).createItems(ships.map((ship) => ({ id: ship, location: { type: LocationType.ShipStack } })))
+    this.material(MaterialType.ShipCard).location(LocationType.ShipStack).limit(4).moveItems({ type: LocationType.ShipCardsRiver })
   }
 
   setupAllianceCards() {

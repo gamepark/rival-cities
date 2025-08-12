@@ -105,16 +105,16 @@ export class RivalCitiesRules
 
   locationsStrategies = {
     [MaterialType.SpecialActionCard]: {
-      [LocationType.SpecialActionCardsDeck]: new PositiveSequenceStrategy(),
+      [LocationType.ActionStack]: new PositiveSequenceStrategy(),
       [LocationType.PlayerSpecialActionCardsHand]: new PositiveSequenceStrategy(),
-      [LocationType.SpecialActionCardsDiscard]: new PositiveSequenceStrategy()
+      [LocationType.SpecialActionCardDiscard]: new PositiveSequenceStrategy()
     },
     [MaterialType.AllianceCard]: {
       [LocationType.AllianceSpace]: new FillGapStrategy(),
       [LocationType.PlayerAlliances]: new PositiveSequenceStrategy()
     },
     [MaterialType.ShipCard]: {
-      [LocationType.ShipCardsDeck]: new PositiveSequenceStrategy(),
+      [LocationType.ShipStack]: new PositiveSequenceStrategy(),
       [LocationType.PlayerShipCards]: new PositiveSequenceStrategy(),
       [LocationType.ShipCardsRiver]: new StackingStrategy()
     },
@@ -132,11 +132,11 @@ export class RivalCitiesRules
 
   hidingStrategies = {
     [MaterialType.SpecialActionCard]: {
-      [LocationType.SpecialActionCardsDeck]: hideItemId,
+      [LocationType.ActionStack]: hideItemId,
       [LocationType.PlayerSpecialActionCardsHand]: hideItemIdToOthers
     },
     [MaterialType.ShipCard]: {
-      [LocationType.ShipCardsDeck]: hideItemId
+      [LocationType.ShipStack]: hideItemId
     },
     [MaterialType.LawsuitCard]: {
       [LocationType.LawsuitDeck]: hideItemId
@@ -166,10 +166,10 @@ export class RivalCitiesRules
   protected afterItemMove(move: ItemMove) {
     const consequences: MaterialMove[] = []
     if (isMoveItemType(MaterialType.SpecialActionCard)(move)) {
-      if (!this.material(MaterialType.SpecialActionCard).location(LocationType.SpecialActionCardsDeck).length) {
-        const discard = this.material(MaterialType.SpecialActionCard).location(LocationType.SpecialActionCardsDiscard)
+      if (!this.material(MaterialType.SpecialActionCard).location(LocationType.ActionStack).length) {
+        const discard = this.material(MaterialType.SpecialActionCard).location(LocationType.SpecialActionCardDiscard)
         if (discard.length) {
-          consequences.push(discard.moveItemsAtOnce({ type: LocationType.SpecialActionCardsDeck }))
+          consequences.push(discard.moveItemsAtOnce({ type: LocationType.ActionStack }))
           consequences.push(discard.shuffle())
         }
       }

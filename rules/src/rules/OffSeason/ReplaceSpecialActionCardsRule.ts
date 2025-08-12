@@ -10,17 +10,17 @@ export class ReplaceSpecialActionCardsRule extends PlayerTurnRule {
       .location(LocationType.ActionCardSpace)
       .sort((item) => item.location.id as number)
     if (cardsOnBoard.length) {
-      return [cardsOnBoard.moveItemsAtOnce({ type: LocationType.SpecialActionCardsDiscard })]
+      return [cardsOnBoard.moveItemsAtOnce({ type: LocationType.SpecialActionCardDiscard })]
     } else {
       return this.dealActionCard(specialActionCardPlaces[0])
     }
   }
 
   dealActionCard(space: number) {
-    const deck = this.material(MaterialType.SpecialActionCard).location(LocationType.SpecialActionCardsDeck).deck()
+    const deck = this.material(MaterialType.SpecialActionCard).location(LocationType.ActionStack).deck()
     if (deck.length) {
       return [deck.dealOne({ type: LocationType.ActionCardSpace, id: space })]
-    } else if (this.material(MaterialType.SpecialActionCard).location(LocationType.SpecialActionCardsDiscard).length) {
+    } else if (this.material(MaterialType.SpecialActionCard).location(LocationType.SpecialActionCardDiscard).length) {
       return []
     } else {
       return [this.startRule(RuleId.ReactivateFactories)]
@@ -29,7 +29,7 @@ export class ReplaceSpecialActionCardsRule extends PlayerTurnRule {
 
   afterItemMove(move: ItemMove) {
     if (
-      (isMoveItemTypeAtOnce(MaterialType.SpecialActionCard)(move) && move.location.type === LocationType.SpecialActionCardsDiscard) ||
+      (isMoveItemTypeAtOnce(MaterialType.SpecialActionCard)(move) && move.location.type === LocationType.SpecialActionCardDiscard) ||
       (isMoveItemType(MaterialType.SpecialActionCard)(move) && move.location.type === LocationType.ActionCardSpace) ||
       isShuffleItemType(MaterialType.SpecialActionCard)(move)
     ) {

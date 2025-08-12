@@ -3,6 +3,7 @@ import { City } from '@gamepark/rival-cities/City'
 import { LocationType } from '@gamepark/rival-cities/material/LocationType'
 import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
 import { actionCardSpaceLocator } from './board/ActionCardSpaceLocator'
+import { actionStackLocator } from './board/ActionStackLocator'
 import { allianceSpaceLocator } from './board/AllianceSpaceLocator'
 import { factoryDeckLocator } from './board/FactoryDeckLocator'
 import { gameOverviewPlaceLocator } from './board/GameOverviewPlaceLocator'
@@ -14,9 +15,8 @@ import { lawsuitSpaceLocator } from './board/LawsuitSpaceLocator'
 import { letterDeckLocator } from './board/LetterDeckLocator'
 import { prestigeMarkerPisteLocator } from './board/PrestigeMarkerPisteLocator'
 import { productPilesLocator } from './board/ProductPilesLocator'
-import { shipCardsDeckLocator } from './board/ShipCardsDeckLocator'
 import { shipCardsRiverLocator } from './board/ShipCardsRiverLocator'
-import { specialActionCardsDeckLocator } from './board/SpecialActionCardsDeckLocator'
+import { shipStackLocator } from './board/ShipStackLocator'
 import { starTokenDeckLocator } from './board/StarTokenDeckLocator'
 import { playerAlliancesLocator } from './player/PlayerAlliancesLocator'
 import { playerBellTokenLocator } from './player/PlayerBellTokenLocator'
@@ -31,9 +31,9 @@ import { playerStarTokensDeckLocator } from './player/PlayerStarTokensDeckLocato
 export const Locators: Partial<Record<LocationType, Locator<City, MaterialType, LocationType>>> = {
   [LocationType.BellTokenSpot]: new Locator({ parentItemType: MaterialType.GameBoard, positionOnParent: { x: 42, y: 1 }, rotateZ: 10 }),
   [LocationType.ActionCardSpace]: actionCardSpaceLocator,
-  [LocationType.SpecialActionCardsDeck]: specialActionCardsDeckLocator,
-  [LocationType.SpecialActionCardsDiscard]: new DeckLocator({ coordinates: { x: 9, y: -27 } }),
-  [LocationType.ShipCardsDeck]: shipCardsDeckLocator,
+  [LocationType.ActionStack]: actionStackLocator,
+  [LocationType.SpecialActionCardDiscard]: new DeckLocator({ coordinates: { x: 9, y: -27 } }),
+  [LocationType.ShipStack]: shipStackLocator,
   [LocationType.ShipCardsRiver]: shipCardsRiverLocator,
   [LocationType.LawsuitDeck]: lawsuitDeckLocator,
   [LocationType.LawsuitSpace]: lawsuitSpaceLocator,

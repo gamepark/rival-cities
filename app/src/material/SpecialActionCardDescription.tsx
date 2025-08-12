@@ -70,7 +70,7 @@ export class SpecialActionCardDescription extends CardDescription {
   }
 
   canShortClick(move: MaterialMove, context: ItemContext): boolean {
-    const locations = [LocationType.SpecialActionCardsDiscard, LocationType.PlayerSpecialActionCardsHand]
+    const locations = [LocationType.SpecialActionCardDiscard, LocationType.PlayerSpecialActionCardsHand]
     return isMoveItemType(MaterialType.SpecialActionCard)(move) && locations.includes(move.location.type ?? 0) && move.itemIndex === context.index
   }
 
@@ -91,9 +91,7 @@ export class SpecialActionCardDescription extends CardDescription {
     )
     const discard = legalMoves.find(
       (move) =>
-        isMoveItemType(MaterialType.SpecialActionCard)(move) &&
-        move.location.type === LocationType.SpecialActionCardsDiscard &&
-        move.itemIndex === context.index
+        isMoveItemType(MaterialType.SpecialActionCard)(move) && move.location.type === LocationType.SpecialActionCardDiscard && move.itemIndex === context.index
     )
 
     if (item.location.type === LocationType.ActionCardSpace && (play || take)) {
@@ -113,7 +111,7 @@ export class SpecialActionCardDescription extends CardDescription {
       )
     }
 
-    if (item.location.type === LocationType.SpecialActionCardsDeck && draw) {
+    if (item.location.type === LocationType.ActionStack && draw) {
       return (
         <ItemMenuButton label={<Trans defaults="button.draw" />} move={draw}>
           <FontAwesomeIcon icon={faHand} css={pointerCursorCss} />

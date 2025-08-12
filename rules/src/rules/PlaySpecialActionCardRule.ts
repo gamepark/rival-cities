@@ -9,7 +9,7 @@ import { Memory } from './Memory'
 
 export class PlaySpecialActionCardRule extends ActionRule<PlaySpecialActionCard> {
   getPlayerMoves() {
-    const moves: MaterialMove[] = this.specialActionCards.moveItems({ type: LocationType.SpecialActionCardsDiscard })
+    const moves: MaterialMove[] = this.specialActionCards.moveItems({ type: LocationType.SpecialActionCardDiscard })
     if (!this.remind(Memory.LetterSpentForOptionC)) {
       moves.push(this.customMove(CustomMoveType.Pass)) // Ship 18 => option C remains optional
     }
@@ -17,7 +17,7 @@ export class PlaySpecialActionCardRule extends ActionRule<PlaySpecialActionCard>
   }
 
   afterItemMove(move: ItemMove) {
-    if (isMoveItemType(MaterialType.SpecialActionCard)(move) && move.location.type === LocationType.SpecialActionCardsDiscard) {
+    if (isMoveItemType(MaterialType.SpecialActionCard)(move) && move.location.type === LocationType.SpecialActionCardDiscard) {
       const specialAction = this.material(MaterialType.SpecialActionCard).getItem<SpecialAction>(move.itemIndex).id
       this.addActions(...structuredClone(specialCardActions[specialAction]))
       return [this.startNextRule()]

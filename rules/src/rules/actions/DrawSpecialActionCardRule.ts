@@ -13,7 +13,7 @@ export class DrawSpecialActionCardRule extends ActionRule<DrawSpecialActionCard>
   }
 
   getPlayerMoves() {
-    const deck = this.material(MaterialType.SpecialActionCard).location(LocationType.SpecialActionCardsDeck).deck()
+    const deck = this.material(MaterialType.SpecialActionCard).location(LocationType.ActionStack).deck()
     if (deck.length) {
       return [deck.dealOne({ type: LocationType.PlayerSpecialActionCardsHand, player: this.player })]
     } else {
