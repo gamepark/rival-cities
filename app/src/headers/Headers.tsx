@@ -9,7 +9,6 @@ import ProductIcon from '../images/icons/Product.png'
 import { AdvanceLawsuitHeader } from './AdvanceLawsuitHeader'
 import { ChooseSplitActionHeader } from './ChooseSplitActionHeader'
 import { ConfirmEndTurnHeader } from './ConfirmEndTurnHeader'
-import { CourtRulingHeader } from './CourtRulingHeader'
 import { DonationHeader } from './DonationHeader'
 import { GainLetterHeader } from './GainLetterHeader'
 import { GainProductsHeader } from './GainProductsHeader'
@@ -41,7 +40,9 @@ export const Headers: Partial<Record<RuleId, ComponentType>> = {
   [RuleId.FormAlliance]: () => <HeaderText code="alliance" moves={{ pass: isCustomMoveType(CustomMoveType.Pass) }} />,
   [RuleId.PurchaseShip]: () => <HeaderText code="ship" moves={{ pass: isCustomMoveType(CustomMoveType.Pass) }} />,
   [RuleId.AdvanceLawsuit]: AdvanceLawsuitHeader,
-  [RuleId.CourtRuling]: CourtRulingHeader,
+  [RuleId.CourtRuling]: () => (
+    <HeaderText code="court-ruling" moves={{ resolve: isCustomMoveType(CustomMoveType.ResolveLawsuit), pass: isCustomMoveType(CustomMoveType.Pass) }} />
+  ),
   [RuleId.ResolveLawsuit]: ResolveLawsuitHeader,
   [RuleId.ReactivateFactory]: ReactivateFactoryHeader,
   [RuleId.Piracy]: PiracyHeader,
