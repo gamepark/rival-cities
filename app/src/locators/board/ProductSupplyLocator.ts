@@ -1,4 +1,4 @@
-import { DropAreaDescription, FlexLocator } from '@gamepark/react-game'
+import { FlexLocator } from '@gamepark/react-game'
 import { Coordinates, Location } from '@gamepark/rules-api'
 import { gameBoardLocator } from '../GameBoardLocator'
 
@@ -17,14 +17,6 @@ class ProductSupplyLocator extends FlexLocator {
     const base = gameBoardLocator.coordinates
     return { x: base.x - 29, y: base.y - 28 }
   }
-
-  locationDescription = new ProductPileDescription()
-}
-
-class ProductPileDescription extends DropAreaDescription {
-  width = 3
-  height = 3
-  borderRadius = 3
 }
 
 export const productSupplyLocator = new ProductSupplyLocator()

@@ -2,8 +2,8 @@ import { getEnumValues } from '@gamepark/rules-api'
 
 export enum Product {
   Beer = 1,
-  Leather,
   Cloth,
+  Leather,
   Furniture
 }
 
