@@ -9,10 +9,10 @@ import { Ship } from '@gamepark/rival-cities/material/Ship'
 import { CustomMoveType } from '@gamepark/rival-cities/rules/CustomMoveType'
 import { isCustomMoveType, isMoveItemType, isStartPlayerTurn, MaterialGame, MaterialMove } from '@gamepark/rules-api'
 import { Trans } from 'react-i18next'
-import Balance from '../images/illustrations/balance.png'
-import Decision from '../images/illustrations/decision.png'
-import Letter from '../images/tokens/LetterFront.jpg'
-import Presitge from '../images/tokens/PrestigeMarker.png'
+import Decision from '../images/icons/decision.png'
+import Lawsuit from '../images/icons/Lawsuit.png'
+import Letter from '../images/icons/Letter.png'
+import Prestige from '../images/tokens/PrestigeMarker.png'
 import { offSeasonOverviewDescription } from '../material/OffSeasonOverviewDescription'
 import { me, opponent, TutorialSetup } from './TutorialSetup'
 
@@ -26,9 +26,9 @@ const BaseComponents = {
   bold: <strong />,
   italic: <em />,
   letter: <img src={Letter} alt="letter" css={image} />,
-  balance: <img src={Balance} alt="balance" css={image} />,
+  balance: <img src={Lawsuit} alt="lawsuit" css={image} />,
   decision: <img src={Decision} alt="decision" css={image} />,
-  prestige: <img src={Presitge} alt="prestige" css={image} />
+  prestige: <img src={Prestige} alt="prestige" css={image} />
 }
 
 export class Tutorial extends MaterialTutorial<number, MaterialType, LocationType> {
@@ -371,7 +371,7 @@ export class Tutorial extends MaterialTutorial<number, MaterialType, LocationTyp
     },
     {
       move: {
-        filter: (move: MaterialMove) => isMoveItemType(MaterialType.SpecialActionCard)(move) && move.location.type === LocationType.PlayerHand,
+        filter: (move: MaterialMove) => isMoveItemType(MaterialType.SpecialActionCard)(move) && move.location.type === LocationType.PlayerHand
       }
     },
     {
@@ -468,16 +468,17 @@ export class Tutorial extends MaterialTutorial<number, MaterialType, LocationTyp
     {
       popup: {
         text: () => <Trans defaults="tuto.step.34" components={BaseComponents} />,
-        position: { x: 0, y: 30 }
+        position: { x: 0, y: 20 }
       },
       focus: (game: MaterialGame) => ({
-        materials: [this.material(game, MaterialType.LawsuitCard).location(LocationType.LawsuitSpace)]
+        materials: [this.material(game, MaterialType.LawsuitCard).location(LocationType.LawsuitSpace)],
+        margin: { bottom: 10 }
       })
     },
     {
       popup: {
         text: () => <Trans defaults="tuto.step.35" components={BaseComponents} />,
-        position: { x: 0, y: 10 }
+        position: { x: 0, y: 20 }
       },
       move: {
         filter: (move: MaterialMove) => isMoveItemType(MaterialType.LawsuitMarker)(move) && move.location.parent === 0

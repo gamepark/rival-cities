@@ -8,6 +8,7 @@ import { isMoveItemType, Location, MaterialMove } from '@gamepark/rules-api'
 
 class InkSpaceLocator extends Locator {
   parentItemType = MaterialType.GameBoard
+  coordinates = { z: 1 }
 
   getRotateZ(location: Location) {
     switch (location.id) {
