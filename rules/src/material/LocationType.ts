@@ -7,7 +7,7 @@ export enum LocationType {
   ShipStack,
   ShipSpace,
   AllianceSpace,
-  LawsuitDeck,
+  LawsuitStack,
   LawsuitSpace,
   LawsuitPieceSpot,
   LawsuitMarkerSpace,

@@ -39,7 +39,7 @@ export class TutorialSetup extends RivalCitiesSetup {
   }
 
   setupLawsuitDeck() {
-    const lawsuitCardItems = lawsuitCardsToUse.map((it) => ({ id: it, location: { type: LocationType.LawsuitDeck } }))
+    const lawsuitCardItems = lawsuitCardsToUse.map((it) => ({ id: it, location: { type: LocationType.LawsuitStack } }))
     this.material(MaterialType.LawsuitCard).createItems(lawsuitCardItems)
   }
 }

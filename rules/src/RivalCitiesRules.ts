@@ -121,7 +121,7 @@ export class RivalCitiesRules
       [LocationType.LawsuitPieceSpot]: new PositiveSequenceStrategy()
     },
     [MaterialType.LawsuitCard]: {
-      [LocationType.LawsuitDeck]: new PositiveSequenceStrategy(),
+      [LocationType.LawsuitStack]: new PositiveSequenceStrategy(),
       [LocationType.PlayerLawsuitCards]: new PositiveSequenceStrategy()
     },
     [MaterialType.Factory]: {
@@ -138,7 +138,7 @@ export class RivalCitiesRules
       [LocationType.ShipStack]: hideItemId
     },
     [MaterialType.LawsuitCard]: {
-      [LocationType.LawsuitDeck]: hideItemId
+      [LocationType.LawsuitStack]: hideItemId
     }
   }
 

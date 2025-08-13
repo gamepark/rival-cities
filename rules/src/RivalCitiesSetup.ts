@@ -71,7 +71,7 @@ export class RivalCitiesSetup extends MaterialGameSetup<City, MaterialType, Loca
       this.material(MaterialType.LawsuitPiece).createItem({ location: { type: LocationType.LawsuitPieceSpot } })
     }
     for (const index of this.material(MaterialType.LawsuitPiece).getIndexes()) {
-      this.material(MaterialType.LawsuitCard).location(LocationType.LawsuitDeck).moveItem({ type: LocationType.LawsuitSpace, parent: index })
+      this.material(MaterialType.LawsuitCard).location(LocationType.LawsuitStack).moveItem({ type: LocationType.LawsuitSpace, parent: index })
       this.material(MaterialType.LawsuitMarker).createItem({ location: { type: LocationType.LawsuitMarkerSpace, parent: index, x: 0 } })
     }
   }
@@ -79,7 +79,7 @@ export class RivalCitiesSetup extends MaterialGameSetup<City, MaterialType, Loca
   setupLawsuitDeck() {
     const lawsuitCardItems = shuffle(getEnumValues(Lawsuit))
       .slice(0, 7)
-      .map((it) => ({ id: it, location: { type: LocationType.LawsuitDeck } }))
+      .map((it) => ({ id: it, location: { type: LocationType.LawsuitStack } }))
     this.material(MaterialType.LawsuitCard).createItems(lawsuitCardItems)
   }
 

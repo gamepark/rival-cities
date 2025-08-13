@@ -29,7 +29,7 @@ export class ResolveLawsuitRule extends ActionRule<ResolveLawsuitAction> {
       moves.push(firstLawsuitCard.deleteItem())
     }
 
-    const lawsuitDeck = this.material(MaterialType.LawsuitCard).location(LocationType.LawsuitDeck).deck()
+    const lawsuitDeck = this.material(MaterialType.LawsuitCard).location(LocationType.LawsuitStack).deck()
 
     if (lawsuitDeck.length) {
       if (firstLawsuitMarkerX !== 0) {

@@ -8,10 +8,10 @@ import { allianceSpaceLocator } from './board/AllianceSpaceLocator'
 import { factoryDeckLocator } from './board/FactoryDeckLocator'
 import { gameOverviewPlaceLocator } from './board/GameOverviewPlaceLocator'
 import { inkSpaceLocator } from './board/InkSpaceLocator'
-import { lawsuitDeckLocator } from './board/LawsuitDeckLocator'
 import { lawsuitMarkerSpaceLocator } from './board/LawsuitMarkerSpaceLocator'
 import { lawsuitPieceSpotLocator } from './board/LawsuitPieceSpotLocator'
 import { lawsuitSpaceLocator } from './board/LawsuitSpaceLocator'
+import { lawsuitStackLocator } from './board/LawsuitStackLocator'
 import { letterDeckLocator } from './board/LetterDeckLocator'
 import { prestigeMarkerPisteLocator } from './board/PrestigeMarkerPisteLocator'
 import { productPilesLocator } from './board/ProductPilesLocator'
@@ -35,7 +35,7 @@ export const Locators: Partial<Record<LocationType, Locator<City, MaterialType, 
   [LocationType.SpecialActionCardDiscard]: new DeckLocator({ coordinates: { x: 9, y: -27 } }),
   [LocationType.ShipStack]: shipStackLocator,
   [LocationType.ShipSpace]: shipSpaceLocator,
-  [LocationType.LawsuitDeck]: lawsuitDeckLocator,
+  [LocationType.LawsuitStack]: lawsuitStackLocator,
   [LocationType.LawsuitSpace]: lawsuitSpaceLocator,
   [LocationType.LawsuitPieceSpot]: lawsuitPieceSpotLocator,
   [LocationType.LawsuitMarkerSpace]: lawsuitMarkerSpaceLocator,
