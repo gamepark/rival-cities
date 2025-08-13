@@ -12,7 +12,7 @@ export enum LocationType {
   LawsuitPieceSpot,
   LawsuitMarkerSpace,
   InkSpace,
-  PrestigeMarkerPiste,
+  PrestigeTrack,
   GameOverviewPlace,
   ProductPiles,
   LetterDeck,

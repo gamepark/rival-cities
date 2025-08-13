@@ -10,8 +10,8 @@ import { Trans } from 'react-i18next'
 import PrestigeMarker from '../images/tokens/PrestigeMarker.png'
 
 export class PrestigeMarkerDescription extends TokenDescription {
-  width = 2.1
-  height = 1.8
+  width = 2.3
+  height = 2
 
   menuAlwaysVisible = true
 
@@ -29,7 +29,7 @@ export class PrestigeMarkerDescription extends TokenDescription {
 
   getItemMenu(_item: MaterialItem, context: ItemContext, legalMoves: MaterialMove[]) {
     const advance = legalMoves.find(
-      (move) => isMoveItemType(MaterialType.PrestigeMarker)(move) && move.location.type === LocationType.PrestigeMarkerPiste && move.itemIndex === context.index
+      (move) => isMoveItemType(MaterialType.PrestigeMarker)(move) && move.location.type === LocationType.PrestigeTrack && move.itemIndex === context.index
     )
 
     if (context.displayIndex !== 0) return undefined

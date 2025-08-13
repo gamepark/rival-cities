@@ -79,7 +79,7 @@ export class EndOfGameHelper extends PlayerTurnRule {
   }
 
   checkIfPrestigeMarkerIsOnACity(): boolean {
-    const prestigeMarkerLocation = this.material(MaterialType.PrestigeMarker).location(LocationType.PrestigeMarkerPiste).getItem()?.location.x ?? 0
+    const prestigeMarkerLocation = this.material(MaterialType.PrestigeMarker).location(LocationType.PrestigeTrack).getItem()?.location.x ?? 0
     return Math.abs(prestigeMarkerLocation) >= 8
   }
 
@@ -100,7 +100,7 @@ export class EndOfGameHelper extends PlayerTurnRule {
   }
 
   get prestigeMarkerLocation() {
-    return this.material(MaterialType.PrestigeMarker).location(LocationType.PrestigeMarkerPiste).getItem()?.location.x ?? 0
+    return this.material(MaterialType.PrestigeMarker).location(LocationType.PrestigeTrack).getItem()?.location.x ?? 0
   }
 
   get prestigeMarkerStars() {

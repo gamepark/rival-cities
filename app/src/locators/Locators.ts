@@ -13,7 +13,7 @@ import { lawsuitPieceSpotLocator } from './board/LawsuitPieceSpotLocator'
 import { lawsuitSpaceLocator } from './board/LawsuitSpaceLocator'
 import { lawsuitStackLocator } from './board/LawsuitStackLocator'
 import { letterDeckLocator } from './board/LetterDeckLocator'
-import { prestigeMarkerPisteLocator } from './board/PrestigeMarkerPisteLocator'
+import { prestigeTrackLocator } from './board/PrestigeTrackLocator'
 import { productPilesLocator } from './board/ProductPilesLocator'
 import { shipSpaceLocator } from './board/ShipSpaceLocator'
 import { shipStackLocator } from './board/ShipStackLocator'
@@ -41,7 +41,7 @@ export const Locators: Partial<Record<LocationType, Locator<City, MaterialType, 
   [LocationType.LawsuitMarkerSpace]: lawsuitMarkerSpaceLocator,
   [LocationType.AllianceSpace]: allianceSpaceLocator,
   [LocationType.InkSpace]: inkSpaceLocator,
-  [LocationType.PrestigeMarkerPiste]: prestigeMarkerPisteLocator,
+  [LocationType.PrestigeTrack]: prestigeTrackLocator,
   [LocationType.GameOverviewPlace]: gameOverviewPlaceLocator,
   [LocationType.ProductPiles]: productPilesLocator,
   [LocationType.LetterDeck]: letterDeckLocator,

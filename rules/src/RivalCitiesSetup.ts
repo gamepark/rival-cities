@@ -23,7 +23,7 @@ export class RivalCitiesSetup extends MaterialGameSetup<City, MaterialType, Loca
   setupMaterial(options: RivalCitiesOptions) {
     this.material(MaterialType.BellToken).createItem({ location: { type: LocationType.BellTokenSpot } })
     this.material(MaterialType.InkJar).createItem({ location: { type: LocationType.InkSpace, id: 0 } })
-    this.material(MaterialType.PrestigeMarker).createItem({ location: { type: LocationType.PrestigeMarkerPiste, x: 0 } })
+    this.material(MaterialType.PrestigeMarker).createItem({ location: { type: LocationType.PrestigeTrack, x: 0 } })
     this.material(MaterialType.Letter).createItem({ quantity: 12, location: { type: LocationType.LetterDeck } })
     this.material(MaterialType.Factory).createItem({ quantity: 12, location: { type: LocationType.FactoryDeck } })
     this.material(MaterialType.StarToken).createItem({ quantity: 12, location: { type: LocationType.StarTokenDeck } })

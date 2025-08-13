@@ -16,7 +16,7 @@ export class EarnPrestigeRule extends ActionRule<EarnPrestige> {
 
   getPlayerMoves() {
     const delta = this.playerEarningPrestige === City.Altona ? -1 : 1
-    return [this.material(MaterialType.PrestigeMarker).moveItem((item) => ({ type: LocationType.PrestigeMarkerPiste, x: item.location.x! + delta }))]
+    return [this.material(MaterialType.PrestigeMarker).moveItem((item) => ({ type: LocationType.PrestigeTrack, x: item.location.x! + delta }))]
   }
 
   get playerEarningPrestige() {

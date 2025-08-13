@@ -99,7 +99,7 @@ export class RivalCitiesLogs implements LogDescription {
         player: actionPlayer
       }
     }
-    if (this.getMoveLocationType(move) === LocationType.PrestigeMarkerPiste) {
+    if (this.getMoveLocationType(move) === LocationType.PrestigeTrack) {
       return {
         Component: GainPrestigeHistory,
         player: actionPlayer
