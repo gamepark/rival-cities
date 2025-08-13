@@ -7,7 +7,6 @@ class ShipSpaceLocator extends Locator {
   rotateZ = -1
 
   getPositionOnParent(location: Location) {
-    console.log(location)
     switch (location.x) {
       case 0:
         return { x: 11.7, y: 63.7 }
