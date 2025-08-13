@@ -31,19 +31,19 @@ export class RivalCitiesLogs implements LogDescription {
         player: move.location.player
       }
     }
-    if (this.getMoveLocationType(move) === LocationType.ProductPiles) {
+    if (this.getMoveLocationType(move) === LocationType.ProductSupply) {
       return {
         Component: PayProductHistory,
         player: actionPlayer
       }
     }
-    if (isMoveItem(move) && move.location.type === LocationType.PlayerLetterDeck) {
+    if (isMoveItem(move) && move.location.type === LocationType.PlayerLetters) {
       return {
         Component: GetLetterHistory,
         player: move.location.player
       }
     }
-    if (this.getMoveLocationType(move) === LocationType.LetterDeck) {
+    if (this.getMoveLocationType(move) === LocationType.LetterSupply) {
       return {
         Component: PayLetterHistory,
         player: actionPlayer
@@ -93,7 +93,7 @@ export class RivalCitiesLogs implements LogDescription {
         player: move.location.player
       }
     }
-    if (this.getMoveLocationType(move) === LocationType.PlayerSpecialActionCardsHand) {
+    if (this.getMoveLocationType(move) === LocationType.PlayerHand) {
       return {
         Component: GetSpecialCardHistory,
         player: actionPlayer

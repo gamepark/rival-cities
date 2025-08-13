@@ -3,7 +3,7 @@ import { PileLocator } from '@gamepark/react-game'
 import { City } from '@gamepark/rival-cities/City'
 import { Location } from '@gamepark/rules-api'
 
-class PlayerStarTokensDeckLocator extends PileLocator {
+class PlayerStarTokensLocator extends PileLocator {
   radius = 1
 
   getCoordinates(location: Location) {
@@ -14,4 +14,4 @@ class PlayerStarTokensDeckLocator extends PileLocator {
   }
 }
 
-export const playerStarTokensDeckLocator = new PlayerStarTokensDeckLocator()
+export const playerStarTokensLocator = new PlayerStarTokensLocator()

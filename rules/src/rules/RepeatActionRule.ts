@@ -20,11 +20,11 @@ export class RepeatActionRule extends ActionRule<RepeatAction> {
     if (cost.type === CostType.Product) {
       const product = this.getProduct(cost.product)
       if (product.getQuantity() >= cost.amount) {
-        moves.push(product.moveItem({ type: LocationType.ProductPiles, id: cost.product }, cost.amount))
+        moves.push(product.moveItem({ type: LocationType.ProductSupply, id: cost.product }, cost.amount))
       }
     } else {
       const productsICanSpend = this.getProducts().id<Product>((product) => this.willHaveEnoughAfterSpending(product))
-      moves.push(...productsICanSpend.moveItems((item) => ({ type: LocationType.ProductPiles, id: item.id })))
+      moves.push(...productsICanSpend.moveItems((item) => ({ type: LocationType.ProductSupply, id: item.id })))
     }
     return moves
   }
@@ -34,7 +34,7 @@ export class RepeatActionRule extends ActionRule<RepeatAction> {
   }
 
   afterItemMove(move: ItemMove) {
-    if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.ProductPiles) {
+    if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.ProductSupply) {
       this.addActions(this.action.extraAction)
       return [this.startNextRule()]
     }

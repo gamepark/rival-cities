@@ -70,7 +70,7 @@ export class SpecialActionCardDescription extends CardDescription {
   }
 
   canShortClick(move: MaterialMove, context: ItemContext): boolean {
-    const locations = [LocationType.SpecialActionCardDiscard, LocationType.PlayerSpecialActionCardsHand]
+    const locations = [LocationType.SpecialActionCardDiscard, LocationType.PlayerHand]
     return isMoveItemType(MaterialType.SpecialActionCard)(move) && locations.includes(move.location.type ?? 0) && move.itemIndex === context.index
   }
 
@@ -78,16 +78,10 @@ export class SpecialActionCardDescription extends CardDescription {
     const inkJarLocationId = context.rules.material(MaterialType.InkJar).getItem()!.location.id
     const play = item.location.id === inkJarLocationId && legalMoves.find((move) => isCustomMoveType(CustomMoveType.PlayInkJarCard)(move))
     const take = legalMoves.find(
-      (move) =>
-        isMoveItemType(MaterialType.SpecialActionCard)(move) &&
-        move.location.type === LocationType.PlayerSpecialActionCardsHand &&
-        move.itemIndex === context.index
+      (move) => isMoveItemType(MaterialType.SpecialActionCard)(move) && move.location.type === LocationType.PlayerHand && move.itemIndex === context.index
     )
     const draw = legalMoves.find(
-      (move) =>
-        isMoveItemType(MaterialType.SpecialActionCard)(move) &&
-        move.location.type === LocationType.PlayerSpecialActionCardsHand &&
-        move.itemIndex === context.index
+      (move) => isMoveItemType(MaterialType.SpecialActionCard)(move) && move.location.type === LocationType.PlayerHand && move.itemIndex === context.index
     )
     const discard = legalMoves.find(
       (move) =>
@@ -119,7 +113,7 @@ export class SpecialActionCardDescription extends CardDescription {
       )
     }
 
-    if (item.location.type === LocationType.PlayerSpecialActionCardsHand && discard) {
+    if (item.location.type === LocationType.PlayerHand && discard) {
       return (
         <ItemMenuButton label={<Trans defaults="button.play" />} angle={50} radius={4} move={discard}>
           <FontAwesomeIcon icon={faHand} css={pointerCursorCss} />

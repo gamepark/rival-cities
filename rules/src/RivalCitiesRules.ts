@@ -105,7 +105,7 @@ export class RivalCitiesRules
   locationsStrategies = {
     [MaterialType.SpecialActionCard]: {
       [LocationType.ActionStack]: new PositiveSequenceStrategy(),
-      [LocationType.PlayerSpecialActionCardsHand]: new PositiveSequenceStrategy(),
+      [LocationType.PlayerHand]: new PositiveSequenceStrategy(),
       [LocationType.SpecialActionCardDiscard]: new PositiveSequenceStrategy()
     },
     [MaterialType.AllianceCard]: {
@@ -132,7 +132,7 @@ export class RivalCitiesRules
   hidingStrategies = {
     [MaterialType.SpecialActionCard]: {
       [LocationType.ActionStack]: hideItemId,
-      [LocationType.PlayerSpecialActionCardsHand]: hideItemIdToOthers
+      [LocationType.PlayerHand]: hideItemIdToOthers
     },
     [MaterialType.ShipCard]: {
       [LocationType.ShipStack]: hideItemId
@@ -203,7 +203,7 @@ export class RivalCitiesRules
         this.memorize(Memory.PendingRule, this.game.rule?.id)
       }
       this.game.rule!.id = RuleId.SwapProduct
-      return [letters.moveItem({ type: LocationType.LetterDeck })]
+      return [letters.moveItem({ type: LocationType.LetterSupply })]
     }
 
     return super.onCustomMove(move)

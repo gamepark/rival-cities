@@ -26,6 +26,6 @@ export class PlaySpecialActionCardRule extends ActionRule<PlaySpecialActionCard>
   }
 
   get specialActionCards() {
-    return this.material(MaterialType.SpecialActionCard).location(LocationType.PlayerSpecialActionCardsHand).player(this.player)
+    return this.material(MaterialType.SpecialActionCard).location(LocationType.PlayerHand).player(this.player)
   }
 }

@@ -3,7 +3,7 @@ import { ListLocator } from '@gamepark/react-game'
 import { City } from '@gamepark/rival-cities/City'
 import { Location } from '@gamepark/rules-api'
 
-class PlayerLettersDeckLocator extends ListLocator {
+class PlayerLettersLocator extends ListLocator {
   gap = { x: 3.5 }
   maxCount = 6
 
@@ -15,4 +15,4 @@ class PlayerLettersDeckLocator extends ListLocator {
   }
 }
 
-export const playerLettersDeckLocator = new PlayerLettersDeckLocator()
+export const playerLettersLocator = new PlayerLettersLocator()

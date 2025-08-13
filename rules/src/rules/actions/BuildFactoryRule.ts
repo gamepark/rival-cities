@@ -17,7 +17,7 @@ export class BuildFactoryRule extends ActionRule<BuildFactory> {
     const moves: MaterialMove[] = []
     const products = this.getProducts()
     if (this.action.building) {
-      return products.moveItems((item) => ({ type: LocationType.ProductPiles, id: item.id }))
+      return products.moveItems((item) => ({ type: LocationType.ProductSupply, id: item.id }))
     }
     const factoriesSupply = this.factoriesSupply
     if (factoriesSupply.length && products.getQuantity() >= (this.action.cost ?? 0)) {
@@ -46,6 +46,6 @@ export class BuildFactoryRule extends ActionRule<BuildFactory> {
   }
 
   get factoriesSupply() {
-    return this.material(MaterialType.Factory).location(LocationType.FactoryDeck)
+    return this.material(MaterialType.Factory).location(LocationType.FactorySupply)
   }
 }

@@ -6,7 +6,7 @@ import { RuleId } from './RuleId'
 export class ChooseStartProductRule extends PlayerTurnRule {
   getPlayerMoves() {
     return this.material(MaterialType.Product)
-      .location(LocationType.ProductPiles)
+      .location(LocationType.ProductSupply)
       .moveItems((item) => ({ type: LocationType.PlayerProducts, player: this.player, id: item.id }))
   }
 

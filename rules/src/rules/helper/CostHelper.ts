@@ -15,7 +15,7 @@ export class CostHelper extends MaterialRulesPart {
   }
 
   getLetters(player: City) {
-    return this.material(MaterialType.Letter).location(LocationType.PlayerLetterDeck).player(player)
+    return this.material(MaterialType.Letter).location(LocationType.PlayerLetters).player(player)
   }
 
   canPay(player: City, cost: Cost) {
@@ -29,7 +29,7 @@ export class CostHelper extends MaterialRulesPart {
       case CostType.AnyProducts:
         return this.getProducts(player).getQuantity() >= cost.amount
       case CostType.Letters:
-        return this.material(MaterialType.Letter).location(LocationType.PlayerLetterDeck).player(player).getQuantity() >= cost.amount
+        return this.material(MaterialType.Letter).location(LocationType.PlayerLetters).player(player).getQuantity() >= cost.amount
     }
   }
 
@@ -37,18 +37,18 @@ export class CostHelper extends MaterialRulesPart {
     const moves: MaterialMove[] = []
     switch (cost.type) {
       case CostType.Product:
-        moves.push(this.getProduct(player, cost.product).moveItem({ type: LocationType.ProductPiles, id: cost.product }, cost.amount))
+        moves.push(this.getProduct(player, cost.product).moveItem({ type: LocationType.ProductSupply, id: cost.product }, cost.amount))
         break
       case CostType.Products:
         for (const product of getEnumValues(Product)) {
           const amount = cost.amount[product]
           if (amount) {
-            moves.push(this.getProduct(player, product).moveItem({ type: LocationType.ProductPiles, id: product }, amount))
+            moves.push(this.getProduct(player, product).moveItem({ type: LocationType.ProductSupply, id: product }, amount))
           }
         }
         break
       case CostType.Letters:
-        moves.push(this.getLetters(player).moveItem({ type: LocationType.LetterDeck }, 1))
+        moves.push(this.getLetters(player).moveItem({ type: LocationType.LetterSupply }, 1))
         break
     }
     return moves

@@ -37,7 +37,7 @@ export class PayAlliancesUpkeepRule extends SimultaneousRule {
   getActivePlayerLegalMoves(player: number) {
     const upkeep = this.remind<AlliancesUpkeep>(Memory.AlliancesUpkeep, player)
     if (upkeep.currentAlliance) {
-      return this.getPlayerProducts(player).moveItems((item) => ({ type: LocationType.ProductPiles, id: item.id }), 1)
+      return this.getPlayerProducts(player).moveItems((item) => ({ type: LocationType.ProductSupply, id: item.id }), 1)
     } else {
       const moves: MaterialMove[] = []
       for (const alliance of getEnumValues(Alliance)) {

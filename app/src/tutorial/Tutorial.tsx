@@ -74,7 +74,7 @@ export class Tutorial extends MaterialTutorial<number, MaterialType, LocationTyp
         text: () => <Trans defaults="tuto.step.2" components={BaseComponents} />
       },
       focus: (game: MaterialGame) => ({
-        materials: [this.material(game, MaterialType.Product).location(LocationType.ProductPiles)],
+        materials: [this.material(game, MaterialType.Product).location(LocationType.ProductSupply)],
         scale: 0.8
       })
     },
@@ -84,7 +84,7 @@ export class Tutorial extends MaterialTutorial<number, MaterialType, LocationTyp
       },
       focus: (game: MaterialGame) => ({
         materials: [
-          this.material(game, MaterialType.Product).location(LocationType.ProductPiles),
+          this.material(game, MaterialType.Product).location(LocationType.ProductSupply),
           this.material(game, MaterialType.Product).location(LocationType.PlayerProducts).player(me)
         ],
         scale: 0.5
@@ -174,7 +174,7 @@ export class Tutorial extends MaterialTutorial<number, MaterialType, LocationTyp
       },
       focus: (game: MaterialGame) => ({
         materials: [
-          this.material(game, MaterialType.Product).location(LocationType.ProductPiles),
+          this.material(game, MaterialType.Product).location(LocationType.ProductSupply),
           this.material(game, MaterialType.Product).location(LocationType.PlayerProducts).player(me)
         ],
         scale: 0.5
@@ -371,7 +371,7 @@ export class Tutorial extends MaterialTutorial<number, MaterialType, LocationTyp
     },
     {
       move: {
-        filter: (move: MaterialMove) => isMoveItemType(MaterialType.SpecialActionCard)(move) && move.location.type === LocationType.PlayerSpecialActionCardsHand,
+        filter: (move: MaterialMove) => isMoveItemType(MaterialType.SpecialActionCard)(move) && move.location.type === LocationType.PlayerHand,
       }
     },
     {

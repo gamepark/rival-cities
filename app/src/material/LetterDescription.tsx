@@ -6,8 +6,8 @@ import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
 import { isMoveItemType, MaterialItem, MaterialMove } from '@gamepark/rules-api'
 import React from 'react'
 import { Trans } from 'react-i18next'
-import LetterFront from '../images/tokens/LetterFront.jpg'
 import LetterBack from '../images/tokens/LetterBack.jpg'
+import LetterFront from '../images/tokens/LetterFront.jpg'
 import { LetterHelp } from './help/LetterHelp'
 
 export class LetterDescription extends CardDescription {
@@ -25,21 +25,21 @@ export class LetterDescription extends CardDescription {
   }
 
   canShortClick(move: MaterialMove, context: ItemContext): boolean {
-    return isMoveItemType(MaterialType.Letter)(move) && context.index === move.itemIndex && move.location.type === LocationType.PlayerLetterDeck
+    return isMoveItemType(MaterialType.Letter)(move) && context.index === move.itemIndex && move.location.type === LocationType.PlayerLetters
   }
 
   help = LetterHelp
 
   getItemMenu(_item: MaterialItem, context: ItemContext, legalMoves: MaterialMove[]): React.ReactNode {
     const take = legalMoves.find(
-      (move) => isMoveItemType(MaterialType.Letter)(move) && move.location.type === LocationType.PlayerLetterDeck && move.itemIndex === context.index
+      (move) => isMoveItemType(MaterialType.Letter)(move) && move.location.type === LocationType.PlayerLetters && move.itemIndex === context.index
     )
     const useLetter = legalMoves.find(
-      (move) => isMoveItemType(MaterialType.Letter)(move) && move.location.type === LocationType.LetterDeck && move.itemIndex === context.index
+      (move) => isMoveItemType(MaterialType.Letter)(move) && move.location.type === LocationType.LetterSupply && move.itemIndex === context.index
     )
 
     if (useLetter) {
-      const nbLetters = context.rules.material(MaterialType.Letter).location(LocationType.PlayerLetterDeck).player(context.player).getQuantity()
+      const nbLetters = context.rules.material(MaterialType.Letter).location(LocationType.PlayerLetters).player(context.player).getQuantity()
       if (context.displayIndex !== nbLetters - 1) return undefined
       return (
         <ItemMenuButton label={<Trans defaults="button.useLetter" />} labelPosition="right" angle={50} radius={4} y={-1} x={1} move={useLetter}>

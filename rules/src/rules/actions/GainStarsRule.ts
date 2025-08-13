@@ -7,7 +7,7 @@ import { ActionRule } from './ActionRule'
 export class GainStarsRule extends ActionRule<GainStars> {
   onRuleStart() {
     const moves: MaterialMove[] = []
-    const supply = this.material(MaterialType.StarToken).location(LocationType.StarTokenDeck)
+    const supply = this.material(MaterialType.StarToken).location(LocationType.StarTokenSupply)
     if (supply.getQuantity() > 0) {
       moves.push(supply.moveItem({ type: LocationType.PlayerStarTokens, player: this.player }, this.action.stars))
     }

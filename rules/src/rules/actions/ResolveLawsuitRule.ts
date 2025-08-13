@@ -15,7 +15,7 @@ export class ResolveLawsuitRule extends ActionRule<ResolveLawsuitAction> {
     const firstLawsuitMarker = this.material(MaterialType.LawsuitMarker).parent(firstLawsuitIndex)
     const firstLawsuitMarkerX = firstLawsuitMarker.getItem()!.location.x!
     const firstLawsuitCard = this.material(MaterialType.LawsuitCard).location(LocationType.LawsuitSpace).parent(firstLawsuitIndex)
-    const starTokens = this.material(MaterialType.StarToken).location(LocationType.StarTokenDeck)
+    const starTokens = this.material(MaterialType.StarToken).location(LocationType.StarTokenSupply)
 
     if (Math.abs(firstLawsuitMarkerX) === 1 && starTokens.length) {
       const player = firstLawsuitMarkerX < 0 ? City.Altona : City.Hamburg

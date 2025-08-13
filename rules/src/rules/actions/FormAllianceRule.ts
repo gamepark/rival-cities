@@ -21,7 +21,7 @@ export class FormAllianceRule extends ActionRule<FormAlliance> {
     if (isMoveItemType(MaterialType.AllianceCard)(move)) {
       const origin = this.material(MaterialType.AllianceCard).getItem(move.itemIndex).location
       if (origin.type === LocationType.PlayerAlliances) {
-        moves.push(this.playerLetters.moveItem({ type: LocationType.LetterDeck }))
+        moves.push(this.playerLetters.moveItem({ type: LocationType.LetterSupply }))
       }
       moves.push(this.startNextRule())
     }
@@ -29,7 +29,7 @@ export class FormAllianceRule extends ActionRule<FormAlliance> {
   }
 
   get playerLetters() {
-    return this.material(MaterialType.Letter).location(LocationType.PlayerLetterDeck).player(this.player)
+    return this.material(MaterialType.Letter).location(LocationType.PlayerLetters).player(this.player)
   }
 
   get freeAlliances() {

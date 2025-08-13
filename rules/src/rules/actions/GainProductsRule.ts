@@ -36,7 +36,7 @@ export class GainProductsRule<A extends GainProducts | Production> extends Actio
 
   gainProduct(product: Product, quantity = 1) {
     const moves: MaterialMove[] = []
-    const supply = this.material(MaterialType.Product).location(LocationType.ProductPiles).id(product)
+    const supply = this.material(MaterialType.Product).location(LocationType.ProductSupply).id(product)
     const supplyQuantity = supply.getQuantity()
     const supplyMissing = quantity - supplyQuantity
     if (supplyQuantity > 0) {

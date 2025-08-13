@@ -38,11 +38,11 @@ export class ChooseActionRule extends PlayerTurnRule {
 
     const letters = this.playerLetters
     if (letters.getQuantity() > 0 && this.hasSpecialActionCard && !this.isOptionCActive) {
-      moves.push(...letters.moveItems({ type: LocationType.LetterDeck })) // Option C
+      moves.push(...letters.moveItems({ type: LocationType.LetterSupply })) // Option C
     }
 
     if (specialActionCard.length && !this.remind(Memory.LetterSpentForOptionC)) {
-      moves.push(specialActionCard.moveItem({ type: LocationType.PlayerSpecialActionCardsHand, player: this.player })) // Option D
+      moves.push(specialActionCard.moveItem({ type: LocationType.PlayerHand, player: this.player })) // Option D
     }
 
     return moves
@@ -83,7 +83,7 @@ export class ChooseActionRule extends PlayerTurnRule {
     }
 
     // Option D
-    if (isMoveItemType(MaterialType.SpecialActionCard)(move) && move.location.type === LocationType.PlayerSpecialActionCardsHand) {
+    if (isMoveItemType(MaterialType.SpecialActionCard)(move) && move.location.type === LocationType.PlayerHand) {
       return [this.startPlayerTurn(RuleId.AdvanceInkJar, this.nextPlayer)]
     }
     return []
@@ -102,11 +102,11 @@ export class ChooseActionRule extends PlayerTurnRule {
   }
 
   get playerLetters() {
-    return this.material(MaterialType.Letter).location(LocationType.PlayerLetterDeck).player(this.player)
+    return this.material(MaterialType.Letter).location(LocationType.PlayerLetters).player(this.player)
   }
 
   get specialActionCards() {
-    return this.material(MaterialType.SpecialActionCard).location(LocationType.PlayerSpecialActionCardsHand).player(this.player)
+    return this.material(MaterialType.SpecialActionCard).location(LocationType.PlayerHand).player(this.player)
   }
 
   get hasSpecialActionCard() {

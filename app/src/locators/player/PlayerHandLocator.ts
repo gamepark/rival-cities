@@ -2,7 +2,7 @@ import { ListLocator } from '@gamepark/react-game'
 import { City } from '@gamepark/rival-cities/City'
 import { Location, MaterialItem } from '@gamepark/rules-api'
 
-class PlayerSpecialActionCardsHandLocator extends ListLocator {
+class PlayerHandLocator extends ListLocator {
   gap = { x: 7 }
   maxCount = 3
 
@@ -29,4 +29,4 @@ class PlayerSpecialActionCardsHandLocator extends ListLocator {
   }
 }
 
-export const playerSpecialActionCardsHandLocator = new PlayerSpecialActionCardsHandLocator()
+export const playerHandLocator = new PlayerHandLocator()

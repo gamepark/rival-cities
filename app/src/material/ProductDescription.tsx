@@ -79,7 +79,7 @@ export class ProductDescription extends TokenDescription {
     const returnToReserve = legalMoves.find(
       (move) =>
         isMoveItemType(MaterialType.Product)(move) &&
-        move.location.type === LocationType.ProductPiles &&
+        move.location.type === LocationType.ProductSupply &&
         move.itemIndex === context.index &&
         move.location.id === item.location.id
     )

@@ -21,18 +21,18 @@ export class GainLetterRule extends ActionRule<GainLetter> {
 
   gainLetter(quantity = 1) {
     const moves: MaterialMove[] = []
-    const supply = this.material(MaterialType.Letter).location(LocationType.LetterDeck)
+    const supply = this.material(MaterialType.Letter).location(LocationType.LetterSupply)
     const supplyQuantity = supply.getQuantity()
     const supplyMissing = quantity - supplyQuantity
     if (supplyQuantity > 0) {
-      moves.push(supply.moveItem({ type: LocationType.PlayerLetterDeck, player: this.player }, Math.min(quantity, supplyQuantity)))
+      moves.push(supply.moveItem({ type: LocationType.PlayerLetters, player: this.player }, Math.min(quantity, supplyQuantity)))
     }
     if (supplyMissing > 0) {
-      const rivalStock = this.material(MaterialType.Letter).location(LocationType.PlayerLetterDeck).player(getRival(this.player))
+      const rivalStock = this.material(MaterialType.Letter).location(LocationType.PlayerLetters).player(getRival(this.player))
       const rivalAvailableStock = Math.max(rivalStock.getQuantity() - 6, 0)
       const quantityLost = supplyMissing - rivalAvailableStock
       if (rivalAvailableStock > 0) {
-        moves.push(rivalStock.moveItem({ type: LocationType.PlayerLetterDeck, player: this.player }, Math.min(supplyMissing, rivalAvailableStock)))
+        moves.push(rivalStock.moveItem({ type: LocationType.PlayerLetters, player: this.player }, Math.min(supplyMissing, rivalAvailableStock)))
       }
       if (quantityLost > 0) {
         moves.push(this.customMove(CustomMoveType.LetterForgo, { quantity: quantityLost }))

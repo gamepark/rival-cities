@@ -6,7 +6,7 @@ import { RuleId } from './RuleId'
 
 export class PayInkJarMovementCostRule extends PlayerTurnRule {
   getPlayerMoves(): MaterialMove[] {
-    return this.playerProducts.moveItems((item) => ({ type: LocationType.ProductPiles, id: item.id }))
+    return this.playerProducts.moveItems((item) => ({ type: LocationType.ProductSupply, id: item.id }))
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {

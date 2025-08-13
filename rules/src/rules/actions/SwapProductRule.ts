@@ -12,7 +12,7 @@ export class SwapProductRule extends ActionRule<SwapProduct> {
       moves.push(...this.productsSupply.moveItems((item) => ({ type: LocationType.PlayerProducts, player: this.player, id: item.id }), 1))
     } else {
       if (this.productsSupply.getQuantity() > 0) {
-        moves.push(...this.getProducts().moveItems((item) => ({ type: LocationType.ProductPiles, id: item.id }), 1))
+        moves.push(...this.getProducts().moveItems((item) => ({ type: LocationType.ProductSupply, id: item.id }), 1))
       }
       moves.push(this.customMove(CustomMoveType.Pass))
     }
@@ -21,7 +21,7 @@ export class SwapProductRule extends ActionRule<SwapProduct> {
 
   afterItemMove(move: ItemMove) {
     if (isMoveItemType(MaterialType.Product)(move)) {
-      if (move.location.type === LocationType.ProductPiles) {
+      if (move.location.type === LocationType.ProductSupply) {
         this.action.swap = true
       } else if (move.location.type === LocationType.PlayerProducts) {
         this.action.swap = false
@@ -35,6 +35,6 @@ export class SwapProductRule extends ActionRule<SwapProduct> {
   }
 
   get productsSupply() {
-    return this.material(MaterialType.Product).location(LocationType.ProductPiles)
+    return this.material(MaterialType.Product).location(LocationType.ProductSupply)
   }
 }

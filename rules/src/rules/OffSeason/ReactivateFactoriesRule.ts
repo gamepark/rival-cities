@@ -25,10 +25,10 @@ export class ReactivateFactoriesRule extends PlayerTurnRule {
   }
 
   get allStarTokenAreTaken() {
-    return this.material(MaterialType.StarToken).location(LocationType.StarTokenDeck).length === 0
+    return this.material(MaterialType.StarToken).location(LocationType.StarTokenSupply).length === 0
   }
 
   get allFactoriesAreTaken() {
-    return this.material(MaterialType.Factory).location(LocationType.FactoryDeck).length === 0
+    return this.material(MaterialType.Factory).location(LocationType.FactorySupply).length === 0
   }
 }

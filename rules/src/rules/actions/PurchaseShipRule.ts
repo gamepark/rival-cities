@@ -32,7 +32,7 @@ export class PurchaseShipRule extends ActionRule<PurchaseShip> {
     if (isMoveItemType(MaterialType.ShipCard)(move) && move.location.type === LocationType.PlayerShipCards) {
       const ship = this.material(MaterialType.ShipCard).getItem<Ship>(move.itemIndex).id
       const cost = shipData[ship].cost
-      moves.push(this.products.id(cost.product).moveItem({ type: LocationType.ProductPiles, id: cost.product }, cost.amount - this.discount))
+      moves.push(this.products.id(cost.product).moveItem({ type: LocationType.ProductSupply, id: cost.product }, cost.amount - this.discount))
     }
     return moves
   }
