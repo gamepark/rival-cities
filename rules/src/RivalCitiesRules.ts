@@ -15,7 +15,6 @@ import {
   PlayMoveContext,
   PositiveSequenceStrategy,
   SecretMaterialRules,
-  StackingStrategy,
   TimeLimit
 } from '@gamepark/rules-api'
 import { City, getRival } from './City'
@@ -116,7 +115,7 @@ export class RivalCitiesRules
     [MaterialType.ShipCard]: {
       [LocationType.ShipStack]: new PositiveSequenceStrategy(),
       [LocationType.PlayerShipCards]: new PositiveSequenceStrategy(),
-      [LocationType.ShipCardsRiver]: new StackingStrategy()
+      [LocationType.ShipSpace]: new PositiveSequenceStrategy()
     },
     [MaterialType.LawsuitPiece]: {
       [LocationType.LawsuitPieceSpot]: new PositiveSequenceStrategy()

@@ -5,7 +5,7 @@ export enum LocationType {
   ActionStack,
   SpecialActionCardDiscard,
   ShipStack,
-  ShipCardsRiver,
+  ShipSpace,
   AllianceSpace,
   LawsuitDeck,
   LawsuitSpace,

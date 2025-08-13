@@ -34,7 +34,7 @@ export class TutorialSetup extends RivalCitiesSetup {
       .map((it) => ({ id: it, location: { type: LocationType.ShipStack } }))
     this.material(MaterialType.ShipCard).createItems(shipCardsItems)
     this.material(MaterialType.ShipCard).location(LocationType.ShipStack).limit(4).moveItems({
-      type: LocationType.ShipCardsRiver
+      type: LocationType.ShipSpace
     })
   }
 

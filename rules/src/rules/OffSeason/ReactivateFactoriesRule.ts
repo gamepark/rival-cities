@@ -17,7 +17,7 @@ export class ReactivateFactoriesRule extends PlayerTurnRule {
   }
 
   get allShipsArePurchased() {
-    return this.material(MaterialType.ShipCard).location(LocationType.ShipCardsRiver).length === 0
+    return this.material(MaterialType.ShipCard).location(LocationType.ShipSpace).length === 0
   }
 
   get allLawsuitsAreResolved() {

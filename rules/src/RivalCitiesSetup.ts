@@ -55,7 +55,7 @@ export class RivalCitiesSetup extends MaterialGameSetup<City, MaterialType, Loca
   setupShipCards() {
     const ships = shuffle(getEnumValues(Ship)).slice(0, 10)
     this.material(MaterialType.ShipCard).createItems(ships.map((ship) => ({ id: ship, location: { type: LocationType.ShipStack } })))
-    this.material(MaterialType.ShipCard).location(LocationType.ShipStack).limit(4).moveItems({ type: LocationType.ShipCardsRiver })
+    this.material(MaterialType.ShipCard).location(LocationType.ShipStack).limit(4).moveItems({ type: LocationType.ShipSpace })
   }
 
   setupAllianceCards() {

@@ -11,7 +11,7 @@ export class PurchaseShipRule extends ActionRule<PurchaseShip> {
     const discount = this.discount
     const products = this.products
     const affordableShips = this.material(MaterialType.ShipCard)
-      .location(LocationType.ShipCardsRiver)
+      .location(LocationType.ShipSpace)
       .id<Ship>((ship) => {
         const cost = shipData[ship].cost
         return products.id(cost.product).getQuantity() >= cost.amount - discount
@@ -49,7 +49,7 @@ export class PurchaseShipRule extends ActionRule<PurchaseShip> {
       }
       const deck = this.material(MaterialType.ShipCard).location(LocationType.ShipStack).deck()
       if (deck.length) {
-        moves.push(deck.dealOne({ type: LocationType.ShipCardsRiver }))
+        moves.push(deck.dealOne({ type: LocationType.ShipSpace }))
       }
       moves.push(this.startNextRule())
     }
