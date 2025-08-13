@@ -1,11 +1,14 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
+import { StyledPlayerPanel, usePlayers, useRules } from '@gamepark/react-game'
 import { City } from '@gamepark/rival-cities/City'
-import { StyledPlayerPanel, usePlayers } from '@gamepark/react-game'
+import { RivalCitiesRules } from '@gamepark/rival-cities/RivalCitiesRules'
 import { createPortal } from 'react-dom'
+import Star from '../images/icons/Star.png'
 
 export const PlayerPanels = () => {
   const players = usePlayers<City>({ sortFromMe: true })
+  const rules = useRules<RivalCitiesRules>()!
   const root = document.getElementById('root')
   if (!root) {
     return null
@@ -13,9 +16,15 @@ export const PlayerPanels = () => {
 
   return createPortal(
     <>
-      {players.map((player) => (
-        <StyledPlayerPanel key={player.id} player={player} css={panelPosition(player.id)} activeRing />
-      ))}
+      {players.map((player) => {
+        const counters = [
+          {
+            image: Star,
+            value: rules.getScore(player.id) ?? 0
+          }
+        ]
+        return <StyledPlayerPanel key={player.id} player={player} css={panelPosition(player.id)} activeRing counters={counters} />
+      })}
     </>,
     root
   )
