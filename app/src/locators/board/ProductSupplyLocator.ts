@@ -4,7 +4,7 @@ import { gameBoardLocator } from '../GameBoardLocator'
 
 class ProductSupplyLocator extends FlexLocator {
   gap = { x: 1.4 }
-  lineGap = { y: 1.4 }
+  lineGap = { y: 1.7 }
   lineSize = 4
   maxLines = 3
 
@@ -15,7 +15,7 @@ class ProductSupplyLocator extends FlexLocator {
 
   getBaseCoordinates(): Partial<Coordinates> {
     const base = gameBoardLocator.coordinates
-    return { x: base.x - 29, y: base.y - 28 }
+    return { x: base.x - 29, y: base.y - 28.8 }
   }
 }
 
