@@ -11,6 +11,9 @@ export class ResolveLawsuitRule extends ActionRule<ResolveLawsuitAction> {
   onRuleStart(): MaterialMove[] {
     const moves: MaterialMove[] = []
     const firstLawsuit = this.material(MaterialType.LawsuitPiece).location((l) => l.x === 0)
+    if (!firstLawsuit.length) {
+      return [this.startNextRule()]
+    }
     const firstLawsuitIndex = firstLawsuit.getIndex()
     const firstLawsuitMarker = this.material(MaterialType.LawsuitMarker).parent(firstLawsuitIndex)
     const firstLawsuitMarkerX = firstLawsuitMarker.getItem()!.location.x!

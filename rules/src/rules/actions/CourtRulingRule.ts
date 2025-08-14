@@ -11,9 +11,11 @@ export class CourtRulingRule extends ActionRule<CourtRuling> {
     const moves: MaterialMove[] = []
 
     const firstLawsuit = this.material(MaterialType.LawsuitPiece).location((l) => l.x === 0)
-    const firstLawsuitX = this.material(MaterialType.LawsuitMarker).parent(firstLawsuit.getIndex()).getItem()!.location.x!
-    if ((this.player === City.Altona && firstLawsuitX <= -2) || (this.player === City.Hamburg && firstLawsuitX >= 2)) {
-      moves.push(this.customMove(CustomMoveType.ResolveLawsuit))
+    if (firstLawsuit.length) {
+      const firstLawsuitX = this.material(MaterialType.LawsuitMarker).parent(firstLawsuit.getIndex()).getItem()!.location.x!
+      if ((this.player === City.Altona && firstLawsuitX <= -2) || (this.player === City.Hamburg && firstLawsuitX >= 2)) {
+        moves.push(this.customMove(CustomMoveType.ResolveLawsuit))
+      }
     }
 
     const lawsuitPieces = this.material(MaterialType.LawsuitPiece)
