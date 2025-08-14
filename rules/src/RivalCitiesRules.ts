@@ -218,7 +218,7 @@ export class RivalCitiesRules
         isCustomMoveType(CustomMoveType.ChooseAlliance)(move) || isMoveItemType(MaterialType.Product)(move) || isMoveItemType(MaterialType.AllianceCard)(move)
       )
     }
-    return []
+    return false
   }
 
   giveTime(): number {
