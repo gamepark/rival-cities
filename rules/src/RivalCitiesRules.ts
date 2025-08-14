@@ -5,7 +5,6 @@ import {
   hideItemId,
   hideItemIdToOthers,
   isCustomMoveType,
-  isEndPlayerTurn,
   isMoveItemType,
   ItemMove,
   MaterialGame,
@@ -115,7 +114,7 @@ export class RivalCitiesRules
     [MaterialType.ShipCard]: {
       [LocationType.ShipStack]: new PositiveSequenceStrategy(),
       [LocationType.PlayerShipCards]: new PositiveSequenceStrategy(),
-      [LocationType.ShipSpace]: new PositiveSequenceStrategy()
+      [LocationType.ShipSpace]: new FillGapStrategy()
     },
     [MaterialType.LawsuitPiece]: {
       [LocationType.LawsuitPieceSpot]: new PositiveSequenceStrategy()
@@ -213,7 +212,14 @@ export class RivalCitiesRules
     return type !== MaterialType.LawsuitPiece && super.itemsCanMerge(type)
   }
 
-  keepMoveSecret = (move: MaterialMove) => this.game.rule?.id === RuleId.PayAlliancesUpkeep && !isEndPlayerTurn(move)
+  keepMoveSecret(move: MaterialMove) {
+    if (this.game.rule?.id === RuleId.PayAlliancesUpkeep) {
+      return (
+        isCustomMoveType(CustomMoveType.ChooseAlliance)(move) || isMoveItemType(MaterialType.Product)(move) || isMoveItemType(MaterialType.AllianceCard)(move)
+      )
+    }
+    return []
+  }
 
   giveTime(): number {
     return 60
