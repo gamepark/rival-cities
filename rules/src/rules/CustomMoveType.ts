@@ -1,6 +1,7 @@
 export enum CustomMoveType {
   Pass = 1,
   PlayInkJarCard,
+  AdvanceLawsuit,
   ResolveLawsuit,
   SpendLetterToSwapProduct,
   ChooseAlliance,

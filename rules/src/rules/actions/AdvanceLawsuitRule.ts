@@ -1,4 +1,4 @@
-import { isMoveItemType, ItemMove, MaterialMove, MoveItem } from '@gamepark/rules-api'
+import { CustomMove, isMoveItemType, ItemMove, MaterialMove, MoveItem } from '@gamepark/rules-api'
 import { City } from '../../City'
 import { Action, ActionType, AdvanceLawsuit } from '../../material/Action'
 import { Alliance } from '../../material/Alliance'
@@ -14,20 +14,32 @@ import { ActionRule } from './ActionRule'
 export class AdvanceLawsuitRule extends ActionRule<AdvanceLawsuit> {
   getPlayerMoves() {
     const moves: MaterialMove[] = [this.customMove(CustomMoveType.Pass)]
-    const deltaX = this.player === City.Altona ? -1 : 1
-    const markers = this.markers.location((l) => l.x !== deltaX * 4 && this.canPayLawsuit(l.parent!))
-    moves.push(...markers.moveItems((marker) => ({ ...marker.location, x: marker.location.x! + deltaX })))
+    const lawsuitIndexes = this.action.lawsuitIndex ? [this.action.lawsuitIndex] : this.material(MaterialType.LawsuitPiece).getIndexes()
+    for (const lawsuitIndex of lawsuitIndexes) {
+      if (this.canPayLawsuit(lawsuitIndex)) {
+        moves.push(this.customMove(CustomMoveType.AdvanceLawsuit, lawsuitIndex))
+      }
+    }
     return moves
-  }
-
-  get markers() {
-    const markers = this.material(MaterialType.LawsuitMarker)
-    return this.action.lawsuitIndex ? markers.parent(this.action.lawsuitIndex) : markers
   }
 
   canPayLawsuit(lawsuitIndex: number) {
     const card = this.lawsuitCards.parent(lawsuitIndex).getItem<Lawsuit>()
     return !!card && new CostHelper(this.game).canPay(this.player, lawsuitData[card.id].cost)
+  }
+
+  onCustomMove(move: CustomMove) {
+    if (move.type === CustomMoveType.AdvanceLawsuit) {
+      const lawsuitIndex = move.data as number
+      const card = this.lawsuitCards.parent(lawsuitIndex).getItem<Lawsuit>()!
+      const { cost } = lawsuitData[card.id]
+      const moves: MaterialMove[] = new CostHelper(this.game).pay(this.player, cost)
+      const marker = this.material(MaterialType.LawsuitMarker).parent(lawsuitIndex)
+      const deltaX = this.player === City.Altona ? -1 : 1
+      moves.push(marker.moveItem((marker) => ({ ...marker.location, x: marker.location.x! + deltaX })))
+      return moves
+    }
+    return super.onCustomMove(move)
   }
 
   afterItemMove(move: ItemMove) {
@@ -38,16 +50,17 @@ export class AdvanceLawsuitRule extends ActionRule<AdvanceLawsuit> {
   }
 
   onMoveMarker(move: MoveItem) {
+    const lawsuitIndex = move.location.parent!
     const extraActions: Action[] = []
-    const card = this.lawsuitCards.parent(move.location.parent).getItem<Lawsuit>()!
-    const { cost, advanceBonus } = lawsuitData[card.id]
+    const card = this.lawsuitCards.parent(lawsuitIndex).getItem<Lawsuit>()!
+    const { advanceBonus } = lawsuitData[card.id]
     const count = this.action.count ?? 0
     if (count === 0) {
       for (const action of advanceBonus) {
         extraActions.push(structuredClone(action))
       }
     }
-    const lawsuitX = this.material(MaterialType.LawsuitPiece).getItem(move.location.parent!).location.x!
+    const lawsuitX = this.material(MaterialType.LawsuitPiece).getItem(lawsuitIndex).location.x!
     if (Math.abs(move.location.x!) !== 4 && count < lawsuitX) {
       extraActions.push({ type: ActionType.AdvanceLawsuit, lawsuitIndex: move.location.parent, count: count + 1 })
     }
@@ -60,7 +73,7 @@ export class AdvanceLawsuitRule extends ActionRule<AdvanceLawsuit> {
       })
     }
     this.addActions(...extraActions)
-    return [...new CostHelper(this.game).pay(this.player, cost), this.startNextRule()]
+    return [this.startNextRule()]
   }
 
   get lawsuitCards() {
