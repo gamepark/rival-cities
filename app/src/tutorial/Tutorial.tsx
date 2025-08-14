@@ -276,8 +276,18 @@ export class Tutorial extends MaterialTutorial<number, MaterialType, LocationTyp
     },
     {
       popup: {
-        text: () => <Trans defaults="tuto.step.17" components={BaseComponents} />
+        text: () => <Trans defaults="tuto.step.17" components={BaseComponents} />,
+        position: { x: -15, y: 0 }
       },
+      focus: () => ({
+        locations: [
+          {
+            type: LocationType.InkSpace,
+            id: 5
+          }
+        ],
+        scale: 0.1
+      }),
       move: {
         filter: (move: MaterialMove) => isMoveItemType(MaterialType.InkJar)(move) && move.location.id === 5
       }
