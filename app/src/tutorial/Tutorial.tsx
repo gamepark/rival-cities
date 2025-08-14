@@ -13,6 +13,7 @@ import Decision from '../images/icons/decision.png'
 import Lawsuit from '../images/icons/Lawsuit.png'
 import Letter from '../images/icons/Letter.png'
 import Prestige from '../images/tokens/PrestigeMarker.png'
+import { gameOverviewDescription } from '../material/GameOverviewDescription'
 import { offSeasonOverviewDescription } from '../material/OffSeasonOverviewDescription'
 import { me, opponent, TutorialSetup } from './TutorialSetup'
 
@@ -294,8 +295,7 @@ export class Tutorial extends MaterialTutorial<number, MaterialType, LocationTyp
     },
     {
       popup: {
-        text: () => <Trans defaults="tuto.step.18" components={BaseComponents} />,
-        position: { x: -20, y: 0 }
+        text: () => <Trans defaults="tuto.step.18" components={BaseComponents} />
       },
       move: {
         filter: (move: MaterialMove) => isMoveItemType(MaterialType.Factory)(move)
@@ -423,8 +423,13 @@ export class Tutorial extends MaterialTutorial<number, MaterialType, LocationTyp
     },
     {
       popup: {
-        text: () => <Trans defaults="tuto.step.27" components={BaseComponents} />
-      }
+        text: () => <Trans defaults="tuto.step.27" components={BaseComponents} />,
+        position: { x: 0, y: 25 }
+      },
+      focus: (game: MaterialGame) => ({
+        materials: [this.material(game, MaterialType.PrestigeMarker).location(LocationType.PrestigeTrack)],
+        scale: 0.5
+      })
     },
     {
       popup: {
@@ -491,13 +496,22 @@ export class Tutorial extends MaterialTutorial<number, MaterialType, LocationTyp
         position: { x: 0, y: 20 }
       },
       move: {
-        filter: (move: MaterialMove) => isMoveItemType(MaterialType.LawsuitMarker)(move) && move.location.parent === 0
+        filter: (move: MaterialMove) => isCustomMoveType(CustomMoveType.AdvanceLawsuit)(move) && move.data === 0
       }
     },
     {
       popup: {
-        text: () => <Trans defaults="tuto.step.36" components={BaseComponents} />
-      }
+        text: () => <Trans defaults="tuto.step.36" components={BaseComponents} />,
+        position: { x: 0, y: 20 }
+      },
+      focus: (game: MaterialGame) => ({
+        materials: [
+          this.material(game, MaterialType.LawsuitCard)
+            .location(LocationType.LawsuitSpace)
+            .filter((item) => item.location.parent !== 0)
+        ],
+        margin: { bottom: 10 }
+      })
     },
     {
       popup: {
@@ -506,8 +520,16 @@ export class Tutorial extends MaterialTutorial<number, MaterialType, LocationTyp
     },
     {
       popup: {
-        text: () => <Trans defaults="tuto.step.38" components={BaseComponents} />
-      }
+        text: () => <Trans defaults="tuto.step.38" components={BaseComponents} />,
+        position: { x: 0, y: 30 }
+      },
+      focus: (game: MaterialGame) => ({
+        materials: [this.material(game, MaterialType.BellToken)],
+        staticItems: {
+          [MaterialType.OffSeasonOverview]: [offSeasonOverviewDescription.staticItem]
+        },
+        margin: { bottom: 10 }
+      })
     },
     {
       popup: {
@@ -517,7 +539,13 @@ export class Tutorial extends MaterialTutorial<number, MaterialType, LocationTyp
     {
       popup: {
         text: () => <Trans defaults="tuto.step.40" components={BaseComponents} />
-      }
+      },
+      focus: (game: MaterialGame) => ({
+        materials: [this.material(game, MaterialType.BellToken)],
+        staticItems: {
+          [MaterialType.GameOverview]: [gameOverviewDescription.staticItem]
+        }
+      })
     },
     {
       popup: {
