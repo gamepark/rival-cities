@@ -1,6 +1,7 @@
 import { isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
 import { Donation } from '../../material/Action'
 import { Alliance } from '../../material/Alliance'
+import { CostType } from '../../material/Cost'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { CustomMoveType } from '../CustomMoveType'
@@ -16,8 +17,8 @@ export class DonationRule extends ActionRule<Donation> {
     }
     const moves: MaterialMove[] = [this.customMove(CustomMoveType.Pass)]
     const starTokensStock = this.material(MaterialType.StarToken).location(LocationType.StarTokenSupply)
-    const products = this.action.product ? playerProducts.id(this.action.product) : playerProducts
-    if (products.getQuantity() >= this.action.cost && starTokensStock.getQuantity() > 0) {
+    const products = this.action.cost.type === CostType.Product ? playerProducts.id(this.action.cost.product) : playerProducts
+    if (products.getQuantity() >= this.action.cost.amount && starTokensStock.getQuantity() > 0) {
       const stars = this.hasAlliance(Alliance.Amsterdam) ? this.action.stars + 1 : this.action.stars
       moves.push(starTokensStock.moveItem({ type: LocationType.PlayerStarTokens, player: this.player }, stars))
     }
@@ -25,14 +26,15 @@ export class DonationRule extends ActionRule<Donation> {
   }
 
   afterItemMove(move: ItemMove) {
+    const cost = this.action.cost
     if (isMoveItemType(MaterialType.StarToken)(move) && move.location.type === LocationType.PlayerStarTokens) {
-      if (this.action.product) {
-        const products = this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(this.player).id(this.action.product)
-        return [products.moveItem({ type: LocationType.ProductSupply, id: this.action.product }, this.action.cost), this.startNextRule()]
+      if (cost.type === CostType.Product) {
+        const products = this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(this.player).id(cost.product)
+        return [products.moveItem({ type: LocationType.ProductSupply, id: cost.product }, cost.amount), this.startNextRule()]
       } else {
-        this.memorize(Memory.Count, this.action.cost)
+        this.memorize(Memory.Count, cost)
       }
-    } else if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.ProductSupply && !this.action.product) {
+    } else if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.ProductSupply && cost.type === CostType.AnyProducts) {
       const count = this.memorize<number>(Memory.Count, (count) => count - 1)
       if (count === 0) {
         return [this.startNextRule()]

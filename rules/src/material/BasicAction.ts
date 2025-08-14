@@ -1,4 +1,5 @@
 import { Action, ActionType } from './Action'
+import { cost } from './Cost'
 import { Product } from './Product'
 
 export enum BasicAction {
@@ -43,7 +44,7 @@ export const basicCardAction: Record<BasicAction, Action> = {
     type: ActionType.Multiple,
     actions: [
       { type: ActionType.SwapProduct, times: 2 },
-      { type: ActionType.Donation, cost: 2, stars: 1, times: 1 }
+      { type: ActionType.Donation, cost: cost(2), stars: 1, times: 1 }
     ]
   },
   [BasicAction.BasicAction9]: {

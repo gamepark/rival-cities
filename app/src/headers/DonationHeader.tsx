@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { HeaderText, Picture, useRules } from '@gamepark/react-game'
+import { CostType } from '@gamepark/rival-cities/material/Cost'
 import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
 import { RivalCitiesRules } from '@gamepark/rival-cities/RivalCitiesRules'
 import { DonationRule } from '@gamepark/rival-cities/rules/actions/DonationRule'
@@ -11,7 +12,7 @@ import { getProductIcon } from './HeaderIconsCss'
 
 export const DonationHeader = () => {
   const rules = useRules<RivalCitiesRules>()!
-  const { cost, product, stars, times } = new DonationRule(rules.game).action
+  const { cost, stars, times } = new DonationRule(rules.game).action
   const count = rules.remind<number>(Memory.Count)
   if (count) {
     return <HeaderText code="donation.pay" values={{ count }} components={{ product: <Picture src={getProductIcon()} /> }} />
@@ -19,9 +20,9 @@ export const DonationHeader = () => {
     return (
       <HeaderText
         code="donation"
-        values={{ cost, stars, times }}
+        values={{ cost: cost.amount, stars, times }}
         components={{
-          item: <Picture src={getProductIcon(product)} />,
+          item: <Picture src={getProductIcon(cost.type === CostType.Product ? cost.product : undefined)} />,
           star: <Picture src={Star} />
         }}
         moves={{

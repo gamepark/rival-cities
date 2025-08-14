@@ -23,22 +23,22 @@ export const GameOverviewHelp: FC<MaterialHelpProps> = () => {
       <ul>
         <li>
           <p>
-            <Trans defaults="help.basic.action.card.choice.1" components={components} />
+            <Trans defaults="help.action.choice.1" components={components} />
           </p>
         </li>
         <li>
           <p>
-            <Trans defaults="help.basic.action.card.choice.2" components={components} />
+            <Trans defaults="help.action.choice.2" components={components} />
           </p>
         </li>
         <li>
           <p>
-            <Trans defaults="help.basic.action.card.choice.3" components={components} />
+            <Trans defaults="help.action.choice.3" components={components} />
           </p>
         </li>
         <li>
           <p>
-            <Trans defaults="help.basic.action.card.choice.4" components={components} />
+            <Trans defaults="help.action.choice.4" components={components} />
           </p>
         </li>
       </ul>

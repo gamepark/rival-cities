@@ -1,4 +1,5 @@
 import { Action, ActionType } from './Action'
+import { cost } from './Cost'
 import { Product } from './Product'
 
 export enum SpecialAction {
@@ -62,7 +63,7 @@ export const specialCardActions: Record<SpecialAction, Action[]> = {
   [SpecialAction.SpecialAction10]: multipleAction(
     { type: ActionType.AdvanceLawsuit },
     { type: ActionType.GainProducts, product: Product.Beer, quantity: 1, isGift: true },
-    { type: ActionType.Donation, product: Product.Furniture, cost: 2, stars: 3, times: 1 }
+    { type: ActionType.Donation, cost: cost(2, Product.Furniture), stars: 3, times: 1 }
   ),
   [SpecialAction.SpecialAction11]: [{ type: ActionType.Production, quantity: 1 }],
   [SpecialAction.SpecialAction12]: multipleAction(
@@ -73,7 +74,7 @@ export const specialCardActions: Record<SpecialAction, Action[]> = {
   [SpecialAction.SpecialAction13]: multipleAction(
     { type: ActionType.AdvanceLawsuit },
     { type: ActionType.GainProducts, product: Product.Beer, quantity: 1, isGift: true },
-    { type: ActionType.Donation, product: Product.Cloth, cost: 1, stars: 1, times: 1 }
+    { type: ActionType.Donation, cost: cost(1, Product.Cloth), stars: 1, times: 1 }
   ),
   [SpecialAction.SpecialAction14]: multipleAction({ type: ActionType.AdvanceLawsuit }, { type: ActionType.BuildFactory }),
   [SpecialAction.SpecialAction15]: multipleAction({ type: ActionType.AdvanceLawsuit }, { type: ActionType.BuildFactory }),
@@ -95,10 +96,10 @@ export const specialCardActions: Record<SpecialAction, Action[]> = {
   [SpecialAction.SpecialAction23]: multipleAction(
     { type: ActionType.AdvanceLawsuit },
     { type: ActionType.GainProducts, quantity: 1, isGift: true },
-    { type: ActionType.Donation, product: Product.Leather, cost: 1, stars: 1, times: 2 }
+    { type: ActionType.Donation, cost: cost(1, Product.Leather), stars: 1, times: 2 }
   ),
   [SpecialAction.SpecialAction24]: multipleAction(
     { type: ActionType.GainProducts, quantity: 2, isGift: true },
-    { type: ActionType.Donation, product: Product.Beer, cost: 3, stars: 1, times: 2 }
+    { type: ActionType.Donation, cost: cost(3, Product.Beer), stars: 1, times: 2 }
   )
 }
