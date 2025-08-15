@@ -9,37 +9,7 @@ export function GameOverviewHelp() {
   return (
     <>
       <h2>{t('help.game.overview')}</h2>
-      <p>
-        <Trans defaults="help.game.overview.1" components={components} />
-      </p>
-      <p>
-        <Trans defaults="help.game.overview.2" components={components} />
-      </p>
-      <p>
-        <Trans defaults="help.game.overview.choice" components={components} />
-      </p>
-      <ol>
-        <li>
-          <p>
-            <Trans defaults="help.action.choice.1" components={components} />
-          </p>
-        </li>
-        <li>
-          <p>
-            <Trans defaults="help.action.choice.2" components={components} />
-          </p>
-        </li>
-        <li>
-          <p>
-            <Trans defaults="help.action.choice.3" components={components} />
-          </p>
-        </li>
-        <li>
-          <p>
-            <Trans defaults="help.action.choice.4" components={components} />
-          </p>
-        </li>
-      </ol>
+      <TurnOverviewHelp />
       <h3>{t('help.game.overview.instant.win')}</h3>
       <ul>
         <li>
@@ -96,6 +66,44 @@ export function GameOverviewHelp() {
       <p>
         <Trans defaults="help.game.overview.score.win" components={components} />
       </p>
+    </>
+  )
+}
+
+export function TurnOverviewHelp() {
+  return (
+    <>
+      <p>
+        <Trans defaults="help.game.overview.1" components={components} />
+      </p>
+      <p>
+        <Trans defaults="help.game.overview.2" components={components} />
+      </p>
+      <p>
+        <Trans defaults="help.game.overview.choice" components={components} />
+      </p>
+      <ol>
+        <li>
+          <p>
+            <Trans defaults="help.action.choice.1" components={components} />
+          </p>
+        </li>
+        <li>
+          <p>
+            <Trans defaults="help.action.choice.2" components={components} />
+          </p>
+        </li>
+        <li>
+          <p>
+            <Trans defaults="help.action.choice.3" components={components} />
+          </p>
+        </li>
+        <li>
+          <p>
+            <Trans defaults="help.action.choice.4" components={components} />
+          </p>
+        </li>
+      </ol>
     </>
   )
 }
