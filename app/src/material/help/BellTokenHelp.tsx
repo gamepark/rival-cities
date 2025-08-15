@@ -1,10 +1,8 @@
 /** @jsxImportSource @emotion/react */
-import { MaterialHelpProps } from '@gamepark/react-game'
-import { FC } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { components } from './utils'
 
-export const BellTokenHelp: FC<MaterialHelpProps> = () => {
+export function BellTokenHelp() {
   const { t } = useTranslation()
 
   return (

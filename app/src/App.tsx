@@ -3,8 +3,8 @@ import { FailuresDialog, FullscreenDialog, LoadingScreen, MaterialGameSounds, Ma
 import { MaterialGame } from '@gamepark/rules-api'
 import { useEffect, useState } from 'react'
 import { GameDisplay } from './GameDisplay'
-import { Headers } from './headers/Headers'
 import { GameOverHeader } from './headers/GameOverHeader'
+import { Headers } from './headers/Headers'
 
 export default function App() {
   const game = useGame<MaterialGame>()
@@ -16,7 +16,7 @@ export default function App() {
   const loading = !game || isJustDisplayed || isImagesLoading
   return (
     <>
-      {!!game && <GameDisplay players={game.players.length} />}
+      {!!game && <GameDisplay />}
       <LoadingScreen display={loading} author="Andreas Steding" artist="Annika Heller" publisher="Deep Print Games" developer="David Sylvestre" />
       <MaterialHeader rulesStepsHeaders={Headers} GameOver={GameOverHeader} loading={loading} />
       <MaterialImageLoader onImagesLoad={() => setImagesLoading(false)} />

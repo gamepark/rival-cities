@@ -3,11 +3,10 @@ import { MaterialHelpProps, PlayMoveButton, useLegalMove, usePlayerId, useRules 
 import { RivalCitiesRules } from '@gamepark/rival-cities/RivalCitiesRules'
 import { CustomMoveType } from '@gamepark/rival-cities/rules/CustomMoveType'
 import { isCustomMoveType } from '@gamepark/rules-api'
-import { FC } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { components } from './utils'
 
-export const LetterHelp: FC<MaterialHelpProps> = ({ item, closeDialog }) => {
+export function LetterHelp({ item, closeDialog }: MaterialHelpProps) {
   const { t } = useTranslation()
   const me = usePlayerId()
   const rules = useRules<RivalCitiesRules>()!
