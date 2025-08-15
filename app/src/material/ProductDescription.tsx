@@ -15,6 +15,7 @@ import Beer from '../images/tokens/products/Beer.png'
 import Cloth from '../images/tokens/products/Cloth.png'
 import Furniture from '../images/tokens/products/Furniture.png'
 import Leather from '../images/tokens/products/Leather.png'
+import { ProductHelp } from './help/ProductHelp'
 
 export class ProductDescription extends TokenDescription {
   borderRadius = 0.3
@@ -119,6 +120,8 @@ export class ProductDescription extends TokenDescription {
     const isSwapAction = currentAction?.actions?.some((action) => action.type === ActionType.SwapProduct)
     return context.rules.game.rule?.id === RuleId.SwapProduct || isSwapAction
   }
+
+  help = ProductHelp
 }
 
 const productSize = {
