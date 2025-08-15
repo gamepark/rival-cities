@@ -6,6 +6,7 @@ import { Trans, useTranslation } from 'react-i18next'
 import { getProductIcon } from '../../headers/HeaderIconsCss'
 import Letter from '../../images/icons/Letter.png'
 import Product from '../../images/icons/Product.png'
+import Star from '../../images/icons/Star.png'
 import { components, note } from './utils'
 
 export function AllianceCardHelp({ item }: MaterialHelpProps) {
@@ -25,6 +26,9 @@ export function AllianceCardHelp({ item }: MaterialHelpProps) {
       </p>
       <p>
         <Trans defaults={`help.card.alliance.${item.id}.text`} components={components} />
+      </p>
+      <p>
+        <Trans defaults="help.card.stars" values={{ stars: alliancesData[alliance].stars }} components={{ star: <Picture src={Star} /> }} />
       </p>
       <p css={note}>
         <Trans defaults="help.card.alliance.win" components={components} />

@@ -28,7 +28,7 @@ export function ShipCardHelp({ item }: MaterialHelpProps) {
 
 function ShipHelp({ ship }: { ship: Ship }) {
   const { t } = useTranslation()
-  const { cost, effect } = shipData[ship]
+  const { cost, effect, getNbStars } = shipData[ship]
   return (
     <>
       <p>
@@ -50,6 +50,15 @@ function ShipHelp({ ship }: { ship: Ship }) {
           <h4>{t('help.card.ship.effect.permanent')}</h4>
           <p>{t(`help.card.ship.${ship}.effect`)}</p>
         </>
+      )}
+      {ship === Ship.Ship21 ? (
+        <p>
+          <Trans defaults="help.card.ship.21.stars" components={{ star: <Picture src={Star} /> }} />
+        </p>
+      ) : (
+        <p>
+          <Trans defaults="help.card.stars" values={{ stars: getNbStars(0) }} components={{ star: <Picture src={Star} /> }} />
+        </p>
       )}
     </>
   )

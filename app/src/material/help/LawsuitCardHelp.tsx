@@ -27,7 +27,7 @@ export function LawsuitCardHelp({ item }: MaterialHelpProps) {
 
 export function LawsuitDetailHelp({ lawsuit }: { lawsuit: Lawsuit }) {
   const { t } = useTranslation()
-  const { cost, advanceBonus, winBonus } = lawsuitData[lawsuit]
+  const { cost, advanceBonus, winBonus, nbStars } = lawsuitData[lawsuit]
   return (
     <>
       <p>
@@ -55,6 +55,9 @@ export function LawsuitDetailHelp({ lawsuit }: { lawsuit: Lawsuit }) {
           <ActionHelp key={index} action={action} />
         ))}
       </>
+      <p>
+        <Trans defaults="help.card.stars" values={{ stars: nbStars }} components={{ star: <Picture src={Star} /> }} />
+      </p>
     </>
   )
 }
