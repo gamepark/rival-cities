@@ -8,6 +8,7 @@ import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
 import { isMoveItemType, MaterialItem, MaterialMove } from '@gamepark/rules-api'
 import { Trans } from 'react-i18next'
 import PrestigeMarker from '../images/tokens/PrestigeMarker.png'
+import { PrestigeMarkerHelp } from './help/PrestigeMarkerHelp'
 
 export class PrestigeMarkerDescription extends TokenDescription {
   width = 2.3
@@ -44,6 +45,8 @@ export class PrestigeMarkerDescription extends TokenDescription {
     }
     return undefined
   }
+
+  help = PrestigeMarkerHelp
 }
 
 export const prestigeMarkerDescription = new PrestigeMarkerDescription()
