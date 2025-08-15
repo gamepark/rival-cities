@@ -7,6 +7,7 @@ import { Product } from '@gamepark/rival-cities/material/Product'
 import { Trans, useTranslation } from 'react-i18next'
 import { getProductIcon } from '../../headers/HeaderIconsCss'
 import Lawsuit from '../../images/icons/Lawsuit.png'
+import Letter from '../../images/icons/Letter.png'
 import Star from '../../images/icons/Star.png'
 import { allianceBtn, components, note } from './utils'
 
@@ -26,7 +27,7 @@ export function ActionsHelp({ actions }: Props) {
   )
 }
 
-function ActionHelp({ action }: { action: Action }) {
+export function ActionHelp({ action }: { action: Action }) {
   const { t } = useTranslation()
   switch (action.type) {
     case ActionType.Split:
@@ -90,6 +91,19 @@ function ActionHelp({ action }: { action: Action }) {
               ...components,
               product: <Picture src={getProductIcon(action.cost.type === CostType.Product ? action.cost.product : undefined)} />,
               star: <Picture src={Star} />
+            }}
+          />
+        </p>
+      )
+    case ActionType.GainLetter:
+      return (
+        <p>
+          <Trans
+            defaults={`help.action.${action.type}`}
+            values={{ ...action, quantity: action.quantity ?? 1 }}
+            components={{
+              ...components,
+              letter: <Picture src={Letter} />
             }}
           />
         </p>
