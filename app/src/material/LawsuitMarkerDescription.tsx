@@ -8,6 +8,7 @@ import { isCustomMoveType, isMoveItemType, MaterialItem, MaterialMove } from '@g
 import React from 'react'
 import { Trans } from 'react-i18next'
 import LawsuitMarker from '../images/tokens/LawsuitMarker.png'
+import { LawsuitMarkerHelp } from './help/LawsuitMarkerHelp'
 
 export class LawsuitMarkerDescription extends TokenDescription {
   width = 0.8
@@ -33,6 +34,8 @@ export class LawsuitMarkerDescription extends TokenDescription {
     }
     return undefined
   }
+
+  help = LawsuitMarkerHelp
 }
 
 export const lawsuitMarkerDescription = new LawsuitMarkerDescription()
