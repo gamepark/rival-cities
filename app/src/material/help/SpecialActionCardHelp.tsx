@@ -4,8 +4,8 @@ import { LocationType } from '@gamepark/rival-cities/material/LocationType'
 import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
 import { SpecialAction, specialCardActions } from '@gamepark/rival-cities/material/SpecialAction'
 import { RivalCitiesRules } from '@gamepark/rival-cities/RivalCitiesRules'
+import { Location } from '@gamepark/rules-api'
 import { Trans, useTranslation } from 'react-i18next'
-import { Location } from '../../../../../rules-api'
 import { ActionsHelp } from './ActionsHelp'
 
 export function SpecialActionCardHelp({ item }: MaterialHelpProps) {
