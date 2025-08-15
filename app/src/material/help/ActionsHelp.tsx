@@ -126,6 +126,12 @@ export function ActionHelp({ action }: { action: Action }) {
           <Trans defaults={`help.action.${action.type}`} values={action} components={{ ...components, lawsuit: <Picture src={Lawsuit} /> }} />
         </p>
       )
+    case ActionType.GainStars:
+      return (
+        <p>
+          <Trans defaults={`help.action.${action.type}`} values={action} components={{ ...components, star: <Picture src={Star} /> }} />
+        </p>
+      )
     default:
       return (
         <p>
