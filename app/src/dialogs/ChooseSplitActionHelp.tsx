@@ -29,7 +29,7 @@ export const ChooseSplitActionHelp = () => {
               </p>
               {action.type === ActionType.Split && index < action.actions.length - 1 && (
                 <p>
-                  <b>{t('help.action.descr.or')}</b>
+                  <b>{t('or')}</b>
                 </p>
               )}
             </div>

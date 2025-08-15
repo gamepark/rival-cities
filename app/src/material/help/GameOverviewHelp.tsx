@@ -1,11 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
-import { MaterialHelpProps } from '@gamepark/react-game'
-import { FC } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { components } from './utils'
 
-export const GameOverviewHelp: FC<MaterialHelpProps> = () => {
+export function GameOverviewHelp() {
   const { t } = useTranslation()
 
   return (
@@ -20,7 +18,7 @@ export const GameOverviewHelp: FC<MaterialHelpProps> = () => {
       <p>
         <Trans defaults="help.game.overview.choice" components={components} />
       </p>
-      <ul>
+      <ol>
         <li>
           <p>
             <Trans defaults="help.action.choice.1" components={components} />
@@ -41,21 +39,21 @@ export const GameOverviewHelp: FC<MaterialHelpProps> = () => {
             <Trans defaults="help.action.choice.4" components={components} />
           </p>
         </li>
-      </ul>
+      </ol>
       <h3>{t('help.game.overview.instant.win')}</h3>
       <ul>
         <li>
           <Trans defaults="help.game.overview.instant.win.1" components={components} />
         </li>
-        <p css={or}>{t('help.action.descr.or')}</p>
+        <p css={or}>{t('or')}</p>
         <li>
           <Trans defaults="help.game.overview.instant.win.2" components={components} />
         </li>
-        <p css={or}>{t('help.action.descr.or')}</p>
+        <p css={or}>{t('or')}</p>
         <li>
           <Trans defaults="help.game.overview.instant.win.3" components={components} />
         </li>
-        <p css={or}>{t('help.action.descr.or')}</p>
+        <p css={or}>{t('or')}</p>
         <li>
           <Trans defaults="help.game.overview.instant.win.4" components={components} />
         </li>
@@ -68,20 +66,19 @@ export const GameOverviewHelp: FC<MaterialHelpProps> = () => {
         <li>
           <Trans defaults="help.game.overview.end.1" components={components} />
         </li>
-        <p css={or}>{t('help.action.descr.or')}</p>
+        <p css={or}>{t('or')}</p>
         <li>
           <Trans defaults="help.game.overview.end.2" components={components} />
         </li>
-        <p css={or}>{t('help.action.descr.or')}</p>
+        <p css={or}>{t('or')}</p>
         <li>
           <Trans defaults="help.game.overview.end.3" components={components} />
         </li>
-        <p css={or}>{t('help.action.descr.or')}</p>
+        <p css={or}>{t('or')}</p>
         <li>
           <Trans defaults="help.game.overview.end.4" components={components} />
         </li>
       </ul>
-      <h3>{t('help.game.overview.score')}</h3>
       <p>
         <Trans defaults="help.game.overview.score.descr" components={components} />
       </p>
@@ -90,10 +87,10 @@ export const GameOverviewHelp: FC<MaterialHelpProps> = () => {
           <Trans defaults="help.game.overview.score.1" components={components} />
         </li>
         <li>
-          <Trans defaults="help.game.overview.end.2" components={components} />
+          <Trans defaults="help.game.overview.score.2" components={components} />
         </li>
         <li>
-          <Trans defaults="help.game.overview.end.3" components={components} />
+          <Trans defaults="help.game.overview.score.3" components={components} />
         </li>
       </ul>
       <p>

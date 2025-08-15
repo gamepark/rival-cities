@@ -1,10 +1,8 @@
 /** @jsxImportSource @emotion/react */
-import { MaterialHelpProps } from '@gamepark/react-game'
-import { FC } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { components } from './utils'
 
-export const OffSeasonOverviewHelp: FC<MaterialHelpProps> = () => {
+export function OffSeasonOverviewHelp() {
   const { t } = useTranslation()
 
   return (
@@ -13,7 +11,7 @@ export const OffSeasonOverviewHelp: FC<MaterialHelpProps> = () => {
       <p>
         <Trans defaults="help.off.season.overview.descr" components={components} />
       </p>
-      <ul>
+      <ol>
         <li>
           <p>
             <Trans defaults="help.off.season.overview.action.1" components={components} />
@@ -39,7 +37,6 @@ export const OffSeasonOverviewHelp: FC<MaterialHelpProps> = () => {
                 <Trans defaults="help.off.season.overview.action.4.1" components={components} />
               </p>
             </li>
-            <p>{t('help.action.descr.and')}</p>
             <li>
               <p>
                 <Trans defaults="help.off.season.overview.action.4.2" components={components} />
@@ -106,7 +103,7 @@ export const OffSeasonOverviewHelp: FC<MaterialHelpProps> = () => {
             </li>
           </ul>
         </li>
-      </ul>
+      </ol>
       <p>
         <Trans defaults="help.off.season.overview.descr.end" components={components} />
       </p>
