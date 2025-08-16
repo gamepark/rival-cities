@@ -1,15 +1,17 @@
-import { LogDescription, MoveComponentContext, MovePlayedLogDescription } from '@gamepark/react-game'
+import { LogDescription, MoveComponentContext } from '@gamepark/react-game'
+import { MovePlayedLogDescription } from '@gamepark/react-game/dist/components/Log/LogDescription'
+import { City } from '@gamepark/rival-cities/City'
 import { LocationType } from '@gamepark/rival-cities/material/LocationType'
 import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
 import { RivalCitiesRules } from '@gamepark/rival-cities/RivalCitiesRules'
 import { RuleId } from '@gamepark/rival-cities/rules/RuleId'
-import { isMoveItem, MaterialGame, MaterialMove } from '@gamepark/rules-api'
+import { isMoveItem, isMoveItemType, MaterialGame, MaterialMove } from '@gamepark/rules-api'
 import { AdvanceInLawsuitHistory } from './components/AdvanceInLawsuitHistory'
 import { GainPrestigeHistory } from './components/GainPrestigeHistory'
+import { GainProductHistory } from './components/GainProductHistory'
 import { GetAllianceHistory } from './components/GetAllianceHistory'
 import { GetFactoryHistory } from './components/GetFactoryHistory'
 import { GetLetterHistory } from './components/GetLetterHistory'
-import { GetProductHistory } from './components/GetProductHistory'
 import { GetShipHistory } from './components/GetShipHistory'
 import { GetSpecialCardHistory } from './components/GetSpecialCardHistory'
 import { GetStarTokenHistory } from './components/GetStarTokenHistory'
@@ -21,20 +23,22 @@ import { UseFactoryHistory } from './components/UseFactoryHistory'
 import { WinLawsuitHistory } from './components/WinLawsuitHistory'
 
 export class RivalCitiesLogs implements LogDescription {
-  getMovePlayedLogDescription(move: MaterialMove, context: MoveComponentContext): MovePlayedLogDescription | undefined {
-    const game = context.game as MaterialGame
+  getMovePlayedLogDescription(move: MaterialMove, context: MoveComponentContext<MaterialMove, City, MaterialGame>): MovePlayedLogDescription | undefined {
+    const { game, action } = context
     const ruleId = game.rule?.id
-    const actionPlayer = context.action.playerId
+    if (ruleId === RuleId.ChooseStartProduct && isMoveItemType(MaterialType.Product)(move)) {
+      return { Component: GainProductHistory, player: action.playerId }
+    }
     if (isMoveItem(move) && move.location.type === LocationType.PlayerProducts) {
       return {
-        Component: ruleId === RuleId.Piracy ? StealProductHistory : GetProductHistory,
+        Component: ruleId === RuleId.Piracy ? StealProductHistory : GainProductHistory,
         player: move.location.player
       }
     }
     if (this.getMoveLocationType(move) === LocationType.ProductSupply) {
       return {
         Component: PayProductHistory,
-        player: actionPlayer
+        player: action.playerId
       }
     }
     if (isMoveItem(move) && move.location.type === LocationType.PlayerLetters) {
@@ -46,7 +50,7 @@ export class RivalCitiesLogs implements LogDescription {
     if (this.getMoveLocationType(move) === LocationType.LetterSupply) {
       return {
         Component: PayLetterHistory,
-        player: actionPlayer
+        player: action.playerId
       }
     }
     if (isMoveItem(move) && move.location.type === LocationType.PlayerStarTokens) {
@@ -72,19 +76,19 @@ export class RivalCitiesLogs implements LogDescription {
     if (this.getMoveLocationType(move) === LocationType.PlayerAlliances) {
       return {
         Component: GetAllianceHistory,
-        player: actionPlayer
+        player: action.playerId
       }
     }
     if (this.getMoveLocationType(move) === LocationType.AllianceSpace) {
       return {
         Component: ReturnAllianceHistory,
-        player: actionPlayer
+        player: action.playerId
       }
     }
     if (this.getMoveLocationType(move) === LocationType.PlayerShipCards) {
       return {
         Component: GetShipHistory,
-        player: actionPlayer
+        player: action.playerId
       }
     }
     if (isMoveItem(move) && move.location.type === LocationType.PlayerLawsuitCards) {
@@ -96,13 +100,13 @@ export class RivalCitiesLogs implements LogDescription {
     if (this.getMoveLocationType(move) === LocationType.PlayerHand) {
       return {
         Component: GetSpecialCardHistory,
-        player: actionPlayer
+        player: action.playerId
       }
     }
     if (this.getMoveLocationType(move) === LocationType.PrestigeTrack) {
       return {
         Component: GainPrestigeHistory,
-        player: actionPlayer
+        player: action.playerId
       }
     }
 
@@ -111,7 +115,7 @@ export class RivalCitiesLogs implements LogDescription {
       if (card.length)
         return {
           Component: AdvanceInLawsuitHistory,
-          player: actionPlayer
+          player: action.playerId
         }
     }
     return undefined

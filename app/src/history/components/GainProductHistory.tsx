@@ -1,0 +1,19 @@
+/** @jsxImportSource @emotion/react */
+import { MoveComponentProps, Picture, usePlayerName } from '@gamepark/react-game'
+import { Product } from '@gamepark/rival-cities/material/Product'
+import { MoveItem } from '@gamepark/rules-api'
+import { Trans } from 'react-i18next'
+import { getProductIcon } from '../../headers/HeaderIconsCss'
+import { historyIcon } from './historyCss'
+
+export const GainProductHistory = ({ move }: MoveComponentProps<MoveItem>) => {
+  const player = usePlayerName(move.location.player)
+  const product = move.location.id as Product
+  return (
+    <Trans
+      defaults="history.gain-product"
+      values={{ player, count: move.quantity ?? 1 }}
+      components={{ product: <Picture css={historyIcon} src={getProductIcon(product)} /> }}
+    />
+  )
+}
