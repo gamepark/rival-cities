@@ -1,13 +1,19 @@
 /** @jsxImportSource @emotion/react */
-
-import { MoveComponentProps, usePlayerName } from '@gamepark/react-game'
+import { MaterialLogProps, Picture, usePlayerName } from '@gamepark/react-game'
+import { Product } from '@gamepark/rival-cities/material/Product'
 import { MoveItem } from '@gamepark/rules-api'
 import { Trans } from 'react-i18next'
+import { getProductIcon } from '../../headers/HeaderIconsCss'
+import { historyIcon } from './historyCss'
 
-export const PayProductHistory = (props: MoveComponentProps<MoveItem>) => {
-  const { context, move } = props
-  const actionPlayer = context.action.playerId
-  const player = usePlayerName(actionPlayer)
-
-  return <Trans defaults="history.pay.product" values={{ player, product: move.location.id, quantity: move.quantity ?? 1 }} />
+export const PayProductHistory = ({ move }: MaterialLogProps<MoveItem>) => {
+  const player = usePlayerName(move.location.player)
+  const product = move.location.id as Product
+  return (
+    <Trans
+      defaults="history.item.pay"
+      values={{ player, count: move.quantity ?? 1 }}
+      components={{ item: <Picture css={historyIcon} src={getProductIcon(product)} /> }}
+    />
+  )
 }

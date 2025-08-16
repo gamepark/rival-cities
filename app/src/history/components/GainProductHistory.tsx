@@ -11,9 +11,9 @@ export const GainProductHistory = ({ move }: MaterialLogProps<MoveItem>) => {
   const product = move.location.id as Product
   return (
     <Trans
-      defaults="history.gain-product"
+      defaults="history.item.gain"
       values={{ player, count: move.quantity ?? 1 }}
-      components={{ product: <Picture css={historyIcon} src={getProductIcon(product)} /> }}
+      components={{ item: <Picture css={historyIcon} src={getProductIcon(product)} /> }}
     />
   )
 }
