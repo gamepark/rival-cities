@@ -4,8 +4,9 @@ import { City } from '@gamepark/rival-cities/City'
 import { LocationType } from '@gamepark/rival-cities/material/LocationType'
 import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
 import { RivalCitiesRules } from '@gamepark/rival-cities/RivalCitiesRules'
+import { CustomMoveType } from '@gamepark/rival-cities/rules/CustomMoveType'
 import { RuleId } from '@gamepark/rival-cities/rules/RuleId'
-import { isMoveItem, isMoveItemType, isMoveItemTypeAtOnce, MaterialGame, MaterialMove } from '@gamepark/rules-api'
+import { isCustomMoveType, isMoveItem, isMoveItemType, isMoveItemTypeAtOnce, MaterialGame, MaterialMove } from '@gamepark/rules-api'
 import { AdvanceInLawsuitHistory } from './components/AdvanceInLawsuitHistory'
 import { BuildFactoryHistory } from './components/BuildFactoryHistory'
 import { DrawSpecialCardHistory } from './components/DrawSpecialCardHistory'
@@ -26,6 +27,7 @@ import { StealAllianceHistory } from './components/StealAllianceHistory'
 import { StealLetterHistory } from './components/StealLetterHistory'
 import { StealProductHistory } from './components/StealProductHistory'
 import { TakeSpecialCardHistory } from './components/TakeSpecialCardHistory'
+import { TriggerAllianceHistory } from './components/TriggerAllianceHistory'
 import { UseFactoryHistory } from './components/UseFactoryHistory'
 import { WinLawsuitHistory } from './components/WinLawsuitHistory'
 
@@ -50,6 +52,10 @@ export class RivalCitiesLogs implements LogDescription {
         return { Component: EndAllianceHistory, depth: 1 }
       }
     }
+    if (isCustomMoveType(CustomMoveType.TriggerAllianceEffect)(move)) {
+      return { Component: TriggerAllianceHistory, depth: 1 }
+    }
+
     if (isMoveItemType(MaterialType.Product)(move)) {
       if (move.location.type === LocationType.PlayerProducts) {
         if (new RivalCitiesRules(game).material(MaterialType.Product).getItem(move.itemIndex).location.type === LocationType.ProductSupply) {
