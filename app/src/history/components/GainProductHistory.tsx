@@ -6,7 +6,7 @@ import { Trans } from 'react-i18next'
 import { getProductIcon } from '../../headers/HeaderIconsCss'
 import { historyIcon } from './historyCss'
 
-export const GainProductHistory = ({ move }: MaterialLogProps<MoveItem>) => {
+export function GainProductHistory({ move }: MaterialLogProps<MoveItem>) {
   const player = usePlayerName(move.location.player)
   const product = move.location.id as Product
   return (

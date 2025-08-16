@@ -6,7 +6,7 @@ import { MaterialMoveBuilder, MoveItem } from '@gamepark/rules-api'
 import { Trans } from 'react-i18next'
 import displayMaterialHelp = MaterialMoveBuilder.displayMaterialHelp
 
-export const TakeSpecialCardHistory = ({ move, context }: MaterialLogProps<MoveItem>) => {
+export function TakeSpecialCardHistory({ move, context }: MaterialLogProps<MoveItem>) {
   const player = usePlayerName(move.location.player)
   const card = new RivalCitiesRules(context.game).material(MaterialType.SpecialActionCard).getItem(move.itemIndex)
   return (

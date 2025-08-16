@@ -7,7 +7,7 @@ import { MaterialMoveBuilder, MoveItem } from '@gamepark/rules-api'
 import { Trans, useTranslation } from 'react-i18next'
 import displayMaterialHelp = MaterialMoveBuilder.displayMaterialHelp
 
-export const EndAllianceHistory = ({ move, context }: MaterialLogProps<MoveItem>) => {
+export function EndAllianceHistory({ move, context }: MaterialLogProps<MoveItem>) {
   const { t } = useTranslation()
   const player = usePlayerName(context.action.playerId)
   const card = new RivalCitiesRules(context.game).material(MaterialType.AllianceCard).getItem<Alliance>(move.itemIndex)

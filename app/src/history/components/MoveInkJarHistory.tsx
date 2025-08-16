@@ -7,7 +7,7 @@ import { Trans } from 'react-i18next'
 import InkJar from '../../images/tokens/InkJar.png'
 import { historyIcon } from './historyCss'
 
-export const MoveInkJarHistory = ({ move, context }: MaterialLogProps<MoveItem>) => {
+export function MoveInkJarHistory({ move, context }: MaterialLogProps<MoveItem>) {
   const player = usePlayerName(context.action.playerId)
   const origin = new RivalCitiesRules(context.game).material(MaterialType.InkJar).getItem()!.location.id as number
   const destination = move.location.id as number

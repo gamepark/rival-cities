@@ -8,7 +8,7 @@ import { MaterialMoveBuilder, MoveItem } from '@gamepark/rules-api'
 import { Trans, useTranslation } from 'react-i18next'
 import displayMaterialHelp = MaterialMoveBuilder.displayMaterialHelp
 
-export const StealAllianceHistory = ({ move, context }: MaterialLogProps<MoveItem>) => {
+export function StealAllianceHistory({ move, context }: MaterialLogProps<MoveItem>) {
   const { t } = useTranslation()
   const player = usePlayerName(context.action.playerId)
   const rival = usePlayerName(getRival(context.action.playerId))

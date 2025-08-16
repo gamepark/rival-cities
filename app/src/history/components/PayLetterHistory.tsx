@@ -5,7 +5,7 @@ import { Trans } from 'react-i18next'
 import Letter from '../../images/icons/Letter.png'
 import { historyIcon } from './historyCss'
 
-export const PayLetterHistory = ({ move }: MaterialLogProps<MoveItem>) => {
+export function PayLetterHistory({ move }: MaterialLogProps<MoveItem>) {
   const player = usePlayerName(move.location.player)
   return <Trans defaults="history.item.pay" values={{ player, count: move.quantity ?? 1 }} components={{ item: <Picture css={historyIcon} src={Letter} /> }} />
 }

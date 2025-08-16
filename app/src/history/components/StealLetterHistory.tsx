@@ -6,7 +6,7 @@ import { Trans } from 'react-i18next'
 import Letter from '../../images/icons/Letter.png'
 import { historyIcon } from './historyCss'
 
-export const StealLetterHistory = ({ move }: MaterialLogProps<MoveItem>) => {
+export function StealLetterHistory({ move }: MaterialLogProps<MoveItem>) {
   const player = usePlayerName(move.location.player)
   const rival = usePlayerName(getRival(move.location.player!))
   return (
