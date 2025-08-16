@@ -7,9 +7,10 @@ import { RivalCitiesRules } from '@gamepark/rival-cities/RivalCitiesRules'
 import { RuleId } from '@gamepark/rival-cities/rules/RuleId'
 import { isMoveItem, isMoveItemType, MaterialGame, MaterialMove } from '@gamepark/rules-api'
 import { AdvanceInLawsuitHistory } from './components/AdvanceInLawsuitHistory'
+import { EndAllianceHistory } from './components/EndAllianceHistory'
+import { FormAllianceHistory } from './components/FormAllianceHistory'
 import { GainPrestigeHistory } from './components/GainPrestigeHistory'
 import { GainProductHistory } from './components/GainProductHistory'
-import { GetAllianceHistory } from './components/GetAllianceHistory'
 import { GetFactoryHistory } from './components/GetFactoryHistory'
 import { GetLetterHistory } from './components/GetLetterHistory'
 import { GetShipHistory } from './components/GetShipHistory'
@@ -18,7 +19,7 @@ import { GetStarTokenHistory } from './components/GetStarTokenHistory'
 import { MoveInkJarHistory } from './components/MoveInkJarHistory'
 import { PayLetterHistory } from './components/PayLetterHistory'
 import { PayProductHistory } from './components/PayProductHistory'
-import { ReturnAllianceHistory } from './components/ReturnAllianceHistory'
+import { StealAllianceHistory } from './components/StealAllianceHistory'
 import { StealProductHistory } from './components/StealProductHistory'
 import { UseFactoryHistory } from './components/UseFactoryHistory'
 import { WinLawsuitHistory } from './components/WinLawsuitHistory'
@@ -32,6 +33,17 @@ export class RivalCitiesLogs implements LogDescription {
     }
     if (ruleId === RuleId.AdvanceInkJar && isMoveItemType(MaterialType.InkJar)(move)) {
       return { Component: MoveInkJarHistory, player: action.playerId }
+    }
+    if (isMoveItemType(MaterialType.AllianceCard)(move)) {
+      if (move.location.type === LocationType.PlayerAlliances) {
+        if (new RivalCitiesRules(game).material(MaterialType.AllianceCard).getItem(move.itemIndex).location.type === LocationType.AllianceSpace) {
+          return { Component: FormAllianceHistory, depth: 1 }
+        } else {
+          return { Component: StealAllianceHistory, depth: 1 }
+        }
+      } else {
+        return { Component: EndAllianceHistory, depth: 1 }
+      }
     }
 
     if (isMoveItem(move) && move.location.type === LocationType.PlayerProducts) {
@@ -76,18 +88,6 @@ export class RivalCitiesLogs implements LogDescription {
           Component: GetFactoryHistory,
           player: move.location.player
         }
-      }
-    }
-    if (this.getMoveLocationType(move) === LocationType.PlayerAlliances) {
-      return {
-        Component: GetAllianceHistory,
-        player: action.playerId
-      }
-    }
-    if (this.getMoveLocationType(move) === LocationType.AllianceSpace) {
-      return {
-        Component: ReturnAllianceHistory,
-        player: action.playerId
       }
     }
     if (this.getMoveLocationType(move) === LocationType.PlayerShipCards) {
