@@ -15,6 +15,7 @@ import { GetLetterHistory } from './components/GetLetterHistory'
 import { GetShipHistory } from './components/GetShipHistory'
 import { GetSpecialCardHistory } from './components/GetSpecialCardHistory'
 import { GetStarTokenHistory } from './components/GetStarTokenHistory'
+import { MoveInkJarHistory } from './components/MoveInkJarHistory'
 import { PayLetterHistory } from './components/PayLetterHistory'
 import { PayProductHistory } from './components/PayProductHistory'
 import { ReturnAllianceHistory } from './components/ReturnAllianceHistory'
@@ -29,6 +30,10 @@ export class RivalCitiesLogs implements LogDescription {
     if (ruleId === RuleId.ChooseStartProduct && isMoveItemType(MaterialType.Product)(move)) {
       return { Component: GainProductHistory, player: action.playerId }
     }
+    if (ruleId === RuleId.AdvanceInkJar && isMoveItemType(MaterialType.InkJar)(move)) {
+      return { Component: MoveInkJarHistory, player: action.playerId }
+    }
+
     if (isMoveItem(move) && move.location.type === LocationType.PlayerProducts) {
       return {
         Component: ruleId === RuleId.Piracy ? StealProductHistory : GainProductHistory,
