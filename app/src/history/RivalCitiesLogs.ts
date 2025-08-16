@@ -5,21 +5,23 @@ import { LocationType } from '@gamepark/rival-cities/material/LocationType'
 import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
 import { RivalCitiesRules } from '@gamepark/rival-cities/RivalCitiesRules'
 import { RuleId } from '@gamepark/rival-cities/rules/RuleId'
-import { isMoveItem, isMoveItemType, MaterialGame, MaterialMove } from '@gamepark/rules-api'
+import { isMoveItem, isMoveItemType, isMoveItemTypeAtOnce, MaterialGame, MaterialMove } from '@gamepark/rules-api'
 import { AdvanceInLawsuitHistory } from './components/AdvanceInLawsuitHistory'
+import { BuildFactoryHistory } from './components/BuildFactoryHistory'
 import { DrawSpecialCardHistory } from './components/DrawSpecialCardHistory'
 import { EndAllianceHistory } from './components/EndAllianceHistory'
 import { FormAllianceHistory } from './components/FormAllianceHistory'
 import { GainLetterHistory } from './components/GainLetterHistory'
 import { GainPrestigeHistory } from './components/GainPrestigeHistory'
 import { GainProductHistory } from './components/GainProductHistory'
-import { GetFactoryHistory } from './components/GetFactoryHistory'
 import { GetShipHistory } from './components/GetShipHistory'
 import { GetStarTokenHistory } from './components/GetStarTokenHistory'
 import { MoveInkJarHistory } from './components/MoveInkJarHistory'
 import { PayLetterHistory } from './components/PayLetterHistory'
 import { PayProductHistory } from './components/PayProductHistory'
 import { PlaySpecialCardHistory } from './components/PlaySpecialCardHistory'
+import { ReactivateAllFactoryHistory } from './components/ReactivateAllFactoriesHistory'
+import { ReactivateFactoryHistory } from './components/ReactivateFactoryHistory'
 import { StealAllianceHistory } from './components/StealAllianceHistory'
 import { StealLetterHistory } from './components/StealLetterHistory'
 import { StealProductHistory } from './components/StealProductHistory'
@@ -81,25 +83,23 @@ export class RivalCitiesLogs implements LogDescription {
         return { Component: PlaySpecialCardHistory, player: action.playerId }
       }
     }
+    if (isMoveItemType(MaterialType.Factory)(move)) {
+      if (new RivalCitiesRules(game).material(MaterialType.Factory).getItem(move.itemIndex).location.type === LocationType.FactorySupply) {
+        return { Component: BuildFactoryHistory, depth: 1 }
+      } else if (move.location.rotation) {
+        return { Component: UseFactoryHistory, depth: 2 }
+      } else {
+        return { Component: ReactivateFactoryHistory, depth: 1 }
+      }
+    }
+    if (isMoveItemTypeAtOnce(MaterialType.Factory)(move)) {
+      return { Component: ReactivateAllFactoryHistory, depth: 1 }
+    }
 
     if (isMoveItem(move) && move.location.type === LocationType.PlayerStarTokens) {
       return {
         Component: GetStarTokenHistory,
         player: move.location.player
-      }
-    }
-    if (isMoveItem(move) && move.location.type === LocationType.PlayerFactories) {
-      if (move.location.rotation) {
-        return {
-          Component: UseFactoryHistory,
-          player: move.location.player
-        }
-      }
-      if (ruleId === RuleId.BuildFactory) {
-        return {
-          Component: GetFactoryHistory,
-          player: move.location.player
-        }
       }
     }
     if (this.getMoveLocationType(move) === LocationType.PlayerShipCards) {
