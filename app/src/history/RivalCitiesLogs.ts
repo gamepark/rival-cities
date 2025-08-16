@@ -7,6 +7,7 @@ import { RivalCitiesRules } from '@gamepark/rival-cities/RivalCitiesRules'
 import { RuleId } from '@gamepark/rival-cities/rules/RuleId'
 import { isMoveItem, isMoveItemType, MaterialGame, MaterialMove } from '@gamepark/rules-api'
 import { AdvanceInLawsuitHistory } from './components/AdvanceInLawsuitHistory'
+import { DrawSpecialCardHistory } from './components/DrawSpecialCardHistory'
 import { EndAllianceHistory } from './components/EndAllianceHistory'
 import { FormAllianceHistory } from './components/FormAllianceHistory'
 import { GainLetterHistory } from './components/GainLetterHistory'
@@ -14,14 +15,15 @@ import { GainPrestigeHistory } from './components/GainPrestigeHistory'
 import { GainProductHistory } from './components/GainProductHistory'
 import { GetFactoryHistory } from './components/GetFactoryHistory'
 import { GetShipHistory } from './components/GetShipHistory'
-import { GetSpecialCardHistory } from './components/GetSpecialCardHistory'
 import { GetStarTokenHistory } from './components/GetStarTokenHistory'
 import { MoveInkJarHistory } from './components/MoveInkJarHistory'
 import { PayLetterHistory } from './components/PayLetterHistory'
 import { PayProductHistory } from './components/PayProductHistory'
+import { PlaySpecialCardHistory } from './components/PlaySpecialCardHistory'
 import { StealAllianceHistory } from './components/StealAllianceHistory'
 import { StealLetterHistory } from './components/StealLetterHistory'
 import { StealProductHistory } from './components/StealProductHistory'
+import { TakeSpecialCardHistory } from './components/TakeSpecialCardHistory'
 import { UseFactoryHistory } from './components/UseFactoryHistory'
 import { WinLawsuitHistory } from './components/WinLawsuitHistory'
 
@@ -68,6 +70,17 @@ export class RivalCitiesLogs implements LogDescription {
         return { Component: PayLetterHistory, depth: 1 }
       }
     }
+    if (isMoveItemType(MaterialType.SpecialActionCard)(move)) {
+      if (move.location.type === LocationType.PlayerHand) {
+        if (new RivalCitiesRules(game).material(MaterialType.SpecialActionCard).getItem(move.itemIndex).location.type === LocationType.ActionCardSpace) {
+          return { Component: TakeSpecialCardHistory, depth: 1 }
+        } else {
+          return { Component: DrawSpecialCardHistory, depth: 1 }
+        }
+      } else if (move.location.type === LocationType.SpecialActionCardDiscard) {
+        return { Component: PlaySpecialCardHistory, player: action.playerId }
+      }
+    }
 
     if (isMoveItem(move) && move.location.type === LocationType.PlayerStarTokens) {
       return {
@@ -99,12 +112,6 @@ export class RivalCitiesLogs implements LogDescription {
       return {
         Component: WinLawsuitHistory,
         player: move.location.player
-      }
-    }
-    if (this.getMoveLocationType(move) === LocationType.PlayerHand) {
-      return {
-        Component: GetSpecialCardHistory,
-        player: action.playerId
       }
     }
     if (this.getMoveLocationType(move) === LocationType.PrestigeTrack) {
