@@ -35,6 +35,7 @@ import { GetStarTokenHistory } from './components/GetStarTokenHistory'
 import { KeepAllianceHistory } from './components/KeepAllianceHistory'
 import { MoveInkJarHistory } from './components/MoveInkJarHistory'
 import { OffSeasonEndHistory } from './components/OffSeasonEndHistory'
+import { PassHistory } from './components/PassHistory'
 import { PayLetterHistory } from './components/PayLetterHistory'
 import { PayProductHistory } from './components/PayProductHistory'
 import { PlaySpecialCardHistory } from './components/PlaySpecialCardHistory'
@@ -136,6 +137,10 @@ export class RivalCitiesLogs implements LogDescription {
 
     if (isMoveItemType(MaterialType.PrestigeMarker)(move)) {
       return { Component: EarnPrestigeHistory, depth: 1 }
+    }
+
+    if (isCustomMoveType(CustomMoveType.Pass)(move)) {
+      return { Component: PassHistory, depth: 1 }
     }
 
     if (isStartRule(move) && move.id === RuleId.TakeBell) {
