@@ -24,7 +24,7 @@ export function MoveInkJarHistory({ move, context }: MaterialLogProps<MoveItem>)
       values={{ player, distance }}
       components={{
         inkJar: <Picture css={historyIcon} src={InkJar} />,
-        card: <PlayMoveButton move={displayMaterialHelp(MaterialType.SpecialActionCard, card)} transient />
+        card: <PlayMoveButton move={displayMaterialHelp(cardType, card)} transient />
       }}
     />
   )

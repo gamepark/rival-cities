@@ -31,7 +31,6 @@ import { EndAllianceHistory } from './components/EndAllianceHistory'
 import { FormAllianceHistory } from './components/FormAllianceHistory'
 import { GainLetterHistory } from './components/GainLetterHistory'
 import { GainProductHistory } from './components/GainProductHistory'
-import { GetShipHistory } from './components/GetShipHistory'
 import { GetStarTokenHistory } from './components/GetStarTokenHistory'
 import { KeepAllianceHistory } from './components/KeepAllianceHistory'
 import { MoveInkJarHistory } from './components/MoveInkJarHistory'
@@ -40,6 +39,7 @@ import { PayLetterHistory } from './components/PayLetterHistory'
 import { PayProductHistory } from './components/PayProductHistory'
 import { PlaySpecialCardHistory } from './components/PlaySpecialCardHistory'
 import { PrestigeIncomeHistory } from './components/PrestigeIncomeHistory'
+import { PurchaseShipHistory } from './components/PurchaseShipHistory'
 import { ReactivateAllFactoryHistory } from './components/ReactivateAllFactoriesHistory'
 import { ReactivateFactoryHistory } from './components/ReactivateFactoryHistory'
 import { StealAllianceHistory } from './components/StealAllianceHistory'
@@ -129,6 +129,11 @@ export class RivalCitiesLogs implements LogDescription {
     if (isMoveItemType(MaterialType.LawsuitCard)(move) && move.location.type === LocationType.PlayerLawsuitCards) {
       return { Component: WinLawsuitHistory, depth: 1 }
     }
+
+    if (isMoveItemType(MaterialType.ShipCard)(move) && move.location.type === LocationType.PlayerShipCards) {
+      return { Component: PurchaseShipHistory, depth: 1 }
+    }
+
     if (isMoveItemType(MaterialType.PrestigeMarker)(move)) {
       return { Component: EarnPrestigeHistory, depth: 1 }
     }
@@ -171,17 +176,7 @@ export class RivalCitiesLogs implements LogDescription {
         player: move.location.player
       }
     }
-    if (this.getMoveLocationType(move) === LocationType.PlayerShipCards) {
-      return {
-        Component: GetShipHistory,
-        player: action.playerId
-      }
-    }
     return undefined
-  }
-
-  getMoveLocationType(move: MaterialMove) {
-    return isMoveItem(move) ? move.location.type : undefined
   }
 
   getItemMoveDepth(game: MaterialGame) {
@@ -192,6 +187,7 @@ export class RivalCitiesLogs implements LogDescription {
       case ActionType.GainProducts:
         return action.isGift ? 1 : 2
       case ActionType.AdvanceLawsuit:
+      case ActionType.PurchaseShip:
         return 2
       default:
         return 1
