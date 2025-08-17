@@ -122,7 +122,7 @@ export class RivalCitiesLogs implements LogDescription {
       }
     }
     if (isMoveItemTypeAtOnce(MaterialType.Factory)(move)) {
-      return { Component: ReactivateAllFactoryHistory, depth: 1 }
+      return { Component: ReactivateAllFactoryHistory }
     }
 
     if (isCustomMoveType(CustomMoveType.AdvanceLawsuit)(move)) {
@@ -174,6 +174,9 @@ export class RivalCitiesLogs implements LogDescription {
       if (Math.abs(prestigeX) >= 2) {
         return { Component: PrestigeIncomeHistory, player: prestigeX < 0 ? City.Altona : City.Hamburg }
       }
+    }
+    if (isStartRule(move) && move.id === RuleId.ReplaceSpecialActionCards) {
+      return { Component: () => <Trans defaults="history.special.replace" /> }
     }
     if (isMoveItemType(MaterialType.BellToken)(move) && move.location.type === LocationType.BellTokenSpot) {
       const player = new RivalCitiesRules(game).material(MaterialType.BellToken).getItem()!.location.player
