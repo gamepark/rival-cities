@@ -32,7 +32,7 @@ export class DonationRule extends ActionRule<Donation> {
         const products = this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(this.player).id(cost.product)
         return [products.moveItem({ type: LocationType.ProductSupply, id: cost.product }, cost.amount), this.startNextRule()]
       } else {
-        this.memorize(Memory.Count, cost)
+        this.memorize(Memory.Count, cost.amount)
       }
     } else if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.ProductSupply && cost.type === CostType.AnyProducts) {
       const count = this.memorize<number>(Memory.Count, (count) => count - 1)
