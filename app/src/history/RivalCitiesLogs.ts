@@ -112,6 +112,9 @@ export class RivalCitiesLogs implements LogDescription {
     if (isMoveItemType(MaterialType.LawsuitCard)(move) && move.location.type === LocationType.PlayerLawsuitCards) {
       return { Component: WinLawsuitHistory, depth: 1 }
     }
+    if (isMoveItemType(MaterialType.PrestigeMarker)(move)) {
+      return { Component: GainPrestigeHistory, depth: 1 }
+    }
 
     if (isMoveItem(move) && move.location.type === LocationType.PlayerStarTokens) {
       return {
@@ -122,12 +125,6 @@ export class RivalCitiesLogs implements LogDescription {
     if (this.getMoveLocationType(move) === LocationType.PlayerShipCards) {
       return {
         Component: GetShipHistory,
-        player: action.playerId
-      }
-    }
-    if (this.getMoveLocationType(move) === LocationType.PrestigeTrack) {
-      return {
-        Component: GainPrestigeHistory,
         player: action.playerId
       }
     }

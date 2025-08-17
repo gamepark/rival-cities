@@ -11,7 +11,7 @@ export default function App() {
   const [isJustDisplayed, setJustDisplayed] = useState(true)
   const [isImagesLoading, setImagesLoading] = useState(true)
   useEffect(() => {
-    setTimeout(() => setJustDisplayed(false), 2000)
+    setTimeout(() => setJustDisplayed(false), process.env.NODE_ENV === 'development' ? 0 : 2000)
   }, [])
   const loading = !game || isJustDisplayed || isImagesLoading
   return (
