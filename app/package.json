@@ -1,6 +1,6 @@
 {
   "name": "@gamepark/rival-cities-app",
-  "version": "0.3.9",
+  "version": "0.3.10",
   "private": true,
   "description": "The user interface of Rival Cities adaptation for Game Park",
   "author": "Romain Fromi <romain@game-park.com> (https://game-park.com/)",
