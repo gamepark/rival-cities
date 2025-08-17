@@ -2,17 +2,20 @@
 import { MaterialLogProps, PlayMoveButton, usePlayerName } from '@gamepark/react-game'
 import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
 import { RivalCitiesRules } from '@gamepark/rival-cities/RivalCitiesRules'
-import { MaterialMoveBuilder, MoveItem } from '@gamepark/rules-api'
+import { CustomMove, MaterialMoveBuilder } from '@gamepark/rules-api'
 import { Trans } from 'react-i18next'
 import displayMaterialHelp = MaterialMoveBuilder.displayMaterialHelp
 
-export function WinLawsuitHistory({ move, context }: MaterialLogProps<MoveItem>) {
+export function AdvanceLawsuitHistory({ move, context }: MaterialLogProps<CustomMove>) {
   const player = usePlayerName(context.action.playerId)
-  const card = new RivalCitiesRules(context.game).material(MaterialType.LawsuitCard).getItem(move.itemIndex)
+  const card = new RivalCitiesRules(context.game)
+    .material(MaterialType.LawsuitCard)
+    .parent(move.data as number)
+    .getItem()
   return (
     <Trans
-      defaults="history.lawsuit.win"
-      values={{ player }}
+      defaults="history.lawsuit.advance"
+      values={{ player, id: move.data }}
       components={{ card: <PlayMoveButton move={displayMaterialHelp(MaterialType.LawsuitCard, card)} transient /> }}
     />
   )

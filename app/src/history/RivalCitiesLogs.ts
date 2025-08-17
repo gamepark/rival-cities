@@ -1,13 +1,15 @@
 import { LogDescription, MoveComponentContext } from '@gamepark/react-game'
 import { MovePlayedLogDescription } from '@gamepark/react-game/dist/components/Log/LogDescription'
 import { City } from '@gamepark/rival-cities/City'
+import { Action, ActionType } from '@gamepark/rival-cities/material/Action'
 import { LocationType } from '@gamepark/rival-cities/material/LocationType'
 import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
 import { RivalCitiesRules } from '@gamepark/rival-cities/RivalCitiesRules'
 import { CustomMoveType } from '@gamepark/rival-cities/rules/CustomMoveType'
+import { Memory } from '@gamepark/rival-cities/rules/Memory'
 import { RuleId } from '@gamepark/rival-cities/rules/RuleId'
 import { isCustomMoveType, isMoveItem, isMoveItemType, isMoveItemTypeAtOnce, MaterialGame, MaterialMove } from '@gamepark/rules-api'
-import { AdvanceInLawsuitHistory } from './components/AdvanceInLawsuitHistory'
+import { AdvanceLawsuitHistory } from './components/AdvanceLawsuitHistory'
 import { BuildFactoryHistory } from './components/BuildFactoryHistory'
 import { DrawSpecialCardHistory } from './components/DrawSpecialCardHistory'
 import { EndAllianceHistory } from './components/EndAllianceHistory'
@@ -57,25 +59,27 @@ export class RivalCitiesLogs implements LogDescription {
     }
 
     if (isMoveItemType(MaterialType.Product)(move)) {
+      const depth = this.getItemMoveDepth(game)
       if (move.location.type === LocationType.PlayerProducts) {
         if (new RivalCitiesRules(game).material(MaterialType.Product).getItem(move.itemIndex).location.type === LocationType.ProductSupply) {
-          return { Component: GainProductHistory, depth: 1 }
+          return { Component: GainProductHistory, depth }
         } else {
-          return { Component: StealProductHistory, depth: 1 }
+          return { Component: StealProductHistory, depth }
         }
       } else {
-        return { Component: PayProductHistory, depth: 1 }
+        return { Component: PayProductHistory, depth }
       }
     }
     if (isMoveItemType(MaterialType.Letter)(move)) {
+      const depth = this.getItemMoveDepth(game)
       if (move.location.type === LocationType.PlayerLetters) {
         if (new RivalCitiesRules(game).material(MaterialType.Letter).getItem(move.itemIndex).location.type === LocationType.LetterSupply) {
-          return { Component: GainLetterHistory, depth: 1 }
+          return { Component: GainLetterHistory, depth }
         } else {
-          return { Component: StealLetterHistory, depth: 1 }
+          return { Component: StealLetterHistory, depth }
         }
       } else {
-        return { Component: PayLetterHistory, depth: 1 }
+        return { Component: PayLetterHistory, depth }
       }
     }
     if (isMoveItemType(MaterialType.SpecialActionCard)(move)) {
@@ -102,6 +106,13 @@ export class RivalCitiesLogs implements LogDescription {
       return { Component: ReactivateAllFactoryHistory, depth: 1 }
     }
 
+    if (isCustomMoveType(CustomMoveType.AdvanceLawsuit)(move)) {
+      return { Component: AdvanceLawsuitHistory, depth: 1 }
+    }
+    if (isMoveItemType(MaterialType.LawsuitCard)(move) && move.location.type === LocationType.PlayerLawsuitCards) {
+      return { Component: WinLawsuitHistory, depth: 1 }
+    }
+
     if (isMoveItem(move) && move.location.type === LocationType.PlayerStarTokens) {
       return {
         Component: GetStarTokenHistory,
@@ -114,31 +125,30 @@ export class RivalCitiesLogs implements LogDescription {
         player: action.playerId
       }
     }
-    if (isMoveItem(move) && move.location.type === LocationType.PlayerLawsuitCards) {
-      return {
-        Component: WinLawsuitHistory,
-        player: move.location.player
-      }
-    }
     if (this.getMoveLocationType(move) === LocationType.PrestigeTrack) {
       return {
         Component: GainPrestigeHistory,
         player: action.playerId
       }
     }
-
-    if (isMoveItem(move) && move.location.type === LocationType.LawsuitMarkerSpace) {
-      const card = new RivalCitiesRules(game).material(MaterialType.LawsuitCard).location(LocationType.LawsuitSpace).parent(move.location.parent)
-      if (card.length)
-        return {
-          Component: AdvanceInLawsuitHistory,
-          player: action.playerId
-        }
-    }
     return undefined
   }
 
   getMoveLocationType(move: MaterialMove) {
     return isMoveItem(move) ? move.location.type : undefined
+  }
+
+  getItemMoveDepth(game: MaterialGame) {
+    const rules = new RivalCitiesRules(game)
+    const action = rules.remind<Action[]>(Memory.Actions)[0]
+    if (!action) return 1
+    switch (action.type) {
+      case ActionType.GainProducts:
+        return action.isGift ? 1 : 2
+      case ActionType.AdvanceLawsuit:
+        return 2
+      default:
+        return 1
+    }
   }
 }
