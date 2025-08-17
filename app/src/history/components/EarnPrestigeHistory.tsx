@@ -8,8 +8,8 @@ import { Trans } from 'react-i18next'
 import Prestige from '../../images/icons/Prestige.png'
 import { historyIcon } from './historyCss'
 
-export function GainPrestigeHistory({ move, context }: MaterialLogProps<MoveItem>) {
+export function EarnPrestigeHistory({ move, context }: MaterialLogProps<MoveItem>) {
   const origin = new RivalCitiesRules(context.game).material(MaterialType.PrestigeMarker).getItem()!.location.x!
   const player = usePlayerName(origin > move.location.x! ? City.Altona : City.Hamburg)
-  return <Trans defaults="history.gain.prestige" values={{ player }} components={{ prestige: <Picture css={historyIcon} src={Prestige} /> }} />
+  return <Trans defaults="history.prestige.earn" values={{ player }} components={{ prestige: <Picture css={historyIcon} src={Prestige} /> }} />
 }

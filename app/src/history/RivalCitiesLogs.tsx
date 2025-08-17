@@ -1,3 +1,5 @@
+/** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react'
 import { LogDescription, MoveComponentContext } from '@gamepark/react-game'
 import { MovePlayedLogDescription } from '@gamepark/react-game/dist/components/Log/LogDescription'
 import { City } from '@gamepark/rival-cities/City'
@@ -7,22 +9,37 @@ import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
 import { RivalCitiesRules } from '@gamepark/rival-cities/RivalCitiesRules'
 import { CustomMoveType } from '@gamepark/rival-cities/rules/CustomMoveType'
 import { Memory } from '@gamepark/rival-cities/rules/Memory'
+import { GainPrestigeIncomeRule } from '@gamepark/rival-cities/rules/OffSeason/GainPrestigeIncomeRule'
+import { GainShipsIncomeRule } from '@gamepark/rival-cities/rules/OffSeason/GainShipsIncomeRule'
 import { RuleId } from '@gamepark/rival-cities/rules/RuleId'
-import { isCustomMoveType, isMoveItem, isMoveItemType, isMoveItemTypeAtOnce, MaterialGame, MaterialMove } from '@gamepark/rules-api'
+import {
+  isCustomMoveType,
+  isMoveItem,
+  isMoveItemType,
+  isMoveItemTypeAtOnce,
+  isStartPlayerTurn,
+  isStartRule,
+  MaterialGame,
+  MaterialMove
+} from '@gamepark/rules-api'
+import { Trans } from 'react-i18next'
 import { AdvanceLawsuitHistory } from './components/AdvanceLawsuitHistory'
 import { BuildFactoryHistory } from './components/BuildFactoryHistory'
 import { DrawSpecialCardHistory } from './components/DrawSpecialCardHistory'
+import { EarnPrestigeHistory } from './components/EarnPrestigeHistory'
 import { EndAllianceHistory } from './components/EndAllianceHistory'
 import { FormAllianceHistory } from './components/FormAllianceHistory'
 import { GainLetterHistory } from './components/GainLetterHistory'
-import { GainPrestigeHistory } from './components/GainPrestigeHistory'
 import { GainProductHistory } from './components/GainProductHistory'
 import { GetShipHistory } from './components/GetShipHistory'
 import { GetStarTokenHistory } from './components/GetStarTokenHistory'
+import { KeepAllianceHistory } from './components/KeepAllianceHistory'
 import { MoveInkJarHistory } from './components/MoveInkJarHistory'
+import { OffSeasonEndHistory } from './components/OffSeasonEndHistory'
 import { PayLetterHistory } from './components/PayLetterHistory'
 import { PayProductHistory } from './components/PayProductHistory'
 import { PlaySpecialCardHistory } from './components/PlaySpecialCardHistory'
+import { PrestigeIncomeHistory } from './components/PrestigeIncomeHistory'
 import { ReactivateAllFactoryHistory } from './components/ReactivateAllFactoriesHistory'
 import { ReactivateFactoryHistory } from './components/ReactivateFactoryHistory'
 import { StealAllianceHistory } from './components/StealAllianceHistory'
@@ -113,7 +130,39 @@ export class RivalCitiesLogs implements LogDescription {
       return { Component: WinLawsuitHistory, depth: 1 }
     }
     if (isMoveItemType(MaterialType.PrestigeMarker)(move)) {
-      return { Component: GainPrestigeHistory, depth: 1 }
+      return { Component: EarnPrestigeHistory, depth: 1 }
+    }
+
+    if (isStartRule(move) && move.id === RuleId.TakeBell) {
+      return {
+        Component: () => (
+          <strong css={bigText}>
+            <Trans defaults="history.off-season" />
+          </strong>
+        )
+      }
+    }
+    if (isCustomMoveType(CustomMoveType.ChooseAlliance)(move)) {
+      return { Component: KeepAllianceHistory, player: action.playerId }
+    }
+    if (ruleId === RuleId.PayAlliancesUpkeep && isStartPlayerTurn(move) && move.id === RuleId.EarnPrestige) {
+      return { Component: () => <Trans defaults="history.ship.most" /> }
+    }
+    if (isStartRule(move) && move.id === RuleId.GainShipsIncome) {
+      const rule = new GainShipsIncomeRule(game)
+      if (rule.getIncome(City.Hamburg).length || rule.getIncome(City.Altona).length) {
+        return { Component: () => <Trans defaults="history.ship.income" /> }
+      }
+    }
+    if (isStartRule(move) && move.id === RuleId.GainPrestigeIncome) {
+      const prestigeX = new GainPrestigeIncomeRule(game).material(MaterialType.PrestigeMarker).getItem()!.location.x!
+      if (Math.abs(prestigeX) >= 2) {
+        return { Component: PrestigeIncomeHistory, player: prestigeX < 0 ? City.Altona : City.Hamburg }
+      }
+    }
+    if (isMoveItemType(MaterialType.BellToken)(move) && move.location.type === LocationType.BellTokenSpot) {
+      const player = new RivalCitiesRules(game).material(MaterialType.BellToken).getItem()!.location.player
+      return { Component: OffSeasonEndHistory, player }
     }
 
     if (isMoveItem(move) && move.location.type === LocationType.PlayerStarTokens) {
@@ -149,3 +198,7 @@ export class RivalCitiesLogs implements LogDescription {
     }
   }
 }
+
+const bigText = css`
+  font-size: 1.5em;
+`
