@@ -12,16 +12,7 @@ import { Memory } from '@gamepark/rival-cities/rules/Memory'
 import { GainPrestigeIncomeRule } from '@gamepark/rival-cities/rules/OffSeason/GainPrestigeIncomeRule'
 import { GainShipsIncomeRule } from '@gamepark/rival-cities/rules/OffSeason/GainShipsIncomeRule'
 import { RuleId } from '@gamepark/rival-cities/rules/RuleId'
-import {
-  isCustomMoveType,
-  isMoveItem,
-  isMoveItemType,
-  isMoveItemTypeAtOnce,
-  isStartPlayerTurn,
-  isStartRule,
-  MaterialGame,
-  MaterialMove
-} from '@gamepark/rules-api'
+import { isCustomMoveType, isMoveItemType, isMoveItemTypeAtOnce, isStartPlayerTurn, isStartRule, MaterialGame, MaterialMove } from '@gamepark/rules-api'
 import { Trans } from 'react-i18next'
 import { AdvanceLawsuitHistory } from './components/AdvanceLawsuitHistory'
 import { BuildFactoryHistory } from './components/BuildFactoryHistory'
@@ -31,7 +22,7 @@ import { EndAllianceHistory } from './components/EndAllianceHistory'
 import { FormAllianceHistory } from './components/FormAllianceHistory'
 import { GainLetterHistory } from './components/GainLetterHistory'
 import { GainProductHistory } from './components/GainProductHistory'
-import { GetStarTokenHistory } from './components/GetStarTokenHistory'
+import { GainStarTokenHistory } from './components/GainStarTokenHistory'
 import { KeepAllianceHistory } from './components/KeepAllianceHistory'
 import { LetterSwapHistory } from './components/LetterSwapHistory'
 import { MoveInkJarHistory } from './components/MoveInkJarHistory'
@@ -101,6 +92,11 @@ export class RivalCitiesLogs implements LogDescription {
         return { Component: PayLetterHistory, depth }
       }
     }
+
+    if (isMoveItemType(MaterialType.StarToken)(move) && move.location.type === LocationType.PlayerStarTokens) {
+      return { Component: GainStarTokenHistory, depth: 1 }
+    }
+
     if (isMoveItemType(MaterialType.SpecialActionCard)(move)) {
       if (move.location.type === LocationType.PlayerHand) {
         if (new RivalCitiesRules(game).material(MaterialType.SpecialActionCard).getItem(move.itemIndex).location.type === LocationType.ActionCardSpace) {
@@ -183,12 +179,6 @@ export class RivalCitiesLogs implements LogDescription {
       return { Component: OffSeasonEndHistory, player }
     }
 
-    if (isMoveItem(move) && move.location.type === LocationType.PlayerStarTokens) {
-      return {
-        Component: GetStarTokenHistory,
-        player: move.location.player
-      }
-    }
     return undefined
   }
 
@@ -201,6 +191,7 @@ export class RivalCitiesLogs implements LogDescription {
         return action.isGift ? 1 : 2
       case ActionType.AdvanceLawsuit:
       case ActionType.PurchaseShip:
+      case ActionType.Donation:
         return 2
       default:
         return 1
