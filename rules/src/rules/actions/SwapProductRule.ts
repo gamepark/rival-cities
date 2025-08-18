@@ -38,7 +38,7 @@ export class SwapProductRule extends ActionRule<SwapProduct> {
         this.action.swap = false
         this.action.times--
         if (!this.action.times) {
-          if (this.playerSwapping) {
+          if (this.remind(Memory.PlayerProductSwap, this.playerSwapping)) {
             this.forget(Memory.PlayerProductSwap, this.playerSwapping)
           } else {
             return [this.startNextRule()]
