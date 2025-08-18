@@ -70,7 +70,10 @@ export class PayAlliancesUpkeepRule extends SimultaneousRule {
       upkeep.currentAlliance = alliance
       return new CostHelper(this.game).pay(player, cost)
     } else if (isCustomMoveType(CustomMoveType.SpendLetterToSwapProduct)) {
-      this.memorize<SwapProduct>(Memory.PlayerProductSwap, { type: ActionType.SwapProduct, times: 1, isLetterSwap: true }, move.data as City)
+      const player = move.data as City
+      const letters = this.material(MaterialType.Letter).player(player)
+      this.memorize<SwapProduct>(Memory.PlayerProductSwap, { type: ActionType.SwapProduct, times: 1, isLetterSwap: true }, player)
+      return [letters.moveItem({ type: LocationType.LetterSupply })]
     }
     return []
   }
@@ -87,7 +90,7 @@ export class PayAlliancesUpkeepRule extends SimultaneousRule {
       const alliance = upkeep.currentAlliance ?? (item.id as Alliance)
       if (move.itemType === MaterialType.AllianceCard) {
         upkeep.cost[alliance]!.amount = 0
-      } else {
+      } else if (move.itemType === MaterialType.Product) {
         upkeep.cost[alliance]!.amount -= move.quantity ?? 1
       }
       if (!upkeep.cost[alliance]?.amount) {
