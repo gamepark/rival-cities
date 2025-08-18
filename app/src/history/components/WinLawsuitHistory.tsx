@@ -7,7 +7,7 @@ import { Trans } from 'react-i18next'
 import displayMaterialHelp = MaterialMoveBuilder.displayMaterialHelp
 
 export function WinLawsuitHistory({ move, context }: MaterialLogProps<MoveItem>) {
-  const player = usePlayerName(context.action.playerId)
+  const player = usePlayerName(move.location.player)
   const card = new RivalCitiesRules(context.game).material(MaterialType.LawsuitCard).getItem(move.itemIndex)
   return (
     <Trans

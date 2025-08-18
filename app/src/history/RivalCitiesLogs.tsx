@@ -12,7 +12,16 @@ import { Memory } from '@gamepark/rival-cities/rules/Memory'
 import { GainPrestigeIncomeRule } from '@gamepark/rival-cities/rules/OffSeason/GainPrestigeIncomeRule'
 import { GainShipsIncomeRule } from '@gamepark/rival-cities/rules/OffSeason/GainShipsIncomeRule'
 import { RuleId } from '@gamepark/rival-cities/rules/RuleId'
-import { isCustomMoveType, isMoveItemType, isMoveItemTypeAtOnce, isStartPlayerTurn, isStartRule, MaterialGame, MaterialMove } from '@gamepark/rules-api'
+import {
+  isCustomMoveType,
+  isDeleteItemType,
+  isMoveItemType,
+  isMoveItemTypeAtOnce,
+  isStartPlayerTurn,
+  isStartRule,
+  MaterialGame,
+  MaterialMove
+} from '@gamepark/rules-api'
 import { Trans } from 'react-i18next'
 import { AdvanceLawsuitHistory } from './components/AdvanceLawsuitHistory'
 import { BuildFactoryHistory } from './components/BuildFactoryHistory'
@@ -123,6 +132,12 @@ export class RivalCitiesLogs implements LogDescription {
 
     if (isCustomMoveType(CustomMoveType.AdvanceLawsuit)(move)) {
       return { Component: AdvanceLawsuitHistory, depth: 1 }
+    }
+    if (isStartRule(move) && move.id === RuleId.ResolveLawsuit) {
+      return { Component: () => <Trans defaults="header.resolve.lawsuit" /> }
+    }
+    if (isDeleteItemType(MaterialType.LawsuitCard)(move)) {
+      return { Component: () => <Trans defaults="history.lawsuit.discard" />, depth: 1 }
     }
     if (isMoveItemType(MaterialType.LawsuitCard)(move) && move.location.type === LocationType.PlayerLawsuitCards) {
       return { Component: WinLawsuitHistory, depth: 1 }
