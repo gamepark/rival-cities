@@ -6,7 +6,7 @@ export const PayInkJarMovementCostHelp = () => {
   return (
     <>
       <h2>{t('help.move.cost')}</h2>
-      <p>{t('help.move.info')}</p>
+      <p>{t('help.game.overview.2')}</p>
     </>
   )
 }
