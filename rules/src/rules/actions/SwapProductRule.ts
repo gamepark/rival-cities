@@ -1,20 +1,31 @@
-import { isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
+import { isMoveItemType, ItemMove, MaterialGame, MaterialMove } from '@gamepark/rules-api'
+import { City } from '../../City'
 import { SwapProduct } from '../../material/Action'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { CustomMoveType } from '../CustomMoveType'
+import { Memory } from '../Memory'
 import { ActionRule } from './ActionRule'
 
 export class SwapProductRule extends ActionRule<SwapProduct> {
+  playerSwapping: City
+
+  constructor(game: MaterialGame, action?: SwapProduct, player?: City) {
+    super(game, action)
+    this.playerSwapping = player ?? this.player
+  }
+
   getPlayerMoves() {
     const moves: MaterialMove[] = []
     if (this.action.swap) {
-      moves.push(...this.productsSupply.moveItems((item) => ({ type: LocationType.PlayerProducts, player: this.player, id: item.id }), 1))
+      moves.push(...this.productsSupply.moveItems((item) => ({ type: LocationType.PlayerProducts, player: this.playerSwapping, id: item.id }), 1))
     } else {
       if (this.productsSupply.getQuantity() > 0) {
-        moves.push(...this.getProducts().moveItems((item) => ({ type: LocationType.ProductSupply, id: item.id }), 1))
+        moves.push(...this.getProducts(this.playerSwapping).moveItems((item) => ({ type: LocationType.ProductSupply, id: item.id }), 1))
       }
-      moves.push(this.customMove(CustomMoveType.Pass))
+      if (!this.action.isLetterSwap) {
+        moves.push(this.customMove(CustomMoveType.Pass))
+      }
     }
     return moves
   }
@@ -27,7 +38,11 @@ export class SwapProductRule extends ActionRule<SwapProduct> {
         this.action.swap = false
         this.action.times--
         if (!this.action.times) {
-          return [this.startNextRule()]
+          if (this.playerSwapping) {
+            this.forget(Memory.PlayerProductSwap, this.playerSwapping)
+          } else {
+            return [this.startNextRule()]
+          }
         }
       }
     }

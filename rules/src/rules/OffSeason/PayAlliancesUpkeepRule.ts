@@ -1,10 +1,11 @@
 import { CustomMove, getEnumValues, isCustomMoveType, isMoveItem, ItemMove, MaterialMove, SimultaneousRule } from '@gamepark/rules-api'
 import { City } from '../../City'
-import { Action, ActionType } from '../../material/Action'
+import { Action, ActionType, SwapProduct } from '../../material/Action'
 import { Alliance, alliancesData } from '../../material/Alliance'
 import { AnyProductsCost, LettersCost, ProductCost } from '../../material/Cost'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
+import { SwapProductRule } from '../actions/SwapProductRule'
 import { CustomMoveType } from '../CustomMoveType'
 import { CostHelper } from '../helper/CostHelper'
 import { Memory } from '../Memory'
@@ -35,6 +36,10 @@ export class PayAlliancesUpkeepRule extends SimultaneousRule {
   }
 
   getActivePlayerLegalMoves(player: number) {
+    const swapProduct = this.remind<SwapProduct | undefined>(Memory.PlayerProductSwap, player)
+    if (swapProduct) {
+      return new SwapProductRule(this.game, swapProduct, player).getPlayerMoves()
+    }
     const upkeep = this.remind<AlliancesUpkeep>(Memory.AlliancesUpkeep, player)
     if (upkeep.currentAlliance) {
       return this.getPlayerProducts(player).moveItems((item) => ({ type: LocationType.ProductSupply, id: item.id }), 1)
@@ -64,6 +69,8 @@ export class PayAlliancesUpkeepRule extends SimultaneousRule {
       const cost = upkeep.cost[alliance]!
       upkeep.currentAlliance = alliance
       return new CostHelper(this.game).pay(player, cost)
+    } else if (isCustomMoveType(CustomMoveType.SpendLetterToSwapProduct)) {
+      this.memorize<SwapProduct>(Memory.PlayerProductSwap, { type: ActionType.SwapProduct, times: 1, isLetterSwap: true }, move.data as City)
     }
     return []
   }
@@ -71,7 +78,11 @@ export class PayAlliancesUpkeepRule extends SimultaneousRule {
   beforeItemMove(move: ItemMove): MaterialMove[] {
     if (isMoveItem(move)) {
       const item = this.material(move.itemType).getItem(move.itemIndex)
-      const player = item.location.player!
+      const player = item.location.player ?? move.location.player!
+      const swapProduct = this.remind<SwapProduct | undefined>(Memory.PlayerProductSwap, player)
+      if (swapProduct) {
+        return new SwapProductRule(this.game, swapProduct, player).afterItemMove(move)
+      }
       const upkeep = this.remind<AlliancesUpkeep>(Memory.AlliancesUpkeep, player)
       const alliance = upkeep.currentAlliance ?? (item.id as Alliance)
       if (move.itemType === MaterialType.AllianceCard) {

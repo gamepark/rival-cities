@@ -17,7 +17,7 @@ import {
   TimeLimit
 } from '@gamepark/rules-api'
 import { City, getRival } from './City'
-import { Action, ActionType } from './material/Action'
+import { Action, ActionType, SwapProduct } from './material/Action'
 import { LocationType } from './material/LocationType'
 import { MaterialType } from './material/MaterialType'
 import { AdvanceLawsuitRule } from './rules/actions/AdvanceLawsuitRule'
@@ -155,8 +155,14 @@ export class RivalCitiesRules
   getLegalMoves(player: City) {
     const legalMoves = super.getLegalMoves(player)
     const letters = this.material(MaterialType.Letter).player(player)
-    if (this.isTurnToPlay(player) && letters.getQuantity() > 0) {
-      legalMoves.push(this.customMove(CustomMoveType.SpendLetterToSwapProduct, player))
+    if (this.isTurnToPlay(player) && letters.getQuantity() > 0 && this.material(MaterialType.Product).player(player).getQuantity() > 0) {
+      const firstAction: Action | undefined = this.remind<Action[]>(Memory.Actions)[0]
+      const isLetterSwap =
+        (firstAction?.type === ActionType.SwapProduct && firstAction.isLetterSwap === true) ||
+        this.remind<SwapProduct | undefined>(Memory.PlayerProductSwap, player) !== undefined
+      if (!isLetterSwap) {
+        legalMoves.push(this.customMove(CustomMoveType.SpendLetterToSwapProduct, player))
+      }
     }
     return legalMoves
   }
@@ -195,9 +201,9 @@ export class RivalCitiesRules
   }
 
   onCustomMove(move: CustomMove): MaterialMove[] {
-    if (move.type === CustomMoveType.SpendLetterToSwapProduct) {
+    if (move.type === CustomMoveType.SpendLetterToSwapProduct && this.game.rule?.id !== RuleId.PayAlliancesUpkeep) {
       const letters = this.material(MaterialType.Letter).player(move.data as City)
-      const actions = this.memorize<Action[]>(Memory.Actions, (actions) => [{ type: ActionType.SwapProduct, times: 1 }, ...actions])
+      const actions = this.memorize<Action[]>(Memory.Actions, (actions) => [{ type: ActionType.SwapProduct, times: 1, isLetterSwap: true }, ...actions])
       if (actions.length === 1) {
         this.memorize(Memory.PendingRule, this.game.rule?.id)
       }
@@ -215,7 +221,11 @@ export class RivalCitiesRules
   keepMoveSecret(move: MaterialMove) {
     if (this.game.rule?.id === RuleId.PayAlliancesUpkeep) {
       return (
-        isCustomMoveType(CustomMoveType.ChooseAlliance)(move) || isMoveItemType(MaterialType.Product)(move) || isMoveItemType(MaterialType.AllianceCard)(move)
+        isCustomMoveType(CustomMoveType.ChooseAlliance)(move) ||
+        isMoveItemType(MaterialType.Product)(move) ||
+        isMoveItemType(MaterialType.AllianceCard)(move) ||
+        isCustomMoveType(CustomMoveType.SpendLetterToSwapProduct)(move) ||
+        isCustomMoveType(CustomMoveType.Pass)(move)
       )
     }
     return false

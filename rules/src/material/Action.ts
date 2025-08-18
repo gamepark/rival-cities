@@ -62,6 +62,7 @@ export type SwapProduct = {
   type: ActionType.SwapProduct
   times: number
   swap?: boolean
+  isLetterSwap?: boolean
 } & ActionCommon
 
 export type GainLetter = {

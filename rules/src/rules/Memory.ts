@@ -3,5 +3,6 @@ export enum Memory {
   Actions,
   LetterSpentForOptionC,
   PendingRule,
-  AlliancesUpkeep
+  AlliancesUpkeep,
+  PlayerProductSwap
 }
