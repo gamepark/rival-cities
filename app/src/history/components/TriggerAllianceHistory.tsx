@@ -9,8 +9,8 @@ import displayMaterialHelp = MaterialMoveBuilder.displayMaterialHelp
 
 export function TriggerAllianceHistory({ move, context }: MaterialLogProps<CustomMove>) {
   const { t } = useTranslation()
-  const player = usePlayerName(context.action.playerId)
-  const card = new RivalCitiesRules(context.game).material(MaterialType.AllianceCard).id(move.data).getItem<Alliance>()
+  const card = new RivalCitiesRules(context.game).material(MaterialType.AllianceCard).id(move.data).getItem<Alliance>()!
+  const player = usePlayerName(card.location.player)
   return (
     <Trans
       defaults="history.alliance.trigger"

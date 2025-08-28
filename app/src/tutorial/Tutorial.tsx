@@ -12,7 +12,7 @@ import { Trans } from 'react-i18next'
 import Decision from '../images/icons/decision.png'
 import Lawsuit from '../images/icons/Lawsuit.png'
 import Letter from '../images/icons/Letter.png'
-import Prestige from '../images/tokens/PrestigeMarker.png'
+import Prestige from '../images/icons/Prestige.png'
 import { gameOverviewDescription } from '../material/GameOverviewDescription'
 import { offSeasonOverviewDescription } from '../material/OffSeasonOverviewDescription'
 import { me, opponent, TutorialSetup } from './TutorialSetup'
@@ -114,7 +114,7 @@ export class Tutorial extends MaterialTutorial<number, MaterialType, LocationTyp
     {
       popup: {
         text: () => <Trans defaults="tuto.step.5" components={BaseComponents} />,
-        position: { x: 0, y: 30 }
+        position: { x: 0, y: 20 }
       },
       focus: () => ({
         locations: [
@@ -126,7 +126,8 @@ export class Tutorial extends MaterialTutorial<number, MaterialType, LocationTyp
             type: LocationType.InkSpace,
             id: 2
           }
-        ]
+        ],
+        margin: { bottom: 10 }
       })
     },
     {
@@ -145,7 +146,7 @@ export class Tutorial extends MaterialTutorial<number, MaterialType, LocationTyp
             id: 4
           }
         ],
-        scale: 0.4
+        margin: { left: 20 }
       })
     },
     {
@@ -154,7 +155,16 @@ export class Tutorial extends MaterialTutorial<number, MaterialType, LocationTyp
       },
       move: {
         filter: (move: MaterialMove) => isMoveItemType(MaterialType.InkJar)(move) && move.location.id === 1
-      }
+      },
+      focus: () => ({
+        locations: [
+          {
+            type: LocationType.InkSpace,
+            id: 1
+          }
+        ],
+        margin: { bottom: 10 }
+      })
     },
     {
       popup: {
@@ -166,7 +176,7 @@ export class Tutorial extends MaterialTutorial<number, MaterialType, LocationTyp
           this.material(game, MaterialType.InkJar).location(LocationType.InkSpace),
           this.material(game, MaterialType.BasicActionCard).location((loc) => loc.type === LocationType.ActionCardSpace && loc.id === 1)
         ],
-        scale: 0.5
+        margin: { bottom: 10 }
       })
     },
     {
@@ -190,11 +200,11 @@ export class Tutorial extends MaterialTutorial<number, MaterialType, LocationTyp
       },
       focus: (game: MaterialGame) => ({
         materials: [this.material(game, MaterialType.Factory).location(LocationType.PlayerFactories).player(me)],
-        scale: 0.5
-      }),
-      move: {
-        filter: (move: MaterialMove) => isMoveItemType(MaterialType.Product)(move) && move.location.id === Product.Beer
-      }
+        staticItems: {
+          [MaterialType.OffSeasonOverview]: [offSeasonOverviewDescription.staticItem]
+        },
+        margin: { left: 1, right: 1 }
+      })
     },
     {
       popup: {
@@ -205,8 +215,11 @@ export class Tutorial extends MaterialTutorial<number, MaterialType, LocationTyp
         staticItems: {
           [MaterialType.OffSeasonOverview]: [offSeasonOverviewDescription.staticItem]
         },
-        scale: 0.5
-      })
+        margin: { left: 1, right: 1 }
+      }),
+      move: {
+        filter: (move: MaterialMove) => isMoveItemType(MaterialType.Product)(move) && move.location.id === Product.Beer
+      }
     },
     {
       move: {
@@ -297,6 +310,14 @@ export class Tutorial extends MaterialTutorial<number, MaterialType, LocationTyp
       popup: {
         text: () => <Trans defaults="tuto.step.18" components={BaseComponents} />
       },
+      focus: (game: MaterialGame) => ({
+        materials: [
+          this.material(game, MaterialType.BasicActionCard).location((loc) => loc.type === LocationType.ActionCardSpace && loc.id === 5),
+          this.material(game, MaterialType.Factory).location(LocationType.FactorySupply),
+          this.material(game, MaterialType.Factory).location(LocationType.PlayerFactories).player(me)
+        ],
+        scale: 0.5
+      }),
       move: {
         filter: (move: MaterialMove) => isMoveItemType(MaterialType.Factory)(move)
       }
@@ -424,17 +445,22 @@ export class Tutorial extends MaterialTutorial<number, MaterialType, LocationTyp
     {
       popup: {
         text: () => <Trans defaults="tuto.step.27" components={BaseComponents} />,
-        position: { x: 0, y: 25 }
+        position: { x: 0, y: 20 }
       },
       focus: (game: MaterialGame) => ({
         materials: [this.material(game, MaterialType.PrestigeMarker).location(LocationType.PrestigeTrack)],
-        scale: 0.5
+        margin: { bottom: 15, top: 5 }
       })
     },
     {
       popup: {
-        text: () => <Trans defaults="tuto.step.28" components={BaseComponents} />
-      }
+        text: () => <Trans defaults="tuto.step.28" components={BaseComponents} />,
+        position: { x: 0, y: 20 }
+      },
+      focus: (game: MaterialGame) => ({
+        materials: [this.material(game, MaterialType.PrestigeMarker).location(LocationType.PrestigeTrack)],
+        margin: { bottom: 15, top: 5 }
+      })
     },
     {
       popup: {
