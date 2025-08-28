@@ -17,7 +17,7 @@ export const RepeatActionHeader = () => {
   const { t } = useTranslation()
   const rules = useRules<RivalCitiesRules>()!
   const { source, cost, extraAction } = new RepeatActionRule(rules.game).action
-  const effect = source ? t(`help.alliance.card.${source}`) : t('ship.effect')
+  const effect = source ? t(`help.card.alliance.${source}`) : t('ship.effect')
   const count = cost.amount
   const product = cost.type === CostType.Product ? cost.product : undefined
   const actionIcon = extraAction.type === ActionType.EarnPrestige ? Prestige : extraAction.type === ActionType.AdvanceLawsuit ? Lawsuit : Draw
