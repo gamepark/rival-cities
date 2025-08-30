@@ -10,7 +10,7 @@ import { GainProductsRule } from './GainProductsRule'
 export class ProductionRule extends GainProductsRule<Production> {
   getPlayerMoves() {
     const moves = super.getPlayerMoves()
-    if (!this.action.quantity) {
+    if (this.action.quantity <= 0) {
       moves.push(this.customMove(CustomMoveType.Pass))
     }
     return moves
