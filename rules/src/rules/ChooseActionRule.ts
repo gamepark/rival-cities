@@ -49,7 +49,7 @@ export class ChooseActionRule extends PlayerTurnRule {
   }
 
   get isOptionCActive() {
-    return this.remind(Memory.LetterSpentForOptionC) || this.hasShip18
+    return this.remind<true | undefined>(Memory.LetterSpentForOptionC) ?? this.hasShip18
   }
 
   onCustomMove(move: CustomMove): MaterialMove[] {
