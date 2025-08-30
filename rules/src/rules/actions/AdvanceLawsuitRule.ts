@@ -14,7 +14,7 @@ import { ActionRule } from './ActionRule'
 export class AdvanceLawsuitRule extends ActionRule<AdvanceLawsuit> {
   getPlayerMoves() {
     const moves: MaterialMove[] = [this.customMove(CustomMoveType.Pass)]
-    const lawsuitIndexes = this.action.lawsuitIndex ? [this.action.lawsuitIndex] : this.material(MaterialType.LawsuitPiece).getIndexes()
+    const lawsuitIndexes = this.action.lawsuitIndex !== undefined ? [this.action.lawsuitIndex] : this.material(MaterialType.LawsuitPiece).getIndexes()
     for (const lawsuitIndex of lawsuitIndexes) {
       if (this.canPayLawsuit(lawsuitIndex)) {
         moves.push(this.customMove(CustomMoveType.AdvanceLawsuit, lawsuitIndex))
@@ -62,7 +62,7 @@ export class AdvanceLawsuitRule extends ActionRule<AdvanceLawsuit> {
     }
     const lawsuitX = this.material(MaterialType.LawsuitPiece).getItem(lawsuitIndex).location.x!
     if (Math.abs(move.location.x!) !== 4 && count < lawsuitX) {
-      extraActions.push({ type: ActionType.AdvanceLawsuit, lawsuitIndex: move.location.parent, count: count + 1 })
+      extraActions.push({ type: ActionType.AdvanceLawsuit, lawsuitIndex, count: count + 1 })
     }
     if (this.hasAlliance(Alliance.LeHavre) && !this.action.isLeHavreBonus && count === 0) {
       extraActions.push({
