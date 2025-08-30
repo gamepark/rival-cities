@@ -58,6 +58,7 @@ export class ChooseActionRule extends PlayerTurnRule {
       const actions = this.inkJarCardActions
       if (this.isOptionCActive) {
         actions.push({ type: ActionType.PlaySpecialActionCard })
+        this.forget(Memory.LetterSpentForOptionC)
       }
       return [this.playActions(actions)]
     }
