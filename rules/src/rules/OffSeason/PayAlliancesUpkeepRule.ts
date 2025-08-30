@@ -90,8 +90,10 @@ export class PayAlliancesUpkeepRule extends SimultaneousRule {
       const alliance = upkeep.currentAlliance ?? (item.id as Alliance)
       if (move.itemType === MaterialType.AllianceCard) {
         upkeep.cost[alliance]!.amount = 0
-      } else if (move.itemType === MaterialType.Product) {
-        upkeep.cost[alliance]!.amount -= move.quantity ?? 1
+      } else if (move.itemType === MaterialType.Product || move.itemType === MaterialType.Letter) {
+        if (upkeep.cost[alliance]) {
+          upkeep.cost[alliance]!.amount -= move.quantity ?? 1
+        }
       }
       if (!upkeep.cost[alliance]?.amount) {
         delete upkeep.currentAlliance
