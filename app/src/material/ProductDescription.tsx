@@ -1,4 +1,3 @@
-import { css, Interpolation, Theme } from '@emotion/react'
 import { faArrowDown, faArrowUp } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { ComponentSize, ItemContext, ItemMenuButton, pointerCursorCss, TokenDescription } from '@gamepark/react-game'
@@ -31,7 +30,7 @@ export class ProductDescription extends TokenDescription {
     return productSize[id]
   }
 
-  getFrontExtraCss(itemId: Product): Interpolation<Theme> {
+  /*getFrontExtraCss(itemId: Product): Interpolation<Theme> {
     switch (itemId) {
       case Product.Beer:
         return css`
@@ -70,7 +69,7 @@ export class ProductDescription extends TokenDescription {
           clip-path: polygon(15% 0%, 100% 0%, 92% 19%, 92% 79%, 71% 100%, 16% 100%, 15% 93%, 7% 93%, 7% 36%, 0% 16%);
         `
     }
-  }
+  }*/
 
   canShortClick(move: MaterialMove, context: ItemContext): boolean {
     return isMoveItemType(MaterialType.Product)(move) && move.itemIndex === context.index
@@ -129,10 +128,10 @@ export class ProductDescription extends TokenDescription {
 }
 
 const productSize = {
-  [Product.Beer]: { width: 1.48, height: 1.6 },
-  [Product.Leather]: { width: 1.33, height: 1.6 },
-  [Product.Cloth]: { width: 1.35, height: 1 },
-  [Product.Furniture]: { width: 1.53, height: 1.6 }
+  [Product.Beer]: { width: 1.7, height: 1.7 },
+  [Product.Leather]: { width: 1.7, height: 1.7 },
+  [Product.Cloth]: { width: 1.7, height: 1.25 },
+  [Product.Furniture]: { width: 1.7, height: 1.7 }
 }
 
 export const productDescription = new ProductDescription()

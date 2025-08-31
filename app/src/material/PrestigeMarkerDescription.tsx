@@ -12,7 +12,7 @@ import { PrestigeMarkerHelp } from './help/PrestigeMarkerHelp'
 
 export class PrestigeMarkerDescription extends TokenDescription {
   width = 2.3
-  height = 2
+  height = 2.3
 
   menuAlwaysVisible = true
 

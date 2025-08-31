@@ -4,8 +4,8 @@ import InkJar from '../images/tokens/InkJar.png'
 import { InkJarHelp } from './help/InkJarHelp'
 
 export class InkJarDescription extends TokenDescription {
-  width = 2.7
-  height = 2.55
+  width = 2.8
+  height = 2.8
 
   image = InkJar
 
