@@ -47,7 +47,7 @@ import { EndOfGameHelper } from './rules/helper/EndOfGameHelper'
 import { Memory } from './rules/Memory'
 import { GainPrestigeIncomeRule } from './rules/OffSeason/GainPrestigeIncomeRule'
 import { GainShipsIncomeRule } from './rules/OffSeason/GainShipsIncomeRule'
-import { AlliancesUpkeep, PayAlliancesUpkeepRule } from './rules/OffSeason/PayAlliancesUpkeepRule'
+import { PayAlliancesUpkeepRule } from './rules/OffSeason/PayAlliancesUpkeepRule'
 import { ReactivateFactoriesRule } from './rules/OffSeason/ReactivateFactoriesRule'
 import { ReplaceSpecialActionCardsRule } from './rules/OffSeason/ReplaceSpecialActionCardsRule'
 import { ReturnBellRule } from './rules/OffSeason/ReturnBellRule'
@@ -221,8 +221,7 @@ export class RivalCitiesRules
   keepMoveSecret(move: MaterialMove) {
     if (this.game.rule?.id === RuleId.PayAlliancesUpkeep) {
       if (isMoveItemType(MaterialType.Product)(move) || isMoveItemType(MaterialType.Letter)(move)) {
-        const owner = this.material(move.itemType).getItem(move.itemIndex).location.player
-        return owner && this.remind<AlliancesUpkeep>(Memory.AlliancesUpkeep, owner).currentAlliance !== undefined
+        return false // TODO: implement keepActionSecret and do not keep secret InkJar movement payment, only alliances payments
       }
       return (
         isCustomMoveType(CustomMoveType.ChooseAlliance)(move) ||
