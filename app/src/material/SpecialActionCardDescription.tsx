@@ -92,12 +92,12 @@ export class SpecialActionCardDescription extends CardDescription {
       return (
         <>
           {play && (
-            <ItemMenuButton label={<Trans defaults="button.play" />} angle={50} radius={4} move={play}>
+            <ItemMenuButton label={<Trans i18nKey="button.play" />} angle={50} radius={4} move={play}>
               <FontAwesomeIcon icon={faHand} css={pointerCursorCss} />
             </ItemMenuButton>
           )}
           {take && (
-            <ItemMenuButton label={<Trans defaults="button.take" />} angle={50} radius={4} y={play ? -0.5 : undefined} move={take}>
+            <ItemMenuButton label={<Trans i18nKey="button.take" />} angle={50} radius={4} y={play ? -0.5 : undefined} move={take}>
               <FontAwesomeIcon icon={faArrowDown} css={pointerCursorCss} />
             </ItemMenuButton>
           )}
@@ -107,7 +107,7 @@ export class SpecialActionCardDescription extends CardDescription {
 
     if (item.location.type === LocationType.ActionStack && draw) {
       return (
-        <ItemMenuButton label={<Trans defaults="button.draw" />} move={draw}>
+        <ItemMenuButton label={<Trans i18nKey="button.draw" />} move={draw}>
           <FontAwesomeIcon icon={faHand} css={pointerCursorCss} />
         </ItemMenuButton>
       )
@@ -115,7 +115,7 @@ export class SpecialActionCardDescription extends CardDescription {
 
     if (item.location.type === LocationType.PlayerHand && discard) {
       return (
-        <ItemMenuButton label={<Trans defaults="button.play" />} angle={50} radius={4} move={discard}>
+        <ItemMenuButton label={<Trans i18nKey="button.play" />} angle={50} radius={4} move={discard}>
           <FontAwesomeIcon icon={faHand} css={pointerCursorCss} />
         </ItemMenuButton>
       )

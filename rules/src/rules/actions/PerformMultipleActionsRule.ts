@@ -1,5 +1,5 @@
 import { isCustomMoveType, isMoveItem, MaterialMove } from '@gamepark/rules-api'
-import { isEqual, omit } from 'lodash'
+import { isEqual, omit } from 'es-toolkit/compat'
 import { Action, MultipleActions, SplitAction } from '../../material/Action'
 import { CustomMoveType } from '../CustomMoveType'
 import { getActionRule } from '../helper/ActionHelper'

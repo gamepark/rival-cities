@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { HeaderText, useRules } from '@gamepark/react-game'
 import { Alliance } from '@gamepark/rival-cities/material/Alliance'
 import { RivalCitiesRules } from '@gamepark/rival-cities/RivalCitiesRules'

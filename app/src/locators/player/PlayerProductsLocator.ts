@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { FlexLocator } from '@gamepark/react-game'
 import { City } from '@gamepark/rival-cities/City'
 import { Coordinates, Location } from '@gamepark/rules-api'

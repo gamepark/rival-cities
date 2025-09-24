@@ -24,6 +24,7 @@ export class ProductDescription extends TokenDescription {
     [Product.Cloth]: Cloth,
     [Product.Furniture]: Furniture
   }
+  transparent = true
   menuAlwaysVisible = true
 
   getSize(id: Product): ComponentSize {
@@ -96,7 +97,7 @@ export class ProductDescription extends TokenDescription {
 
     if (take) {
       return (
-        <ItemMenuButton label={<Trans defaults="button.take" />} labelPosition={'right'} angle={50} radius={4} y={-1} x={0} move={take}>
+        <ItemMenuButton label={<Trans i18nKey="button.take" />} labelPosition={'right'} angle={50} radius={4} y={-1} x={0} move={take}>
           <FontAwesomeIcon icon={faArrowDown} css={pointerCursorCss} />
         </ItemMenuButton>
       )
@@ -105,7 +106,7 @@ export class ProductDescription extends TokenDescription {
     if (returnToReserve) {
       const label = this.checkIfIsExchange(context) ? 'button.exchange' : 'button.pay'
       return (
-        <ItemMenuButton label={<Trans defaults={label} />} labelPosition={'right'} angle={50} radius={4} y={-1} x={0} move={returnToReserve}>
+        <ItemMenuButton label={<Trans i18nKey={label} />} labelPosition={'right'} angle={50} radius={4} y={-1} x={0} move={returnToReserve}>
           <FontAwesomeIcon icon={faArrowUp} css={pointerCursorCss} />
         </ItemMenuButton>
       )

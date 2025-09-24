@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { HeaderText, useRules } from '@gamepark/react-game'
 import { RivalCitiesRules } from '@gamepark/rival-cities/RivalCitiesRules'
 import { AdvanceLawsuitRule } from '@gamepark/rival-cities/rules/actions/AdvanceLawsuitRule'

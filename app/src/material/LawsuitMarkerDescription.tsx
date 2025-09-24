@@ -17,6 +17,7 @@ export class LawsuitMarkerDescription extends TokenDescription {
   menuAlwaysVisible = true
 
   image = LawsuitMarker
+  transparent = true
 
   canShortClick(move: MaterialMove, context: ItemContext): boolean {
     return isMoveItemType(MaterialType.LawsuitMarker)(move) && context.index === move.itemIndex
@@ -27,7 +28,7 @@ export class LawsuitMarkerDescription extends TokenDescription {
     if (advance) {
       const icon = context.rules.game.rule?.player === City.Altona ? faArrowLeft : faArrowRight
       return (
-        <ItemMenuButton label={<Trans defaults="button.advance" />} angle={50} radius={4} y={1.5} x={0} move={advance}>
+        <ItemMenuButton label={<Trans i18nKey="button.advance" />} angle={50} radius={4} y={1.5} x={0} move={advance}>
           <FontAwesomeIcon icon={icon} css={pointerCursorCss} />
         </ItemMenuButton>
       )

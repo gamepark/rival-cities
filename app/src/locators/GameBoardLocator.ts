@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { Locator } from '@gamepark/react-game'
 
 class GameBoardLocator extends Locator {

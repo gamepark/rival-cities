@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { HeaderText, usePlayerId, usePlayerName, useRules } from '@gamepark/react-game'
 import { getRival } from '@gamepark/rival-cities/City'
 import { RivalCitiesRules } from '@gamepark/rival-cities/RivalCitiesRules'
@@ -13,7 +12,7 @@ export const PiracyHeader = () => {
   const target = usePlayerName(getRival(activePlayer))
   const count = new PiracyRule(rules.game).action.nbProductsToSteal
   if (me && activePlayer !== me) {
-    return <Trans defaults="header.piracy.target" values={{ player, count }} />
+    return <Trans i18nKey="header.piracy.target" values={{ player, count }} />
   }
   return <HeaderText code="piracy" values={{ count, target }} />
 }

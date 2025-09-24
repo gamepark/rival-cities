@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { MaterialLogProps, PlayMoveButton, usePlayerName } from '@gamepark/react-game'
 import { getRival } from '@gamepark/rival-cities/City'
 import { Alliance } from '@gamepark/rival-cities/material/Alliance'
@@ -15,7 +14,7 @@ export function StealAllianceHistory({ move, context }: MaterialLogProps<MoveIte
   const card = new RivalCitiesRules(context.game).material(MaterialType.AllianceCard).getItem<Alliance>(move.itemIndex)
   return (
     <Trans
-      defaults="history.alliance.steal"
+      i18nKey="history.alliance.steal"
       values={{ player, rival, alliance: t(`help.card.alliance.${card.id}`) }}
       components={{
         card: <PlayMoveButton move={displayMaterialHelp(MaterialType.AllianceCard, card)} transient />

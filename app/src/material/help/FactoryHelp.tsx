@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { MaterialHelpProps, useRules } from '@gamepark/react-game'
 import { LocationType } from '@gamepark/rival-cities/material/LocationType'
 import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
@@ -15,14 +14,14 @@ export function FactoryHelp({ item }: MaterialHelpProps) {
       {item.location?.type === LocationType.FactorySupply && (
         <p>
           <Trans
-            defaults="help.factory.supply"
+            i18nKey="help.factory.supply"
             values={{ count: rules.material(MaterialType.Factory).location(LocationType.FactorySupply).getQuantity() }}
             components={components}
           />
         </p>
       )}
       <p>
-        <Trans defaults="help.factory.text" components={components} />
+        <Trans i18nKey="help.factory.text" components={components} />
       </p>
     </>
   )

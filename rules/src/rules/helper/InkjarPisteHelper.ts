@@ -1,5 +1,5 @@
 import { Location, PlayerTurnRule } from '@gamepark/rules-api'
-import { range, sumBy } from 'lodash'
+import { range, sumBy } from 'es-toolkit/compat'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
 import { Ship } from '../../material/Ship'

@@ -13,10 +13,9 @@ import { PrestigeMarkerHelp } from './help/PrestigeMarkerHelp'
 export class PrestigeMarkerDescription extends TokenDescription {
   width = 2.3
   height = 2.3
-
-  menuAlwaysVisible = true
-
   image = PrestigeMarker
+  transparent = true
+  menuAlwaysVisible = true
 
   canShortClick(move: MaterialMove, context: ItemContext) {
     return isMoveItemType(MaterialType.PrestigeMarker)(move) && move.itemIndex === context.index
@@ -38,7 +37,7 @@ export class PrestigeMarkerDescription extends TokenDescription {
     if (advance) {
       const icon = context.rules.game.rule?.player === City.Altona ? faArrowLeft : faArrowRight
       return (
-        <ItemMenuButton label={<Trans defaults="button.advance" />} angle={50} radius={4} y={1.5} x={0} move={advance}>
+        <ItemMenuButton label={<Trans i18nKey="button.advance" />} angle={50} radius={4} y={1.5} x={0} move={advance}>
           <FontAwesomeIcon icon={icon} css={pointerCursorCss} />
         </ItemMenuButton>
       )

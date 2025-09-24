@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { Picture } from '@gamepark/react-game'
 import { Action, ActionType } from '@gamepark/rival-cities/material/Action'
 import { Alliance } from '@gamepark/rival-cities/material/Alliance'
@@ -39,7 +38,7 @@ export function ActionHelp({ action }: { action: Action }) {
           </p>
           <ActionHelp action={action.actions[1]} />
           <p css={note}>
-            <Trans defaults="help.action.split.note" components={{ ...components, alliance: allianceBtn(Alliance.Gdansk) }} />
+            <Trans i18nKey="help.action.split.note" components={{ ...components, alliance: allianceBtn(Alliance.Gdansk) }} />
           </p>
         </>
       )
@@ -57,7 +56,7 @@ export function ActionHelp({ action }: { action: Action }) {
         return (
           <p>
             <Trans
-              defaults={`help.action.${action.type}`}
+              i18nKey={`help.action.${action.type}`}
               values={action}
               components={{ ...components, product: <Picture src={getProductIcon(action.product)} /> }}
             />
@@ -67,7 +66,7 @@ export function ActionHelp({ action }: { action: Action }) {
         return (
           <p>
             <Trans
-              defaults={`help.action.${action.type}.any`}
+              i18nKey={`help.action.${action.type}.any`}
               values={action}
               components={{
                 ...components,
@@ -85,7 +84,7 @@ export function ActionHelp({ action }: { action: Action }) {
       return (
         <p>
           <Trans
-            defaults={`help.action.${action.type}`}
+            i18nKey={`help.action.${action.type}`}
             values={{ ...action, cost: action.cost.amount }}
             components={{
               ...components,
@@ -99,7 +98,7 @@ export function ActionHelp({ action }: { action: Action }) {
       return (
         <p>
           <Trans
-            defaults={`help.action.${action.type}`}
+            i18nKey={`help.action.${action.type}`}
             values={{ ...action, quantity: action.quantity ?? 1 }}
             components={{
               ...components,
@@ -111,31 +110,31 @@ export function ActionHelp({ action }: { action: Action }) {
     case ActionType.BuildFactory:
       return (
         <p>
-          <Trans defaults={`help.action.${action.type}${action.cost ? '' : '.free'}`} values={action} components={components} />
+          <Trans i18nKey={`help.action.${action.type}${action.cost ? '' : '.free'}`} values={action} components={components} />
         </p>
       )
     case ActionType.EarnPrestige:
       return (
         <p>
-          <Trans defaults={`help.action.${action.type}${action.rival ? '.rival' : ''}`} values={action} components={components} />
+          <Trans i18nKey={`help.action.${action.type}${action.rival ? '.rival' : ''}`} values={action} components={components} />
         </p>
       )
     case ActionType.AdvanceLawsuit:
       return (
         <p>
-          <Trans defaults={`help.action.${action.type}`} values={action} components={{ ...components, lawsuit: <Picture src={Lawsuit} /> }} />
+          <Trans i18nKey={`help.action.${action.type}`} values={action} components={{ ...components, lawsuit: <Picture src={Lawsuit} /> }} />
         </p>
       )
     case ActionType.GainStars:
       return (
         <p>
-          <Trans defaults={`help.action.${action.type}`} values={action} components={{ ...components, star: <Picture src={Star} /> }} />
+          <Trans i18nKey={`help.action.${action.type}`} values={action} components={{ ...components, star: <Picture src={Star} /> }} />
         </p>
       )
     default:
       return (
         <p>
-          <Trans defaults={`help.action.${action.type}`} values={action} components={components} />
+          <Trans i18nKey={`help.action.${action.type}`} values={action} components={components} />
         </p>
       )
   }

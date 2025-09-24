@@ -1,5 +1,5 @@
 import { MaterialMove } from '@gamepark/rules-api'
-import { isEqual } from 'lodash'
+import { isEqual } from 'es-toolkit/compat'
 import { Alliance } from '../../material/Alliance'
 import { getActionRule } from '../helper/ActionHelper'
 import { ActionRuleIds } from '../helper/ActionRuleIds'

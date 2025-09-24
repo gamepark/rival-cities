@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { MaterialHelpProps, Picture } from '@gamepark/react-game'
 import { Alliance, alliancesData } from '@gamepark/rival-cities/material/Alliance'
 import { CostType } from '@gamepark/rival-cities/material/Cost'
@@ -18,20 +17,20 @@ export function AllianceCardHelp({ item }: MaterialHelpProps) {
     <>
       <h2>{t('help.card.alliance')}</h2>
       <p>
-        <Trans defaults="help.card.alliance.text" components={{ ...components, letter: <Picture src={Letter} /> }} />
+        <Trans i18nKey="help.card.alliance.text" components={{ ...components, letter: <Picture src={Letter} /> }} />
       </p>
       <h3>{t(`help.card.alliance.${item.id}`)}</h3>
       <p>
-        <Trans defaults="help.card.alliance.upkeep" values={upkeepCost} components={{ ...components, item: <Picture src={upkeepItem} /> }} />
+        <Trans i18nKey="help.card.alliance.upkeep" values={upkeepCost} components={{ ...components, item: <Picture src={upkeepItem} /> }} />
       </p>
       <p>
-        <Trans defaults={`help.card.alliance.${item.id}.text`} components={components} />
+        <Trans i18nKey={`help.card.alliance.${item.id}.text`} components={components} />
       </p>
       <p>
-        <Trans defaults="help.card.stars" values={{ stars: alliancesData[alliance].stars }} components={{ star: <Picture src={Star} /> }} />
+        <Trans i18nKey="help.card.stars" values={{ stars: alliancesData[alliance].stars }} components={{ star: <Picture src={Star} /> }} />
       </p>
       <p css={note}>
-        <Trans defaults="help.card.alliance.win" components={components} />
+        <Trans i18nKey="help.card.alliance.win" components={components} />
       </p>
     </>
   )

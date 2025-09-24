@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { MaterialHelpProps, Picture } from '@gamepark/react-game'
 import { Ship, shipData, ShipEffect, ShipEffectType } from '@gamepark/rival-cities/material/Ship'
 import { Trans, useTranslation } from 'react-i18next'
@@ -16,11 +15,11 @@ export function ShipCardHelp({ item }: MaterialHelpProps) {
     <>
       <h2>{t('help.card.ship')}</h2>
       <p>
-        <Trans defaults="help.card.ship.text" />
+        <Trans i18nKey="help.card.ship.text" />
       </p>
       {item.id && <ShipHelp ship={item.id} />}
       <p css={note}>
-        <Trans defaults={'help.card.ship.win'} components={components} />
+        <Trans i18nKey={'help.card.ship.win'} components={components} />
       </p>
     </>
   )
@@ -33,7 +32,7 @@ function ShipHelp({ ship }: { ship: Ship }) {
     <>
       <p>
         <strong>
-          <Trans defaults="help.card.ship.cost" components={{ cost: <CostDisplay cost={cost} /> }} />
+          <Trans i18nKey="help.card.ship.cost" components={{ cost: <CostDisplay cost={cost} /> }} />
         </strong>
       </p>
       {effect && <ShipEffectHelp effect={effect} />}
@@ -41,7 +40,7 @@ function ShipHelp({ ship }: { ship: Ship }) {
         <>
           <h4>{t('help.card.ship.effect.permanent')}</h4>
           <p>
-            <Trans defaults="help.card.ship.16.effect" components={{ ...components, beer: <Picture src={Beer} /> }} />
+            <Trans i18nKey="help.card.ship.16.effect" components={{ ...components, beer: <Picture src={Beer} /> }} />
           </p>
         </>
       )}
@@ -53,11 +52,11 @@ function ShipHelp({ ship }: { ship: Ship }) {
       )}
       {ship === Ship.Ship21 ? (
         <p>
-          <Trans defaults="help.card.ship.21.stars" components={{ star: <Picture src={Star} /> }} />
+          <Trans i18nKey="help.card.ship.21.stars" components={{ star: <Picture src={Star} /> }} />
         </p>
       ) : (
         <p>
-          <Trans defaults="help.card.stars" values={{ stars: getNbStars(0) }} components={{ star: <Picture src={Star} /> }} />
+          <Trans i18nKey="help.card.stars" values={{ stars: getNbStars(0) }} components={{ star: <Picture src={Star} /> }} />
         </p>
       )}
     </>
@@ -81,7 +80,7 @@ function ShipEffectHelp({ effect }: { effect: ShipEffect }) {
         <>
           <h4>{t('help.card.ship.effect.permanent')}</h4>
           <p>
-            <Trans defaults="help.card.ship.effect.production" components={{ product: <Picture src={getProductIcon(effect.product)} /> }} />
+            <Trans i18nKey="help.card.ship.effect.production" components={{ product: <Picture src={getProductIcon(effect.product)} /> }} />
           </p>
         </>
       )
@@ -97,7 +96,7 @@ function ShipEffectHelp({ effect }: { effect: ShipEffect }) {
         <>
           <h4>{t('help.card.ship.effect.permanent')}</h4>
           <p>
-            <Trans defaults="help.card.ship.15.effect" components={{ star: <Picture src={Star} /> }} />
+            <Trans i18nKey="help.card.ship.15.effect" components={{ star: <Picture src={Star} /> }} />
           </p>
         </>
       )

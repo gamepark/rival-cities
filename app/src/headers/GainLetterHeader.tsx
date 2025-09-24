@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { HeaderText, Picture, useRules } from '@gamepark/react-game'
 import { RivalCitiesRules } from '@gamepark/rival-cities/RivalCitiesRules'
 import { GainLetterRule } from '@gamepark/rival-cities/rules/actions/GainLetterRule'

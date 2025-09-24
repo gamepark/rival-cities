@@ -7,5 +7,5 @@ interface ActionDescriptionProps {
 }
 
 export const ActionDescription = ({ action }: ActionDescriptionProps) => {
-  return <Trans defaults={`help.action.descr.${action.type}`} components={components} />
+  return <Trans i18nKey={`help.action.descr.${action.type}`} components={components} />
 }

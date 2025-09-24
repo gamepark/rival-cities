@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { MaterialHelpProps } from '@gamepark/react-game'
 import { BasicAction, basicCardAction } from '@gamepark/rival-cities/material/BasicAction'
 import { Trans, useTranslation } from 'react-i18next'
@@ -15,7 +14,7 @@ export function BasicActionCardHelp({ item }: MaterialHelpProps) {
         <li>{t('help.action.choice.1')}</li>
         <li>{t('help.action.choice.2')}</li>
         <li>
-          <Trans defaults={'help.action.choice.3'} components={{ bold: <strong /> }} />
+          <Trans i18nKey={'help.action.choice.3'} components={{ bold: <strong /> }} />
         </li>
       </ol>
       <ActionsHelp actions={[action]} />

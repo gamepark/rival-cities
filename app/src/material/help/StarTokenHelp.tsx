@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { MaterialHelpProps, useRules } from '@gamepark/react-game'
 import { LocationType } from '@gamepark/rival-cities/material/LocationType'
 import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
@@ -15,14 +14,14 @@ export function StarTokenHelp({ item }: MaterialHelpProps) {
       {item.location?.type === LocationType.StarTokenSupply && (
         <p>
           <Trans
-            defaults="help.star.supply"
+            i18nKey="help.star.supply"
             values={{ count: rules.material(MaterialType.StarToken).location(LocationType.StarTokenSupply).getQuantity() }}
             components={components}
           />
         </p>
       )}
       <p>
-        <Trans defaults="help.star.text" components={components} />
+        <Trans i18nKey="help.star.text" components={components} />
       </p>
     </>
   )

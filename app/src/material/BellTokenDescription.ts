@@ -5,9 +5,8 @@ import { BellTokenHelp } from './help/BellTokenHelp'
 export class BellTokenDescription extends CardDescription {
   width = 3
   height = 4.8
-
   image = BellToken
-
+  transparent = true
   help = BellTokenHelp
 }
 

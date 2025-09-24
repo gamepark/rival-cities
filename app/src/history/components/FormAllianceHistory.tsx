@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { MaterialLogProps, PlayMoveButton, usePlayerName } from '@gamepark/react-game'
 import { Alliance } from '@gamepark/rival-cities/material/Alliance'
 import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
@@ -13,7 +12,7 @@ export function FormAllianceHistory({ move, context }: MaterialLogProps<MoveItem
   const card = new RivalCitiesRules(context.game).material(MaterialType.AllianceCard).getItem<Alliance>(move.itemIndex)
   return (
     <Trans
-      defaults="history.alliance.form"
+      i18nKey="history.alliance.form"
       values={{ player, alliance: t(`help.card.alliance.${card.id}`) }}
       components={{
         card: <PlayMoveButton move={displayMaterialHelp(MaterialType.AllianceCard, card)} transient />

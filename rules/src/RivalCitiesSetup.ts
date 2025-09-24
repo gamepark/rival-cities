@@ -1,5 +1,5 @@
 import { getEnumValues, MaterialGameSetup } from '@gamepark/rules-api'
-import shuffle from 'lodash/shuffle'
+import { shuffle } from 'es-toolkit/compat'
 import { City } from './City'
 import { basicActionCardPlaces, specialActionCardPlaces } from './constantes'
 import { allianceCards } from './material/Alliance'

@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { PlayMoveButton, useLegalMove, usePlayerId, usePlayerName, useRules } from '@gamepark/react-game'
 import { RivalCitiesRules } from '@gamepark/rival-cities/RivalCitiesRules'
 import { isStartPlayerTurn } from '@gamepark/rules-api'
@@ -11,8 +10,8 @@ export const ConfirmEndTurnHeader = () => {
   const player = usePlayerName(activePlayer)
   const confirm = useLegalMove(isStartPlayerTurn)
   if (activePlayer === me) {
-    return <Trans defaults="header.end-turn.you" components={{ confirm: <PlayMoveButton move={confirm} auto={10} /> }} />
+    return <Trans i18nKey="header.end-turn.you" components={{ confirm: <PlayMoveButton move={confirm} auto={10} /> }} />
   } else {
-    return <Trans defaults="header.end-turn.player" values={{ player }} />
+    return <Trans i18nKey="header.end-turn.player" values={{ player }} />
   }
 }

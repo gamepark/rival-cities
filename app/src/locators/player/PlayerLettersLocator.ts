@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { ListLocator } from '@gamepark/react-game'
 import { City } from '@gamepark/rival-cities/City'
 import { Location } from '@gamepark/rules-api'

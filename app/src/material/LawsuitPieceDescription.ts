@@ -5,6 +5,7 @@ export class LawsuitPieceDescription extends CardDescription {
   width = 8.9
   height = 4.1
   image = LawsuitPiece
+  transparent = true
   displayHelp = () => undefined
 }
 

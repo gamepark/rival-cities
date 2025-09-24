@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { MaterialLogProps, Picture, usePlayerName } from '@gamepark/react-game'
 import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
 import { Product } from '@gamepark/rival-cities/material/Product'
@@ -14,7 +13,7 @@ export function PayProductHistory({ move, context }: MaterialLogProps<MoveItem>)
   const product = move.location.id as Product
   return (
     <Trans
-      defaults="history.item.pay"
+      i18nKey="history.item.pay"
       values={{ player, count: move.quantity ?? 1 }}
       components={{ item: <Picture css={historyIcon} src={getProductIcon(product)} /> }}
     />

@@ -42,7 +42,7 @@ export class LetterDescription extends CardDescription {
       const nbLetters = context.rules.material(MaterialType.Letter).location(LocationType.PlayerLetters).player(context.player).getQuantity()
       if (context.displayIndex !== nbLetters - 1) return undefined
       return (
-        <ItemMenuButton label={<Trans defaults="button.useLetter" />} labelPosition="right" angle={50} radius={4} y={-1} x={1} move={useLetter}>
+        <ItemMenuButton label={<Trans i18nKey="button.useLetter" />} labelPosition="right" angle={50} radius={4} y={-1} x={1} move={useLetter}>
           <FontAwesomeIcon icon={faHand} css={pointerCursorCss} />
         </ItemMenuButton>
       )
@@ -51,7 +51,7 @@ export class LetterDescription extends CardDescription {
     if (take) {
       if (context.displayIndex !== 0) return undefined
       return (
-        <ItemMenuButton label={<Trans defaults="button.take" />} angle={50} radius={4} y={0} x={1} move={take}>
+        <ItemMenuButton label={<Trans i18nKey="button.take" />} angle={50} radius={4} y={0} x={1} move={take}>
           <FontAwesomeIcon icon={faArrowDown} css={pointerCursorCss} />
         </ItemMenuButton>
       )

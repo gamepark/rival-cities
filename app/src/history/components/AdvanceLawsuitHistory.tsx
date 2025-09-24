@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { MaterialLogProps, PlayMoveButton, usePlayerName } from '@gamepark/react-game'
 import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
 import { RivalCitiesRules } from '@gamepark/rival-cities/RivalCitiesRules'
@@ -14,7 +13,7 @@ export function AdvanceLawsuitHistory({ move, context }: MaterialLogProps<Custom
     .getItem()
   return (
     <Trans
-      defaults="history.lawsuit.advance"
+      i18nKey="history.lawsuit.advance"
       values={{ player, id: move.data }}
       components={{ card: <PlayMoveButton move={displayMaterialHelp(MaterialType.LawsuitCard, card)} transient /> }}
     />

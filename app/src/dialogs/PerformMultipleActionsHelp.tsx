@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { useRules } from '@gamepark/react-game'
 import { Action, MultipleActions } from '@gamepark/rival-cities/material/Action'
 import { RivalCitiesRules } from '@gamepark/rival-cities/RivalCitiesRules'
@@ -21,7 +20,7 @@ export const PerformMultipleActionsHelp = () => {
       <h2>{t('help.rule.actions')}</h2>
       {action.actions.map((a, index) => (
         <p key={index}>
-          <Trans defaults={`help.action.descr.${a.type}`} values={a} components={components} />
+          <Trans i18nKey={`help.action.descr.${a.type}`} values={a} components={components} />
         </p>
       ))}
     </>

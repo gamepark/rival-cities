@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { HeaderText, Picture } from '@gamepark/react-game'
 import { CustomMoveType } from '@gamepark/rival-cities/rules/CustomMoveType'
 import { RuleId } from '@gamepark/rival-cities/rules/RuleId'
@@ -40,7 +39,7 @@ export const Headers: Partial<Record<RuleId, ComponentType>> = {
   [RuleId.CourtRuling]: () => (
     <HeaderText code="court-ruling" moves={{ resolve: isCustomMoveType(CustomMoveType.ResolveLawsuit), pass: isCustomMoveType(CustomMoveType.Pass) }} />
   ),
-  [RuleId.ResolveLawsuit]: () => <Trans defaults="header.resolve.lawsuit" />,
+  [RuleId.ResolveLawsuit]: () => <Trans i18nKey="header.resolve.lawsuit" />,
   [RuleId.ReactivateFactory]: () => <HeaderText code="reactivate-factory" />,
   [RuleId.Piracy]: PiracyHeader,
   [RuleId.RepeatAction]: RepeatActionHeader,
@@ -48,7 +47,7 @@ export const Headers: Partial<Record<RuleId, ComponentType>> = {
   [RuleId.ConfirmEndTurn]: ConfirmEndTurnHeader,
   [RuleId.TakeBell]: () => <HeaderText code="take-bell" />,
   [RuleId.PayAlliancesUpkeep]: PayAlliancesUpkeepHeader,
-  [RuleId.ReplaceSpecialActionCards]: () => <Trans defaults="header.replace-cards" />,
-  [RuleId.ReactivateFactories]: () => <Trans defaults="header.reactivate-factories" />,
-  [RuleId.ReturnBell]: () => <Trans defaults="header.return-bell" />
+  [RuleId.ReplaceSpecialActionCards]: () => <Trans i18nKey="header.replace-cards" />,
+  [RuleId.ReactivateFactories]: () => <Trans i18nKey="header.reactivate-factories" />,
+  [RuleId.ReturnBell]: () => <Trans i18nKey="header.return-bell" />
 }

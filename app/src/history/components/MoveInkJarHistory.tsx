@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { MaterialLogProps, Picture, PlayMoveButton, usePlayerName } from '@gamepark/react-game'
 import { specialActionCardPlaces } from '@gamepark/rival-cities/constantes'
 import { LocationType } from '@gamepark/rival-cities/material/LocationType'
@@ -20,7 +19,7 @@ export function MoveInkJarHistory({ move, context }: MaterialLogProps<MoveItem>)
   const card = rules.material(cardType).location(LocationType.ActionCardSpace).locationId(destination).getItem()
   return (
     <Trans
-      defaults="history.move-ink-jar"
+      i18nKey="history.move-ink-jar"
       values={{ player, distance }}
       components={{
         inkJar: <Picture css={historyIcon} src={InkJar} />,

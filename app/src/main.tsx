@@ -1,22 +1,21 @@
-/** @jsxImportSource @emotion/react */
+import { GameProvider, setupTranslation } from '@gamepark/react-game'
 import { RivalCitiesOptionsSpec } from '@gamepark/rival-cities/RivalCitiesOptions'
 import { RivalCitiesRules } from '@gamepark/rival-cities/RivalCitiesRules'
 import { RivalCitiesSetup } from '@gamepark/rival-cities/RivalCitiesSetup'
-import { GameProvider, setupTranslation } from '@gamepark/react-game'
 import { StrictMode } from 'react'
-import ReactDOM from 'react-dom'
+import { createRoot } from 'react-dom/client'
 import { gameAnimations } from './animations/GameAnimations'
-import App from './App'
-import { RivalCitiesLogs } from './history/RivalCitiesLogs'
+import { App } from './App'
+import { RulesHelp } from './dialogs/RulesHelp.ts'
+import { RivalCitiesLogs } from './history/RivalCitiesLogs.tsx'
 import { Locators } from './locators/Locators'
 import { Material, MaterialI18n } from './material/Material'
 import translations from './translations.json'
-import { RulesHelp } from './dialogs/RulesHelp'
-import { Tutorial } from './tutorial/Tutorial'
+import { Tutorial } from './tutorial/Tutorial.tsx'
 
 setupTranslation(translations, { debug: false })
 
-ReactDOM.render(
+createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <GameProvider
       game="rival-cities"
@@ -33,6 +32,5 @@ ReactDOM.render(
     >
       <App />
     </GameProvider>
-  </StrictMode>,
-  document.getElementById('root')
+  </StrictMode>
 )

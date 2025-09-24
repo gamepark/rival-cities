@@ -7,19 +7,17 @@ import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
 import { isMoveItemType, MaterialItem, MaterialMove } from '@gamepark/rules-api'
 import React from 'react'
 import { Trans } from 'react-i18next'
-import FactoryFront from '../images/tokens/FactoryFront.png'
 import FactoryBack from '../images/tokens/FactoryBack.png'
+import FactoryFront from '../images/tokens/FactoryFront.png'
 import { FactoryHelp } from './help/FactoryHelp'
 
 export class FactoryDescription extends CardDescription {
   width = 2.4
   height = 2.4
-
-  backImage = FactoryBack
-
-  menuAlwaysVisible = true
-
   image = FactoryFront
+  backImage = FactoryBack
+  transparent = true
+  menuAlwaysVisible = true
 
   isFlipped(item: Partial<MaterialItem>): boolean {
     return item.location?.rotation as boolean
@@ -55,7 +53,7 @@ export class FactoryDescription extends CardDescription {
 
     if (take) {
       return (
-        <ItemMenuButton label={<Trans defaults="button.take" />} angle={50} radius={4} y={-1} x={1} move={take}>
+        <ItemMenuButton label={<Trans i18nKey="button.take" />} angle={50} radius={4} y={-1} x={1} move={take}>
           <FontAwesomeIcon icon={faArrowDown} css={pointerCursorCss} />
         </ItemMenuButton>
       )

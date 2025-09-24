@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { MaterialHelpProps, usePlayerId, usePlayerName, useRules } from '@gamepark/react-game'
 import { LocationType } from '@gamepark/rival-cities/material/LocationType'
 import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
@@ -30,7 +29,7 @@ function SpecialActionCardLocationHelp({ location }: { location: Location }) {
             <li>{t('help.action.choice.1')}</li>
             <li>{t('help.action.choice.2')}</li>
             <li>
-              <Trans defaults={'help.action.choice.3'} components={{ bold: <strong /> }} />
+              <Trans i18nKey={'help.action.choice.3'} components={{ bold: <strong /> }} />
             </li>
             <li>{t('help.action.choice.4')}</li>
           </ol>

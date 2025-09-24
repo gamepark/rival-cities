@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { faMoneyCheckDollar, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { CardDescription, ItemContext, ItemMenuButton, pointerCursorCss } from '@gamepark/react-game'
@@ -54,12 +53,12 @@ export class AllianceCardDescription extends CardDescription {
       return (
         <>
           {pay && (
-            <ItemMenuButton label={<Trans defaults="button.pay" />} angle={50} radius={4} move={pay}>
+            <ItemMenuButton label={<Trans i18nKey="button.pay" />} angle={50} radius={4} move={pay}>
               <FontAwesomeIcon icon={faMoneyCheckDollar} css={pointerCursorCss} />
             </ItemMenuButton>
           )}
           {discard && (
-            <ItemMenuButton label={<Trans defaults="button.discard" />} angle={50} radius={4} y={pay ? -0.5 : undefined} move={discard}>
+            <ItemMenuButton label={<Trans i18nKey="button.discard" />} angle={50} radius={4} y={pay ? -0.5 : undefined} move={discard}>
               <FontAwesomeIcon icon={faTrash} css={pointerCursorCss} />
             </ItemMenuButton>
           )}

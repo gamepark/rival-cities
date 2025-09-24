@@ -31,7 +31,7 @@ export class StarTokenDescription extends CardDescription {
 
     if (take) {
       return (
-        <ItemMenuButton label={<Trans defaults="button.take" />} labelPosition={'right'} angle={50} radius={4} y={-1} x={1} move={take}>
+        <ItemMenuButton label={<Trans i18nKey="button.take" />} labelPosition={'right'} angle={50} radius={4} y={-1} x={1} move={take}>
           <FontAwesomeIcon icon={faArrowDown} css={pointerCursorCss} />
         </ItemMenuButton>
       )

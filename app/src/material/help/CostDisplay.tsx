@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { Picture } from '@gamepark/react-game'
 import { Cost, CostType } from '@gamepark/rival-cities/material/Cost'
 import { Product } from '@gamepark/rival-cities/material/Product'

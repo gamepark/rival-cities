@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { HeaderText, Picture, useRules } from '@gamepark/react-game'
 import { CostType } from '@gamepark/rival-cities/material/Cost'
 import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'

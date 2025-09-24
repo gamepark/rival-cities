@@ -47,7 +47,7 @@ export class LawsuitCardDescription extends CardDescription {
     const moveLeft = legalMoves.find((move) => isMoveItemType(MaterialType.LawsuitPiece)(move) && move.itemIndex === item.location.parent)
     if (moveLeft) {
       return (
-        <ItemMenuButton label={<Trans defaults="button.exchange" />} labelPosition="right" angle={50} y={0} x={-4.8} move={moveLeft}>
+        <ItemMenuButton label={<Trans i18nKey="button.exchange" />} labelPosition="right" angle={50} y={0} x={-4.8} move={moveLeft}>
           <FontAwesomeIcon icon={faArrowRightArrowLeft} css={pointerCursorCss} />
         </ItemMenuButton>
       )
@@ -55,7 +55,7 @@ export class LawsuitCardDescription extends CardDescription {
 
     if (resolveLawsuit && item.location.parent === firstLawsuit.getIndex()) {
       return (
-        <ItemMenuButton label={<Trans defaults="button.resolve" />} labelPosition="left" angle={50} y={-2} x={2.5} move={resolveLawsuit}>
+        <ItemMenuButton label={<Trans i18nKey="button.resolve" />} labelPosition="left" angle={50} y={-2} x={2.5} move={resolveLawsuit}>
           <FontAwesomeIcon icon={faCheck} css={pointerCursorCss} />
         </ItemMenuButton>
       )

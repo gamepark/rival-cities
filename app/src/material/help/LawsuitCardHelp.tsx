@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { MaterialHelpProps, Picture } from '@gamepark/react-game'
 import { Lawsuit, lawsuitData } from '@gamepark/rival-cities/material/Lawsuit'
 import { Trans, useTranslation } from 'react-i18next'
@@ -15,11 +14,11 @@ export function LawsuitCardHelp({ item }: MaterialHelpProps) {
     <>
       <h2>{t('help.card.lawsuit')}</h2>
       <p>
-        <Trans defaults="help.card.lawsuit.text" components={{ ...components, lawsuit: <Picture src={LawsuitIcon} />, star: <Picture src={Star} /> }} />
+        <Trans i18nKey="help.card.lawsuit.text" components={{ ...components, lawsuit: <Picture src={LawsuitIcon} />, star: <Picture src={Star} /> }} />
       </p>
       {item.id && <LawsuitDetailHelp lawsuit={item.id} />}
       <p css={note}>
-        <Trans defaults="help.card.lawsuit.win" components={components} />
+        <Trans i18nKey="help.card.lawsuit.win" components={components} />
       </p>
     </>
   )
@@ -32,14 +31,14 @@ export function LawsuitDetailHelp({ lawsuit }: { lawsuit: Lawsuit }) {
     <>
       <p>
         <strong>
-          <Trans defaults="help.lawsuit.price" components={{ lawsuit: <Picture src={LawsuitIcon} /> }} />
+          <Trans i18nKey="help.lawsuit.price" components={{ lawsuit: <Picture src={LawsuitIcon} /> }} />
         </strong>{' '}
         <CostDisplay cost={cost} />
       </p>
 
       <p>
         <strong>
-          <Trans defaults="help.lawsuit.action.advance" components={{ lawsuit: <Picture src={LawsuitIcon} /> }} />
+          <Trans i18nKey="help.lawsuit.action.advance" components={{ lawsuit: <Picture src={LawsuitIcon} /> }} />
         </strong>
       </p>
       <>
@@ -56,7 +55,7 @@ export function LawsuitDetailHelp({ lawsuit }: { lawsuit: Lawsuit }) {
         ))}
       </>
       <p>
-        <Trans defaults="help.card.stars" values={{ stars: nbStars }} components={{ star: <Picture src={Star} /> }} />
+        <Trans i18nKey="help.card.stars" values={{ stars: nbStars }} components={{ star: <Picture src={Star} /> }} />
       </p>
     </>
   )

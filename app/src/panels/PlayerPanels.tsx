@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
 import { StyledPlayerPanel, usePlayers, useRules } from '@gamepark/react-game'
 import { City } from '@gamepark/rival-cities/City'

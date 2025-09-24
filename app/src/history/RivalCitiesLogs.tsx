@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
 import { LogDescription, MoveComponentContext } from '@gamepark/react-game'
 import { MovePlayedLogDescription } from '@gamepark/react-game/dist/components/Log/LogDescription'
@@ -134,10 +133,10 @@ export class RivalCitiesLogs implements LogDescription {
       return { Component: AdvanceLawsuitHistory, depth: 1 }
     }
     if (isStartRule(move) && move.id === RuleId.ResolveLawsuit) {
-      return { Component: () => <Trans defaults="header.resolve.lawsuit" /> }
+      return { Component: () => <Trans i18nKey="header.resolve.lawsuit" /> }
     }
     if (isDeleteItemType(MaterialType.LawsuitCard)(move)) {
-      return { Component: () => <Trans defaults="history.lawsuit.discard" />, depth: 1 }
+      return { Component: () => <Trans i18nKey="history.lawsuit.discard" />, depth: 1 }
     }
     if (isMoveItemType(MaterialType.LawsuitCard)(move) && move.location.type === LocationType.PlayerLawsuitCards) {
       return { Component: WinLawsuitHistory, depth: 1 }
@@ -163,7 +162,7 @@ export class RivalCitiesLogs implements LogDescription {
       return {
         Component: () => (
           <strong css={bigText}>
-            <Trans defaults="history.off-season" />
+            <Trans i18nKey="history.off-season" />
           </strong>
         )
       }
@@ -172,12 +171,12 @@ export class RivalCitiesLogs implements LogDescription {
       return { Component: KeepAllianceHistory, player: action.playerId }
     }
     if (ruleId === RuleId.PayAlliancesUpkeep && isStartPlayerTurn(move) && move.id === RuleId.EarnPrestige) {
-      return { Component: () => <Trans defaults="history.ship.most" /> }
+      return { Component: () => <Trans i18nKey="history.ship.most" /> }
     }
     if (isStartRule(move) && move.id === RuleId.GainShipsIncome) {
       const rule = new GainShipsIncomeRule(game)
       if (rule.getIncome(City.Hamburg).length || rule.getIncome(City.Altona).length) {
-        return { Component: () => <Trans defaults="history.ship.income" /> }
+        return { Component: () => <Trans i18nKey="history.ship.income" /> }
       }
     }
     if (isStartRule(move) && move.id === RuleId.GainPrestigeIncome) {
@@ -187,7 +186,7 @@ export class RivalCitiesLogs implements LogDescription {
       }
     }
     if (isStartRule(move) && move.id === RuleId.ReplaceSpecialActionCards) {
-      return { Component: () => <Trans defaults="history.special.replace" /> }
+      return { Component: () => <Trans i18nKey="history.special.replace" /> }
     }
     if (isMoveItemType(MaterialType.BellToken)(move) && move.location.type === LocationType.BellTokenSpot) {
       const player = new RivalCitiesRules(game).material(MaterialType.BellToken).getItem()!.location.player

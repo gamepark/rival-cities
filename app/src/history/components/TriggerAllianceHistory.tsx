@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { MaterialLogProps, PlayMoveButton, usePlayerName } from '@gamepark/react-game'
 import { Alliance } from '@gamepark/rival-cities/material/Alliance'
 import { MaterialType } from '@gamepark/rival-cities/material/MaterialType'
@@ -13,7 +12,7 @@ export function TriggerAllianceHistory({ move, context }: MaterialLogProps<Custo
   const player = usePlayerName(card.location.player)
   return (
     <Trans
-      defaults="history.alliance.trigger"
+      i18nKey="history.alliance.trigger"
       values={{ player, alliance: t(`help.card.alliance.${move.data}`) }}
       components={{
         card: <PlayMoveButton move={displayMaterialHelp(MaterialType.AllianceCard, card)} transient />

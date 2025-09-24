@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { useRules } from '@gamepark/react-game'
 import { ActionType } from '@gamepark/rival-cities/material/Action'
 import { BasicAction, basicCardAction } from '@gamepark/rival-cities/material/BasicAction'
@@ -25,7 +24,7 @@ export const ChooseSplitActionHelp = () => {
           {action.actions.map((a, index) => (
             <div key={index}>
               <p>
-                <Trans defaults={`help.action.descr.${a.type}`} values={a} components={components} />
+                <Trans i18nKey={`help.action.descr.${a.type}`} values={a} components={components} />
               </p>
               {action.type === ActionType.Split && index < action.actions.length - 1 && (
                 <p>
@@ -37,7 +36,7 @@ export const ChooseSplitActionHelp = () => {
         </>
       ) : (
         <p>
-          <Trans defaults={`help.action.descr.${action.type}`} values={action} components={components} />
+          <Trans i18nKey={`help.action.descr.${action.type}`} values={action} components={components} />
         </p>
       )}
     </>

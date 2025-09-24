@@ -54,7 +54,7 @@ export class BasicActionCardDescription extends CardDescription {
 
     if (item.location.type === LocationType.ActionCardSpace && play) {
       return (
-        <ItemMenuButton label={<Trans defaults="button.play" />} angle={50} radius={4} move={play}>
+        <ItemMenuButton label={<Trans i18nKey="button.play" />} angle={50} radius={4} move={play}>
           <FontAwesomeIcon icon={faHand} css={pointerCursorCss} />
         </ItemMenuButton>
       )

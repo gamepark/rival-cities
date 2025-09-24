@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { MaterialHelpProps, PlayMoveButton, useLegalMove, usePlayerId } from '@gamepark/react-game'
 import { CustomMoveType } from '@gamepark/rival-cities/rules/CustomMoveType'
 import { isCustomMoveType } from '@gamepark/rules-api'
@@ -15,7 +14,7 @@ export function LetterHelp({ item, closeDialog }: MaterialHelpProps) {
     <>
       <h2>{t('help.letter')}</h2>
       <p>
-        <Trans defaults="help.letter.text" components={components} />
+        <Trans i18nKey="help.letter.text" components={components} />
       </p>
       <ul>
         <li>{t('help.letter.use.1')}</li>
