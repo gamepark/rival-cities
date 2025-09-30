@@ -28,16 +28,18 @@ export class DonationRule extends ActionRule<Donation> {
   afterItemMove(move: ItemMove) {
     const cost = this.action.cost
     if (isMoveItemType(MaterialType.StarToken)(move) && move.location.type === LocationType.PlayerStarTokens) {
+      this.memorize(Memory.Count, cost.amount)
       if (cost.type === CostType.Product) {
         const products = this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(this.player).id(cost.product)
-        return [products.moveItem({ type: LocationType.ProductSupply, id: cost.product }, cost.amount), this.startNextRule()]
-      } else {
-        this.memorize(Memory.Count, cost.amount)
+        return [products.moveItem({ type: LocationType.ProductSupply, id: cost.product }, cost.amount)]
       }
-    } else if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.ProductSupply && cost.type === CostType.AnyProducts) {
-      const count = this.memorize<number>(Memory.Count, (count) => count - 1)
+    } else if (isMoveItemType(MaterialType.Product)(move) && move.location.type === LocationType.ProductSupply) {
+      const count = this.memorize<number>(Memory.Count, (count) => count - (move.quantity ?? 1))
       if (count === 0) {
-        return [this.startNextRule()]
+        this.action.times--
+        if (this.action.times === 0) {
+          return [this.startNextRule()]
+        }
       }
     }
     return []
