@@ -16,7 +16,7 @@ export class FactoryDescription extends CardDescription {
   height = 2.4
   image = FactoryFront
   backImage = FactoryBack
-  transparent = true
+  transparency = true
   menuAlwaysVisible = true
 
   isFlipped(item: Partial<MaterialItem>): boolean {

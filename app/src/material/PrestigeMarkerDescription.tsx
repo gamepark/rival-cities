@@ -14,7 +14,7 @@ export class PrestigeMarkerDescription extends TokenDescription {
   width = 2.3
   height = 2.3
   image = PrestigeMarker
-  transparent = true
+  transparency = true
   menuAlwaysVisible = true
 
   canShortClick(move: MaterialMove, context: ItemContext) {

@@ -8,7 +8,7 @@ export class InkJarDescription extends TokenDescription {
   height = 2.8
 
   image = InkJar
-  transparent = true
+  transparency = true
 
   getFrontExtraCss(): Interpolation<Theme> {
     return css`

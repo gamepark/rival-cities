@@ -17,7 +17,7 @@ export class LawsuitMarkerDescription extends TokenDescription {
   menuAlwaysVisible = true
 
   image = LawsuitMarker
-  transparent = true
+  transparency = true
 
   canShortClick(move: MaterialMove, context: ItemContext): boolean {
     return isMoveItemType(MaterialType.LawsuitMarker)(move) && context.index === move.itemIndex
