@@ -82,7 +82,7 @@ export const shipData: Record<Ship, ShipData> = {
     cost: cost(3, Product.Leather),
     effect: {
       type: ShipEffectType.Instant,
-      actions: [{ type: ActionType.DrawSpecialActionCard }]
+      actions: [{ type: ActionType.DrawSpecialActionCard }, { type: ActionType.DrawSpecialActionCard }]
     },
     getNbStars: () => 2
   },
