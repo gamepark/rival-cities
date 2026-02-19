@@ -15,6 +15,7 @@ import { GainStarsHeader } from './GainStarsHeader'
 import { PayAlliancesUpkeepHeader } from './PayAlliancesUpkeepHeader'
 import { PiracyHeader } from './PiracyHeader'
 import { ProductionHeader } from './ProductionHeader'
+import { ReactivateFactoryHeader } from './ReactivateFactoryHeader'
 import { RepeatActionHeader } from './RepeatActionHeader'
 
 export const Headers: Partial<Record<RuleId, ComponentType>> = {
@@ -40,7 +41,7 @@ export const Headers: Partial<Record<RuleId, ComponentType>> = {
     <HeaderText code="court-ruling" moves={{ resolve: isCustomMoveType(CustomMoveType.ResolveLawsuit), pass: isCustomMoveType(CustomMoveType.Pass) }} />
   ),
   [RuleId.ResolveLawsuit]: () => <Trans i18nKey="header.resolve.lawsuit" />,
-  [RuleId.ReactivateFactory]: () => <HeaderText code="reactivate-factory" />,
+  [RuleId.ReactivateFactory]: ReactivateFactoryHeader,
   [RuleId.Piracy]: PiracyHeader,
   [RuleId.RepeatAction]: RepeatActionHeader,
   [RuleId.GainStars]: GainStarsHeader,
