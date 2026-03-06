@@ -198,7 +198,8 @@ export class RivalCitiesLogs implements LogDescription {
 
   getItemMoveDepth(game: MaterialGame) {
     const rules = new RivalCitiesRules(game)
-    const action = rules.remind<Action[]>(Memory.Actions)[0]
+    const actions = rules.remind<Action[]>(Memory.Actions)
+    const action = actions?.[0]
     if (!action) return 1
     switch (action.type) {
       case ActionType.GainProducts:
