@@ -16,7 +16,7 @@ export function App() {
   return (
     <>
       {!!game && <GameDisplay />}
-      <LoadingScreen display={loading} author="Andreas Steding" artist="Annika Heller" publisher="Deep Print Games" developer="David Sylvestre" />
+      <LoadingScreen display={loading} />
       <MaterialHeader rulesStepsHeaders={Headers} GameOver={GameOverHeader} loading={loading} />
       <MaterialImageLoader onImagesLoad={() => setImagesLoading(false)} />
       <MaterialGameSounds />

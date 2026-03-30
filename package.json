@@ -7,25 +7,27 @@
   "author": "Romain Fromi <romain@game-park.com> (https://game-park.com/)",
   "license": "ISC",
   "devDependencies": {
-    "@eslint/js": "^9.35.0",
-    "eslint": "^9.35.0",
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.1.0",
     "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-prettier": "^5.5.4",
-    "globals": "^16.4.0",
-    "lerna": "^8.2.4",
-    "prettier": "3.6.2",
-    "typescript": "^5.9.2",
-    "typescript-eslint": "^8.44.0"
+    "eslint-plugin-prettier": "^5.5.5",
+    "globals": "^17.4.0",
+    "lerna": "^9.0.7",
+    "prettier": "^3.8.1",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.57.2",
+    "vitest": "^4.1.1"
   },
   "scripts": {
     "dev": "yarn workspace @gamepark/rival-cities-app run dev",
     "preview": "yarn workspace @gamepark/rival-cities-app run preview",
     "build": "yarn workspace @gamepark/rival-cities-app run build",
     "deploy": "yarn workspace @gamepark/rival-cities-app run deploy",
+    "test": "yarn workspace @gamepark/rival-cities run test && yarn workspace @gamepark/rival-cities-app run test",
     "publish": "lerna publish",
     "lint": "yarn workspace @gamepark/rival-cities run lint && yarn workspace @gamepark/rival-cities-app run lint",
-    "linkgp": "yarn link ../rules-api ../react-client ../react-game -r",
-    "unlinkgp": "yarn unlink ../react-game ../react-client ../rules-api"
+    "linkgp": "yarn link ../rules-api ../react-client ../react-game -r && git update-index --skip-worktree package.json yarn.lock",
+    "unlinkgp": "git update-index --no-skip-worktree package.json yarn.lock && yarn unlink ../react-game ../react-client ../rules-api"
   },
   "packageManager": "yarn@4.9.4"
 }

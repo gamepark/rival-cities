@@ -1,5 +1,5 @@
 import { css } from '@emotion/react'
-import { GameTable, GameTableNavigation } from '@gamepark/react-game'
+import { DevToolsHub, GameTable, GameTableNavigation } from '@gamepark/react-game'
 import { PlayerPanels } from './panels/PlayerPanels'
 
 export function GameDisplay() {
@@ -9,6 +9,7 @@ export function GameDisplay() {
       <GameTable xMin={-50} xMax={50} yMin={-31} yMax={24} margin={margin} css={process.env.NODE_ENV === 'development' && tableBorder}>
         <GameTableNavigation css={navigationCss} />
         <PlayerPanels />
+        {import.meta.env.DEV && <DevToolsHub />}
       </GameTable>
     </>
   )
