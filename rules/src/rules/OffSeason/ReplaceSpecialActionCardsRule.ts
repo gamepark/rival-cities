@@ -37,7 +37,7 @@ export class ReplaceSpecialActionCardsRule extends PlayerTurnRule {
       const nextSpace = specialActionCardPlaces.find((place) => cardsOnPiste.locationId(place).length === 0)
       if (nextSpace !== undefined) {
         return this.dealActionCard(nextSpace)
-      } else {
+      } else if (!isShuffleItemType(MaterialType.SpecialActionCard)(move)) {
         return [this.startRule(RuleId.ReactivateFactories)]
       }
     }
