@@ -24,7 +24,7 @@ export class RepeatActionRule extends ActionRule<RepeatAction> {
       }
     } else {
       const productsICanSpend = this.getProducts().id<Product>((product) => this.willHaveEnoughAfterSpending(product))
-      moves.push(...productsICanSpend.moveItems((item) => ({ type: LocationType.ProductSupply, id: item.id })))
+      moves.push(...productsICanSpend.moveItems((item) => ({ type: LocationType.ProductSupply, id: item.id }), 1))
     }
     return moves
   }

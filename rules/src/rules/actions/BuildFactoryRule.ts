@@ -17,11 +17,11 @@ export class BuildFactoryRule extends ActionRule<BuildFactory> {
     const moves: MaterialMove[] = []
     const products = this.getProducts()
     if (this.action.building) {
-      return products.moveItems((item) => ({ type: LocationType.ProductSupply, id: item.id }))
+      return products.moveItems((item) => ({ type: LocationType.ProductSupply, id: item.id }), 1)
     }
     const factoriesSupply = this.factoriesSupply
     if (factoriesSupply.length && products.getQuantity() >= (this.action.cost ?? 0)) {
-      moves.push(factoriesSupply.moveItem({ type: LocationType.PlayerFactories, player: this.player, rotation: false }))
+      moves.push(factoriesSupply.moveItem({ type: LocationType.PlayerFactories, player: this.player, rotation: false }, 1))
     }
     if (!this.action.building) {
       moves.push(this.customMove(CustomMoveType.Pass))

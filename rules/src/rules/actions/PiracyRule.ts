@@ -14,7 +14,7 @@ export class PiracyRule extends ActionRule<Piracy> {
   }
 
   getPlayerMoves() {
-    return this.rivalProducts.moveItems((item) => ({ type: LocationType.PlayerProducts, player: this.player, id: item.id }))
+    return this.rivalProducts.moveItems((item) => ({ type: LocationType.PlayerProducts, player: this.player, id: item.id }), 1)
   }
 
   afterItemMove(move: ItemMove) {

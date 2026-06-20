@@ -7,7 +7,7 @@ export class ChooseStartProductRule extends PlayerTurnRule {
   getPlayerMoves() {
     return this.material(MaterialType.Product)
       .location(LocationType.ProductSupply)
-      .moveItems((item) => ({ type: LocationType.PlayerProducts, player: this.player, id: item.id }))
+      .moveItems((item) => ({ type: LocationType.PlayerProducts, player: this.player, id: item.id }), 1)
   }
 
   afterItemMove(move: ItemMove): MaterialMove[] {

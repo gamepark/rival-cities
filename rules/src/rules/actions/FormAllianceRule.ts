@@ -21,7 +21,7 @@ export class FormAllianceRule extends ActionRule<FormAlliance> {
     if (isMoveItemType(MaterialType.AllianceCard)(move)) {
       const origin = this.material(MaterialType.AllianceCard).getItem(move.itemIndex).location
       if (origin.type === LocationType.PlayerAlliances) {
-        moves.push(this.playerLetters.moveItem({ type: LocationType.LetterSupply }))
+        moves.push(this.playerLetters.moveItem({ type: LocationType.LetterSupply }, 1))
       }
       moves.push(this.startNextRule())
     }

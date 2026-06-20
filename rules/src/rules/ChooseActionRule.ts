@@ -38,7 +38,7 @@ export class ChooseActionRule extends PlayerTurnRule {
 
     const letters = this.playerLetters
     if (letters.getQuantity() > 0 && this.hasSpecialActionCard && !this.isOptionCActive) {
-      moves.push(...letters.moveItems({ type: LocationType.LetterSupply })) // Option C
+      moves.push(...letters.moveItems({ type: LocationType.LetterSupply }, 1)) // Option C
     }
 
     if (specialActionCard.length && !this.remind(Memory.LetterSpentForOptionC)) {

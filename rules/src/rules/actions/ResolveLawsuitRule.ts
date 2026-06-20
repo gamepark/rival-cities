@@ -22,7 +22,7 @@ export class ResolveLawsuitRule extends ActionRule<ResolveLawsuitAction> {
 
     if (Math.abs(firstLawsuitMarkerX) === 1 && starTokens.length) {
       const player = firstLawsuitMarkerX < 0 ? City.Altona : City.Hamburg
-      moves.push(starTokens.moveItem({ type: LocationType.PlayerStarTokens, player }))
+      moves.push(starTokens.moveItem({ type: LocationType.PlayerStarTokens, player }, 1))
     }
 
     if (Math.abs(firstLawsuitMarkerX) >= 2) {

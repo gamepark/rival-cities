@@ -13,7 +13,7 @@ export class DonationRule extends ActionRule<Donation> {
     const playerProducts = this.material(MaterialType.Product).location(LocationType.PlayerProducts).player(this.player)
     const productsToPay = this.remind<number | undefined>(Memory.Count)
     if (productsToPay) {
-      return playerProducts.moveItems((item) => ({ type: LocationType.ProductSupply, id: item.id }))
+      return playerProducts.moveItems((item) => ({ type: LocationType.ProductSupply, id: item.id }), 1)
     }
     const moves: MaterialMove[] = [this.customMove(CustomMoveType.Pass)]
     const starTokensStock = this.material(MaterialType.StarToken).location(LocationType.StarTokenSupply)

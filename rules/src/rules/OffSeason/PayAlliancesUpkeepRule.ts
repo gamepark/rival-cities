@@ -73,7 +73,7 @@ export class PayAlliancesUpkeepRule extends SimultaneousRule {
       const player = move.data as City
       const letters = this.material(MaterialType.Letter).player(player)
       this.memorize<SwapProduct>(Memory.PlayerProductSwap, { type: ActionType.SwapProduct, times: 1, isLetterSwap: true }, player)
-      return [letters.moveItem({ type: LocationType.LetterSupply })]
+      return [letters.moveItem({ type: LocationType.LetterSupply }, 1)]
     }
     return []
   }
