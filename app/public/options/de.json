@@ -1,0 +1,7 @@
+{
+  "identities": "Stadt",
+  "identities.1": "Altona",
+  "identities.2": "Hamburg",
+  "option.firstPlay": "Spielaufbau für die erste Partie",
+  "option.firstPlay.help": "Falls dies eure erste Partie ist, klickt dieses Kästchen an, um die Grund-Aktionskarten in der richtigen Reihenfolge zu haben, andernfalls werden sie zufällig um den Spielplan herum verteilt. "
+}

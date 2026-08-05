@@ -1,0 +1,7 @@
+{
+  "identities": "City",
+  "identities.1": "Altona",
+  "identities.2": "Hambourg",
+  "option.firstPlay": "First game setup",
+  "option.firstPlay.help": "If this is your first game, check this box to have the basic action cards in order, otherwise they will be randomly arranged around the board."
+}

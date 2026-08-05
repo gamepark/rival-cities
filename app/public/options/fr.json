@@ -1,0 +1,7 @@
+{
+  "identities": "Ville",
+  "identities.1": "Altona",
+  "identities.2": "Hambourg",
+  "option.firstPlay": "Mise en place première partie",
+  "option.firstPlay.help": "Si c'est votre première partie, cochez cette case pour que les cartes actions basiques soient dans l'ordre, sinon elles seront disposées de manière aléatoire autour du plateau."
+}

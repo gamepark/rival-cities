@@ -1,0 +1,7 @@
+{
+  "identities": "Ciudad",
+  "identities.1": "Altona",
+  "identities.2": "Hamburgo",
+  "option.firstPlay": "Preparación para la primera partida",
+  "option.firstPlay.help": "Si es tu primera partida, marca esta casilla para tener las cartas de acción básicas en orden; si no, se colocarán aleatoriamente alrededor del tablero."
+}
