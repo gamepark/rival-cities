@@ -1,5 +1,5 @@
 import { GameProvider } from '@gamepark/react-game'
-import { RivalCitiesOptionsSpec } from '@gamepark/rival-cities/RivalCitiesOptions'
+import { RivalCitiesOptionsSpecV2 } from '@gamepark/rival-cities/RivalCitiesOptions'
 import { RivalCitiesRules } from '@gamepark/rival-cities/RivalCitiesRules'
 import { RivalCitiesSetup } from '@gamepark/rival-cities/RivalCitiesSetup'
 import { StrictMode } from 'react'
@@ -17,7 +17,7 @@ createRoot(document.getElementById('root')!).render(
     <GameProvider
       game="rival-cities"
       Rules={RivalCitiesRules}
-      optionsSpec={RivalCitiesOptionsSpec}
+      optionsSpec={RivalCitiesOptionsSpecV2}
       GameSetup={RivalCitiesSetup}
       material={Material}
       materialI18n={MaterialI18n}
