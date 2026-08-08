@@ -1,4 +1,5 @@
 import { CustomMove, isMoveItemType, ItemMove, MaterialMove, MoveItem } from '@gamepark/rules-api'
+import { cloneDeep } from 'es-toolkit/compat'
 import { City } from '../../City'
 import { Action, ActionType, AdvanceLawsuit } from '../../material/Action'
 import { Alliance } from '../../material/Alliance'
@@ -57,7 +58,7 @@ export class AdvanceLawsuitRule extends ActionRule<AdvanceLawsuit> {
     const count = this.action.count ?? 0
     if (count === 0) {
       for (const action of advanceBonus) {
-        extraActions.push(structuredClone(action))
+        extraActions.push(cloneDeep(action))
       }
     }
     const lawsuitX = this.material(MaterialType.LawsuitPiece).getItem(lawsuitIndex).location.x!

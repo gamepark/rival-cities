@@ -1,4 +1,5 @@
 import { PlayerTurnRule } from '@gamepark/rules-api'
+import { cloneDeep } from 'es-toolkit/compat'
 import { City } from '../../City'
 import { Action } from '../../material/Action'
 import { LocationType } from '../../material/LocationType'
@@ -31,7 +32,7 @@ export class GainShipsIncomeRule extends PlayerTurnRule {
     for (const ship of ships.getItems<Ship>()) {
       const effect = shipData[ship.id].effect
       if (effect?.type === ShipEffectType.Income) {
-        income.push(structuredClone(effect.action))
+        income.push(cloneDeep(effect.action))
       }
     }
     return income

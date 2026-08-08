@@ -1,4 +1,5 @@
 import { isDeleteItemType, isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
+import { cloneDeep } from 'es-toolkit/compat'
 import { City } from '../../City'
 import { ResolveLawsuitAction } from '../../material/Action'
 import { Lawsuit, lawsuitData } from '../../material/Lawsuit'
@@ -55,15 +56,15 @@ export class ResolveLawsuitRule extends ActionRule<ResolveLawsuitAction> {
           this.action.isRivalTurn = true
         }
         const lawsuit = this.material(MaterialType.LawsuitCard).getItem<Lawsuit>(move.itemIndex).id
-        const actions = structuredClone(lawsuitData[lawsuit].winBonus)
+        const actions = cloneDeep(lawsuitData[lawsuit].winBonus)
         const playerShips = this.material(MaterialType.ShipCard).player(move.location.player).getItems<Ship>()
         for (const ship of playerShips) {
           const effect = shipData[ship.id].effect
           if (effect?.type === ShipEffectType.WinLawsuitBonus) {
-            actions.push(effect.action)
+            actions.push(cloneDeep(effect.action))
           }
         }
-        this.addActions(...structuredClone(actions))
+        this.addActions(...actions)
       } else if (move.location.type === LocationType.LawsuitSpace) {
         return [this.startNextRule()]
       }

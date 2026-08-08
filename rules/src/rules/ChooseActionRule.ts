@@ -1,4 +1,5 @@
 import { CustomMove, isCustomMoveType, isMoveItemType, ItemMove, MaterialMove, PlayerTurnRule } from '@gamepark/rules-api'
+import { cloneDeep } from 'es-toolkit/compat'
 import { specialActionCardPlaces } from '../constantes'
 import { Action, ActionType } from '../material/Action'
 import { BasicAction, basicCardAction } from '../material/BasicAction'
@@ -70,7 +71,7 @@ export class ChooseActionRule extends PlayerTurnRule {
     if (isMoveItemType(MaterialType.SpecialActionCard)(move) && move.location.type === LocationType.SpecialActionCardDiscard) {
       const actions: Action[] = []
       const cardId = this.material(MaterialType.SpecialActionCard).getItem<SpecialAction>(move.itemIndex).id
-      actions.push(...structuredClone(specialCardActions[cardId]))
+      actions.push(...cloneDeep(specialCardActions[cardId]))
       if (this.isOptionCActive) {
         actions.push(...this.inkJarCardActions)
         this.forget(Memory.LetterSpentForOptionC)
@@ -95,10 +96,10 @@ export class ChooseActionRule extends PlayerTurnRule {
       return [{ type: ActionType.GainProducts, quantity: 1, isGift: true }]
     } else if (specialActionCardPlaces.includes(this.inkJarLocationId)) {
       const specialAction = this.specialActionCard.getItem<SpecialAction>()!.id
-      return structuredClone(specialCardActions[specialAction])
+      return cloneDeep(specialCardActions[specialAction])
     } else {
       const basicAction = this.basicActionCard.getItem<BasicAction>()!.id
-      return [structuredClone(basicCardAction[basicAction])]
+      return [cloneDeep(basicCardAction[basicAction])]
     }
   }
 

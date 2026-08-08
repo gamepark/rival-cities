@@ -1,4 +1,5 @@
 import { isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
+import { cloneDeep } from 'es-toolkit/compat'
 import { PlaySpecialActionCard } from '../material/Action'
 import { LocationType } from '../material/LocationType'
 import { MaterialType } from '../material/MaterialType'
@@ -19,7 +20,7 @@ export class PlaySpecialActionCardRule extends ActionRule<PlaySpecialActionCard>
   afterItemMove(move: ItemMove) {
     if (isMoveItemType(MaterialType.SpecialActionCard)(move) && move.location.type === LocationType.SpecialActionCardDiscard) {
       const specialAction = this.material(MaterialType.SpecialActionCard).getItem<SpecialAction>(move.itemIndex).id
-      this.addActions(...structuredClone(specialCardActions[specialAction]))
+      this.addActions(...cloneDeep(specialCardActions[specialAction]))
       return [this.startNextRule()]
     }
     return []

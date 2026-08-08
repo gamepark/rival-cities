@@ -1,4 +1,5 @@
 import { CustomMove, getEnumValues, isCustomMoveType, isMoveItem, ItemMove, MaterialMove, SimultaneousRule } from '@gamepark/rules-api'
+import { cloneDeep } from 'es-toolkit/compat'
 import { City } from '../../City'
 import { Action, ActionType, SwapProduct } from '../../material/Action'
 import { Alliance, alliancesData } from '../../material/Alliance'
@@ -24,7 +25,7 @@ export class PayAlliancesUpkeepRule extends SimultaneousRule {
     for (const player of this.activePlayers) {
       const upkeep: AlliancesUpkeep = { cost: {} }
       for (const alliance of this.getAlliances(player)) {
-        upkeep.cost[alliance.id] = structuredClone(alliancesData[alliance.id].cost)
+        upkeep.cost[alliance.id] = cloneDeep(alliancesData[alliance.id].cost)
       }
       this.memorize(Memory.AlliancesUpkeep, upkeep, player)
     }

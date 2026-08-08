@@ -1,4 +1,5 @@
 import { isMoveItemType, ItemMove, MaterialMove } from '@gamepark/rules-api'
+import { cloneDeep } from 'es-toolkit/compat'
 import { PurchaseShip } from '../../material/Action'
 import { LocationType } from '../../material/LocationType'
 import { MaterialType } from '../../material/MaterialType'
@@ -44,7 +45,7 @@ export class PurchaseShipRule extends ActionRule<PurchaseShip> {
       const effect = shipData[ship].effect
       if (effect?.type === ShipEffectType.Instant && effect.actions) {
         for (const action of effect.actions) {
-          this.addActions(structuredClone(action))
+          this.addActions(cloneDeep(action))
         }
       }
       const deck = this.material(MaterialType.ShipCard).location(LocationType.ShipStack).deck()
